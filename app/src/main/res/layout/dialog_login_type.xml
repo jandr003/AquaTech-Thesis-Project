@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/dialog_box_rounded"
+        android:elevation="12dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Select User Type"
+            android:textColor="@color/aqua_primary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Please choose how you’ll use the app"
+            android:textColor="#8A8A8A"
+            android:textSize="13sp" />
+
+        <!-- Customer Option -->
+        <LinearLayout
+            android:id="@+id/option_customer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/option_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_customer"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="12dp"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/man_user_circle_icon"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="@color/aqua_cicle"
+                app:strokeWidth="2dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Customer"
+                    android:textColor="@color/aqua_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Request service and track status"
+                    android:textColor="#8A8A8A"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/check_customer"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/selected"
+                android:src="@drawable/ic_check_on"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Technician Option -->
+        <LinearLayout
+            android:id="@+id/option_tech"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/option_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_tech"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="12dp"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/new_technician"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="@color/aqua_cicle"
+                app:strokeWidth="2dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Technician"
+                    android:textColor="@color/aqua_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Perform services and submit reports"
+                    android:textColor="#8A8A8A"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/check_tech"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@string/selected"
+                android:src="@drawable/ic_check_on"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="105dp"
+            android:layout_height="51dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/aqua_primary"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="@string/ok"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="0dp"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <!-- 1. DATE HEADER -->
+    <TextView
+        android:id="@+id/tvDateHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Today"
+        android:textColor="#8E8E8E"
+        android:textSize="11sp"
+        android:visibility="gone" />
+
+    <!-- 2. SENDER LABEL -->
+    <TextView
+        android:id="@+id/tvSenderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDateHeader"
+        android:layout_marginStart="46dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="AI Model"
+        android:textColor="#3E5C96"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <!-- 3. AVATAR -->
+    <ImageView
+        android:id="@+id/techAvatarIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@id/messageContainer"
+        android:layout_marginBottom="2dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/aquatech_iconbot" />
+
+    <!-- 4. MESSAGE BUBBLE -->
+    <LinearLayout
+        android:id="@+id/messageContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSenderLabel"
+        android:layout_toEndOf="@id/techAvatarIcon"
+        android:layout_marginStart="10dp"
+        android:minWidth="60dp"
+        android:maxWidth="290dp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:orientation="vertical"
+        android:background="@drawable/bubble_ai">
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:textColor="#334155"
+            android:textSize="14sp"
+            android:text="Sample text..."
+            android:lineSpacingExtra="3dp" />
+
+        <!-- FILE ATTACHMENT AREA -->
+        <LinearLayout
+            android:id="@+id/fileAttachmentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="4dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:src="@drawable/upload_file_png" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvFileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="middle"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:singleLine="true"
+                    android:text="Receipt.pdf"
+                    android:textColor="#1E293B"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvFileSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="2 MB"
+                    android:textColor="#64748B"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- DOWNLOAD ACTION BUTTON -->
+            <ImageView
+                android:id="@+id/btnDownloadAction"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_download"
+                android:tint="#64748B"
+                android:padding="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:text="12:00 PM"
+            android:textColor="#94A3B8"
+            android:textSize="9sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>

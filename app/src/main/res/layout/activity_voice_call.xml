@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/call_background_gradient">
+
+    <!-- Header Title -->
+
+    <TextView
+        android:id="@+id/inCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="IN CALL"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <FrameLayout
+        android:id="@+id/avatarWrapper"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.220">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/green_circle_border" />
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="90dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/callAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="187dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/new_technician" />
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/ConnectedCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connected"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.485" />
+
+    <TextView
+        android:id="@+id/tvCallTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="00:00"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ConnectedCall" />
+
+    <TextView
+        android:id="@+id/callTechName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Jonnifer Iglesias"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.563" />
+
+
+    <TextView
+        android:id="@+id/tvAquaTechnician"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Aqua Technician"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.62">
+
+    </TextView>
+
+    <FrameLayout
+        android:id="@+id/btnSpeakerWrapper"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.346"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAquaTechnician"
+        app:layout_constraintVertical_bias="0.153">
+
+         <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/volume_icon"
+             android:duplicateParentState="true"/>
+
+         <ImageView
+             android:id="@+id/btnSpeakerIcon"
+             android:layout_width="32dp"
+             android:layout_height="32dp"
+             android:layout_gravity="center"
+             android:scaleType="fitCenter"
+             android:src="@drawable/speaker_icon_png"
+             app:tint="#4D4D4D" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/btnMicrophoneWrapper"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.653"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAquaTechnician"
+        app:layout_constraintVertical_bias="0.153">
+
+         <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/volume_icon"
+             android:duplicateParentState="true"/>
+
+
+        <ImageView
+            android:id="@+id/mutedMicroPhone"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:src="@drawable/microphone_muted"
+            app:tint="#4D4D4D" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/btnEndCallWrapper"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSpeakerWrapper"
+        app:layout_constraintVertical_bias="0.4">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_end_call" />
+
+
+        <ImageView
+            android:id="@+id/ivEndCallIcon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:rotation="45"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/ic_menu_call"
+            app:tint="#FFFFFF"
+            android:duplicateParentState="true"/>
+
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

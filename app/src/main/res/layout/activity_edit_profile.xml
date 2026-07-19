@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/aqua_background">
+
+    <!-- Header Section -->
+    <View
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="118dp"
+        android:background="@drawable/header_gradient"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="49dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_arrow_back_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Edit Profile"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnBack" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <!-- Profile Image Section -->
+            <FrameLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvProfileImage"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="60dp"
+                    app:cardBackgroundColor="#F0F7FF"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/aqua_primary"
+                    app:strokeWidth="3dp">
+
+                    <ImageView
+                        android:id="@+id/ivEditProfilePic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:scaleX="1.1"
+                        android:scaleY="1.1"
+                        android:src="@drawable/man_user_circle_icon" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnChangePic"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="bottom|end"
+                    app:cardBackgroundColor="#1C4E75"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="4dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="9dp"
+                        android:src="@drawable/image_241"
+                        app:tint="@color/white" />
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins"
+                android:text="Change Profile Picture"
+                android:textColor="@color/aqua_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- Choose Background Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="start"
+                android:fontFamily="@font/poppins"
+                android:text="Choose background"
+                android:textColor="#888888"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:scrollbars="none"
+                android:overScrollMode="never">
+
+                <LinearLayout
+                    android:id="@+id/colorContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorGray" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#CFD8DC" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorBlue" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#90CAF9" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorPurple" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#B39DDB" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorGreen" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#A5D6A7" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorOrange" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#FFCC80" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorYellow" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#FFF59D" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorCoral" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#FFAB91" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorCyan" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#80DEEA" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorPink" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#F48FB1" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorBlack" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#546E7A" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Input Fields Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="6dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Username"
+                        android:textColor="#AAAAAA"
+                        android:textSize="12sp" 
+                        android:textStyle="bold" />
+                    
+                    <EditText 
+                        android:id="@+id/etEditUsername" 
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins" 
+                        android:hint="Username"
+                        android:paddingVertical="12dp" 
+                        android:textColor="@color/aqua_text_dark" 
+                        android:textSize="16sp" />
+                    
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0" />
+
+                    <TextView
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Full Name"
+                        android:textColor="#AAAAAA"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    
+                    <EditText 
+                        android:id="@+id/etEditFullName" 
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" 
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins" 
+                        android:hint="Enter Full Name"
+                        android:paddingVertical="12dp" 
+                        android:textColor="@color/aqua_text_dark" 
+                        android:textSize="16sp" />
+                    
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" 
+                        android:background="#F0F0F0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" 
+                        android:layout_marginTop="16dp" 
+                        android:fontFamily="@font/poppins"
+                        android:text="Contact Number"
+                        android:textColor="#AAAAAA" 
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    
+                    <EditText
+                        android:id="@+id/etEditNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" 
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Enter Contact Number"
+                        android:inputType="phone"
+                        android:paddingVertical="12dp"
+                        android:textColor="@color/aqua_text_dark"
+                        android:textSize="16sp" />
+                    
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0" />
+
+                    <TextView 
+                        android:layout_width="wrap_content" 
+                        android:layout_height="wrap_content" 
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Address"
+                        android:textColor="#AAAAAA"
+                        android:textSize="12sp" 
+                        android:textStyle="bold" />
+                    
+                    <EditText
+                        android:id="@+id/etEditAddress" 
+                        android:layout_width="match_parent" 
+                        android:layout_height="wrap_content" 
+                        android:background="@android:color/transparent" 
+                        android:fontFamily="@font/poppins" 
+                        android:hint="Enter Full Address"
+                        android:paddingVertical="12dp" 
+                        android:textColor="@color/aqua_text_dark" 
+                        android:textSize="16sp"
+                        android:inputType="textMultiLine"
+                        android:maxLines="3"
+                        android:minLines="1"
+                        android:scrollbars="vertical" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUpdateProfile"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="@color/aqua_primary"
+                android:text="UPDATE PROFILE"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:cornerRadius="16dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivCustomerAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/man_customer_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImage" />
+
+        <TextView
+            android:id="@+id/tvCustomerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="John Doe"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvTicketIDOpen"
+            app:layout_constraintStart_toEndOf="@id/ivCustomerAvatar"
+            app:layout_constraintTop_toTopOf="@id/ivCustomerAvatar" />
+
+        <TextView
+            android:id="@+id/priorityBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/status_circle_red"
+            android:fontFamily="@font/poppins"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:text="URGENT"
+            android:textColor="#FFFFFF"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTicketIDOpen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="#ASC2026-0014"
+            android:textColor="#4B91C6"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSRONumberOpen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="SRO-00014799"
+            android:textColor="#888888"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTicketIDOpen" />
+
+        <!-- 🛠️ FIX: Constrained end to start of IDs to prevent overlap -->
+        <TextView
+            android:id="@+id/tvServiceTypeOpen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Filter Preventive"
+            android:textColor="#666666"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@id/tvSRONumberOpen"
+            app:layout_constraintStart_toStartOf="@id/tvCustomerName"
+            app:layout_constraintTop_toBottomOf="@id/tvCustomerName" />
+
+        <TextView
+            android:id="@+id/tvServiceTimeOpen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:textStyle="bold"
+            android:text="Preferred time 10:00 to 11am"
+            android:textColor="#888888"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvSRONumberOpen"
+            app:layout_constraintStart_toStartOf="@id/tvCustomerName"
+            app:layout_constraintTop_toBottomOf="@+id/tvServiceTypeOpen" />
+
+        <LinearLayout
+            android:id="@+id/locationContainerOpen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="top"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvCustomerName"
+            app:layout_constraintTop_toBottomOf="@+id/tvServiceTimeOpen">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/maps_and_flags__2__1"
+                app:tint="#4B91C6" />
+
+            <TextView
+                android:id="@+id/tvLocationOpen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"
+                android:text="UNIT 201 MCKINLEY HILL, BGC TAGUIG"
+                android:textColor="#888888"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contactContainerOpen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvCustomerName"
+            app:layout_constraintTop_toBottomOf="@+id/locationContainerOpen">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_phone"
+                app:tint="#4B91C6" />
+
+            <TextView
+                android:id="@+id/tvContactOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:text="0912-345-6789"
+                android:textColor="#888888"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAssignTech"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="#4B91C6"
+            android:paddingHorizontal="16dp"
+            android:text="ASSIGN TECH"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contactContainerOpen" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

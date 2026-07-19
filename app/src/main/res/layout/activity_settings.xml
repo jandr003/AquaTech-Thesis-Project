@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F6FBFF">
+
+    <!-- HEADER -->
+    <View
+        android:id="@+id/settingsHeader"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/header_gradient"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_arrow_back_gray"
+        app:layout_constraintBottom_toBottomOf="@id/settingsHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/settingsHeader"
+        app:layout_constraintVertical_bias="0.64"
+        app:tint="#757575" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Settings"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.214"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnBack"
+        app:layout_constraintVertical_bias="0.571" />
+
+    <!-- MY ACCOUNT SECTION -->
+    <TextView
+        android:id="@+id/yourAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="My Account"
+        android:textSize="14sp"
+        android:textColor="#4B91C6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsHeader" />
+
+    <TextView
+        android:id="@+id/yourAccSec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Account &amp; Security"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourAccount" />
+
+    <ImageView
+        android:id="@+id/arrowUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourAccSec"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourAccSec" />
+
+    <View
+        android:id="@+id/accountDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourAccSec" />
+
+    <!-- VALID ID SECTION (Re-anchored after removing Address) -->
+    <TextView
+        android:id="@+id/yourValidID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Valid ID"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider" />
+
+    <ImageView
+        android:id="@+id/arrowUp02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourValidID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourValidID" />
+
+    <View
+        android:id="@+id/accountDivider02"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourValidID" />
+
+    <!-- PREFERENCES SECTION -->
+    <TextView
+        android:id="@+id/yourPreferences"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:textColor="#4B91C6"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Preferences"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider02" />
+
+    <TextView
+        android:id="@+id/yourLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Language"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourPreferences" />
+
+    <ImageView
+        android:id="@+id/arrowUp03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourLanguage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourLanguage" />
+
+    <View
+        android:id="@+id/accountDivider03"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourLanguage" />
+
+    <TextView
+        android:id="@+id/yourDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Display"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider03" />
+
+    <ImageView
+        android:id="@+id/arrowUp04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourDisplay" />
+
+    <View
+        android:id="@+id/accountDivider04"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourDisplay" />
+
+    <TextView
+        android:id="@+id/yourPrivacySettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Privacy Settings"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider04" />
+
+    <ImageView
+        android:id="@+id/arrowUp05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourPrivacySettings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourPrivacySettings" />
+
+    <View
+        android:id="@+id/accountDivider05"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourPrivacySettings" />
+
+    <TextView
+        android:id="@+id/yourChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="13dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Chat Setting"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider05" />
+
+    <ImageView
+        android:id="@+id/arrowUp06"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourChat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourChat" />
+
+    <View
+        android:id="@+id/accountDivider06"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourChat" />
+
+    <TextView
+        android:id="@+id/yourNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Notification Settings"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider06" />
+
+    <ImageView
+        android:id="@+id/arrowUp07"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourNotification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourNotification" />
+
+    <TextView
+        android:id="@+id/yourSupport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="10dp"
+        android:text="Support"
+        android:textColor="#4B91C6"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins_black_ttf"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourNotification" />
+
+    <TextView
+        android:id="@+id/yourHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="10dp"
+        android:text="Help Center"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_black_ttf"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourSupport" />
+
+    <ImageView
+        android:id="@+id/arrowUp08"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourHelp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourHelp" />
+
+    <View
+        android:id="@+id/accountDivider07"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourHelp" />
+
+    <TextView
+        android:id="@+id/yourTermsCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="10dp"
+        android:text="Terms and Condition"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_black_ttf"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider07" />
+
+    <ImageView
+        android:id="@+id/arrowUp09"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourTermsCondition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourTermsCondition" />
+
+    <View
+        android:id="@+id/accountDivider08"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourTermsCondition" />
+
+    <TextView
+        android:id="@+id/yourAccDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Account Deletion"
+        android:textColor="#FF4B4B"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider08" />
+
+    <ImageView
+        android:id="@+id/arrowUp10"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/yourAccDelete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/yourAccDelete"
+        app:tint="#FF4B4B" />
+
+
+    <View
+        android:id="@+id/accountDivider09"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/divider_line"
+        app:layout_constraintTop_toBottomOf="@+id/yourAccDelete" />
+
+    <TextView
+        android:id="@+id/youAboutInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:layout_marginTop="13dp"
+        android:textSize="16sp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountDivider09" />
+
+    <ImageView
+        android:id="@+id/arrowUp11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="@id/youAboutInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/youAboutInfo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

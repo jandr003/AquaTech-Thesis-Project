@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA">
+
+    <!-- 1. PROFESSIONAL HEADER -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_gradient"
+        app:elevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="18dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:id="@+id/btnBackPerformance"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:src="@drawable/arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/tvHeaderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="TECH PERFORMANCE"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/btnBackPerformance"
+                app:layout_constraintStart_toEndOf="@id/btnBackPerformance"
+                app:layout_constraintTop_toTopOf="@id/btnBackPerformance" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExportPdf"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EXPORT PDF"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                app:icon="@drawable/ic_download"
+                app:iconTint="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="32dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- 2. TECHNICIAN PROFILE SUMMARY -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="20dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivTechAvatarPerformance"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:padding="2dp"
+                        android:src="@drawable/new_technician"
+                        app:shapeAppearanceOverlay="@style/CircleImage"
+                        app:strokeColor="#F0F0F0"
+                        app:strokeWidth="2dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvTechNamePerformance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="Jhonny Sinder"
+                            android:textColor="#333333"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/tvTechID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="ID: ASC-T001"
+                            android:textColor="#1E3A8A"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center_vertical">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/viewStatusIndicator"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                app:cardBackgroundColor="#8BC34A"
+                                app:cardCornerRadius="4dp"
+                                app:cardElevation="0dp" />
+
+                            <TextView
+                                android:id="@+id/tvTechStatusPerformance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Active Now"
+                                android:textColor="#8BC34A"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 3. STATS ROW -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp" android:gravity="center">
+                        <TextView android:id="@+id/tvCompletedCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="45" android:textColor="#8BC34A" android:textSize="20sp" android:textStyle="bold" android:fontFamily="@font/poppins_black_ttf"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Completed" android:textColor="#888888" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp" android:gravity="center">
+                        <TextView android:id="@+id/tvActiveCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2" android:textColor="#448AFF" android:textSize="20sp" android:textStyle="bold" android:fontFamily="@font/poppins_black_ttf"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ongoing" android:textColor="#888888" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp" android:gravity="center">
+                        <TextView android:id="@+id/tvRatingStat" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4.5" android:textColor="#FFB300" android:textSize="20sp" android:textStyle="bold" android:fontFamily="@font/poppins_black_ttf"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rating" android:textColor="#888888" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 4. ACTION BUTTONS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLiveTrack"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#1E3A8A"
+                    android:text="LIVE TRACK"
+                    android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/maps_and_flags__2__1"
+                    app:iconTint="#FFFFFF" />
+            </LinearLayout>
+
+            <!-- 5. VERIFIED IDENTIFICATION -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="4dp"
+                android:text="VERIFIED CREDENTIALS"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <!-- GOVERNMENT ID CARD -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="3dp">
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/ivTechIDPreview"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/img_place_holder" />
+                        <View android:layout_width="match_parent" android:layout_height="40dp"
+                            android:layout_alignParentBottom="true" android:background="@drawable/gradient_overlay_dark" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="8dp" android:fontFamily="@font/poppins"
+                            android:text="GOV ID" android:textColor="#FFFFFF" android:textSize="10sp" android:textStyle="bold" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- TECHNICAL CERTIFICATE CARD -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="3dp">
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/ivTechCertPreview"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/img_place_holder" />
+                        <View android:layout_width="match_parent" android:layout_height="40dp"
+                            android:layout_alignParentBottom="true" android:background="@drawable/gradient_overlay_dark" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="8dp" android:fontFamily="@font/poppins"
+                            android:text="CERTIFICATE" android:textColor="#FFFFFF" android:textSize="10sp" android:textStyle="bold" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- 6. RECENT HISTORY LIST -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="4dp"
+                android:text="RECENT SERVICE LOGS"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTechHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_completed_request" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

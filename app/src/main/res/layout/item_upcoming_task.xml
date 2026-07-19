@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="12dp"
+    android:clipToPadding="false">
+
+    <TextView
+        android:id="@+id/statusOpenGreen"
+        android:layout_width="23dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/status_completed_green"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="-3dp"
+        android:paddingTop="12dp"
+        android:text="26\nFEB"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/UpcomingCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/UpcomingCard" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/UpcomingCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="#F8F8F8"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/statusOpenGreen"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="12dp">
+
+            <TextView
+                android:id="@+id/tvUpcomingCustomerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:maxLines="1"
+                android:text="Customer Name"
+                android:textColor="#333333"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvUpcomingTicketId"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvUpcomingTicketId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="#ASC2026-0000"
+                android:textColor="#3EB5E8"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvUpcomingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="00:00 AM - 00:00 PM"
+                android:textColor="#555555"
+                android:textSize="10.5sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUpcomingTicketId" />
+
+            <TextView
+                android:id="@+id/tvUpcomingServiceType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="Filter Preventive, Other Parts"
+                android:textColor="#4B91C6"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tvUpcomingTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvUpcomingCustomerName" />
+
+            <TextView
+                android:id="@+id/tvUpcomingAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins"
+                android:maxLines="2"
+                android:text="Address details will appear here..."
+                android:textColor="#666666"
+                android:textSize="11.5sp"
+                app:layout_constraintEnd_toStartOf="@+id/btnAcceptUpcoming"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUpcomingServiceType" />
+
+            <TextView
+                android:id="@+id/tvUpcomingSro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="SRO-00000000"
+                android:textColor="#555555"
+                android:textSize="11.5sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUpcomingAddress" />
+
+            <ImageView
+                android:id="@+id/btnChatUpcoming"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/chat_1"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAcceptUpcoming"
+                app:layout_constraintEnd_toStartOf="@+id/btnAcceptUpcoming"
+                app:layout_constraintTop_toTopOf="@+id/btnAcceptUpcoming" />
+
+            <Button
+                android:id="@+id/btnAcceptUpcoming"
+                android:layout_width="95dp"
+                android:layout_height="44dp"
+                android:backgroundTint="#4B91C6"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="ACCEPT"
+                android:textColor="@android:color/white"
+                android:textSize="11.5sp"
+                android:textStyle="bold"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUpcomingTime"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

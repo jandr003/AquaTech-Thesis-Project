@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <dimen name="valid_id_width">287dp</dimen>
+        <dimen name="valid_id_height">158dp</dimen>
+    </resources>

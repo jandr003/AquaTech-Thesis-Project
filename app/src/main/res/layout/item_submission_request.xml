@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#F0F0F0">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Ticket ID -->
+        <TextView
+            android:id="@+id/tvSubmitTicketID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#ASC2026-0542"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#1E3A8A"
+            android:fontFamily="@font/poppins_black_ttf"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Status Badge -->
+        <TextView
+            android:id="@+id/tvSubmitStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUBMISSION"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:textColor="#4B91C6"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:background="@drawable/status_circle_green"
+            android:backgroundTint="#FFF8E1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvSubmitTicketID"
+            app:layout_constraintBottom_toBottomOf="@id/tvSubmitTicketID"/>
+
+        <!-- Technician Name -->
+        <TextView
+            android:id="@+id/tvSubmitTechName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submitted by: Technician John"
+            android:textSize="11sp"
+            android:textColor="#888888"
+            android:fontFamily="@font/poppins"
+            android:layout_marginTop="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubmitTicketID" />
+
+        <!-- Service Type -->
+        <TextView
+            android:id="@+id/tvSubmitServiceType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Service Details"
+            android:textSize="13sp"
+            android:textColor="#333333"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubmitTechName" />
+
+        <!-- Customer Name -->
+        <TextView
+            android:id="@+id/tvSubmitCustomer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Customer: Mary Dela Torre"
+            android:textSize="11sp"
+            android:textColor="#666666"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/poppins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubmitServiceType" />
+
+        <!-- ACTION BUTTONS (NO EDIT) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdminArchive"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="REJECT"
+            android:textSize="10sp"
+            app:strokeColor="#F44336"
+            android:textColor="#F44336"
+            app:cornerRadius="8dp"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSubmitCustomer" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdminApprove"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="APPROVE"
+            android:textSize="10sp"
+            android:backgroundTint="#4CAF50"
+            app:cornerRadius="8dp"
+            android:layout_marginEnd="12dp"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintEnd_toStartOf="@id/btnAdminArchive"
+            app:layout_constraintTop_toTopOf="@id/btnAdminArchive" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

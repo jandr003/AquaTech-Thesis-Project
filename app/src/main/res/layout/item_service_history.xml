@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="4dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- 1. ICON -->
+        <View
+            android:id="@+id/iconBg"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/circle_blue"
+            android:backgroundTint="#F0F7FF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivHistoryIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/maintenance_icon"
+            app:layout_constraintBottom_toBottomOf="@id/iconBg"
+            app:layout_constraintEnd_toEndOf="@id/iconBg"
+            app:layout_constraintStart_toStartOf="@id/iconBg"
+            app:layout_constraintTop_toTopOf="@id/iconBg"
+            app:tint="@color/aqua_primary" />
+
+        <!-- 2. TICKET ID -->
+        <TextView
+            android:id="@+id/tvHistoryTicketId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="#ASC2026-0146"
+            android:textColor="@color/aqua_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iconBg"
+            app:layout_constraintTop_toTopOf="@id/iconBg" />
+
+        <!-- 3. ITEMS CHOSEN -->
+        <TextView
+            android:id="@+id/tvHistoryItems"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="Installation Kit, Filter Preventive..."
+            android:textColor="#1A3C40"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tvHistoryTicketId"
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryTicketId"
+            app:layout_constraintEnd_toStartOf="@id/tvHistoryPrice" />
+
+        <!-- 4. DATE AND TIME -->
+        <TextView
+            android:id="@+id/tvHistoryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/poppins"
+            android:text="August 28 2025, 10:30 PM"
+            android:textColor="#BBBBBB"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/tvHistoryItems"
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryItems" />
+
+        <!-- 5. PRICE & STATUS (Right Side) -->
+        <TextView
+            android:id="@+id/tvHistoryPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="₱ 2,500"
+            android:textColor="#1A3C40"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvHistoryItems" />
+
+        <TextView
+            android:id="@+id/tvHistoryStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/poppins"
+            android:text="COMPLETED"
+            android:textColor="#00C1A4"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/tvHistoryPrice"
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryPrice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

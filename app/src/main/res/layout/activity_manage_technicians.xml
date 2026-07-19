@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC">
+
+    <!-- HEADER -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/manageHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="18dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="16dp"
+        android:background="@drawable/header_gradient"
+        android:elevation="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBackManage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@drawable/arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#FFFFFF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="MANAGE TECHNICIANS"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btnBackManage"
+            app:layout_constraintStart_toEndOf="@id/btnBackManage"
+            app:layout_constraintTop_toTopOf="@id/btnBackManage" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddTech"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/poppins_black_ttf"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:icon="@android:drawable/ic_input_add"
+            app:iconTint="#FFFFFF" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- TABS OR FILTERS -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutTechs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/manageHeader"
+        app:tabIndicatorColor="#1E3A8A"
+        app:tabSelectedTextColor="#1E3A8A"
+        app:tabTextColor="#64748B">
+        <com.google.android.material.tabs.TabItem android:text="Active" />
+        <com.google.android.material.tabs.TabItem android:text="Pending" />
+        <com.google.android.material.tabs.TabItem android:text="Disabled" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <!-- SEARCH -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/searchCard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:layout_constraintTop_toBottomOf="@id/tabLayoutTechs">
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchViewTechs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search by name or ID..."
+            app:queryBackground="@android:color/transparent" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- LIST -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvManageTechs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchCard"
+        tools:listitem="@layout/item_manage_tech" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA">
+
+    <!-- Header -->
+    <View
+        android:id="@+id/perfHeader"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/header_gradient"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnBackPerf"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_arrow_back_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tvPerformanceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Your Performance"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnBackPerf" />
+
+    <TextView
+        android:id="@+id/tvPerformanceSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/poppins"
+        android:text="Here’s how you’ve been doing"
+        android:textColor="#E0FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPerformanceTitle" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/perfHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Total Tasks Summary Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Tasks Completed"
+                        android:textColor="#888888"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins"/>
+
+                    <TextView
+                        android:id="@+id/tvTotalTasks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#1C4E75"
+                        android:textSize="48sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins_black_ttf"/>
+
+                    <TextView
+                        android:id="@+id/tvPerfMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Let's get started today!"
+                        android:textColor="#3EB5E8"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/poppins"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Monthly Progress Section Header -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MONTHLY STATS"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_black_ttf"/>
+            </RelativeLayout>
+
+            <!-- Month 1 -->
+            <LinearLayout
+                android:id="@+id/layoutMonth1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvMonth1Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MONTH"
+                        android:textColor="#555555"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins"/>
+                    <TextView
+                        android:id="@+id/tvMonth1Tasks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="0 tasks"
+                        android:textColor="#3EB5E8"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppins"/>
+                </RelativeLayout>
+                <ProgressBar
+                    android:id="@+id/pbMonth1"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="8dp"
+                    android:progress="0"
+                    android:progressTint="#3EB5E8"
+                    android:progressBackgroundTint="#D1EDF8"/>
+            </LinearLayout>
+
+            <!-- Month 2 -->
+            <LinearLayout
+                android:id="@+id/layoutMonth2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvMonth2Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MONTH"
+                        android:textColor="#555555"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins"/>
+                    <TextView
+                        android:id="@+id/tvMonth2Tasks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="0 tasks"
+                        android:textColor="#3EB5E8"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppins"/>
+                </RelativeLayout>
+                <ProgressBar
+                    android:id="@+id/pbMonth2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="8dp"
+                    android:progress="0"
+                    android:progressTint="#3EB5E8"
+                    android:progressBackgroundTint="#D1EDF8"/>
+            </LinearLayout>
+
+            <!-- Month 3 -->
+            <LinearLayout
+                android:id="@+id/layoutMonth3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvMonth3Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MONTH"
+                        android:textColor="#555555"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins"/>
+                    <TextView
+                        android:id="@+id/tvMonth3Tasks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="0 tasks"
+                        android:textColor="#3EB5E8"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/poppins"/>
+                </RelativeLayout>
+                <ProgressBar
+                    android:id="@+id/pbMonth3"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="8dp"
+                    android:progress="0"
+                    android:progressTint="#3EB5E8"
+                    android:progressBackgroundTint="#D1EDF8"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

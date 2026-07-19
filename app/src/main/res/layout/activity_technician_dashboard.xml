@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:openDrawer="start">
+
+    <!-- MAIN CONTENT -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <!-- TOP NOTIFICATION CONTAINER -->
+        <FrameLayout
+            android:id="@+id/notificationContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/headerBg"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
+            android:background="@drawable/header_gradient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/techProfileAvatar"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/new_technician"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/TechnicianDash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Good Day, Technician!"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/techProfileAvatar"
+            app:layout_constraintStart_toEndOf="@id/techProfileAvatar"
+            app:layout_constraintTop_toTopOf="@id/techProfileAvatar" />
+
+        <ImageView
+            android:id="@+id/notifIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="52dp"
+            android:src="@drawable/notification_icon"
+            app:layout_constraintBottom_toBottomOf="@id/techProfileAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/techProfileAvatar" />
+
+        <TextView
+            android:id="@+id/SchedService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Scheduled Service"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/techProfileAvatar"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/TechnicianCard"
+            android:layout_width="0dp"
+            android:layout_height="430dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/SchedService">
+
+            <LinearLayout
+                android:id="@+id/noTicketsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <ImageView android:layout_width="100dp" android:layout_height="100dp" android:src="@drawable/send_1" app:tint="#E0E0E0"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:fontFamily="@font/poppins_black_ttf" android:text="No assigned tasks yet" android:textColor="#BCBCBC" android:textSize="16sp"/>
+            </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/dashboardScroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:fillViewport="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mainContentLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="23dp">
+
+                    <TextView
+                        android:id="@+id/tvProgressLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:text="In Progress"
+                        android:textColor="#333333"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tvProgressCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/poppins_black_ttf"
+                        android:text="(1)"
+                        android:textColor="#333333"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBaseline_toBaselineOf="@id/tvProgressLabel"
+                        app:layout_constraintStart_toEndOf="@id/tvProgressLabel"/>
+
+                    <View
+                        android:id="@+id/underlineProgress"
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@drawable/divider_line"
+                        app:layout_constraintBottom_toBottomOf="@id/tvProgressLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tvProgressCount"
+                        app:layout_constraintTop_toTopOf="@id/tvProgressLabel"/>
+
+                    <TextView
+                        android:id="@+id/statusOpenBlue"
+                        android:layout_width="23dp"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/status_in_progress_blue"
+                        android:fontFamily="@font/poppins_black_ttf"
+                        android:gravity="top|center_horizontal"
+                        android:lineSpacingExtra="-2dp"
+                        android:paddingTop="8dp"
+                        android:text="12\nDEC"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/TechnicianReportOne"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvProgressLabel"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/TechnicianReportOne"
+                        android:layout_width="0dp"
+                        android:layout_height="124dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="48dp"
+                        android:layout_marginEnd="16dp"
+                        app:cardBackgroundColor="#F5F5F5"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvProgressLabel">
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="12dp">
+
+                            <TextView android:id="@+id/tvReportLabel" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:ellipsize="end" android:fontFamily="@font/poppins_black_ttf" android:maxLines="1" android:text="Customer Name" android:textColor="#333333" android:textSize="16sp" android:textStyle="bold" app:layout_constraintEnd_toStartOf="@+id/displayTicketID" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+                            <TextView android:id="@+id/displayTicketID" android:layout_width="wrap_content" android:layout_height="wrap_content" android:ellipsize="end" android:fontFamily="@font/poppins_black_ttf" android:singleLine="true" android:text="#ASC2026-0001" android:textColor="#3EB5E8" android:textSize="15sp" android:textStyle="bold" app:layout_constraintBaseline_toBaselineOf="@id/tvReportLabel" app:layout_constraintEnd_toEndOf="parent"/>
+
+                            <TextView
+                                android:id="@+id/tvReportSubLabel"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:fontFamily="@font/poppins_black_ttf"
+                                android:text="SERVICE TYPE"
+                                android:textColor="#4B91C6"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:maxLines="2"
+                                android:ellipsize="end"
+                                app:layout_constraintEnd_toStartOf="@+id/displayTimeRequest"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvReportLabel"/>
+
+                            <TextView android:id="@+id/displayTimeRequest" android:layout_width="wrap_content" android:layout_height="wrap_content" android:ellipsize="end" android:fontFamily="@font/poppins_black_ttf" android:singleLine="true" android:text="TIME RANGE" android:textSize="11sp" android:textStyle="bold" app:layout_constraintBaseline_toBaselineOf="@+id/tvReportSubLabel" app:layout_constraintEnd_toEndOf="parent"/>
+                            <TextView android:id="@+id/tvcustomerAddress" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:ellipsize="end" android:maxLines="2" android:text="Address Details" android:textColor="#505050" android:textSize="13sp" app:layout_constraintEnd_toStartOf="@+id/submitButton" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/tvReportSubLabel"/>
+                            <TextView android:id="@+id/customerSroNum" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/poppins_black_ttf" android:text="SRO-0000" android:textSize="12sp" android:textStyle="bold" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/tvcustomerAddress"/>
+                            <Button android:id="@+id/submitButton" android:layout_width="wrap_content" android:layout_height="45dp" android:layout_marginBottom="4dp" android:backgroundTint="#4B91C6" android:fontFamily="@font/poppins_black_ttf" android:text="TRACK" android:textColor="@android:color/white" android:textSize="11sp" android:textStyle="bold" app:cornerRadius="8dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/tvUpcomingLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Upcoming"
+                        android:textColor="#333333"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/TechnicianReportOne"/>
+
+                    <TextView
+                        android:id="@+id/tvUpcomingLabelCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:fontFamily="@font/poppins_black_ttf"
+                        android:text="(0)"
+                        android:textColor="#333333"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/tvUpcomingLabel"
+                        app:layout_constraintStart_toEndOf="@+id/tvUpcomingLabel"/>
+
+                    <View
+                        android:id="@+id/UpcomingProgress"
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="24dp"
+                        android:background="@drawable/divider_line"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvUpcomingLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tvUpcomingLabelCount"
+                        app:layout_constraintTop_toTopOf="@+id/tvUpcomingLabel"/>
+
+                    <!-- RecyclerView for dynamic Upcoming tasks -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvUpcomingTasks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintTop_toBottomOf="@id/tvUpcomingLabel"
+                        tools:listitem="@layout/item_upcoming_task" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/MessagesContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Messages"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TechnicianCard"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/MessagesContainerCard"
+            android:layout_width="0dp"
+            android:layout_height="240dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/MessagesContent">
+
+            <!-- 🔑 DYNAMIC MESSAGE LIST (RecyclerView) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMessageThreads"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_chat_thread" />
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/settingIcon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/settingicon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        app:headerLayout="@layout/nav_header_admin"
+        app:menu="@menu/admin_drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WaterDropFillAnimationActivity">
+
+    <com.example.aquatech.WaterDropView
+        android:id="@+id/waterWaveView"
+        android:layout_width="205dp"
+        android:layout_height="205dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circularProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="0"
+        app:indicatorColor="@android:color/holo_blue_light"
+        app:indicatorSize="315dp"
+        app:trackThickness="23dp"
+        app:trackColor="@android:color/transparent"
+        app:indicatorDirectionCircular="clockwise"
+        app:layout_constraintBottom_toBottomOf="@id/waterWaveView"
+        app:layout_constraintEnd_toEndOf="@id/waterWaveView"
+        app:layout_constraintStart_toStartOf="@id/waterWaveView"
+        app:layout_constraintTop_toTopOf="@id/waterWaveView" />
+
+
+
+    <ImageView
+        android:id="@+id/ivCheckIcon"
+        android:layout_width="264dp"
+        android:layout_height="264dp"
+        android:alpha="0"
+        android:visibility="gone"
+        android:src="@drawable/ic_check_on"
+        app:layout_constraintBottom_toBottomOf="@id/waterWaveView"
+        app:layout_constraintEnd_toEndOf="@id/waterWaveView"
+        app:layout_constraintStart_toStartOf="@id/waterWaveView"
+        app:layout_constraintTop_toTopOf="@id/waterWaveView" />
+
+    <TextView
+        android:id="@+id/tv_to_be_continued"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hang tight, we’re on it!"
+        android:textColor="#1C4E75"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/circularProgress"
+        android:layout_marginTop="32dp"
+        app:layout_constraintVertical_bias="0.6" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/aqua_background"
+        android:contentDescription="@string/background_color" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wave_curve_request" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ExtraText">
+
+        <ImageView
+            android:id="@+id/customerProfile"
+            android:layout_width="33dp"
+            android:layout_height="30dp"
+            android:src="@drawable/man_user_circle_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.042"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.055" />
+
+        <ImageView
+            android:id="@+id/btnDownload"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Download Request"
+            android:focusable="true"
+            android:src="@drawable/ic_download"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.945"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.056" />
+
+        <TextView
+            android:id="@+id/ServiceReqSent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="SERVICE REQUEST FORM"
+            android:textColor="#7D7D7D"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/serviceCard"
+            android:layout_width="340dp"
+            android:layout_height="535dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp">
+
+                <ImageView
+                    android:id="@+id/AquaTechHeader"
+                    android:layout_width="200dp"
+                    android:layout_height="61dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/the_asc_logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/RequestSuccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Succesfully Requested Service Form"
+                    android:textColor="#7D7D7D"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/AquaTechHeader" />
+
+                <TextView
+                    android:id="@+id/timeDateReq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="SEPTEMBER 15, 2025"
+                    android:textColor="#7D7D7D"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/RequestSuccess" />
+
+                <ImageView
+                    android:id="@+id/AquaUnderline"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/underline_blue"
+                    app:layout_constraintTop_toBottomOf="@id/timeDateReq" />
+
+                <ScrollView
+                    android:id="@+id/successContentScroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="3dp"
+                    android:fadeScrollbars="false"
+                    android:scrollbars="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/AquaUnderline">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/labelTicketID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="TICKET ID"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/displayTicketID"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text="#ASC2026-0001"
+                            android:textColor="#3EB5E8"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBaseline_toBaselineOf="@id/labelTicketID"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/labelTicketID" />
+
+                        <TextView
+                            android:id="@+id/labelCustomerName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="CUSTOMER NAME"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/labelTicketID" />
+
+                        <TextView
+                            android:id="@+id/displayCustomerName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text="Mary Dela Torre"
+                            android:textColor="#7D7D7D"
+                            android:textSize="16sp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/labelCustomerName"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/labelCustomerName" />
+
+                        <TextView
+                            android:id="@+id/labelContactNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="CONTACT NUMBER"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/displayCustomerName" />
+
+                        <TextView
+                            android:id="@+id/displayContactNumber"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text="+639603220273"
+                            android:textColor="#7D7D7D"
+                            android:textSize="16sp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/labelContactNumber"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/labelContactNumber" />
+
+                        <TextView
+                            android:id="@+id/labelAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="ADDRESS"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/displayAddress" />
+
+                        <TextView
+                            android:id="@+id/displayAddress"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text="ADDRESS HERE"
+                            android:textColor="#7D7D7D"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/labelAddress"
+                            app:layout_constraintTop_toBottomOf="@id/displayContactNumber" />
+
+                        <TextView
+                            android:id="@+id/labelRefNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="REFERENCE NO."
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/displayAddress" />
+
+                        <TextView
+                            android:id="@+id/displayRefNo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text="REF NO"
+                            android:textColor="#7D7D7D"
+                            android:textSize="16sp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/labelRefNo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/labelRefNo" />
+
+                        <TextView
+                            android:id="@+id/labelUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="UNIT"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/displayRefNo" />
+
+                        <TextView
+                            android:id="@+id/displayUnit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text="UNIT MODEL"
+                            android:textColor="#7D7D7D"
+                            android:textSize="16sp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/labelUnit"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/labelUnit" />
+
+                        <TextView
+                            android:id="@+id/labelValidID"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="Customer Valid ID (optional)"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/displayValidIDStatus"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/displayUnit" />
+
+                        <TextView
+                            android:id="@+id/displayValidIDStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="#FF5252"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBaseline_toBaselineOf="@id/labelValidID"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardValidID"
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:layout_marginTop="8dp"
+                            android:visibility="gone"
+                            app:cardBackgroundColor="#F5F5F5"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintTop_toBottomOf="@id/labelValidID">
+
+                            <ImageView
+                                android:id="@+id/ivValidID"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter" />
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:id="@+id/labelRemarks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="REMARKS"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cardValidID" />
+
+                        <TextView
+                            android:id="@+id/displayRemarks"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text="N/A"
+                            android:textColor="#7D7D7D"
+                            android:textSize="14sp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/labelRemarks"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/labelRemarks" />
+
+                        <View
+                            android:id="@+id/summaryDivider"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20dp"
+                            android:background="#E0E0E0"
+                            app:layout_constraintTop_toBottomOf="@id/displayRemarks" />
+
+                        <TextView
+                            android:id="@+id/labelOrdersHeader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="ORDERS"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/summaryDivider" />
+
+                        <LinearLayout
+                            android:id="@+id/ordersListContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="vertical"
+                            app:layout_constraintTop_toBottomOf="@id/labelOrdersHeader" />
+
+                        <View
+                            android:id="@+id/totalDivider"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20dp"
+                            android:background="#D3D3D3"
+                            app:layout_constraintTop_toBottomOf="@id/ordersListContainer" />
+
+                        <TextView
+                            android:id="@+id/labelTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="TOTAL"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/displayTotalAmount" />
+
+                        <TextView
+                            android:id="@+id/displayTotalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="₱ 0.00"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/totalDivider" />
+
+                        <TextView
+                            android:id="@+id/displayStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/status_open_blue"
+                            android:fontFamily="@font/poppins"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="4dp"
+                            android:text="OPEN"
+                            android:textColor="@android:color/white"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/displayTotalAmount" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </ScrollView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ReturnDashBoard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#3EB5E8"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="RETURN TO CUSTOMER DASHBOARD"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.939" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

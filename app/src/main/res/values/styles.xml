@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Rounded corner shape -->
+    <style name="TimePickerRoundedCorners" parent="ShapeAppearance.Material3.Corner.None">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <!-- Custom time picker style -->
+    <style name="CustomTimePicker" parent="ThemeOverlay.Material3.MaterialTimePicker">
+        <item name="colorPrimary">@color/aqua_cicle</item>
+        <item name="colorSecondary">@color/primaryBlue</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="colorSurface">@color/aqua_background</item>
+        <item name="colorOnSurface">@color/aqua_text_dark</item>
+    </style>
+
+    <!-- Shape for circular images -->
+    <style name="CircleImage" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>

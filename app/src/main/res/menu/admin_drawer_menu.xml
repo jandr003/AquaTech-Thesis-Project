@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_admin_panel"
+            android:icon="@android:drawable/ic_lock_lock"
+            android:title="Proceed as Admin"
+            android:visible="false" /> <!-- FORCE HIDDEN BY DEFAULT -->
+
+        <item
+            android:id="@+id/nav_tech_profile"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="Technician Profile" />
+
+        <item
+            android:id="@+id/nav_performance"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="Work Performance" />
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="Help &amp; Support" />
+    </group>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/exit"
+        android:title="Logout" />
+</menu>

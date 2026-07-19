@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/aqua_background">
+
+    <!-- HEADER AREA (Clean & Focused) -->
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#373737" />
+
+    <TextView
+        android:id="@+id/tvHeaderTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="AquaTech Unit"
+        android:textColor="#373737"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.559"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnBack"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvSelectLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Select a Unit"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeaderTitle" />
+
+
+    <!-- WL CUBE CARD (HIDDEN BY DEFAULT) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/blueCard01"
+        android:layout_width="374dp"
+        android:layout_height="202dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:cardBackgroundColor="#68A4D2"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectLabel">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/imgDispenser01"
+                android:layout_width="131dp"
+                android:layout_height="149dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="Water Dispenser Image"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/titled_design1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/customerUnit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_black_ttf"
+                tools:text="WL Cube Firewall Water Purifier"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgDispenser01"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/CustomerUnitName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="Unit Name"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/customerUnit"
+                app:layout_constraintTop_toBottomOf="@+id/customerUnit" />
+
+            <TextView
+                android:id="@+id/CustomerUnitSerial"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                tools:text="F-FXCU1-M-HCA-TT-**-***"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/customerUnit"
+                app:layout_constraintTop_toBottomOf="@+id/CustomerUnitName" />
+
+            <TextView
+                android:id="@+id/CustomerUnitSerialNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="Unit Serial No."
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/customerUnit"
+                app:layout_constraintTop_toBottomOf="@+id/CustomerUnitSerial" />
+
+            <TextView
+                android:id="@+id/CustomerUnitPurchase"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                tools:text="Monthly Subscription"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/customerUnit"
+                app:layout_constraintTop_toBottomOf="@+id/CustomerUnitSerialNum" />
+
+            <TextView
+                android:id="@+id/CustomerTypePurchase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="Type of Purchase"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/customerUnit"
+                app:layout_constraintTop_toBottomOf="@+id/CustomerUnitPurchase" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- SMART SLIM CARD (HIDDEN BY DEFAULT) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/blueCard02"
+        android:layout_width="374dp"
+        android:layout_height="202dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:cardBackgroundColor="#68A4D2"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blueCard01">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/imgDispenser02"
+                    android:layout_width="131dp"
+                    android:layout_height="149dp"
+                    tools:src="@drawable/titled_design2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/CustomerUnit01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    tools:text="Smart Slim"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/imgDispenser02"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/CustomerUnitName01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Unit Name"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/CustomerUnit01"
+                    app:layout_constraintTop_toBottomOf="@+id/CustomerUnit01" />
+
+                <TextView
+                    android:id="@+id/CustomerUnitSerial01"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    tools:text="F-FXCU1-M-HCA-AA-**-***"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/CustomerUnit01"
+                    app:layout_constraintTop_toBottomOf="@+id/CustomerUnitName01" />
+
+                <TextView
+                    android:id="@+id/CustomerUnitSerialNum01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Unit Serial No."
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/CustomerUnit01"
+                    app:layout_constraintTop_toBottomOf="@+id/CustomerUnitSerial01" />
+
+                <TextView
+                    android:id="@+id/CustomerUnitPurchase01"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    tools:text="Owned"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/CustomerUnit01"
+                    app:layout_constraintTop_toBottomOf="@+id/CustomerUnitSerialNum01" />
+
+                <TextView
+                    android:id="@+id/CustomerTypePurchase01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Type of Purchase"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/CustomerUnit01"
+                    app:layout_constraintTop_toBottomOf="@+id/CustomerUnitPurchase01" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    <!-- PLUS ICON / ADD NEW UNIT -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/blueCard03"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="#DCECF9"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blueCard02">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/PlusIcon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/plus_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- NO UNITS PLACEHOLDER -->
+    <TextView
+        android:id="@+id/tvNoUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="No units added yet. Tap + to add one."
+        android:textColor="#888888"
+        android:textSize="14sp"
+        android:visibility="visible"
+        tools:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blueCard03" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

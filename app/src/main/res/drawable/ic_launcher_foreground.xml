@@ -1,0 +1,6 @@
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/asc_logo_hd_vector"
+    android:insetLeft="23dp"
+    android:insetRight="23dp"
+    android:insetTop="26dp"
+    android:insetBottom="26dp" />

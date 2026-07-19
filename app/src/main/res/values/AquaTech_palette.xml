@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="statusBarBlue">#00000000</color>
+    <color name="statusBarOverlayDark">#66000000</color>
+
+    <color name="aqua_primary">#1C4E75</color>
+    <color name="aqua_background">#F6FBFF</color>
+    <color name="aqua_secondary">#55ACD8</color>
+    <color name="aqua_text_dark">#1A1A1A</color>
+    <color name="aqua_text_light">#33000000</color>
+    <color name="aqua_card">#F8F8F8</color>
+    <color name="aqua_cicle">#4B91C6</color>
+    <color name="primaryBlue">#3EB5E8</color>
+    <color name="aquatech_blue">#1C4E75</color>
+
+
+
+</resources>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivTechAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/new_technician"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImage" />
+
+        <TextView
+            android:id="@+id/tvTechName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Technician John"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvTicketID"
+            app:layout_constraintStart_toEndOf="@id/ivTechAvatar"
+            app:layout_constraintTop_toTopOf="@id/ivTechAvatar" />
+
+        <TextView
+            android:id="@+id/tvTicketID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="ASC2026-0014"
+            android:textColor="#3EB5E8"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvServiceType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/poppins"
+            android:text="Filter Preventive and Installation"
+            android:textColor="#666666"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvTechName"
+            app:layout_constraintTop_toBottomOf="@id/tvTechName" />
+
+        <TextView
+            android:id="@+id/tvServiceTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/poppins"
+            android:text="Service Time: 10:00 to 11:00 am"
+            android:textColor="#888888"
+            android:textStyle="bold"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvTechName"
+            app:layout_constraintTop_toBottomOf="@id/tvServiceType" />
+
+        <LinearLayout
+            android:id="@+id/locationContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="top"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvTechName"
+            app:layout_constraintTop_toBottomOf="@id/tvServiceTime">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/maps_and_flags__2__1"
+                app:tint="#4B91C6" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins"
+                android:text="UNIT 201 MCKINLEY HILL, BGC TAGUIG"
+                android:textColor="#888888"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvLiveStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/poppins"
+            android:text="On the way to customer location (10 mins away)"
+            android:textColor="#8BC34A"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/badgeStatus"
+            app:layout_constraintStart_toStartOf="@id/tvTechName"
+            app:layout_constraintTop_toBottomOf="@id/locationContainer" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTrackOnMap"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="4dp"
+            android:padding="0dp"
+            android:text="TRACK LIVE"
+            android:textAllCaps="false"
+            android:textColor="#448AFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:icon="@android:drawable/ic_menu_compass"
+            app:iconPadding="4dp"
+            app:iconSize="16dp"
+            app:iconTint="#448AFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvTechName"
+            app:layout_constraintTop_toBottomOf="@id/tvLiveStatus" />
+
+        <TextView
+            android:id="@+id/badgeStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/status_in_progress_blue"
+            android:fontFamily="@font/poppins"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:text="EN ROUTE"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

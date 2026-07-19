@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/popup_background"
+    android:elevation="8dp"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvResubmitMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Report Rejected"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btnDismiss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dismiss"
+            android:backgroundTint="@color/aqua_text_light"/>
+
+        <Button
+            android:id="@+id/btnOpenReport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open"
+            android:backgroundTint="@color/aqua_secondary"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

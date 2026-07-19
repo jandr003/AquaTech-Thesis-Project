@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground"
+    android:padding="12dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/techStatusIndicator"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="6dp"
+        app:cardBackgroundColor="#AAAAAA"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp" />
+
+    <TextView
+        android:id="@+id/tvTechName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/techStatusIndicator"
+        android:layout_marginStart="12dp"
+        android:text="Technician Name"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:textColor="#333333"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tvTechRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="0.0 / 5.0"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:textColor="#FFB300"
+        android:textSize="14sp" />
+
+    <ProgressBar
+        android:id="@+id/pbTechRating"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_below="@id/tvTechName"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/techStatusIndicator"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="80dp"
+        android:progress="0"
+        android:max="50"
+        android:progressTint="#FFB300"
+        android:progressBackgroundTint="#F0F0F0"/>
+
+</RelativeLayout>

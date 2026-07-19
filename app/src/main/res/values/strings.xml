@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">AquaTech</string>
+    <string name="select_user_type">Select User Type</string>
+    <string name="technician">Technician</string>
+    <string name="customer">Customer</string>
+    <string name="ok">OK</string>
+    <string name="technician_icon_desc">Technician icon</string>
+    <string name="customer_icon_desc">Customer icon</string>
+    <string name="selected">Selected</string>
+    <string name="services">SERVICES</string>
+    <string name="service_request_form">SERVICE REQUEST FORM</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="background_color">Background Color</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
+    <string name="zero">0</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="submit_now">Submit Now!</string>
+    <string-array name="purchase_type_options">
+        <item>SUBSCRIPTION</item>
+        <item>OUTRIGHT</item>
+    </string-array>
+
+    <!-- Technician List for Admin Dashboard -->
+    <string-array name="technician_names">
+        <item>John</item>
+        <item>Jhonny Sinder</item>
+        <item>Ricky Arcilla</item>
+        <item>Ruel Trinidad</item>
+        <item>Glenda Delantar</item>
+        <item>Jerry Duena</item>
+        <item>Jonnifer Iglesias</item>
+        <item>Marlon Salvador</item>
+        <item>Selvino Magora Jr.</item>
+    </string-array>
+
+    <!-- Notification Messages -->
+    <string name="notif_completed_full_msg"><b>Technician</b> has completed your request <b>tap</b> to rate your technician.</string>
+    <string name="notif_assigned_msg"><b>Technician</b> has been assigned to you.</string>
+    <string name="notif_approved_msg"><b>Service Request Form</b> has been approved.</string>
+    <string name="notif_message_msg"><b>Technician</b> sent you a message.</string>
+    <string name="notif_buddy_msg"><b>AquaBuddy</b> sent you a message.</string>
+
+    <!-- Terms of Use -->
+    <string name="terms_intro">These Terms of Use govern your access to and use of the <b>AquaTech</b> mobile application, operated by Aqua Smartguard Corp. By downloading or using the App, you agree to these terms.</string>
+    <string name="terms_s1_title">1. App Purpose and License</string>
+    <string name="terms_s1_body"><b>AquaTech</b> is a service platform designed to connect Customers with Technicians for unit maintenance. We grant you a personal, non-transferable license to use the App for managing your service requests.</string>
+    <string name="terms_s2_title">2. User Data and Privacy</string>
+    <string name="terms_s2_body">To provide tracking and service matching, the App requires access to your location and contact information. Your data is protected and used only for service fulfillment and App improvements as stated in our Privacy Policy.</string>
+    <string name="terms_s3_title">3. NO ONLINE PAYMENTS</string>
+    <string name="terms_s3_body">IMPORTANT: <b>AquaTech</b> does NOT process or facilitate payments within the application. All service fees must be paid directly to the assigned Technician via Cash-on-Delivery (COD). A digital receipt will be issued and can be downloaded via <b>AquaBuddy</b> or through your notifications. For service verification, a photo of the unit with the customer may be taken upon completion.</string>
+    <string name="terms_s4_title">4. Technician Tracking</string>
+    <string name="terms_s4_body">Real-time tracking is provided for your convenience to estimate technician arrival. <b>AquaTech</b> does not guarantee the 100% accuracy of GPS data due to environmental or network factors.</string>
+    <string name="terms_s5_title">5. Limitation of Liability</string>
+    <string name="terms_s5_body"><b>AquaTech</b> acts as a facilitator. We are not responsible for the direct conduct or quality of work performed by independent technicians. Users are encouraged to provide feedback via the AquaBuddy chat or Support Hotline.</string>
+    <string name="terms_s6_title">6. Account Security</string>
+    <string name="terms_s6_body">You are responsible for maintaining the security of your account password. Any action taken through your account is considered your responsibility.</string>
+    <string name="terms_s7_title">7. Contact Support</string>
+    <string name="terms_s7_body">For concerns regarding your service or the App, please contact us at (02) 8928 2782.</string>
+
+    <!-- About AquaTech Section -->
+    <string name="about_app_story"><b>AquaTech</b> is a dedicated service platform envisioned and developed by two interns to address and resolve core operational challenges at <b>Aqua Smartguard Corp</b>. By digitizing technician coordination and unit care, this app serves as the primary tool in fulfilling our commitment to excellent service.</string>
+
+    <string name="about_mission_text">Water is the most important substance we consume. But rather than a source of health and hydration, water in the Philippines today is a source of inconvenience at best, and danger and pollution at worst.\n\nWe are on a mission to make a water revolution in the Philippines—providing access for every individual, home, and business to an unlimited supply of the world’s safest clean water, guaranteed.\n\nTogether with our mother company, <b>Waterlogic</b>, and their decades of experience delivering highly-certified, great-tasting water in a safe and environmentally-responsible way, we will transform drinking water into a trusted, clean and sustainably abundant resource for all Filipinos.\n\n<b>Waterlogic</b> provides the world’s purest and safest water to over 50 million households and offices in more than 70 countries. The Water Revolution has now arrived in the Philippines.</string>
+
+    <string name="about_footer_credits">Developed by Two Intern Developers (2026)</string>
+</resources>
