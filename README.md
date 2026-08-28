@@ -1,6 +1,7 @@
 # AquaTech - Aqua Smartguard Corp
 
-AquaTech is the official comprehensive Android application for **Aqua Smartguard Corp**, based in **Makati City**. It is designed to streamline water-related service management, connecting customers with skilled technicians. The platform integrates real-time tracking, AI-powered assistance, and seamless communication to enhance the service experience.
+**AquaTech** is an Android application developed for **Aqua Smartguard Corp.**, a water safety service company based in **Makati City**. The application was designed to support the company’s service operations by providing a digital platform for managing customer requests, technician assignments, service updates, and reports. It also allows customers and technicians to communicate and access relevant service information through the application, helping make the overall service process more organized and efficient.
+
 
 ## 🚀 Key Features
 
