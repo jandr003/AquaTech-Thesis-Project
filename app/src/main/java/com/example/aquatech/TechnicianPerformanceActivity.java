@@ -111,7 +111,6 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
     private void setupFirebase() {
         requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
 
-        // 📍 Listen to ServiceRequests in real-time
         requestsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -174,8 +173,7 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
 
                 tvCompleted.setText(String.valueOf(completed));
                 tvOngoing.setText(String.valueOf(ongoing));
-                
-                // 📍 REAL-TIME CALCULATION: 0.0 default if no ratings
+
                 float avgRating = ratingCount > 0 ? totalRating / ratingCount : 0.0f; 
                 tvRating.setText(String.format(Locale.US, "%.1f", avgRating));
 

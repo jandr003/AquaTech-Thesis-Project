@@ -37,7 +37,6 @@
                 android:textColor="#888888"
                 android:textSize="12sp" />
 
-            <!-- ID SECTION -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

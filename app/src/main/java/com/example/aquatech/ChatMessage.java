@@ -6,10 +6,8 @@ public class ChatMessage {
     private long timestamp;
     private boolean isSystem;
 
-    // 🔙 ibinalik ang isUser para hindi masira ang existing code
     private boolean isUser;
 
-    // File fields
     private boolean isFile;
     private String fileName;
     private String fileSize;
@@ -23,16 +21,13 @@ public class ChatMessage {
         // Required for Firebase
     }
 
-    // Constructor for text messages (with senderId)
     public ChatMessage(String text, String senderId, boolean isSystem) {
         this.text = text;
         this.senderId = senderId;
         this.isSystem = isSystem;
         this.timestamp = System.currentTimeMillis();
-        // hindi na namin i-set ang isUser dito – iaasa na lang sa setter
     }
 
-    // Constructor for AquaBuddy (backward compatibility)
     public ChatMessage(String text, boolean isUser, boolean isSystem) {
         this.text = text;
         this.isUser = isUser;
@@ -41,7 +36,6 @@ public class ChatMessage {
         this.timestamp = System.currentTimeMillis();
     }
 
-    // Constructor for file messages (with senderId)
     public ChatMessage(String text, String fileName, String fileSize, String fileUrl, String senderId) {
         this.text = text;
         this.fileName = fileName;
@@ -52,7 +46,6 @@ public class ChatMessage {
         this.timestamp = System.currentTimeMillis();
     }
 
-    // Constructor for file messages (without senderId) – for backward compatibility
     public ChatMessage(String text, String fileName, String fileSize, String fileUrl) {
         this.text = text;
         this.fileName = fileName;
@@ -63,7 +56,6 @@ public class ChatMessage {
         this.timestamp = System.currentTimeMillis();
     }
 
-    // Getters and Setters
     public String getText() { return text; }
     public void setText(String text) { this.text = text; }
 
@@ -76,7 +68,6 @@ public class ChatMessage {
     public boolean isSystem() { return isSystem; }
     public void setSystem(boolean system) { isSystem = system; }
 
-    // 🔙 ibinalik ang isUser
     public boolean isUser() { return isUser; }
     public void setUser(boolean user) { isUser = user; }
 

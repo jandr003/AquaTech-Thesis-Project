@@ -32,21 +32,18 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TechnicianModel tech = techList.get(position);
         holder.tvTechName.setText(tech.fullName != null ? tech.fullName : "Unknown Tech");
-        
-        // 📍 REMOVED " / 5.0" - Now showing only the score (e.g., 5.6, 6.1)
         holder.tvTechRating.setText(String.format(Locale.getDefault(), "%.1f", tech.rating));
-        
-        // 📍 PROGRESS BAR: Max is 50 (for 5.0 precision)
+
         int progressValue = (int)(tech.rating * 10);
         holder.pbTechRating.setProgress(progressValue);
 
         // Status Indicator based on accountStatus
         if ("active".equalsIgnoreCase(tech.accountStatus)) {
-            holder.statusIndicator.setCardBackgroundColor(0xFF8BC34A); // Green
+            holder.statusIndicator.setCardBackgroundColor(0xFF8BC34A);
         } else if ("pending".equalsIgnoreCase(tech.accountStatus)) {
-            holder.statusIndicator.setCardBackgroundColor(0xFFFFA000); // Orange/Amber
+            holder.statusIndicator.setCardBackgroundColor(0xFFFFA000);
         } else {
-            holder.statusIndicator.setCardBackgroundColor(0xFFAAAAAA); // Gray (Offline/Disabled)
+            holder.statusIndicator.setCardBackgroundColor(0xFFAAAAAA);
         }
 
         holder.itemView.setOnClickListener(v -> {

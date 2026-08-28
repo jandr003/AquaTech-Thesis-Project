@@ -105,13 +105,11 @@ public class ChatSettingsActivity extends AppCompatActivity {
         RadioGroup rgLanguages = dialog.findViewById(R.id.rgLanguages);
         Button btnSave = dialog.findViewById(R.id.btnSaveLanguage);
 
-        // I-set ang current selection base sa naka-save
         String current = tvCurrentLanguage.getText().toString();
         if (current.equals("Tagalog")) rgLanguages.check(R.id.rbTagalog);
         else if (current.equals("English")) rgLanguages.check(R.id.rbEnglish);
         else rgLanguages.check(R.id.rbTaglish);
 
-        // Save Button Listener
         btnSave.setOnClickListener(v -> {
             int selectedId = rgLanguages.getCheckedRadioButtonId();
             String lang = "Taglish";

@@ -3,9 +3,9 @@ package com.example.aquatech;
 public class HistoryItem {
     private String ticketId;
     private String date;
-    private String itemsSummary; // Halimbawa: "Installation Kit, Filter Preventive"
-    private String totalPrice;   // Halimbawa: "₱ 3,350"
-    private String status;       // COMPLETED
+    private String itemsSummary;
+    private String totalPrice;
+    private String status;
 
     public HistoryItem(String ticketId, String date, String itemsSummary, String totalPrice, String status) {
         this.ticketId = ticketId;

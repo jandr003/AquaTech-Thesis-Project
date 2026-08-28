@@ -152,19 +152,15 @@ public class TechnicianPerformanceListActivity extends AppCompatActivity {
                 tech.accountStatus = "offline";
             }
 
-            // 📍 CALCULATION LOGIC: Scale to 7.0 Performance Rating
-            // Quality (0-5 stars)
             float avgStars = ratingCounts.containsKey(nameKey) ? 
                             totalRatings.get(nameKey) / ratingCounts.get(nameKey) : 0;
             
-            // Productivity (0-5 score, where 7 tasks = 5.0)
+
             int completed = completedCounts.getOrDefault(nameKey, 0);
             float productivity = Math.min((completed / 7.0f) * 5.0f, 5.0f);
 
-            // Final Rating = (Quality + Productivity) * 0.7 => Max 10 * 0.7 = 7.0
             if (completed > 0) {
                 float baseScore = (avgStars == 0) ? productivity : (avgStars + productivity) / 2.0f;
-                // Scale 5.0 base to 7.0 max
                 tech.rating = baseScore * 1.4f;
             } else {
                 tech.rating = 0.0f;
@@ -173,7 +169,6 @@ public class TechnicianPerformanceListActivity extends AppCompatActivity {
             techList.add(tech);
         }
 
-        // 📍 SORTING: Highest performance at the top
         Collections.sort(techList, (t1, t2) -> Float.compare(t2.rating, t1.rating));
 
         filter("");

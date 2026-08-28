@@ -38,15 +38,11 @@ public class DotAnimationHelper {
     }
 
     public void startMaintenanceAnimation(View icon) {
-        // 1. PREMIUM SLOW ROTATION (4 seconds per 360 cycle)
-        // Ginagamit ang LinearInterpolator para walang "hinto" sa bawat ikot
         rotateAnim = ObjectAnimator.ofFloat(icon, "rotation", 0f, 360f);
         rotateAnim.setDuration(4000); 
         rotateAnim.setInterpolator(new LinearInterpolator()); 
         rotateAnim.setRepeatCount(ValueAnimator.INFINITE);
 
-        // 2. SMOOTH BREATHING SCALE (3 seconds pulse)
-        // Ginagamit ang AccelerateDecelerate para "swabe" ang pag-zoom in at out
         scaleAnim = ObjectAnimator.ofPropertyValuesHolder(
                 icon,
                 PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.08f),

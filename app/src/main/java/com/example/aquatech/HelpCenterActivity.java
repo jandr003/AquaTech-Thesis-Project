@@ -48,21 +48,18 @@ public class HelpCenterActivity extends AppCompatActivity {
         etSearch = findViewById(R.id.etSearchHelp);
         faqCard = findViewById(R.id.faqCard);
         tvPopularTitle = findViewById(R.id.tvPopularTopics);
-        
-        // FAQ Containers
+
         faq1 = findViewById(R.id.layoutFaq1);
         faq2 = findViewById(R.id.layoutFaq2);
         faq3 = findViewById(R.id.layoutFaq3);
         faq4 = findViewById(R.id.layoutFaq4);
         faq5 = findViewById(R.id.layoutFaq5);
-        
-        // Dividers
+
         div1 = findViewById(R.id.divider1);
         div2 = findViewById(R.id.divider2);
         div3 = findViewById(R.id.divider3);
         div4 = findViewById(R.id.divider4);
-        
-        // Questions (para sa filtering)
+
         tvQ1 = findViewById(R.id.tvQuestion1);
         tvQ2 = findViewById(R.id.tvQuestion2);
         tvQ3 = findViewById(R.id.tvQuestion3);

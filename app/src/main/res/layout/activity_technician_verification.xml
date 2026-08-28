@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F6FBFF">
 
-    <!-- HEADER -->
+
     <View
         android:id="@+id/headerBg"
         android:layout_width="match_parent"
@@ -52,7 +52,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- STATUS CARD (UPGRADED SHADOW) -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,14 +93,12 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- UPLOAD SECTION (for hiding when verified/reviewing) -->
             <LinearLayout
                 android:id="@+id/uploadSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- REQUIREMENT 1: VALID ID -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,7 +152,6 @@
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
-                <!-- REQUIREMENT 2: CERTIFICATE OR COMPANY ID -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -209,7 +205,7 @@
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
-            </LinearLayout> <!-- end of uploadSection -->
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSubmitVerification"

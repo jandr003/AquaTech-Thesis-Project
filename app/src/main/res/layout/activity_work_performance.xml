@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
-    <!-- Header -->
     <View
         android:id="@+id/perfHeader"
         android:layout_width="match_parent"
@@ -68,7 +67,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Total Tasks Summary Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +113,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Monthly Progress Section Header -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,7 +128,6 @@
                     android:fontFamily="@font/poppins_black_ttf"/>
             </RelativeLayout>
 
-            <!-- Month 1 -->
             <LinearLayout
                 android:id="@+id/layoutMonth1"
                 android:layout_width="match_parent"
@@ -172,7 +168,6 @@
                     android:progressBackgroundTint="#D1EDF8"/>
             </LinearLayout>
 
-            <!-- Month 2 -->
             <LinearLayout
                 android:id="@+id/layoutMonth2"
                 android:layout_width="match_parent"
@@ -213,7 +208,6 @@
                     android:progressBackgroundTint="#D1EDF8"/>
             </LinearLayout>
 
-            <!-- Month 3 -->
             <LinearLayout
                 android:id="@+id/layoutMonth3"
                 android:layout_width="match_parent"

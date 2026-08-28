@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
-        <!-- AquaTech Logo Header -->
         <ImageView
             android:id="@+id/ivLogoHeader"
             android:layout_width="120dp"
@@ -50,7 +49,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-        <!-- Language Selection Group -->
         <RadioGroup
             android:id="@+id/rgLanguages"
             android:layout_width="match_parent"

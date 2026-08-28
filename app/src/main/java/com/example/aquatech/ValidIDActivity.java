@@ -29,9 +29,6 @@ public class ValidIDActivity extends AppCompatActivity {
         setupStatusBar();
         initializeViews();
         setupClickListeners();
-
-        // HALIMBAWA: Dito mo tatawagin yung data galing Firebase
-        // Status pwedeng: "none", "pending", or "verified"
         updateUI("none"); 
     }
 
@@ -57,14 +54,10 @@ public class ValidIDActivity extends AppCompatActivity {
 
         btnUpdateId.setOnClickListener(v -> {
             Toast.makeText(this, "Opening Gallery/Camera...", Toast.LENGTH_SHORT).show();
-            // Pagkatapos mag-upload, pwede mong tawagin ang updateUI("pending");
+            // Pagkatapos
         });
     }
 
-    /**
-     * Binabago ang itsura ng screen depende sa status
-     * @param status - "none", "pending", "verified"
-     */
     private void updateUI(String status) {
         switch (status) {
             case "none":

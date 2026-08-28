@@ -248,7 +248,6 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
         verificationData.put("certUrl", certDownloadUrl);
         verificationData.put("submittedAt", System.currentTimeMillis());
 
-        // Update BOTH nodes to ensure Admin sees it in Manage Technicians
         Map<String, Object> updates = new HashMap<>();
         updates.put("/Technicians/" + currentUid + "/verification", verificationData);
         updates.put("/Users/" + currentUid + "/verification", verificationData);

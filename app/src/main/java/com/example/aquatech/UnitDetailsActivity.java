@@ -91,15 +91,12 @@ public class UnitDetailsActivity extends AppCompatActivity {
         unitData.put("unitImageRes", unitImageRes);
 
         DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
-        
-        // 1. I-save sa 'units' list
         userRef.child("units").child(formattedSro).setValue(unitData);
 
-        // 2. I-set bilang 'Active Unit' at pumunta sa DASHBOARD
         userRef.updateChildren(unitData).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(this, "Account Setup Complete!", Toast.LENGTH_SHORT).show();
-                navigateToDashboard(); // 📍 FIXED: Diretso sa Dashboard
+                navigateToDashboard();
             } else {
                 Toast.makeText(this, "Failed to save unit details.", Toast.LENGTH_SHORT).show();
             }
@@ -108,7 +105,6 @@ public class UnitDetailsActivity extends AppCompatActivity {
 
     private void navigateToDashboard() {
         Intent intent = new Intent(this, CustomerDashboardActivity.class);
-        // Clear stack para hindi na makabalik sa setup screens
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

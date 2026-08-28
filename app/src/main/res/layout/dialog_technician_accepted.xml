@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <!-- Logo (Left Side) -->
         <ImageView
             android:id="@+id/ivAcceptedLogo"
             android:layout_width="45dp"
@@ -25,7 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Info Container (Center) -->
         <LinearLayout
             android:id="@+id/infoContainer"
             android:layout_width="0dp"
@@ -59,7 +57,6 @@
                 android:ellipsize="end" />
         </LinearLayout>
 
-        <!-- VIEW Button (Bottom Right) -->
         <TextView
             android:id="@+id/btnAcceptedView"
             android:layout_width="wrap_content"
@@ -78,7 +75,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/infoContainer" />
 
-        <!-- Close Button -->
         <ImageView
             android:id="@+id/btnCloseAccepted"
             android:layout_width="24dp"

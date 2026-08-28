@@ -7,7 +7,6 @@ public class AvatarDataProvider {
 
     public static List<AvatarModel> getTechnicianAvatars() {
         List<AvatarModel> avatars = new ArrayList<>();
-        // Professional tech icons
         avatars.add(new AvatarModel(R.drawable.technician_man1));
         avatars.add(new AvatarModel(R.drawable.technician_woman2));
         return avatars;

@@ -62,9 +62,6 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
         tvServiceType = findViewById(R.id.tvServiceTypeDetails);
         tvRemarks = findViewById(R.id.tvTechRemarks);
         rbRating = findViewById(R.id.rbCustomerRating);
-        
-        // Find status text from the layout (hardcoded in XML, but we'll bind it)
-        // Since it's inside a nested layout, we find it if it has an ID, or just find by tag
         tvStatus = findViewById(R.id.tvHeaderTitle); 
 
         findViewById(R.id.btnBackDetails).setOnClickListener(v -> finish());
@@ -76,7 +73,6 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // 📍 CUSTOMER DETAILS
                     String customer = snapshot.child("customerName").getValue(String.class);
                     String phone = snapshot.child("customerPhone").getValue(String.class);
                     if (phone == null) phone = snapshot.child("userPhone").getValue(String.class);
@@ -85,19 +81,15 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
                     if (unitSro == null) unitSro = snapshot.child("sroNumber").getValue(String.class);
                     
                     String address = snapshot.child("address").getValue(String.class);
-                    
-                    // 📍 TECHNICIAN INFO
+
                     String tech = snapshot.child("assignedTechName").getValue(String.class);
                     String remarks = snapshot.child("technicianRemarks").getValue(String.class);
                     String imageUrl = snapshot.child("proofImageUrl").getValue(String.class);
-                    
-                    // 📍 SERVICE TYPE (Multiple logic)
+
                     String service = getServiceTypeLabel(snapshot);
-                    
-                    // 📍 RATING
+
                     Float rating = snapshot.child("rating").getValue(Float.class);
 
-                    // BIND TO UI
                     tvCustomerName.setText(customer != null ? customer : "N/A");
                     tvCustomerPhone.setText(phone != null ? phone : "Not Provided");
                     tvUnitSro.setText(unitSro != null ? unitSro : "N/A");
@@ -109,7 +101,6 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
                     if (rating != null) rbRating.setRating(rating);
                     else rbRating.setRating(0f);
 
-                    // 📍 PROOF OF VISIT IMAGE
                     if (imageUrl != null && !imageUrl.isEmpty()) {
                         ivProof.setLayoutParams(new android.widget.FrameLayout.LayoutParams(
                                 android.widget.FrameLayout.LayoutParams.MATCH_PARENT, 

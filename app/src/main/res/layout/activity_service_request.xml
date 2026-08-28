@@ -94,7 +94,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/circleNumber2"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"> <!-- Lock sa taas ng Card -->
+                    app:layout_constraintTop_toTopOf="parent">
 
 
                     <TextView
@@ -637,7 +637,7 @@
                     android:padding="16dp"
                     android:visibility="gone">
 
-                    <!-- lahat ng UI ng Step 1 dito -->
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -648,12 +648,8 @@
                     android:padding="16dp"
                     android:visibility="gone">
 
-                    <!-- lahat ng UI ng Step 2 dito -->
+
                 </LinearLayout>
-
-
-                <!-- 1. FIXED HEADER (HINDI ITO SASAMA SA SCROLL) -->
-
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/circleNumber3"
@@ -687,7 +683,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/circleNumber3" />
 
-                <!-- 2. SCROLLABLE BODY (DITO LALABAS ANG SLIDEBAR SA GILID) -->
                 <ScrollView
                     android:id="@+id/circle3ScrollContainer"
                     android:layout_width="match_parent"
@@ -704,9 +699,7 @@
                         android:layout_height="wrap_content"
                         android:paddingBottom="32dp">
 
-                        <!-- FILTER PREVENTIVE TITLE -->
 
-                        <!-- CBC ITEM -->
                         <TextView
                             android:id="@+id/filterPreventiveLabel"
                             android:layout_width="wrap_content"
@@ -783,7 +776,6 @@
                             app:layout_constraintEnd_toStartOf="@id/qtyCBC"
                             app:layout_constraintTop_toTopOf="@id/qtyCBC" />
 
-                        <!-- SEDIMENT ITEM -->
 
                         <TextView
                             android:id="@+id/sedimentLabel"
@@ -834,7 +826,6 @@
                             app:layout_constraintEnd_toStartOf="@id/qtySEDIMENT"
                             app:layout_constraintTop_toTopOf="@id/qtySEDIMENT" />
 
-                        <!-- OTHER PARTS TITLE -->
                         <TextView
                             android:id="@+id/OtherPartsLabel"
                             android:layout_width="wrap_content"
@@ -848,7 +839,6 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/sedimentLabel" />
 
-                        <!-- AQUATAL ITEM -->
                         <TextView
                             android:id="@+id/AquatalLabel"
                             android:layout_width="wrap_content"
@@ -898,7 +888,6 @@
                             app:layout_constraintEnd_toStartOf="@id/qtyAquatal"
                             app:layout_constraintTop_toTopOf="@id/qtyAquatal" />
 
-                        <!-- INLINE FILTER ITEM -->
                         <TextView
                             android:id="@+id/InlineFilterLabel"
                             android:layout_width="wrap_content"
@@ -948,7 +937,6 @@
                             app:layout_constraintEnd_toStartOf="@id/qtyInlineFilter"
                             app:layout_constraintTop_toTopOf="@id/qtyInlineFilter" />
 
-                        <!-- UV LAMP ITEM -->
                         <TextView
                             android:id="@+id/UvLampLabel"
                             android:layout_width="wrap_content"
@@ -998,7 +986,6 @@
                             app:layout_constraintEnd_toStartOf="@id/qtyUvLampLabel"
                             app:layout_constraintTop_toTopOf="@id/qtyUvLampLabel" />
 
-                        <!-- TOUCH PANEL ITEM -->
                         <TextView
                             android:id="@+id/TouchPanel"
                             android:layout_width="wrap_content"
@@ -1048,7 +1035,6 @@
                             app:layout_constraintEnd_toStartOf="@id/qtyTouchPanel"
                             app:layout_constraintTop_toTopOf="@id/qtyTouchPanel" />
 
-                        <!-- PBC BOARD ITEM -->
                         <TextView
                             android:id="@+id/PbcBoard"
                             android:layout_width="wrap_content"
@@ -1098,7 +1084,6 @@
                             app:layout_constraintEnd_toStartOf="@id/qtyPbcBoard"
                             app:layout_constraintTop_toTopOf="@id/qtyPbcBoard" />
 
-                        <!-- SMSF 1µ CBC ITEM -->
                         <TextView
                             android:id="@+id/SMSF1µ"
                             android:layout_width="wrap_content"
@@ -1148,7 +1133,6 @@
                             app:layout_constraintEnd_toStartOf="@id/qtySMSF1µCBC2"
                             app:layout_constraintTop_toTopOf="@id/qtySMSF1µCBC2" />
 
-                        <!-- SMSF 10µ SED ITEM -->
                         <TextView
                             android:id="@+id/SMSF10µSED"
                             android:layout_width="wrap_content"

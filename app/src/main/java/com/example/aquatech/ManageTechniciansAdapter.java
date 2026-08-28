@@ -43,20 +43,16 @@ public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechnic
         String name = tech.fullName != null ? tech.fullName : (tech.name != null ? tech.name : "Unknown Technician");
         holder.tvName.setText(name);
 
-        // 📍 MODIFIED: Show custom ASC-T ID instead of the long UID string
         if (tech.techId != null && !tech.techId.isEmpty()) {
             holder.tvId.setText("ID: " + tech.techId);
         } else {
-            // Fallback: If techId is missing in the object, show a generic placeholder
             holder.tvId.setText("ID: ASC-T (Pending)");
         }
 
-        // DEFAULT STATUS (PENDING)
         String statusText = "PENDING";
         int statusBg = R.drawable.status_pending_orange;
         int textColor = ContextCompat.getColor(context, android.R.color.white);
 
-        // CHECK ACCOUNT STATUS
         if ("disabled".equalsIgnoreCase(tech.accountStatus)) {
             statusText = "DISABLED";
             statusBg = R.drawable.status_cancelled_red;
@@ -72,7 +68,6 @@ public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechnic
         holder.tvStatus.setBackgroundResource(statusBg);
         holder.tvStatus.setTextColor(textColor);
 
-        // LOAD PROFILE IMAGE
         if (tech.profileImageUrl != null && !tech.profileImageUrl.isEmpty()) {
             Glide.with(context)
                     .load(tech.profileImageUrl)
@@ -83,7 +78,6 @@ public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechnic
             holder.ivProfile.setImageResource(R.drawable.new_technician);
         }
 
-        // BUTTON CLICK LISTENERS
         holder.btnView.setOnClickListener(v -> {
             if (listener != null) listener.onViewVerification(tech);
         });

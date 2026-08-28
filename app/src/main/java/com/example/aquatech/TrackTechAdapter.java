@@ -44,30 +44,20 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServiceLogModel item = list.get(position);
-
-        // 👤 Technician name
         holder.tvTechName.setText(item.getTechName() != null ? item.getTechName() : "Unknown Tech");
-
-        // 🆔 Ticket ID / SRO
         holder.tvTicketID.setText(item.getSroNumber() != null ? item.getSroNumber() : "N/A");
-
-        // 🔧 Service type – ito ay computed na sa TrackTechniciansActivity (getServiceTypeFromSnapshot)
-        // at naka-set sa model.setTechRole().
         String serviceType = item.getTechRole();
         if (serviceType == null || serviceType.isEmpty()) {
             serviceType = "General Service";
         }
         holder.tvServiceType.setText(serviceType);
 
-        // ⏰ Service time range
         String timeRange = item.getDateTime();
         holder.tvServiceTime.setText(timeRange != null ? "Service Time: " + timeRange : "Service Time: Not set");
 
-        // 📍 Customer address
         String address = item.getAddress();
         holder.tvLocation.setText(address != null ? address : "Address not available");
 
-        // 📏 Compute distance and ETA kung may location data
         double techLat = item.getTechLat();
         double techLng = item.getTechLng();
         double custLat = item.getLatitude();
@@ -80,7 +70,6 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
             float distanceMeters = results[0];
             float distanceKm = distanceMeters / 1000;
 
-            // Estimated time (average speed 30 km/h sa city)
             int minutes = (int) (distanceKm / 30 * 60);
             if (minutes < 1) minutes = 1;
 
@@ -92,7 +81,6 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
                 holder.tvLiveStatus.setTextColor(Color.parseColor("#FF9800"));
             }
         } else {
-            // Walang location data
             if ("In Progress".equalsIgnoreCase(item.getStatus())) {
                 liveStatus = "On the way to customer location";
                 holder.tvLiveStatus.setTextColor(Color.parseColor("#8BC34A"));
@@ -103,14 +91,12 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
         }
         holder.tvLiveStatus.setText(liveStatus);
 
-        // 🏷️ Badge ayon sa status
         if ("In Progress".equalsIgnoreCase(item.getStatus())) {
             holder.badgeStatus.setText("EN ROUTE");
         } else {
             holder.badgeStatus.setText("OPEN");
         }
 
-        // Click listeners
         holder.itemView.setOnClickListener(v -> listener.onItemClick(item));
         holder.btnTrackOnMap.setOnClickListener(v -> listener.onTrackClick(item));
     }

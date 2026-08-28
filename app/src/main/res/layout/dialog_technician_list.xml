@@ -48,7 +48,6 @@
             android:layout_marginTop="20dp"
             android:visibility="gone" />
 
-        <!-- Reduced height to 280dp so the dialog doesn't get cut off -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDialogTechs"
             android:layout_width="match_parent"

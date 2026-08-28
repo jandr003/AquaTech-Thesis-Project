@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Title -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:textColor="#8A8A8A"
             android:textSize="13sp" />
 
-        <!-- Customer Option -->
+
         <LinearLayout
             android:id="@+id/option_customer"
             android:layout_width="match_parent"
@@ -94,7 +94,6 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Technician Option -->
         <LinearLayout
             android:id="@+id/option_tech"
             android:layout_width="match_parent"

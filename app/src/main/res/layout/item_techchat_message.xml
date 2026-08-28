@@ -7,7 +7,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <!-- 1. DATE HEADER -->
+
     <TextView
         android:id="@+id/tvDateHeader"
         android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
         android:textSize="11sp"
         android:visibility="gone" />
 
-    <!-- 2. SENDER LABEL -->
+
     <TextView
         android:id="@+id/tvSenderLabel"
         android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
         android:textStyle="bold"
         android:visibility="gone" />
 
-    <!-- 3. AVATAR -->
+
     <ImageView
         android:id="@+id/techAvatarIcon"
         android:layout_width="32dp"
@@ -47,7 +47,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/aquatech_iconbot" />
 
-    <!-- 4. MESSAGE BUBBLE -->
     <LinearLayout
         android:id="@+id/messageContainer"
         android:layout_width="wrap_content"
@@ -73,7 +72,7 @@
             android:text="Sample text..."
             android:lineSpacingExtra="3dp" />
 
-        <!-- FILE ATTACHMENT AREA -->
+
         <LinearLayout
             android:id="@+id/fileAttachmentLayout"
             android:layout_width="match_parent"
@@ -118,7 +117,7 @@
                     android:textSize="11sp" />
             </LinearLayout>
 
-            <!-- DOWNLOAD ACTION BUTTON -->
+
             <ImageView
                 android:id="@+id/btnDownloadAction"
                 android:layout_width="22dp"

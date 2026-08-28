@@ -51,20 +51,16 @@ public class SettingsActivity extends AppCompatActivity {
     private void initializeViews() {
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
-        // Account & Security Dialog
         setupClick(R.id.yourAccSec, R.id.arrowUp, this::showAccountSecurityDialog);
-        
-        // Settings Activities
+
         setupClick(R.id.yourChat, R.id.arrowUp06, () -> startActivity(new Intent(this, ChatSettingsActivity.class)));
         setupClick(R.id.yourNotification, R.id.arrowUp07, () -> startActivity(new Intent(this, NotificationSettingsActivity.class)));
         setupClick(R.id.yourValidID, R.id.arrowUp02, () -> startActivity(new Intent(this, ValidIDActivity.class)));
-        
-        // Preference Dialogs
+
         setupClick(R.id.yourLanguage, R.id.arrowUp03, this::showLanguageDialog);
         setupClick(R.id.yourDisplay, R.id.arrowUp04, this::showDisplayDialog);
         setupClick(R.id.yourPrivacySettings, R.id.arrowUp05, this::showPrivacyDialog);
 
-        // Support & Info Links
         setupClick(R.id.yourHelp, R.id.arrowUp08, () -> startActivity(new Intent(this, HelpCenterActivity.class)));
         setupClick(R.id.yourTermsCondition, R.id.arrowUp09, () -> startActivity(new Intent(this, TermsAndConditionActivity.class)));
         setupClick(R.id.yourAccDelete, R.id.arrowUp10, () -> startActivity(new Intent(this, AccountDeletionActivity.class)));
@@ -101,7 +97,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
-        // UPDATED: Now points to ConfirmPasswordActivity
         dialog.findViewById(R.id.layoutChangePasswordInSec).setOnClickListener(v -> {
             dialog.dismiss();
             startActivity(new Intent(this, ConfirmPasswordActivity.class));

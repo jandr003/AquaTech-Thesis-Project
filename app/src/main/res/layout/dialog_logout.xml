@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:padding="12dp"> <!-- Dinagdagan ng padding para lumitaw ang shadow -->
+    android:padding="12dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -83,7 +83,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- FLOATING LOGO CIRCLE -->
     <androidx.cardview.widget.CardView
         android:layout_width="90dp"
         android:layout_height="90dp"

@@ -42,7 +42,7 @@
                 android:layout_marginTop="20dp"
                 android:background="#F0F0F0" />
 
-            <!-- 1. Font Size Adjustment -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,7 +102,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- 2. Show Serial Numbers -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,7 +149,7 @@
                     app:trackTint="@color/aqua_secondary" />
             </LinearLayout>
 
-            <!-- 3. Display Ticket IDs (UPDATED) -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,7 +197,7 @@
                     app:trackTint="@color/aqua_secondary" />
             </LinearLayout>
 
-            <!-- 4. Technician Distance -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

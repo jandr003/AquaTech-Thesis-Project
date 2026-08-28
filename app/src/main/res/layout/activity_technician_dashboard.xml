@@ -7,13 +7,11 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
-    <!-- MAIN CONTENT -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white">
 
-        <!-- TOP NOTIFICATION CONTAINER -->
         <FrameLayout
             android:id="@+id/notificationContainer"
             android:layout_width="match_parent"
@@ -260,7 +258,6 @@
                         app:layout_constraintStart_toEndOf="@+id/tvUpcomingLabelCount"
                         app:layout_constraintTop_toTopOf="@+id/tvUpcomingLabel"/>
 
-                    <!-- RecyclerView for dynamic Upcoming tasks -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvUpcomingTasks"
                         android:layout_width="match_parent"
@@ -302,7 +299,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/MessagesContent">
 
-            <!-- 🔑 DYNAMIC MESSAGE LIST (RecyclerView) -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMessageThreads"
                 android:layout_width="match_parent"

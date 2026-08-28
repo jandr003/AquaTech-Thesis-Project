@@ -16,7 +16,6 @@ public class AboutActivity extends AppCompatActivity {
 
         setupStatusBar();
 
-        // Back Button
         findViewById(R.id.btnBackAbout).setOnClickListener(v -> finish());
     }
 

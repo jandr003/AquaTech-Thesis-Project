@@ -15,7 +15,7 @@
         android:padding="16dp"
         android:background="#F8FBFF">
 
-        <!-- Tech Profile -->
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivTechItemProfile"
             android:layout_width="55dp"
@@ -29,7 +29,7 @@
             app:strokeColor="#E2E8F0"
             app:strokeWidth="1dp" />
 
-        <!-- Info Container -->
+
         <LinearLayout
             android:id="@+id/infoContainer"
             android:layout_width="0dp"
@@ -78,7 +78,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Actions Container -->
+
         <LinearLayout
             android:id="@+id/actionContainer"
             android:layout_width="wrap_content"

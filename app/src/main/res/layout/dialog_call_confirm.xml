@@ -8,7 +8,7 @@
     android:clipToPadding="false"
     android:padding="10dp">
 
-    <!-- MAIN DIALOG CARD -->
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,14 +17,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- BLUE BORDER WRAPPER -->
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_call_dialog"
             android:padding="20dp">
 
-            <!-- 1. CLOSE BUTTON (X) -->
+
             <ImageView
                 android:id="@+id/btnCloseCallDialog"
                 android:layout_width="28dp"
@@ -38,7 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="#757575" />
 
-            <!-- 2. TITLE -->
+
             <TextView
                 android:id="@+id/tvRequestTitle"
                 android:layout_width="152dp"
@@ -54,7 +54,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- 3. TELEPHONE ICON -->
             <ImageView
                 android:id="@+id/ivCallCenterIcon"
                 android:layout_width="140dp"
@@ -66,7 +65,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvRequestTitle" />
 
-            <!-- 4. CALL BUTTON -->
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnConfirmCall"
                 android:layout_width="160dp"

@@ -31,10 +31,9 @@ public class IncomingCallPopup {
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            // Show at the top like a heads-up notification
             WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
             params.gravity = android.view.Gravity.TOP;
-            params.y = 100; // Offset from top
+            params.y = 100;
             dialog.getWindow().setAttributes(params);
         }
 

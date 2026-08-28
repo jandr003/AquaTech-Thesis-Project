@@ -31,7 +31,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
         NotificationModel notif = notificationList.get(position);
 
-        // Use Html.fromHtml to render <b> tags
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             holder.tvMessage.setText(Html.fromHtml(notif.getMessage(), Html.FROM_HTML_MODE_LEGACY));
         } else {

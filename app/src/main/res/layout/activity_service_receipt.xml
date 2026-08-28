@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/aqua_background">
 
-    <!-- Header Section -->
     <View
         android:id="@+id/receiptHeader"
         android:layout_width="match_parent"
@@ -29,7 +28,6 @@
         app:layout_constraintTop_toTopOf="@id/receiptHeader"
         app:layout_constraintVertical_bias="0.75" />
 
-    <!-- DOWNLOAD BUTTON -->
 
     <ImageView
         android:id="@+id/btnDownloadReceipt"
@@ -96,7 +94,6 @@
                     android:layout_marginVertical="12dp"
                     android:background="#EEEEEE" />
 
-                <!-- CUSTOMER INFO SECTION -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +129,6 @@
                     android:layout_marginVertical="12dp"
                     android:background="#F5F5F5" />
 
-                <!-- SERVICE DETAILS SECTION -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -241,7 +237,7 @@
                     android:layout_marginVertical="12dp"
                     android:background="#F5F5F5" />
 
-                <!-- UNIT INFO -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -266,7 +262,6 @@
                     android:layout_marginVertical="12dp"
                     android:background="#F5F5F5" />
 
-                <!-- BILLING SUMMARY SECTION -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -317,7 +312,6 @@
                     android:layout_marginVertical="12dp"
                     android:background="#F5F5F5" />
 
-                <!-- TECHNICIAN INFO SECTION -->
                 <LinearLayout
                     android:id="@+id/technicianInfoLayout"
                     android:layout_width="match_parent"
@@ -380,7 +374,6 @@
                     android:layout_marginVertical="8dp"
                     android:background="#EEEEEE" />
 
-                <!-- Dynamic Status Section -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -415,7 +408,6 @@
                     android:layout_marginVertical="16dp"
                     android:background="#EEEEEE" />
 
-                <!-- POLICY AND TERMS SECTION -->
                 <TextView
                     android:id="@+id/tvReceiptPolicyTerms"
                     android:layout_width="match_parent"
@@ -433,7 +425,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <!-- BACK BUTTON NILIPAT SA BABA NG XML PARA NASA IBABAW NG LAHAT -->
     <ImageView
         android:id="@+id/btnBackReceipt"
         android:layout_width="56dp"

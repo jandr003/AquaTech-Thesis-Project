@@ -158,14 +158,12 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         String otpCode = generateOtp();
 
-        // 📍 FIREBASE SYNC: Save OTP to Firebase
         Map<String, Object> otpData = new HashMap<>();
         otpData.put("otp", otpCode);
         otpData.put("timestamp", ServerValue.TIMESTAMP);
 
         resetsRef.child(mobileToSearch).setValue(otpData).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                // Save OTP locally as fallback
                 getSharedPreferences("otp_prefs", MODE_PRIVATE).edit().putString("last_otp", otpCode).apply();
 
                 showOtpNotification(otpCode);

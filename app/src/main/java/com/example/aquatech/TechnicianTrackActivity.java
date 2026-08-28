@@ -76,7 +76,7 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
 
-    // 📍 MAKATI COORDINATES (Anchor Point)
+    // MAKATI COORDINATES (Anchor Point)
     private final GeoPoint COMPANY_LOC = new GeoPoint(14.5584827, 121.0323902);
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
@@ -91,7 +91,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     private GeoPoint lastPosition = null;
     private float currentBearing = 0f;
 
-    // ✅ Flag para iwas multiple intents
     private boolean hasArrived = false;
     private ValueEventListener trackingListener;
 
@@ -105,7 +104,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         initializeViews();
 
-        // ✅ CHECK KUNG MAY NATANGGAP NA TICKET_ID
         ticketId = getIntent().getStringExtra("TICKET_ID");
         customerName = getIntent().getStringExtra("CUSTOMER_NAME");
 
@@ -117,7 +115,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
 
         if (customerName != null) tvCustomerName.setText(customerName);
 
-        // Kunin ang technician UID
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             techUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         } else {
@@ -130,7 +127,7 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         usersRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users");
 
         setupMap();
-        resolveTechName();       // Pupunuin ang currentTechName (display name)
+        resolveTechName();
         loadTrackingData();
         setupClickListeners();
         startLocationUpdates();
@@ -169,7 +166,7 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             else currentTechName = "Technician";
 
             if (techUid != null) {
-                setupNotificationMonitor(); // gumamit ng UID, hindi pangalan
+                setupNotificationMonitor();
             }
         }
     }
@@ -180,7 +177,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             return;
         }
 
-        // ✅ MAS MABILIS NA LOCATION UPDATES (every 2 seconds)
         LocationRequest locationRequest = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 2000)
                 .setMinUpdateIntervalMillis(1000)
                 .build();
@@ -203,7 +199,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         double lat = loc.getLatitude();
         double lng = loc.getLongitude();
 
-        // 🛡️ PHILIPPINES BOUNDARY CHECK
         boolean isInPH = (lat > 4.0 && lat < 21.0 && lng > 116.0 && lng < 127.0);
 
         if (!isInPH) {
@@ -213,14 +208,12 @@ public class TechnicianTrackActivity extends AppCompatActivity {
 
         GeoPoint newPos = new GeoPoint(lat, lng);
 
-        // ✅ I-save ang last position para sa bearing calculation
         if (techMarker.getPosition() != null) {
             lastPosition = techMarker.getPosition();
         }
 
         animateMarkerSmoothly(techMarker, newPos);
 
-        // Update Firebase – gamit ang techUid
         if (techUid != null) {
             Map<String, Object> updates = new HashMap<>();
             updates.put("latitude", lat);
@@ -235,7 +228,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             requestsRef.child(ticketId).updateChildren(reqUpdates);
         }
 
-        // Route update every 7 seconds
         long now = System.currentTimeMillis();
         if (customerLoc != null && (now - lastRouteFetchTime > 7000)) {
             new FetchRouteTask(newPos, customerLoc).execute();
@@ -243,19 +235,13 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             isRouteFetched = true;
         }
 
-        // ✅ I-center ang map sa technician para hindi mawala sa view
         mMap.getController().animateTo(newPos);
-
-        // ✅ CHECK KUNG MALAPIT NA SA CUSTOMER
         checkProximityToCustomer(newPos);
     }
 
-    // ✅ Bagong method para sa proximity check
     private void checkProximityToCustomer(GeoPoint techPos) {
-        // Kung wala pang customer location o nakarating na, huwag nang mag-check
         if (customerLoc == null || hasArrived) return;
 
-        // Kinukuha ang distansya sa pagitan ng technician at customer (sa meters)
         float[] results = new float[1];
         Location.distanceBetween(
                 techPos.getLatitude(), techPos.getLongitude(),
@@ -264,22 +250,18 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         );
         float distance = results[0];
 
-        // ✅ Threshold: 20 meters (puwedeng baguhin)
         if (distance <= 20) {
-            hasArrived = true; // Para hindi na ma-trigger ulit
-
-            // I-update sa Firebase na nakarating na ang technician
+            hasArrived = true;
             if (ticketId != null) {
                 requestsRef.child(ticketId).child("status").setValue("Arrived");
             }
 
-            // Ipakita ang ServiceStatusActivity
             runOnUiThread(() -> {
                 Toast.makeText(this, "You have arrived at customer location!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(TechnicianTrackActivity.this, ServiceStatusActivity.class);
                 intent.putExtra("TICKET_ID", ticketId);
                 startActivity(intent);
-                finish(); // Optional: isara ang tracking activity
+                finish();
             });
         }
     }
@@ -295,7 +277,7 @@ public class TechnicianTrackActivity extends AppCompatActivity {
                     if (n != null && n.getMessage() != null) {
                         if ("CALL".equalsIgnoreCase(n.getType())) {
                             if (isActivityInForeground) {
-                                showIncomingCallDialog(n.getMessage(), n.getTicketId()); // ticketId dito ay customer UID
+                                showIncomingCallDialog(n.getMessage(), n.getTicketId());
                             }
                             snapshot.getRef().removeValue();
                         } else if (isActivityInForeground) {
@@ -333,7 +315,7 @@ public class TechnicianTrackActivity extends AppCompatActivity {
                     Intent intent = new Intent(this, VoiceCallActivity.class);
                     intent.putExtra("TECH_ID", techUid);
                     intent.putExtra("CUSTOMER_ID", callerCustId);
-                    intent.putExtra("NAME", customerName); // pangalan ng kausap (customer)
+                    intent.putExtra("NAME", customerName);
                     startActivity(intent);
                 })
                 .setNegativeButton("Decline", (dialog, which) -> {
@@ -412,7 +394,7 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             }
             @Override public void onCancelled(@NonNull DatabaseError error) {}
         };
-        requestsRef.child(ticketId).addValueEventListener(trackingListener); // ← ISANG BESES LANG
+        requestsRef.child(ticketId).addValueEventListener(trackingListener);
     }
     private void animateMarkerSmoothly(final Marker marker, final GeoPoint toPosition) {
         if (marker.getPosition().equals(toPosition)) return;
@@ -431,17 +413,15 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             double lng = v * toPosition.getLongitude() + (1 - v) * startPosition.getLongitude();
             GeoPoint currentPoint = new GeoPoint(lat, lng);
 
-            // ✅ Mas accurate na bearing calculation gamit ang last two points
+
             if (lastPosition != null && v > 0.1f) {
                 float newBearing = calculateBearing(lastPosition, currentPoint);
-                // Smooth rotation - huwag masyadong biglaan
                 currentBearing = currentBearing * 0.7f + newBearing * 0.3f;
                 marker.setRotation(currentBearing);
             }
 
             marker.setPosition(currentPoint);
 
-            // Prune route para mawala ang nadaanan na
             if (routeLine != null && routeLine.getActualPoints() != null && !routeLine.getActualPoints().isEmpty()) {
                 pruneRoute(currentPoint);
             }
@@ -457,13 +437,10 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         List<GeoPoint> points = routeLine.getActualPoints();
         if (points == null || points.size() < 2) return;
 
-
-        // Remove points na malapit na sa current position
         while (points.size() > 1 && currentPos.distanceToAsDouble(points.get(0)) < 20) {
             points.remove(0);
         }
 
-        // Update ang first point para mag-match sa current position
         if (!points.isEmpty()) {
             points.set(0, currentPos);
         }
@@ -538,9 +515,9 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         }
 
         @Override protected void onPostExecute(List<GeoPoint> points) {
-            if (isFinishing() || isDestroyed()) return; // ✅
-            if (points == null || points.isEmpty()) return; // ✅
-            if (routeLine == null || mMap == null) return; // ✅
+            if (isFinishing() || isDestroyed()) return;
+            if (points == null || points.isEmpty()) return;
+            if (routeLine == null || mMap == null) return;
             routeLine.setPoints(points);
             mMap.invalidate();
         }
@@ -552,7 +529,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         if (btnZoomIn != null) btnZoomIn.setOnClickListener(v -> mMap.getController().zoomIn());
         if (btnZoomOut != null) btnZoomOut.setOnClickListener(v -> mMap.getController().zoomOut());
 
-        // ✅ CHAT – gumamit ng UID
         btnChat.setOnClickListener(v -> {
             if (customerId == null) {
                 Toast.makeText(this, "Customer data not loaded yet", Toast.LENGTH_SHORT).show();
@@ -570,7 +546,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // ✅ CALL – gamit ang CallHelper
         btnCall.setOnClickListener(v -> {
             if (customerId == null) {
                 Toast.makeText(this, "Customer data not loaded yet", Toast.LENGTH_SHORT).show();
@@ -582,11 +557,11 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             }
 
             CallHelper.initiateCall(
-                    this,        // Activity context
-                    techUid,            // Technician UID
-                    customerId,         // Customer UID
-                    customerName,       // Pangalan ng kausap (customer)
-                    true                // true = technician ang tumatawag
+                    this,
+                    techUid,
+                    customerId,
+                    customerName,
+                    true
             );
         });
 
@@ -601,14 +576,12 @@ public class TechnicianTrackActivity extends AppCompatActivity {
 
     @Override protected void onDestroy() {
         super.onDestroy();
-        // ✅ Remove tracking listener
         if (requestsRef != null && trackingListener != null && ticketId != null) {
             requestsRef.child(ticketId).removeEventListener(trackingListener);
         }
         if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
         if (locationCallback != null) fusedLocationClient.removeLocationUpdates(locationCallback);
         if (posAnimator != null) posAnimator.cancel();
-        // ✅ Null out map objects
         routeLine = null;
         mMap = null;
     }

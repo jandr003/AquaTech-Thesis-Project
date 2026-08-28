@@ -35,7 +35,6 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    // 🔑 Explicit Database URL for Singapore Region
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     @Override
@@ -92,7 +91,6 @@ public class SignupActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Creating Account...", Toast.LENGTH_SHORT).show();
 
-        // ✅ Create user in Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -105,7 +103,6 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void saveUserData(String userId, String username, String fullName, String email, String mobile, String address) {
-        // 🔑 LOGIC FOR DEMO: Check if email belongs to AquaSmartGuard
         boolean isTechnician = email.toLowerCase().endsWith("@aquasmartguard.ph");
         String role = isTechnician ? "Technician" : "Customer";
 
@@ -118,42 +115,34 @@ public class SignupActivity extends AppCompatActivity {
         userData.put("address", address);
         userData.put("role", role);
         userData.put("userType", role);
-        
-        // Initial Account Status
+
         String initialStatus = isTechnician ? "pending" : "active";
         userData.put("accountStatus", initialStatus);
 
         if (isTechnician) {
-            // Generate Tech ID (ASC-TXXXX)
             String techId = "ASC-T" + (new Random().nextInt(900) + 100);
             userData.put("techId", techId);
-            
-            // Initial verification status
+
             Map<String, Object> verification = new HashMap<>();
             verification.put("status", "Not Verified");
             userData.put("verification", verification);
 
-            // Save also to Technicians node for specialized management
             mDatabase.child("Technicians").child(userId).setValue(userData);
         } else {
-            // Keep Customer specific logic
             String refNo = "ASC-" + (new Random().nextInt(9000) + 1000);
             userData.put("referenceNo", refNo);
             userData.put("avatarResId", R.drawable.man_user_circle_icon);
             userData.put("profileBgColor", "#F0F7FF");
         }
 
-        // Save to global Users node
         mDatabase.child("Users").child(userId).setValue(userData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(SignupActivity.this, role + " Registered Successfully!", Toast.LENGTH_SHORT).show();
 
                         if (isTechnician) {
-                            // Redirect to Technician Verification
                             startActivity(new Intent(SignupActivity.this, TechnicianVerificationActivity.class));
                         } else {
-                            // Redirect to Customer Setup
                             startActivity(new Intent(SignupActivity.this, CustomerSetupActivity.class));
                         }
                         finish();
@@ -170,7 +159,7 @@ public class SignupActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                finish(); // Balik sa login screen
+                finish();
             }
             @Override
             public void updateDrawState(@NonNull android.text.TextPaint ds) {

@@ -207,15 +207,12 @@ public class OpenRequestsActivity extends AppCompatActivity {
         }
     }
 
-    // ✅ FIXED: Technician dialog with full null safety
     private void showTechnicianDialog(ServiceLogModel ticket) {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_technician_list);
 
-        // 🛡️ Prevent dialog from closing when touching outside
         dialog.setCanceledOnTouchOutside(false);
-        // Also prevent back button from closing accidentally (optional)
-        dialog.setCancelable(true); // Back button still works, but you can set false if needed
+        dialog.setCancelable(true);
 
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -226,9 +223,7 @@ public class OpenRequestsActivity extends AppCompatActivity {
         Button btnClose = dialog.findViewById(R.id.btnCloseDialog);
         List<Map<String, String>> techList = new ArrayList<>();
 
-        // ✅ Updated adapter with safe click listener
         DialogTechAdapter techAdapter = new DialogTechAdapter(techList, (name, uid) -> {
-            // name is guaranteed non-null by adapter
             assignTechnicianToTicket(ticket, name, uid);
             dialog.dismiss();
         });
@@ -248,20 +243,19 @@ public class OpenRequestsActivity extends AppCompatActivity {
                             if ("Technician".equalsIgnoreCase(role)) {
                                 String name = ds.child("fullName").getValue(String.class);
                                 String tId = ds.child("techId").getValue(String.class);
-                                String workStatus = ds.child("workStatus").getValue(String.class); // ✅ fetch status
+                                String workStatus = ds.child("workStatus").getValue(String.class);
 
                                 if (name != null && !name.isEmpty()) {
                                     Map<String, String> techMap = new HashMap<>();
                                     techMap.put("name", name);
                                     techMap.put("uid", ds.getKey());
                                     techMap.put("techId", tId != null ? tId : "ASC-T00");
-                                    techMap.put("status", workStatus != null ? workStatus : "Available"); // ✅ store status
+                                    techMap.put("status", workStatus != null ? workStatus : "Available");
                                     techList.add(techMap);
                                 }
                             }
                         }
 
-                        // Add fallback technicians (with default status "Available")
                         for (int i = 0; i < techNamesArr.length; i++) {
                             String sName = techNamesArr[i];
                             boolean exists = false;
@@ -276,7 +270,7 @@ public class OpenRequestsActivity extends AppCompatActivity {
                                 techMap.put("name", sName);
                                 techMap.put("uid", sName);
                                 techMap.put("techId", "ASC-T00" + (i + 1));
-                                techMap.put("status", "Available"); // ✅ default status
+                                techMap.put("status", "Available");
                                 techList.add(techMap);
                             }
                         }

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#D9E1E6">
 
-    <!-- HEADER SECTION -->
     <TextView
         android:id="@+id/headerTitle"
         android:layout_width="match_parent"
@@ -81,7 +80,6 @@
         app:layout_constraintTop_toBottomOf="@id/headerTitle"
         tools:listitem="@layout/item_techchat_message" />
 
-    <!-- INPUT AREA -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/inputArea"
         android:layout_width="match_parent"

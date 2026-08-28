@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:paddingBottom="8dp">
 
-    <!-- Active Highlight Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cvDay"
         android:layout_width="50dp"

@@ -86,7 +86,7 @@
             android:layout_marginTop="20dp"
             android:background="#F0F0F0" />
 
-        <!-- CORE TABS -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +97,6 @@
             android:textSize="10sp"
             android:textStyle="bold" />
 
-        <!-- 1. Monthly Analytics -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnMonthlyAnalytics"
             style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -115,7 +114,6 @@
             app:iconPadding="12dp"
             app:iconTint="#1E3A8A" />
 
-        <!-- 2. Admin Settings -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDialogSettings"
             style="@style/Widget.MaterialComponents.Button.TextButton"

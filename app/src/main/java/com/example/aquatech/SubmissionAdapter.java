@@ -19,7 +19,7 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
     public interface OnActionClickListener {
         void onApprove(String ticketId);
         void onReject(String ticketId, String techUid, String techName);
-        void onEdit(String ticketId); // optional, pwedeng tanggalin kung hindi gagamitin
+        void onEdit(String ticketId);
     }
 
     public SubmissionAdapter(List<ServiceLogModel> list, OnActionClickListener listener) {
@@ -38,32 +38,18 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServiceLogModel item = list.get(position);
 
-        // Ticket ID / SRO Number
         holder.tvTicketID.setText(item.getSroNumber());
-
-        // Submitted by: [Technician Name]
         holder.tvTechName.setText("Submitted by: " + item.getTechName());
-
-        // Customer Name
         holder.tvCustomer.setText("Customer: " + item.getCustomerName());
-
-        // Service Type (formatted)
         holder.tvServiceType.setText(item.getTechRole());
-
-        // Approve button
         holder.btnApprove.setOnClickListener(v -> listener.onApprove(item.getSroNumber()));
-
-        // Reject button
         holder.btnReject.setOnClickListener(v -> {
             if (item.getTechUid() != null) {
                 listener.onReject(item.getSroNumber(), item.getTechUid(), item.getTechName());
             } else {
-                // Fallback kung walang techUid (dapat meron)
                 listener.onReject(item.getSroNumber(), "", item.getTechName());
             }
         });
-
-        // Optional Edit button (kung may layout)
         // holder.btnEdit.setOnClickListener(v -> listener.onEdit(item.getSroNumber()));
     }
 
@@ -74,7 +60,7 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTicketID, tvTechName, tvServiceType, tvCustomer;
-        Button btnApprove, btnReject; // , btnEdit;
+        Button btnApprove, btnReject;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,8 +70,7 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
             tvCustomer = itemView.findViewById(R.id.tvSubmitCustomer);
 
             btnApprove = itemView.findViewById(R.id.btnAdminApprove);
-            btnReject = itemView.findViewById(R.id.btnAdminArchive); // Siguraduhing may ID na ito sa layout
-            // btnEdit = itemView.findViewById(R.id.btnAdminEdit);
+            btnReject = itemView.findViewById(R.id.btnAdminArchive);
         }
     }
 }

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/aqua_background">
 
-    <!-- 1. FIXED HEADER -->
     <View
         android:id="@+id/headerBg"
         android:layout_width="match_parent"
@@ -52,7 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/headerBg" />
 
-    <!-- SCROLLABLE CONTENT AREA -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -65,7 +63,6 @@
             android:orientation="vertical"
             android:paddingBottom="24dp">
 
-            <!-- 2. TECHNICIAN INFO CARD -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/blueCard"
                 android:layout_width="match_parent"
@@ -157,7 +154,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 3. TRACKING MAP SECTION -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/mapTrackCard"
                 android:layout_width="match_parent"
@@ -205,7 +201,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- 4. ORDERS SECTION HEADER -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ordersHeader"
                 android:layout_width="wrap_content"
@@ -239,7 +234,6 @@
                     app:layout_constraintTop_toTopOf="@id/OrderIcon" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- 🔑 DYNAMIC RECYCLERVIEW FOR ORDERS (Nothing else hardcoded here!) -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvOrders"
                 android:layout_width="match_parent"

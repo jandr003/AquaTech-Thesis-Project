@@ -62,7 +62,6 @@
 
         <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE" />
 
-        <!-- Taglish Option -->
         <LinearLayout
             android:id="@+id/btnLangTaglish"
             android:layout_width="match_parent"
@@ -91,7 +90,7 @@
 
         <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#EEEEEE" />
 
-        <!-- Filipino Option -->
+
         <LinearLayout
             android:id="@+id/btnLangFilipino"
             android:layout_width="match_parent"

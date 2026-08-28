@@ -19,10 +19,8 @@ public class NotificationSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Check if user is technician from intent
         isTechnician = getIntent().getBooleanExtra("IS_TECH", false);
 
-        // USE THE CORRECT LAYOUT BASED ON ROLE
         if (isTechnician) {
             setContentView(R.layout.activity_technician_notification_settings);
         } else {

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
-    <!-- 1. PROFESSIONAL HEADER -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,7 +74,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- 2. TECHNICIAN PROFILE SUMMARY -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,7 +152,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 3. STATS ROW -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,7 +198,6 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- 4. ACTION BUTTONS -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -225,7 +221,6 @@
                     app:iconTint="#FFFFFF" />
             </LinearLayout>
 
-            <!-- 5. VERIFIED IDENTIFICATION -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -242,7 +237,7 @@
                 android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
-                <!-- GOVERNMENT ID CARD -->
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -267,7 +262,6 @@
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- TECHNICAL CERTIFICATE CARD -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -293,7 +287,6 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- 6. RECENT HISTORY LIST -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

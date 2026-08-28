@@ -37,7 +37,7 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
     private ImageView indicatorEight, indicatorLower, indicatorUpper, indicatorNumber, indicatorSpecial;
 
     private FirebaseAuth mAuth;
-    private String userId; // 🔑 Dito mase-save yung UID galing sa VerificationCodeActivity
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,6 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_password);
 
         mAuth = FirebaseAuth.getInstance();
-        
-        // 🔑 Kunin ang USER_ID na ipinasa ni VerificationCodeActivity
         userId = getIntent().getStringExtra("USER_ID");
 
         setupStatusBar();
@@ -137,11 +135,9 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
         pd.setCancelable(false);
         pd.show();
 
-        // 🔑 FIREBASE UPDATE: I-update ang password sa 'Users' node sa Realtime Database
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         userRef.child("password").setValue(pass1).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                // Kung may logged in user (halimbawa galing Phone Auth), i-update din ang Auth password
                 FirebaseUser user = mAuth.getCurrentUser();
                 if (user != null) {
                     user.updatePassword(pass1);
@@ -149,8 +145,7 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
                 
                 pd.dismiss();
                 Toast.makeText(this, "Password updated successfully!", Toast.LENGTH_LONG).show();
-                
-                // Balik sa Login/Splash screen
+
                 Intent intent = new Intent(this, SplashActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);

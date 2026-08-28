@@ -4,10 +4,10 @@ public class NotificationModel {
     private String id;
     private String message;
     private long timestamp;
-    private String type; // e.g., "PDF", "ASSIGNED", "MESSAGE", "COMPLETED", "CALL", "RESUBMIT"
+    private String type;
     private String ticketId;
-    private String senderName; // Added to support caller name in notifications
-    private int iconResId = -1; // Default to -1
+    private String senderName;
+    private int iconResId = -1;
 
     public NotificationModel() {
     }
@@ -47,10 +47,8 @@ public class NotificationModel {
     public String getSenderName() { return senderName; }
     public void setSenderName(String senderName) { this.senderName = senderName; }
 
-    // Manual setter for icon
     public void setIconResId(int iconResId) { this.iconResId = iconResId; }
 
-    // Helper to get relative time
     public String getTimeAgo() {
         long now = System.currentTimeMillis();
         long diff = now - timestamp;
@@ -60,7 +58,6 @@ public class NotificationModel {
         return (diff / 86400000) + "d ago";
     }
 
-    // Helper for icon (Check if manual override exists, else use type logic)
     public int getIconResId() {
         if (iconResId != -1) return iconResId;
 
@@ -71,7 +68,7 @@ public class NotificationModel {
             case "COMPLETED": return R.drawable.maintenance_technician1;
             case "MESSAGE": return R.drawable.message_notification_1;
             case "CALL": return R.drawable.telephone_icon;
-            case "RESUBMIT": return R.drawable.alert_icon; // o anumang icon na gusto mo
+            case "RESUBMIT": return R.drawable.alert_icon;
             default: return R.drawable.asc_logooo;
         }
     }

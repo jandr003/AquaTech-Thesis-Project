@@ -79,7 +79,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTicketIDOpen" />
 
-        <!-- 🛠️ FIX: Constrained end to start of IDs to prevent overlap -->
+
         <TextView
             android:id="@+id/tvServiceTypeOpen"
             android:layout_width="0dp"

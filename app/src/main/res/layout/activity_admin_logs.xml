@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8FAFC">
 
-    <!-- MODERN HEADER -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/logsHeaderGroup"
         android:layout_width="match_parent"
@@ -45,7 +44,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- LOGS LIST AREA -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAdminLogs"
         android:layout_width="match_parent"

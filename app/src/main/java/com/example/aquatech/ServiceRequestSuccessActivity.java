@@ -143,7 +143,6 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         String date = intent.getStringExtra("DATE");
         if (date != null && timeDateReq != null) timeDateReq.setText(date.toUpperCase());
 
-        // Load Order Summary from Intent
         if (ordersListContainer != null) {
             ordersListContainer.removeAllViews();
             addOrderFromIntent("qty_wayvalve", "Installation Kit (3-Way Valve)");
@@ -385,13 +384,11 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             notifView.setTranslationY(-500f);
             notifView.animate().translationY(0f).setDuration(600).setInterpolator(new OvershootInterpolator()).start();
 
-            // 🛠️ NOTIFY CHATBOT ABOUT THE DOWNLOAD
             if (currentUid != null) {
                 NotificationActivity.addNotification(currentUid, "You have downloaded a receipt: <b>" + fileName + "</b>", "PDF", ticketId);
             }
 
             notifView.setOnClickListener(v -> {
-                // 🛠️ REDIRECT TO CHATBOT TO AUTO-SEND THE FILE
                 Intent intent = new Intent(this, AquaBuddyActivity.class);
                 intent.putExtra("SEND_FILE_MESSAGE", true);
                 intent.putExtra("FILE_NAME", fileName);

@@ -56,8 +56,6 @@ public class UnitSelectionActivity extends AppCompatActivity {
     private void setupFirebaseListener() {
         String uid = mAuth.getUid();
         if (uid == null) return;
-
-        // 📍 Listening to all units saved under the user
         unitsRef = FirebaseDatabase.getInstance().getReference("Users").child(uid).child("units");
         unitsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -69,7 +67,6 @@ public class UnitSelectionActivity extends AppCompatActivity {
                     }
                     updateUI(unitList);
                 } else {
-                    // Fallback to legacy/root if units folder is empty
                     fetchLegacyUnit(uid);
                 }
             }

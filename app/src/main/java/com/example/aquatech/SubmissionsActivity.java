@@ -115,7 +115,6 @@ public class SubmissionsActivity extends AppCompatActivity {
                 Toast.makeText(SubmissionsActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
-        // 📍 BUG FIX: Use addValueEventListener on root reference, not a filtered query that might trigger recursive updates
         dbRef.addValueEventListener(submissionsListener);
     }
 
@@ -199,12 +198,11 @@ public class SubmissionsActivity extends AppCompatActivity {
         DatabaseReference notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("Notifications").child(techUid);
         String id = notifRef.push().getKey();
         if (id != null) {
-            // Sa SubmissionsActivity approve path:
             NotificationModel notification = new NotificationModel(
                     id,
                     message,
                     System.currentTimeMillis(),
-                    "APPROVED",  // ← hindi "REJECTED"
+                    "APPROVED",
                     ticketId,
                     "Admin"
             );

@@ -45,12 +45,10 @@ public class AdminSettingsActivity extends AppCompatActivity {
     private void initializeViews() {
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
-        // Change Password
         findViewById(R.id.btnChangePassword).setOnClickListener(v -> {
             startActivity(new Intent(this, ConfirmPasswordActivity.class));
         });
 
-        // Notifications
         SwitchMaterial swRequest = findViewById(R.id.switchRequestAlerts);
         SwitchMaterial swUrgent = findViewById(R.id.switchUrgentAlerts);
 
@@ -63,19 +61,15 @@ public class AdminSettingsActivity extends AppCompatActivity {
         swUrgent.setOnCheckedChangeListener((buttonView, isChecked) -> 
             prefs.edit().putBoolean("admin_notif_urgent", isChecked).apply());
 
-        // Preferences
         findViewById(R.id.btnLanguage).setOnClickListener(v -> showLanguageDialog());
         findViewById(R.id.btnDisplay).setOnClickListener(v -> Toast.makeText(this, "Display settings coming soon", Toast.LENGTH_SHORT).show());
 
-        // Support
         findViewById(R.id.btnHelpCenter).setOnClickListener(v -> startActivity(new Intent(this, HelpCenterActivity.class)));
         findViewById(R.id.btnAbout).setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
-        
-        // Admin Profile (if button exists in layout)
+
         View btnProfile = findViewById(R.id.btnAdminProfile);
         if (btnProfile != null) {
             btnProfile.setOnClickListener(v -> {
-                // You can add logic here to show a profile edit screen or dialog
                 Toast.makeText(this, "Profile management coming soon", Toast.LENGTH_SHORT).show();
             });
         }

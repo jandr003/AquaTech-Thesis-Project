@@ -16,7 +16,6 @@
         android:orientation="horizontal"
         android:baselineAligned="false">
 
-        <!-- Left Accent Strip (Aqua Blue) -->
         <View
             android:layout_width="6dp"
             android:layout_height="match_parent"
@@ -28,7 +27,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Top Header: Ticket ID and Date -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -55,21 +53,21 @@
                     android:textSize="11sp" />
             </RelativeLayout>
 
-            <!-- Spacing Divider -->
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
                 android:background="#F5F5F5" />
 
-            <!-- Main Info Row -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <!-- Customer Info -->
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -99,7 +97,7 @@
                         android:ellipsize="end" />
                 </LinearLayout>
 
-                <!-- Service Info -->
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

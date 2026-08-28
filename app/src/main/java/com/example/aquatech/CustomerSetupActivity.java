@@ -82,8 +82,6 @@ public class CustomerSetupActivity extends AppCompatActivity {
         card2.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
         card3.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
         card4.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
-
-        // Highlight UI
         selectedCard.setCardBackgroundColor(Color.parseColor("#E3F2FD"));
 
         // FIREBASE LOGIC: Save the selected unit to the user's profile
@@ -101,7 +99,6 @@ public class CustomerSetupActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            // Fallback in case userRef is null
             Intent intent = new Intent(CustomerSetupActivity.this, UnitDetailsActivity.class);
             intent.putExtra("UNIT_NAME", unitName);
             startActivity(intent);

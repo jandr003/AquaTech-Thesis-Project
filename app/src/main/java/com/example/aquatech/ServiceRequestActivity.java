@@ -152,7 +152,6 @@ public class ServiceRequestActivity extends AppCompatActivity {
                         boolean hasActiveRequest = false;
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             String status = ds.child("status").getValue(String.class);
-                            // List of statuses that mean a request is still active
                             if (status != null && (status.equalsIgnoreCase("Open") || 
                                 status.equalsIgnoreCase("Assigned") || 
                                 status.equalsIgnoreCase("In Progress") || 
@@ -180,7 +179,7 @@ public class ServiceRequestActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         pd.dismiss();
-                        handleSubmission(); // Proceed if check fails
+                        handleSubmission();
                     }
                 });
     }
@@ -193,7 +192,6 @@ public class ServiceRequestActivity extends AppCompatActivity {
         String sTime = startTimeText.getText().toString();
         String eTime = endTimeText.getText().toString();
 
-        // ❌ STRICT OFFICE HOURS CHECK
         if (sTime.equals("---") || eTime.equals("---") || isOutsideOfficeHours(sTime) || isOutsideOfficeHours(eTime)) {
             showTimeWarning();
             return;
@@ -235,8 +233,6 @@ public class ServiceRequestActivity extends AppCompatActivity {
             if (amPm.equalsIgnoreCase("PM") && hour != 12) militaryHour += 12;
             if (amPm.equalsIgnoreCase("AM") && hour == 12) militaryHour = 0;
 
-            // ✅ OFFICE HOURS: 8:00 AM to 5:00 PM (Strict)
-            // 8:00 AM is 8, 5:00 PM is 17
             if (militaryHour < 8 || militaryHour >= 17) return true;
             return false;
         } catch (Exception e) { return true; }
@@ -476,7 +472,6 @@ public class ServiceRequestActivity extends AppCompatActivity {
             String sTime = startTimeText.getText().toString();
             String eTime = endTimeText.getText().toString();
 
-            // 📍 VALIDATION CHECK ON NEXT
             validateAndColorTime();
 
             if (isOutsideOfficeHours(sTime) || isOutsideOfficeHours(eTime)) {

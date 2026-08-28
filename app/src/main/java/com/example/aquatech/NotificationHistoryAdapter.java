@@ -37,17 +37,14 @@ public class NotificationHistoryAdapter extends RecyclerView.Adapter<Notificatio
         holder.tvTime.setText(model.getTimeAgo());
         holder.ivIcon.setImageResource(model.getIconResId());
 
-        // 🛠️ CLICK LISTENER TO REDIRECT BASED ON TYPE
         holder.itemView.setOnClickListener(v -> {
             if (model.getTicketId() != null && !model.getTicketId().isEmpty()) {
                 if ("RESUBMIT".equalsIgnoreCase(model.getType())) {
-                    // Open technician dashboard with resubmit flag
                     Intent intent = new Intent(context, TechnicianDashboardActivity.class);
                     intent.putExtra("RESUBMIT_TICKET_ID", model.getTicketId());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(intent);
                 } else {
-                    // Default to service receipt
                     Intent intent = new Intent(context, ServiceReceiptActivity.class);
                     intent.putExtra("TICKET_ID", model.getTicketId());
                     context.startActivity(intent);

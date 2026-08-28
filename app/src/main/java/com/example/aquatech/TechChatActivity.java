@@ -198,7 +198,6 @@ public class TechChatActivity extends AppCompatActivity {
                 if (!isInitialNotifLoad) {
                     NotificationModel n = snapshot.getValue(NotificationModel.class);
                     if (n != null && "CALL".equalsIgnoreCase(n.getType())) {
-                        // ✅ Use custom popup for incoming call
                         showIncomingCallPopup(n.getMessage(), n.getTicketId(), n.getSenderName());
                         snapshot.getRef().removeValue();
                     }
@@ -216,15 +215,12 @@ public class TechChatActivity extends AppCompatActivity {
         });
     }
 
-    // ✅ New popup method using IncomingCallPopup class
     private void showIncomingCallPopup(String message, String callerCustId, String callerName) {
         IncomingCallPopup popup = new IncomingCallPopup(this, callerName, new IncomingCallPopup.OnCallActionListener() {
             @Override
             public void onAnswer() {
                 String chatId = techId + "_" + callerCustId;
                 DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
-
-                // ✅ Answering sets callStatus to "active" and sets start time
                 Map<String, Object> updates = new HashMap<>();
                 updates.put("callStatus", "active");
                 updates.put("callStartTime", ServerValue.TIMESTAMP);
@@ -276,7 +272,6 @@ public class TechChatActivity extends AppCompatActivity {
 
         rootChatRef.updateChildren(chatMeta);
 
-        // Send notification
         String notifMessage = "Technician sent you a message!";
         sendNotificationToUser(customerId, notifMessage, "CHAT", techId, true);
 
@@ -289,7 +284,6 @@ public class TechChatActivity extends AppCompatActivity {
         String target = isToCustomer ? "CustomerNotifications" : "Notifications";
         DatabaseReference ref = FirebaseDatabase.getInstance(DB_URL).getReference(target).child(userId).push();
 
-        // ✅ Include sender name for CALL type
         String senderName = (myRealName != null && !myRealName.isEmpty()) ? myRealName : "Technician";
         NotificationModel notification = new NotificationModel(
                 ref.getKey(),
@@ -297,7 +291,7 @@ public class TechChatActivity extends AppCompatActivity {
                 System.currentTimeMillis(),
                 type,
                 ticketId,
-                senderName  // ✅ Include sender name
+                senderName
         );
         ref.setValue(notification);
     }
@@ -330,26 +324,22 @@ public class TechChatActivity extends AppCompatActivity {
         });
     }
 
-    // ✅ Updated initiateCall method for real-time sync
     private void initiateCall() {
         String callerId = techId;
         String receiverId = customerId;
         String callerName = (myRealName != null && !myRealName.isEmpty()) ? myRealName : "Technician";
 
-        // Set call status to "ringing" (not active yet)
         String chatId = techId + "_" + customerId;
         DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("callStatus", "ringing");
-        updates.put("callStartTime", null); // No start time yet
+        updates.put("callStartTime", null);
         chatRef.updateChildren(updates);
 
-        // Send notification to customer
         String notifMessage = "<b>Incoming Call</b><br>" + callerName + " is calling.";
         sendNotificationToUser(customerId, notifMessage, "CALL", techId, true);
 
-        // Launch own call activity (will show "CALLING..." until answered)
         Intent intent = new Intent(this, VoiceCallActivity.class);
         intent.putExtra("TECH_ID", techId);
         intent.putExtra("CUSTOMER_ID", customerId);

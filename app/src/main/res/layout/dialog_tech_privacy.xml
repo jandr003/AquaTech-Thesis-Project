@@ -38,7 +38,6 @@
             android:layout_marginTop="20dp"
             android:background="#F0F0F0" />
 
-        <!-- 1. Location Tracking -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +81,6 @@
                 android:checked="true" />
         </RelativeLayout>
 
-        <!-- 2. Diagnostic Reports -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -44,7 +44,6 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
 
         holder.tvCustomerName.setText(model.getTechName());
 
-        // 🛠️ TAMA NA BINDING: Ticket ID followed by SRO Number below it
         holder.tvTicketID.setText(model.getTicketId());
         if (holder.tvSRONumber != null) {
             holder.tvSRONumber.setText("#" + model.getSroNumber());

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Top half: Aqua with rounded corners -->
     <item android:top="0dp" android:bottom="105dp">
         <shape android:shape="rectangle">
             <solid android:color="#55ACD8"/>
@@ -9,7 +8,6 @@
         </shape>
     </item>
 
-    <!-- Bottom half: White, no corners -->
     <item android:top="106dp">
         <shape android:shape="rectangle">
             <solid android:color="#FFFFFF"/>

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
-    <!-- 1. HEADER SECTION (Same as Dashboard/Monthly Audit) -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,7 +72,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- 2. ANALYTICS PANEL (KATULAD SA DASHBOARD) -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,16 +95,35 @@
                         android:textColor="#1E3A8A"
                         android:letterSpacing="0.1"/>
 
-                    <!-- Grid Stats -->
+
                     <GridLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:columnCount="3">
 
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:gravity="center" android:orientation="vertical">
-                            <TextView android:id="@+id/tvStatTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textStyle="bold" android:textSize="18sp" android:textColor="#1E3A8A"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TOTAL" android:textSize="8sp" android:textColor="#888888"/>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvStatTotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="#1E3A8A"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TOTAL"
+                                android:textSize="8sp"
+                                android:textColor="#888888"/>
                         </LinearLayout>
 
                         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:gravity="center" android:orientation="vertical">
@@ -140,7 +157,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 3. SEARCH & FILTERS -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -189,7 +206,6 @@
                 <com.google.android.material.chip.Chip android:id="@+id/chipCancelled" style="@style/Widget.MaterialComponents.Chip.Choice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cancelled"/>
             </com.google.android.material.chip.ChipGroup>
 
-            <!-- 4. MASTER SERVICE LOG LIST -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

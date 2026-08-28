@@ -111,12 +111,10 @@ public class TrackTechniciansActivity extends AppCompatActivity {
         adapter = new TrackTechAdapter(this, trackList, new TrackTechAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ServiceLogModel model) {
-                // Optional: Open detailed request view if needed
             }
 
             @Override
             public void onTrackClick(ServiceLogModel model) {
-                //REAL-TIME TRACKING ON MAP
                 if (model == null || model.getTechId() == null) return;
                 
                 Marker marker = techMarkers.get(model.getTechId());
@@ -219,7 +217,6 @@ public class TrackTechniciansActivity extends AppCompatActivity {
 
                     updateTechMarker(techId, techLoc, techName);
 
-                    // Sync for live data binding in the list
                     for (ServiceLogModel m : trackList) {
                         if (techId.equals(m.getTechId())) {
                             m.setTechLat(techLoc.getLatitude());

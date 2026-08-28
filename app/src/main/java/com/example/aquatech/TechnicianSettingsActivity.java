@@ -56,8 +56,7 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
             String uid = user.getUid();
             userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
             notifRef = FirebaseDatabase.getInstance().getReference("Notifications").child(uid);
-            
-            // KONEK SA POPUP LISTENER
+
             setupRealtimePopupListener();
         }
 
@@ -82,7 +81,6 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
             @Override public void onCancelled(@NonNull DatabaseError e) {}
         });
 
-        // Sync flag para hindi mag-popup ang mga lumang notif
         notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override public void onDataChange(@NonNull DataSnapshot s) { isInitialLoad = false; }
             @Override public void onCancelled(@NonNull DatabaseError e) {}
@@ -90,20 +88,16 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
     }
 
     private void showItemNotificationPopup(NotificationModel notif) {
-        // I-inflate ang mismong item_notification.xml mo
         View layout = getLayoutInflater().inflate(R.layout.item_notification, null);
-        
-        // Konek ang Views mula sa XML
+
         TextView tvMsg = layout.findViewById(R.id.tvNotifMessage);
         TextView tvTime = layout.findViewById(R.id.tvNotifTime);
         ImageView ivIcon = layout.findViewById(R.id.ivNotifIcon);
-        
-        // I-set ang data (may HTML support para sa bold text)
+
         if (tvMsg != null) tvMsg.setText(Html.fromHtml(notif.getMessage()));
         if (tvTime != null) tvTime.setText("Just now");
         if (ivIcon != null) ivIcon.setImageResource(getIconForType(notif.getType()));
 
-        // I-display bilang Custom Toast sa taas (In-App Popup style)
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, 100);
@@ -133,7 +127,6 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
     private void initializeViews() {
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
-        // Availability Toggle - Force ON
         SwitchMaterial swAvailability = findViewById(R.id.switchAvailability);
         if (swAvailability != null) {
             swAvailability.setChecked(true);
@@ -196,13 +189,11 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
         
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            // DYNAMIC TECH ID
             if (tvTechId != null) {
                 String email = user.getEmail() != null ? user.getEmail().toLowerCase() : "";
                 tvTechId.setText(getTechIdFromEmail(email));
             }
 
-            // REAL WORLD MEMBER SINCE
             if (tvSince != null) {
                 FirebaseUserMetadata metadata = user.getMetadata();
                 if (metadata != null) {
@@ -212,7 +203,6 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
                 }
             }
 
-            // BACKEND SYNC
             if (userRef != null) {
                 userRef.addValueEventListener(new ValueEventListener() {
                     @Override

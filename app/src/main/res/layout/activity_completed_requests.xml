@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- 1. HEADER SECTION -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/completedHeader"
         android:layout_width="match_parent"
@@ -45,7 +45,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 2. COMPLETED LIST -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

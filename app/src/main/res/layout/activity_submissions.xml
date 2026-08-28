@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
-    <!-- 1. HEADER SECTION -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/submissionHeader"
         android:layout_width="match_parent"
@@ -45,7 +44,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 2. SUBMISSION LIST -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

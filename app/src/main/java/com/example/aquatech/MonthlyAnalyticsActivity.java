@@ -327,7 +327,6 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         PdfDocument.Page page = document.startPage(pageInfo);
         Canvas canvas = page.getCanvas();
 
-        // Header
         titlePaint.setColor(Color.parseColor("#1E3A8A"));
         titlePaint.setTextSize(24f);
         canvas.drawText("AQUATECH MONTHLY ANALYTICS", margin, y, titlePaint);
@@ -339,7 +338,6 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         canvas.drawText("Generated on: " + dateStr, margin, y, paint);
         y += 30;
 
-        // Summary
         paint.setColor(Color.parseColor("#F3F4F6"));
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect(margin, y, pageWidth - margin, y + 120, paint);
@@ -357,7 +355,6 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         canvas.drawText("Avg Rating: " + tvCsatScore.getText(), margin + 350, y + 75, paint);
         y += 140;
 
-        // Weekly trends
         paint.setFakeBoldText(true);
         paint.setTextSize(14f);
         canvas.drawText("WEEKLY GROWTH TRENDS", margin, y, paint);
@@ -380,13 +377,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         }
         y = graphBottom + 60;
 
-        // Request log table
         paint.setFakeBoldText(true);
         paint.setTextSize(14f);
         canvas.drawText("RECENT REQUEST LOG", margin, y, paint);
         y += 25;
 
-        // Table header
         paint.setColor(Color.parseColor("#E5E7EB"));
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect(margin, y, pageWidth - margin, y + 25, paint);
@@ -431,12 +426,10 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         File pdfFile = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), fileName);
 
         try {
-            // 1. Write to internal storage first (never close document yet)
             FileOutputStream fos = new FileOutputStream(pdfFile);
             document.writeTo(fos);
             fos.close();
 
-            // 2. Save to Downloads by copying the file (document is still open for now)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ContentValues cv = new ContentValues();
                 cv.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
@@ -477,10 +470,8 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                 }
             }
 
-            // 3. Close the document after all writes are done
             document.close();
 
-            // 4. Open the PDF from internal storage
             Uri pdfUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", pdfFile);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(pdfUri, "application/pdf");

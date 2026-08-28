@@ -41,15 +41,11 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DataSnapshot ds = taskList.get(position);
         
-        // 1. Customer Name
+
         String name = ds.child("customerName").getValue(String.class);
         holder.tvName.setText(name != null ? name : "Unknown");
-
-        // 2. Ticket ID (Top Right)
         String tId = ds.child("ticketId").getValue(String.class);
         holder.tvTicketId.setText("#" + (tId != null ? tId : "---"));
-
-        // 3. Preferred Time
         String time = ds.child("timeRange").getValue(String.class);
         if (time == null || time.isEmpty()) {
             String start = ds.child("startTime").getValue(String.class);
@@ -59,11 +55,8 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
         }
         holder.tvTime.setText(time);
 
-        // 4. Address
         String addr = ds.child("address").getValue(String.class);
         holder.tvAddress.setText(addr != null ? addr : "No Address");
-
-        // 5. 📍 REAL-TIME SRO (Strict Fetching)
         String sro = ds.child("referenceNo").getValue(String.class);
         if (sro == null) sro = ds.child("sroNumber").getValue(String.class);
 
@@ -73,7 +66,7 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
             holder.tvSro.setText("No SRO Attached");
         }
 
-        // 6. CATEGORY LOGIC
+
         List<String> categories = new ArrayList<>();
         if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
             categories.add("Filter Preventive");
@@ -95,7 +88,6 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
         if (categoryStr.length() > 0) holder.tvServiceType.setText(categoryStr.toString());
         else holder.tvServiceType.setText("General Service");
 
-        // 7. DATE LOGIC
         Long timestamp = ds.child("assignedTimestamp").getValue(Long.class);
         if (timestamp != null) {
             Date date = new Date(timestamp);

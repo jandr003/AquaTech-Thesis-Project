@@ -9,7 +9,7 @@
                 android:angle="45"/>
         </shape>
     </item>
-    <!-- The "Sheen" Overlay -->
+
     <item>
         <shape android:shape="rectangle">
             <gradient

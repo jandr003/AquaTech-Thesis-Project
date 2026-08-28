@@ -4,7 +4,7 @@
     android:viewportWidth="500"
     android:viewportHeight="500">
 
-    <!-- Droplet shape -->
+
     <path
         android:fillColor="#32a2dc"
         android:pathData="M363,44.429

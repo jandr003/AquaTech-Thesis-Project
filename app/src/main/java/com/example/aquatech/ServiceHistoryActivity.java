@@ -55,8 +55,7 @@ public class ServiceHistoryActivity extends AppCompatActivity {
         setupStatusBar();
         initializeViews();
         setupCalendar(currentCalendar);
-        
-        // Initial load for today's history
+
         String today = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(new Date());
         tvSelectedDateLabel.setText("Today, " + today);
         loadHistoryFromFirebase(today);
@@ -137,8 +136,7 @@ public class ServiceHistoryActivity extends AppCompatActivity {
                         String ticketId = ds.child("ticketId").getValue(String.class);
                         String status = ds.child("status").getValue(String.class);
                         Double total = ds.child("totalAmount").getValue(Double.class);
-                        
-                        // BUILD SUMMARY BASED ON BLUEPRINT ITEMS
+
                         StringBuilder summaryBuilder = new StringBuilder();
                         if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment")) summaryBuilder.append("Filter PM, ");
                         if (hasQty(ds, "qty_wayvalve")) summaryBuilder.append("Install Kit, ");

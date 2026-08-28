@@ -149,11 +149,10 @@ public class WorkPerformanceActivity extends AppCompatActivity {
 
     private void updateUI(int total, int m1, int m2, int m3) {
         tvTotalTasks.setText(String.valueOf(total));
-        tvMonth1Tasks.setText(m1 + " / 7 tasks"); // Changed to show out of 7
-        tvMonth2Tasks.setText(m2 + " / 7 tasks"); // Changed to show out of 7
-        tvMonth3Tasks.setText(m3 + " / 7 tasks"); // Changed to show out of 7
+        tvMonth1Tasks.setText(m1 + " / 7 tasks");
+        tvMonth2Tasks.setText(m2 + " / 7 tasks");
+        tvMonth3Tasks.setText(m3 + " / 7 tasks");
 
-        // Progress bar: Max is 7 tasks
         int maxTasks = 7;
         pbMonth1.setMax(maxTasks);
         pbMonth1.setProgress(Math.min(m1, maxTasks));
@@ -164,7 +163,6 @@ public class WorkPerformanceActivity extends AppCompatActivity {
         pbMonth3.setMax(maxTasks);
         pbMonth3.setProgress(Math.min(m3, maxTasks));
 
-        // Message based on total tasks
         if (total == 0) {
             tvPerfMessage.setText("LET'S GET STARTED TODAY!");
         } else if (total <= 5) {

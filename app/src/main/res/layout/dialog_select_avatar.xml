@@ -32,7 +32,7 @@
             android:textColor="#888888"
             android:textSize="12sp" />
 
-        <!-- FIXED: Added clipToPadding="false" and better padding -->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAvatars"
             android:layout_width="match_parent"

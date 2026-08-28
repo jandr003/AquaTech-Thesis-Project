@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- HEADER SECTION -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/adminHeader"
             android:layout_width="match_parent"
@@ -105,7 +104,6 @@
                 android:paddingHorizontal="16dp"
                 android:paddingBottom="24dp">
 
-                <!-- MAIN STATISTICS GRID -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -359,7 +357,6 @@
                     </GridLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- QUICK PANELS SECTION -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -370,7 +367,6 @@
                     android:textColor="#333333"
                     android:textSize="14sp" />
 
-                <!-- Button 1: Technician Performance (Toned Down Blue) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardActionTechPerf"
                     android:layout_width="match_parent"
@@ -438,7 +434,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Button 2: Recent Activity (Toned Down Blue) -->
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardActionLogs"
                     android:layout_width="match_parent"
@@ -506,7 +502,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Button 3: Manage Technicians (Toned Down Blue) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardActionManageTechs"
                     android:layout_width="match_parent"

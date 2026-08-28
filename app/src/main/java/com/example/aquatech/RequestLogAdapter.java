@@ -31,29 +31,22 @@ public class RequestLogAdapter extends RecyclerView.Adapter<RequestLogAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RequestLogModel item = logList.get(position);
 
-        // Ticket ID
         holder.tvTicketID.setText(item.getTicketId());
-
-        // Customer ID (use the new field)
         holder.tvCustomerID.setText(item.getCustomerId());
-
-        // Status
         String status = item.getStatus();
         holder.tvStatus.setText(status);
 
-        // Set status color and background
         if ("Completed".equalsIgnoreCase(status)) {
             holder.tvStatus.setTextColor(Color.parseColor("#4CAF50"));
             holder.tvStatus.setBackgroundResource(R.drawable.status_circle_green);
         } else if ("In Progress".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
             holder.tvStatus.setTextColor(Color.parseColor("#FF9800"));
-            holder.tvStatus.setBackgroundResource(R.drawable.status_circle_orange); // you need to create this
+            holder.tvStatus.setBackgroundResource(R.drawable.status_circle_orange);
         } else {
             holder.tvStatus.setTextColor(Color.parseColor("#9E9E9E"));
-            holder.tvStatus.setBackgroundResource(R.drawable.status_circle_gray);   // you need to create this
+            holder.tvStatus.setBackgroundResource(R.drawable.status_circle_gray);
         }
 
-        // Optionally display technician name in the SRO field (or any other field)
         holder.tvSRO.setText(item.getTechName());
     }
 

@@ -34,10 +34,8 @@ public class AquaTimePickerDialog {
             int selectedMinute = picker.getMinute();
 
             if (selectedHour < OFFICE_START_HOUR || selectedHour >= OFFICE_END_HOUR) {
-                // Show error or just reset to a valid time
                 String message = "Please select a time between 8:00 AM and 5:00 PM.";
-                // You can show a Toast here if you have context
-                return; // Or reset the time
+                return;
             }
 
             String startTime = formatTime(selectedHour, selectedMinute);
@@ -59,7 +57,6 @@ public class AquaTimePickerDialog {
     }
 
     public static void showEnd(FragmentManager fm, final String startTimeStr, OnTimePicked callback) {
-        // Parse start time to set minimum for end time
         Calendar startCal = Calendar.getInstance();
         if (startTimeStr != null && !startTimeStr.equals("---")) {
             try {
@@ -87,7 +84,6 @@ public class AquaTimePickerDialog {
             int selectedMinute = picker.getMinute();
 
             if (selectedHour > OFFICE_END_HOUR || (selectedHour == OFFICE_END_HOUR && selectedMinute > 0)) {
-                // Reset to 5:00 PM if out of bounds
                 selectedHour = OFFICE_END_HOUR;
                 selectedMinute = 0;
             }

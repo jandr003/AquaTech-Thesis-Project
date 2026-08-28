@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Handle Bar -->
+
         <View
             android:layout_width="40dp"
             android:layout_height="4dp"
@@ -22,7 +22,7 @@
             android:layout_marginBottom="20dp"
             android:background="#E0E0E0" />
 
-        <!-- Profile Title -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <!-- Profile Card -->
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,14 +94,13 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Underline Divider sa gitna ng Profile Info at Edit Profile -->
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="12dp"
                     android:background="#F5F5F5" />
 
-                <!-- Edit Profile Option -->
                 <LinearLayout
                     android:id="@+id/bsEditProfileOption"
                     android:layout_width="match_parent"
@@ -132,12 +131,12 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Spacer -->
+
         <View
             android:layout_width="match_parent"
             android:layout_height="16dp" />
 
-        <!-- History Option (Service Forms) -->
+
         <LinearLayout
             android:id="@+id/bsHistoryOption"
             android:layout_width="match_parent"
@@ -166,7 +165,7 @@
                 android:textSize="15sp" />
         </LinearLayout>
 
-        <!-- Logout Item -->
+
         <LinearLayout
             android:id="@+id/bsLogoutOption"
             android:layout_width="match_parent"

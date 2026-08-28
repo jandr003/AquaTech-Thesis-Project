@@ -52,18 +52,15 @@ public class AdminDashboardActivity extends AppCompatActivity {
         tvOverdueCount = findViewById(R.id.tvOverdueCount);
         tvAdminName = findViewById(R.id.tvAdminName);
 
-        // Stats Cards (Original Click Listeners)
         findViewById(R.id.cardInProgress).setOnClickListener(v ->
                 startActivity(new Intent(this, TrackTechniciansActivity.class))
         );
         findViewById(R.id.cardOpen).setOnClickListener(v -> startActivity(new Intent(this, OpenRequestsActivity.class)));
         findViewById(R.id.cardCompleted).setOnClickListener(v -> startActivity(new Intent(this, CompletedRequestsActivity.class)));
         findViewById(R.id.cardSubmissions).setOnClickListener(v -> startActivity(new Intent(this, SubmissionsActivity.class)));
-        
-        // Header
+
         findViewById(R.id.adminAvatar).setOnClickListener(v -> showAdminProfileDialog());
 
-        // Quick Panels Listeners
         findViewById(R.id.cardActionTechPerf).setOnClickListener(v -> {
             startActivity(new Intent(this, TechnicianPerformanceListActivity.class));
         });
@@ -133,8 +130,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         
         if (email.equals("management@aquasmartguard.ph")) dialogName.setText("Glenn Jean");
         else if (email.equals("admin@aquasmartguard.ph")) dialogName.setText("John Andrew");
-        
-        // Removed btnAdminLogs and btnManageTechs as they were removed from the XML layout
+
 
         View btnDialogSettings = dialog.findViewById(R.id.btnDialogSettings);
         if (btnDialogSettings != null) {

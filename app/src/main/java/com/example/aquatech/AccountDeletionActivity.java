@@ -21,14 +21,10 @@ public class AccountDeletionActivity extends AppCompatActivity {
 
         setupStatusBar();
 
-        // Back Button
         findViewById(R.id.btnBackDelete).setOnClickListener(v -> finish());
 
-        // Confirm Deletion Button
         MaterialButton btnConfirm = findViewById(R.id.btnConfirmDelete);
         btnConfirm.setOnClickListener(v -> {
-            // Dito natin ilalagay ang actual deletion logic sa future
-            // Sa ngayon, magpapakita muna tayo ng Toast at babalik sa Splash
             deleteAccount();
         });
     }

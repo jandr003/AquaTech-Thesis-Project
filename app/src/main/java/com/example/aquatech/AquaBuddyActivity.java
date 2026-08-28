@@ -97,7 +97,6 @@ public class AquaBuddyActivity extends AppCompatActivity {
             handleIncomingFiles(); 
             setupNotificationMonitor();
 
-            // ✅ Greeting if it's a new session or forced from dashboard
             checkAndSendInitialGreeting();
         } else {
             addMessageToUI("Hello there, buddy! I'm AquaBuddy, your friendly assistant. How's your day going? I'm here to help you with your water dispenser needs!", false, false);
@@ -229,9 +228,8 @@ public class AquaBuddyActivity extends AppCompatActivity {
                     if (techId != null) assignedTechId = techId;
                     if (techName != null) assignedTechName = techName;
 
-                    // Advice about long waiting
+
                     if ("Assigned".equalsIgnoreCase(status) || "In Progress".equalsIgnoreCase(status)) {
-                        // Check timestamp if it's taking too long (simulation for now)
                     }
                 }
             }
@@ -263,7 +261,7 @@ public class AquaBuddyActivity extends AppCompatActivity {
             String text = etMessage.getText().toString().trim();
             if (!text.isEmpty()) {
                 saveMessage(text, true, false);
-                handleInternalLogic(text); // Check for keywords first
+                handleInternalLogic(text);
                 etMessage.setText("");
                 resetInactivityTimer();
             }
@@ -272,26 +270,22 @@ public class AquaBuddyActivity extends AppCompatActivity {
 
     private void handleInternalLogic(String text) {
         String input = text.toLowerCase();
-        
-        // 1. Solution for Installation Kit
+
         if (input.contains("installation") || input.contains("kit")) {
             sendBotMessage("Oh, about the <b>Installation Kit</b>, buddy! It usually includes the way valve and connectors. The price is around <b>₱500 - ₱800</b> depending on your unit. Need me to assist with a request for this?");
             return;
         }
-        
-        // 2. Solution for Filter Preventive
+
         if (input.contains("filter") || input.contains("preventive") || input.contains("maintenance")) {
             sendBotMessage("Maintenance is important, buddy! Our <b>Filter Preventive Maintenance</b> package (CBC, Sediment, SMSF) usually costs <b>₱1,200 - ₱2,500</b>. This keeps your water fresh and safe!");
             return;
         }
-        
-        // 3. Solution for Other Parts
+
         if (input.contains("parts") || input.contains("board") || input.contains("uv") || input.contains("panel")) {
             sendBotMessage("Looking for <b>Other Parts</b>, buddy? UV Lamps, PBC Boards, and Touch Panels range from <b>₱800 to ₱3,500</b>. Just let me know the specific part so I can help you better!");
             return;
         }
-        
-        // 4. Technician Advice
+
         if (input.contains("ang tagal") || input.contains("super late") || input.contains("tagal ng technician") || input.contains("waiting")) {
             if (assignedTechId != null) {
                 sendBotMessage("I'm sorry if it's taking a while, buddy. You can actually <b>call your technician</b> (" + assignedTechName + ") directly through the 'Voice Call' button in your active request screen to check their location!");
@@ -301,7 +295,6 @@ public class AquaBuddyActivity extends AppCompatActivity {
             return;
         }
 
-        // Default to Dialogflow for general conversation
         sendMessageToBot(text);
     }
 

@@ -24,16 +24,13 @@ public class TermsAndConditionActivity extends AppCompatActivity {
         cbAgree = findViewById(R.id.cbAgreeTerms);
         btnAccept = findViewById(R.id.btnAcceptTerms);
 
-        // Back Button
         findViewById(R.id.btnBackTerms).setOnClickListener(v -> finish());
 
-        // Checkbox Logic
         cbAgree.setOnCheckedChangeListener((buttonView, isChecked) -> {
             btnAccept.setEnabled(isChecked);
             btnAccept.setAlpha(isChecked ? 1.0f : 0.5f);
         });
 
-        // Accept Button
         btnAccept.setOnClickListener(v -> finish());
     }
 

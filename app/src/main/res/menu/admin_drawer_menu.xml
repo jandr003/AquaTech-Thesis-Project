@@ -5,7 +5,7 @@
             android:id="@+id/nav_admin_panel"
             android:icon="@android:drawable/ic_lock_lock"
             android:title="Proceed as Admin"
-            android:visible="false" /> <!-- FORCE HIDDEN BY DEFAULT -->
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_tech_profile"

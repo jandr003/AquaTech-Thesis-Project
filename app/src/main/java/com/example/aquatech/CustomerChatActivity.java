@@ -108,7 +108,7 @@ public class CustomerChatActivity extends AppCompatActivity {
             setupFirebaseChatListener();
             setupNotificationMonitor();
             fetchMetaData();
-            fetchOtherPartyRealName(); // 🛠️ Fetch real name from Users node
+            fetchOtherPartyRealName();
             markAsRead();
         } else {
             Toast.makeText(this, "Connection error. Please try again.", Toast.LENGTH_LONG).show();

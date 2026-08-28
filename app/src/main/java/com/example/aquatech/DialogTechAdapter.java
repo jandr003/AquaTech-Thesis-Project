@@ -40,16 +40,13 @@ public class DialogTechAdapter extends RecyclerView.Adapter<DialogTechAdapter.Vi
         String name = tech.get("name");
         String uid = tech.get("uid");
         String techIdStr = tech.get("techId");
-        String status = tech.get("status"); // ✅ Now we get status from the map
+        String status = tech.get("status");
 
-        // Display name
         String displayName = (name != null && !name.isEmpty()) ? name : "Unknown Technician";
         holder.tvName.setText(displayName);
 
-        // Display tech ID
         holder.tvId.setText(techIdStr != null ? techIdStr : "N/A");
 
-        // Display status with appropriate color
         if ("Busy".equalsIgnoreCase(status)) {
             holder.tvStatus.setText("Currently performing a task (Busy)");
             holder.tvStatus.setTextColor(Color.parseColor("#FF5252"));
@@ -58,7 +55,6 @@ public class DialogTechAdapter extends RecyclerView.Adapter<DialogTechAdapter.Vi
             holder.tvStatus.setTextColor(Color.parseColor("#8BC34A"));
         }
 
-        // Click listener
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onTechClick(displayName, uid != null ? uid : "");

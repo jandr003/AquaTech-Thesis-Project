@@ -228,7 +228,6 @@
             android:theme="@style/Theme.AquaTech"
             tools:ignore="LockedOrientationActivity" />
 
-        <!-- NEW: Work Performance Activity -->
         <activity
             android:name=".WorkPerformanceActivity"
             android:exported="false"
@@ -370,7 +369,6 @@
             android:theme="@style/Theme.AquaTech"
             tools:ignore="LockedOrientationActivity" />
 
-        <!-- NEW: Monthly Analytics Registered -->
         <activity
             android:name=".MonthlyAnalyticsActivity"
             android:exported="false"
@@ -378,7 +376,6 @@
             android:theme="@style/Theme.AquaTech"
             tools:ignore="LockedOrientationActivity" />
 
-        <!-- NEW: Technician Performance List Registered -->
         <activity
             android:name=".TechnicianPerformanceListActivity"
             android:exported="false"

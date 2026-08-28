@@ -107,7 +107,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
     private Uri proofUri;
     private String currentRemarks = "";
 
-    // ✅ Declare listener fields
     private ChildEventListener notifListener;
     private ValueEventListener tasksListener;
     private ValueEventListener messagesListener;
@@ -165,18 +164,15 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
     }
 
     private void fetchTechNameAndInitFirebase(String uid) {
-        // UNA: Subukan sa "Users" node (original)
         DatabaseReference usersRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
         usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // Nasa Users node
                     String name = snapshot.child("fullName").getValue(String.class);
                     if (name != null && !name.isEmpty()) {
                         currentTechName = name.trim();
                     } else {
-                        // Subukan ang "name" field
                         name = snapshot.child("name").getValue(String.class);
                         if (name != null && !name.isEmpty()) {
                             currentTechName = name.trim();
@@ -185,7 +181,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                     setupNavHeader();
                     initializeFirebaseListeners(uid);
                 } else {
-                    // KUNG WALA sa Users, subukan sa "Technicians" node
                     DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(uid);
                     techRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -198,7 +193,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                                     currentTechName = name.trim();
                                 }
                             } else {
-                                // Wala sa pareho, gamitin ang default
                                 setupNavHeader();
                             }
                             if (currentTechName == null || currentTechName.isEmpty())
@@ -221,7 +215,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Fallback sa Technicians node kung may error sa Users
                 DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(uid);
                 techRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -251,7 +244,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
     }
 
     private void fetchUidFromEmailAndInit(String email) {
-        // Subukan muna sa Users node
         DatabaseReference usersRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users");
         usersRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -269,7 +261,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                     setupNavHeader();
                     initializeFirebaseListeners(currentTechUid);
                 } else {
-                    // Kung wala sa Users, subukan sa Technicians
                     DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians");
                     techRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -287,7 +278,7 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                                 }
                             } else {
                                 setupNavHeader();
-                                currentTechUid = email; // fallback
+                                currentTechUid = email;
                             }
                             setupNavHeader();
                             initializeFirebaseListeners(currentTechUid);
@@ -305,7 +296,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Fallback sa Technicians
                 DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians");
                 techRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -384,7 +374,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                             ds.getRef().child("assignedTechId").setValue(currentTechUid);
                         }
 
-                        // ✅ Show task on dashboard if it's active, pending submission, or waiting for approval
                         if ("In Progress".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status) ||
                                 "Arrived".equalsIgnoreCase(status) || "Submission".equalsIgnoreCase(status) ||
                                 "Submitted".equalsIgnoreCase(status) || "Rejected".equalsIgnoreCase(status)) {
@@ -443,7 +432,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
             return;
         }
 
-        // ✅ Kunin ang signature ng technician bago i-update
         DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL)
                 .getReference("Technicians").child(currentTechUid).child("signature");
 
@@ -452,14 +440,12 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String signature = snapshot.getValue(String.class);
                 if (signature == null || signature.isEmpty()) {
-                    // Kung walang naka-save na signature, gumamit ng default (signature1_png)
                     signature = "signature1_png";
                     Log.d("SIGNATURE", "No signature found, using default: " + signature);
                 } else {
                     Log.d("SIGNATURE", "Found signature: " + signature);
                 }
 
-                // ✅ I-update ang ticket kasama ang signature
                 Map<String, Object> updates = new HashMap<>();
                 updates.put("status", "In Progress");
                 updates.put("assignedTechId", currentTechUid);
@@ -470,13 +456,10 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                 requestsRef.child(dbKey).updateChildren(updates)
                         .addOnSuccessListener(aVoid -> {
                             AdminDashboardActivity.addAdminLog("Technician " + currentTechName + " accepted ticket #" + ticketId);
-
-                            // ✅ Send notification to customer
                             if (customerId != null && !customerId.isEmpty()) {
                                 String htmlMsg = "<b>Technician Accepted!</b><br>Technician " + currentTechName + " has accepted your ticket #" + ticketId;
                                 NotificationActivity.addNotification(customerId.trim(), htmlMsg, "CHAT", ticketId);
 
-                                // ✅ Send chat messages
                                 sendAcceptanceChatMessage(customerId.trim(), ticketId, customerName, htmlMsg);
                             } else {
                                 Log.e("ACCEPT_ERROR", "customerId is null or empty, cannot send chat message");
@@ -536,14 +519,13 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
 
         Log.d("CHAT_DEBUG", "Creating chat with ID: " + chatId);
 
-        // 1. System message (technician accepted)
         DatabaseReference systemMsgRef = chatRef.child("messages").push();
         Map<String, Object> systemMessage = new HashMap<>();
         systemMessage.put("text", htmlMsg);
         systemMessage.put("senderId", currentTechUid);
         systemMessage.put("timestamp", ServerValue.TIMESTAMP);
         systemMessage.put("system", true);
-        systemMessage.put("isUser", false); // para sa backward compatibility
+        systemMessage.put("isUser", false);
 
         systemMsgRef.setValue(systemMessage).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -554,7 +536,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
             }
         });
 
-        // 2. Welcome message (technician's first actual message)
         String welcomeText = "Hello! I'm Technician " + currentTechName + ". I've accepted your ticket #" + ticketId;
         DatabaseReference welcomeMsgRef = chatRef.child("messages").push();
         Map<String, Object> welcomeMessage = new HashMap<>();
@@ -562,8 +543,7 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         welcomeMessage.put("senderId", currentTechUid);
         welcomeMessage.put("timestamp", ServerValue.TIMESTAMP);
         welcomeMessage.put("system", false);
-        welcomeMessage.put("isUser", false); // technician ang nagpadala, kaya false ang isUser
-
+        welcomeMessage.put("isUser", false);
         welcomeMsgRef.setValue(welcomeMessage).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d("CHAT_DEBUG", "Welcome message sent successfully");
@@ -573,7 +553,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
             }
         });
 
-        // 3. Update chat metadata (for displaying in chat list)
         Map<String, Object> metadata = new HashMap<>();
         metadata.put("customerName", customerName != null ? customerName : "Customer");
         metadata.put("techName", currentTechName);
@@ -720,7 +699,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         if (isFinishing() || isDestroyed()) return;
         SimpleDateFormat df = new SimpleDateFormat("dd", Locale.getDefault()), mf = new SimpleDateFormat("MMM", Locale.getDefault());
 
-        // ✅ Check kung talagang may active task at existing ito
         boolean hasActive = (activeTaskSnapshot != null && activeTaskSnapshot.exists());
 
         if (hasActive) {
@@ -750,13 +728,13 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                 if (btnActionInProg != null) {
                     if ("Submission".equalsIgnoreCase(status) || "Submitted".equalsIgnoreCase(status)) {
                         btnActionInProg.setText("REPORT");
-                        btnActionInProg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFC107"))); // Yellow
+                        btnActionInProg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFC107")));
                     } else if ("Rejected".equalsIgnoreCase(status)) {
                         btnActionInProg.setText("REPORT");
-                        btnActionInProg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#28A745"))); // Green
+                        btnActionInProg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#28A745")));
                     } else {
                         btnActionInProg.setText("TRACK");
-                        btnActionInProg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4B91C6"))); // Blue
+                        btnActionInProg.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4B91C6")));
                     }
                 }
 
@@ -1137,8 +1115,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
 
             String fileName = "report_" + System.currentTimeMillis() + ".jpg";
             StorageReference fileRef = storageRef.child("Reports/" + fileName);
-
-            // ✅ UPDATED — may isFinishing() check na
             fileRef.putFile(proofUri)
                     .addOnSuccessListener(ts -> {
                         if (isFinishing() || isDestroyed()) return;
@@ -1188,7 +1164,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                     updates.put("submissionTimestamp", ServerValue.TIMESTAMP);
 
                     requestsRef.child(ticketId).updateChildren(updates).addOnCompleteListener(t -> {
-                        // ✅ CHECK MUNA BAGO GALAWIN ANG UI
                         if (isFinishing() || isDestroyed()) {
                             try { pd.dismiss(); } catch (Exception ignored) {}
                             return;
@@ -1217,7 +1192,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
     protected void onDestroy() {
         super.onDestroy();
 
-        // ✅ Remove Firebase listeners to prevent memory leaks
         if (notifRef != null && notifListener != null) {
             notifRef.removeEventListener(notifListener);
         }
@@ -1227,8 +1201,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         if (userChatsRef != null && messagesListener != null) {
             userChatsRef.removeEventListener(messagesListener);
         }
-
-        // ✅ Remove any other resources if needed
         if (reportDialog != null && reportDialog.isShowing()) {
             reportDialog.dismiss();
         }

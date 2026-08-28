@@ -5,7 +5,6 @@
     android:viewportWidth="24"
     android:viewportHeight="24">
 
-    <!-- Path para sa ">" shape -->
     <path
         android:fillColor="#575757"
         android:pathData="M9,6 L15,12 L9,18"

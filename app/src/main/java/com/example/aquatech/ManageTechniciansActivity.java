@@ -164,14 +164,12 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 allTechs.clear();
-                techToUidMap.clear(); // Clear mapping
+                techToUidMap.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     TechnicianModel tech = ds.getValue(TechnicianModel.class);
                     if (tech != null) {
                         String uid = ds.getKey();
-                        techToUidMap.put(tech.email != null ? tech.email : uid, uid); // Map email/UID to key
-                        
-                        // If DB techId is UID or missing, we keep it for display but priority is ASC-T
+                        techToUidMap.put(tech.email != null ? tech.email : uid, uid);
                         if (tech.techId == null || tech.techId.isEmpty() || tech.techId.length() > 15) {
                              tech.techId = uid; 
                         }
@@ -213,9 +211,8 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
 
     @Override
     public void onDeleteTech(TechnicianModel tech) {
-        // 📍 FIND THE REAL DATABASE KEY (UID)
         String uidToDelete = techToUidMap.get(tech.email);
-        if (uidToDelete == null) uidToDelete = tech.techId; // Fallback if UID was used as ID
+        if (uidToDelete == null) uidToDelete = tech.techId;
 
         final String finalUid = uidToDelete;
 
@@ -224,8 +221,7 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
                 .setMessage("Are you sure you want to PERMANENTLY REMOVE " + tech.fullName + "?\n\nThis will delete them from the database and assignment lists.")
                 .setPositiveButton("Delete Permanently", (dialog, which) -> {
                     DatabaseReference rootRef = FirebaseDatabase.getInstance(DB_URL).getReference();
-                    
-                    // 📍 REAL DELETION from both nodes
+
                     Map<String, Object> updates = new HashMap<>();
                     updates.put("/Users/" + finalUid, null);
                     updates.put("/Technicians/" + finalUid, null);

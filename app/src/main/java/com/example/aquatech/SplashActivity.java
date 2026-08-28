@@ -54,7 +54,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-    // ✅ LISTAHAN NG LAHAT NG TECHNICIAN EMAILS (Super accounts that bypass checks)
     private final Set<String> TECHNICIAN_EMAILS = new HashSet<>(Arrays.asList(
             "jhonny.s@aquasmartguard.ph",
             "rarcilla@aquasmartguard.ph",
@@ -66,7 +65,6 @@ public class SplashActivity extends AppCompatActivity {
             "smjr@aquasmartguard.ph"
     ));
 
-    // ✅ LISTAHAN NG ADMIN EMAILS
     private final Set<String> ADMIN_EMAILS = new HashSet<>(Arrays.asList(
             "admin@aquasmartguard.ph",
             "management@aquasmartguard.ph"
@@ -111,13 +109,11 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
-        // --- BYPASS LOGIC (admin123) ---
         if (password.equals("admin123")) {
             loginWithBypass(input);
             return;
         }
 
-        // --- REGULAR FIREBASE LOGIN ---
         if (loginProgress != null) loginProgress.setVisibility(View.VISIBLE);
         findViewById(R.id.btnLogin).setEnabled(false);
 
@@ -129,7 +125,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void loginWithBypass(String input) {
-        // ✅ DIRECT CHECK: Kung technician email
         if (TECHNICIAN_EMAILS.contains(input)) {
             startActivity(new Intent(this, TechnicianDashboardActivity.class)
                     .putExtra("USER_EMAIL", input));
@@ -137,7 +132,6 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
-        // ✅ DIRECT CHECK: Kung admin email
         if (ADMIN_EMAILS.contains(input)) {
             startActivity(new Intent(this, AdminDashboardActivity.class)
                     .putExtra("USER_EMAIL", input));
@@ -145,7 +139,6 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
-        // Kung hindi direct match, hanapin sa database
         if (loginProgress != null) loginProgress.setVisibility(View.VISIBLE);
         findViewById(R.id.btnLogin).setEnabled(false);
 
@@ -192,7 +185,6 @@ public class SplashActivity extends AppCompatActivity {
         String cleanRole = role != null ? role.trim().toLowerCase() : "";
         String cleanStatus = status != null ? status.trim().toLowerCase() : "active";
 
-        // ✅ Check Status for Technicians
         if ("technician".equals(cleanRole)) {
             if ("pending".equals(cleanStatus)) {
                 handleLoginError("Account pending approval. Please wait for the admin to verify your account.");
@@ -209,7 +201,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startDashboardWithEmail(String email, String role) {
-        // ✅ DIRECT CHECK: Kung technician email (kahit anong role)
         if (TECHNICIAN_EMAILS.contains(email)) {
             startActivity(new Intent(this, TechnicianDashboardActivity.class)
                     .putExtra("USER_EMAIL", email));
@@ -217,7 +208,6 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
-        // ✅ DIRECT CHECK: Kung admin email
         if (ADMIN_EMAILS.contains(email)) {
             startActivity(new Intent(this, AdminDashboardActivity.class)
                     .putExtra("USER_EMAIL", email));
@@ -225,7 +215,6 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
-        // Kung hindi, sundin ang role
         String cleanRole = role != null ? role.trim().toLowerCase() : "";
         Intent intent;
         if ("admin".equals(cleanRole)) {
@@ -277,7 +266,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkUserRoleAndRedirect(String uid, String email) {
-        // ✅ DIRECT CHECK: Kung technician email (kahit anong role)
         if (TECHNICIAN_EMAILS.contains(email)) {
             startActivity(new Intent(this, TechnicianDashboardActivity.class)
                     .putExtra("USER_EMAIL", email));
@@ -285,7 +273,6 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
-        // ✅ DIRECT CHECK: Kung admin email
         if (ADMIN_EMAILS.contains(email)) {
             startActivity(new Intent(this, AdminDashboardActivity.class)
                     .putExtra("USER_EMAIL", email));
@@ -293,7 +280,6 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
-        // Kung hindi, check database
         dbRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

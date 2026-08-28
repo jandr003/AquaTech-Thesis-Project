@@ -72,10 +72,9 @@ public class CompletedRequestsActivity extends AppCompatActivity {
                     String status = ds.child("status").getValue(String.class);
 
                     if (status != null && status.equalsIgnoreCase("Completed")) {
-                        // 📍 KEY FIX: Get REAL Customer Name
                         String customerName = ds.child("customerName").getValue(String.class);
                         if (customerName == null || customerName.isEmpty()) {
-                            customerName = ds.child("name").getValue(String.class); // subukan ang ibang field
+                            customerName = ds.child("name").getValue(String.class);
                         }
                         
                         String ticketId = ds.child("ticketId").getValue(String.class);
@@ -92,7 +91,6 @@ public class CompletedRequestsActivity extends AppCompatActivity {
                             completionTime = sdf.format(new Date(timestamp));
                         }
 
-                        // Populate Model correctly
                         ServiceLogModel model = new ServiceLogModel();
                         model.setSroNumber(ticketId);
                         model.setCustomerName(customerName != null ? customerName : "Real Name Unknown");

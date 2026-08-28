@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/aqua_background">
 
-    <!-- Header Section -->
     <View
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -57,7 +56,6 @@
             android:clipChildren="false"
             android:clipToPadding="false">
 
-            <!-- Profile Image Section -->
             <FrameLayout
                 android:layout_width="120dp"
                 android:layout_height="120dp"
@@ -113,7 +111,6 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <!-- Choose Background Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -153,7 +150,6 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <!-- Input Fields Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- 1. ICON -->
+
         <View
             android:id="@+id/iconBg"
             android:layout_width="48dp"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="@id/iconBg"
             app:tint="@color/aqua_primary" />
 
-        <!-- 2. TICKET ID -->
+
         <TextView
             android:id="@+id/tvHistoryTicketId"
             android:layout_width="0dp"
@@ -49,7 +49,7 @@
             app:layout_constraintStart_toEndOf="@id/iconBg"
             app:layout_constraintTop_toTopOf="@id/iconBg" />
 
-        <!-- 3. ITEMS CHOSEN -->
+
         <TextView
             android:id="@+id/tvHistoryItems"
             android:layout_width="0dp"
@@ -63,7 +63,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvHistoryTicketId"
             app:layout_constraintEnd_toStartOf="@id/tvHistoryPrice" />
 
-        <!-- 4. DATE AND TIME -->
+
         <TextView
             android:id="@+id/tvHistoryDate"
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
             app:layout_constraintStart_toStartOf="@id/tvHistoryItems"
             app:layout_constraintTop_toBottomOf="@id/tvHistoryItems" />
 
-        <!-- 5. PRICE & STATUS (Right Side) -->
+
         <TextView
             android:id="@+id/tvHistoryPrice"
             android:layout_width="wrap_content"

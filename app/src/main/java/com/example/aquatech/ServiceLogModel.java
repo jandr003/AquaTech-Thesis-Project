@@ -4,33 +4,27 @@ public class ServiceLogModel {
     private String sroNumber;
     private String ticketId;
     private String techName;
-    private String techUid;          // ✅ technician UID (para sa reject)
+    private String techUid;
     private String techRole;
     private String dateTime;
     private String techPhone;
-    private String customerName;      // ✅ customer name
+    private String customerName;
     private String customerPhone;
     private String address;
     private String techId;
     private String status;
-    private String userId;            // 🔑 Added for Chat functionality
+    private String userId;
     private double latitude;
     private double longitude;
     private double techLat;
     private double techLng;
     private double totalAmount;
-
-    // ✅ NEW FIELDS for completed requests
     private String remarks;
     private String proofUrl;
     private String feedback;
     private String preferredTime;
-
-    // Optional, but used in CompletedRequestsActivity
     private String serviceTypeLabel;
     private String completionTime;
-
-    // Constructors
     public ServiceLogModel() {}
 
     public ServiceLogModel(String sroNumber, String techName, String techRole, String status, String customerPhone) {
@@ -41,7 +35,6 @@ public class ServiceLogModel {
         this.customerPhone = customerPhone;
     }
 
-    // Constructor used in CompletedRequestsActivity (maps customerName → techName, serviceTypeLabel → techRole, completionTime → dateTime)
     public ServiceLogModel(String sroNumber, String techName, String techRole, String dateTime, String address, double latitude, double longitude) {
         this.sroNumber = sroNumber;
         this.techName = techName;
@@ -52,7 +45,6 @@ public class ServiceLogModel {
         this.longitude = longitude;
     }
 
-    // Getters and Setters
     public String getTicketId() { return ticketId != null ? ticketId : sroNumber; }
     public void setTicketId(String ticketId) { this.ticketId = ticketId; }
 
@@ -107,7 +99,6 @@ public class ServiceLogModel {
     public double getTotalAmount() { return totalAmount; }
     public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
 
-    // ✅ NEW GETTERS AND SETTERS
     public String getRemarks() { return remarks; }
     public void setRemarks(String remarks) { this.remarks = remarks; }
 
@@ -120,7 +111,6 @@ public class ServiceLogModel {
     public String getPreferredTime() { return preferredTime; }
     public void setPreferredTime(String preferredTime) { this.preferredTime = preferredTime; }
 
-    // Optional, used in adapter display
     public String getCompletionTime() { return completionTime != null ? completionTime : dateTime; }
     public void setCompletionTime(String completionTime) { this.completionTime = completionTime; }
 }

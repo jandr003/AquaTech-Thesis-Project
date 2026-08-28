@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/aqua_background">
 
-    <!-- 1. BLUE HEADER GRADIENT -->
     <View
         android:id="@+id/notifHeader"
         android:layout_width="match_parent"

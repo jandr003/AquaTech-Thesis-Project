@@ -207,8 +207,7 @@ public class TrackServiceActivity extends AppCompatActivity {
         }
         techMarker.setPosition(techLoc);
         techMarker.setTitle(label);
-        
-        // Rate limiting: Update route and mins away at most every 3 seconds to save data/API
+
         long currentTime = System.currentTimeMillis();
         if (custLoc != null && (currentTime - lastRouteRequestTime > 3000)) {
             new FetchRouteTask(techLoc, custLoc).execute();
@@ -257,7 +256,6 @@ public class TrackServiceActivity extends AppCompatActivity {
             try {
                 JSONObject route = json.getJSONArray("routes").getJSONObject(0);
 
-                // REALTIME ETA CALCULATION (Mins update here)
                 double durationSeconds = route.getDouble("duration");
                 int minutes = (int) Math.ceil(durationSeconds / 60.0);
                 if (tvEta != null) {

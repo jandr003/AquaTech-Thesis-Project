@@ -41,11 +41,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         Calendar cal = Calendar.getInstance();
         cal.setTime(item.getDate());
 
-        // Set Day Name (Mon, Tue...) and Date Number
         holder.tvDayName.setText(new SimpleDateFormat("EEE", Locale.getDefault()).format(item.getDate()));
         holder.tvDateNumber.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
 
-        // Handle Status Dot Color
         int dotColor;
         switch (item.getStatus()) {
             case "COMPLETED": dotColor = Color.parseColor("#00C1A4"); break;
@@ -55,12 +53,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         }
         holder.vStatusDot.setBackgroundColor(dotColor);
 
-        // Handle Selection Style (Blue Pill)
         if (item.isSelected()) {
             holder.cvDay.setCardBackgroundColor(Color.parseColor("#2196F3"));
             holder.tvDayName.setTextColor(Color.WHITE);
             holder.tvDateNumber.setTextColor(Color.WHITE);
-            holder.vStatusDot.setBackgroundColor(Color.WHITE); // Make dot white on blue bg
+            holder.vStatusDot.setBackgroundColor(Color.WHITE);
             holder.cvDay.setCardElevation(6f);
         } else {
             holder.cvDay.setCardBackgroundColor(Color.TRANSPARENT);

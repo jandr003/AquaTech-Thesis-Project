@@ -41,7 +41,7 @@ public class AuditLogAdapter extends RecyclerView.Adapter<AuditLogAdapter.ViewHo
             holder.tvStatus.setBackgroundResource(R.drawable.status_circle_green);
         } else {
             holder.tvStatus.setTextColor(Color.parseColor("#FF9800"));
-            holder.tvStatus.setBackgroundResource(R.drawable.status_circle_green); // Pwedeng palitan ng orange drawable kung meron
+            holder.tvStatus.setBackgroundResource(R.drawable.status_circle_green);
         }
     }
 

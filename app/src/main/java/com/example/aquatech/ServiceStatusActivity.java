@@ -53,11 +53,10 @@ public class ServiceStatusActivity extends AppCompatActivity {
             return;
         }
 
-        // Point directly to this ticket
         requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId);
 
         initializeViews();
-        setupStatusListener(); // 📍 Start real-time sync
+        setupStatusListener();
     }
 
     private void initializeViews() {
@@ -86,7 +85,6 @@ public class ServiceStatusActivity extends AppCompatActivity {
     }
 
     private void setupStatusListener() {
-        // 📍 Listening real-time to the status field
         statusListener = requestsRef.child("status").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -98,9 +96,7 @@ public class ServiceStatusActivity extends AppCompatActivity {
                 } else if ("Ongoing".equals(status)) {
                     showOngoingScreen();
                 } else if ("Completed".equals(status) || "Submission".equals(status)) {
-                    // Close the status activity if it's already done elsewhere
                     if (isMaintenanceStarted && "Submission".equals(status)) {
-                        // handled by intent navigation in completeMaintenance()
                     } else {
                         finish();
                     }
@@ -150,7 +146,6 @@ public class ServiceStatusActivity extends AppCompatActivity {
             pd.dismiss();
             if (task.isSuccessful()) {
                 AdminDashboardActivity.addAdminLog("Technician started maintenance for ticket #" + ticketId);
-                // Listener will trigger showOngoingScreen()
             } else {
                 Toast.makeText(this, "Network Error: Failed to start service", Toast.LENGTH_SHORT).show();
             }
@@ -176,7 +171,6 @@ public class ServiceStatusActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 AdminDashboardActivity.addAdminLog("Technician finished maintenance for ticket #" + ticketId);
 
-                // Immediate navigation to Dashboard for report submission
                 Intent intent = new Intent(ServiceStatusActivity.this, TechnicianDashboardActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);;
                 startActivity(intent);
@@ -209,7 +203,6 @@ public class ServiceStatusActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // 📍 Clean up listener to prevent ghost updates
         if (requestsRef != null && statusListener != null) {
             requestsRef.child("status").removeEventListener(statusListener);
         }

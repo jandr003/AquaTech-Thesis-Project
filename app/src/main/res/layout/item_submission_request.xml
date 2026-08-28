@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Ticket ID -->
+
         <TextView
             android:id="@+id/tvSubmitTicketID"
             android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Status Badge -->
+
         <TextView
             android:id="@+id/tvSubmitStatus"
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="@id/tvSubmitTicketID"
             app:layout_constraintBottom_toBottomOf="@id/tvSubmitTicketID"/>
 
-        <!-- Technician Name -->
+
         <TextView
             android:id="@+id/tvSubmitTechName"
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSubmitTicketID" />
 
-        <!-- Service Type -->
+
         <TextView
             android:id="@+id/tvSubmitServiceType"
             android:layout_width="0dp"
@@ -72,7 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSubmitTechName" />
 
-        <!-- Customer Name -->
+
         <TextView
             android:id="@+id/tvSubmitCustomer"
             android:layout_width="0dp"
@@ -86,7 +86,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSubmitServiceType" />
 
-        <!-- ACTION BUTTONS (NO EDIT) -->
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAdminArchive"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"

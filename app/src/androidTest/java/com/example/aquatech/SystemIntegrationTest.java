@@ -30,21 +30,19 @@ public class SystemIntegrationTest {
 
     @Test
     public void testFullSystemFlow() {
-        // --- STEP 1: CUSTOMER SIGNUP & REQUEST ---
         waitTime(12000); // Wait for Splash animations
         
         onView(withId(R.id.tvDontHaveAccount))
                 .check(matches(isDisplayed()))
                 .perform(click());
 
-        // Fill up fields with unique data (timestamp ensures bypass triggers)
         String timestamp = String.valueOf(System.currentTimeMillis());
         onView(withId(R.id.etUsername)).perform(typeText("user_" + timestamp), closeSoftKeyboard());
         onView(withId(R.id.etFullName)).perform(typeText("Juan Dela Cruz"), closeSoftKeyboard());
         onView(withId(R.id.etEmail)).perform(typeText("test_" + timestamp + "@gmail.com"), closeSoftKeyboard());
         onView(withId(R.id.etMobile)).perform(typeText("09123456789"), closeSoftKeyboard());
         onView(withId(R.id.etAddress)).perform(typeText("Manila, Philippines"), closeSoftKeyboard());
-        onView(withId(R.id.etPassword)).perform(typeText("Password123!"), closeSoftKeyboard());
+        onView(withId(R.id.etPassword)).perform(typeText("TestPassword123!"), closeSoftKeyboard());
         
         onView(isRoot()).perform(closeSoftKeyboard());
         
@@ -54,22 +52,18 @@ public class SystemIntegrationTest {
             onView(withId(R.id.btnSignUp)).perform(click());
         }
 
-        // Wait for Bypass to trigger
         waitTime(5000); 
 
-        // Unit Selection Screen
         onView(withId(R.id.whiteCardItem1)).perform(click());
         
         waitTime(3000);
         onView(withId(R.id.etUnitNumber)).perform(typeText("A-101"), closeSoftKeyboard());
-        
-        // SELECT PURCHASE TYPE from Spinner (REQUIRED)
+
         onView(withId(R.id.purchaseTypeDropdown)).perform(click());
-        onData(anything()).atPosition(1).perform(click()); // Select SUBSCRIPTION
+        onData(anything()).atPosition(1).perform(click());
         
         onView(withId(R.id.btnConfirm)).perform(click());
 
-        // --- CUSTOMER DASHBOARD ---
         waitTime(8000); 
         onView(withId(R.id.requestButton)).perform(click());
         
@@ -82,7 +76,6 @@ public class SystemIntegrationTest {
         
         waitTime(5000);
 
-        // --- STEP 2: VERIFY AS ADMIN (OPTIONAL IF BYPASS IS READY) ---
         activityRule.getScenario().onActivity(activity -> {
             Intent intent = new Intent(activity, SplashActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

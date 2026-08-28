@@ -72,7 +72,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private boolean isInitialRequestLoad = true;
     private boolean isInitialNotifLoad = true;
     private boolean isActivityInForeground = false;
-    private boolean hasRated = false; // para maiwasan ang multiple rating dialogs
+    private boolean hasRated = false;
 
     // For chat threads list
     private RecyclerView rvChatThreads;
@@ -384,8 +384,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private void setupServiceRequestMonitor() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) return;
-        
-        // Listen to ALL requests from this user to find any active ones
+
         monitorQuery = requestsRef.orderByChild("userId").equalTo(user.getUid());
         monitorListener = new ValueEventListener() {
             @Override
@@ -409,7 +408,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                            status.equalsIgnoreCase("Rejected");
 
                         if (!isFinished) {
-                            // Any status other than finished means an active request
                             hasActiveRequest = true;
                             currentRequestStatus = status;
                             currentTicketId = ds.getKey();
@@ -429,7 +427,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         } else if ("Completed".equalsIgnoreCase(status)) {
                             Boolean rated = ds.child("rated").getValue(Boolean.class);
                             if (rated == null || !rated) {
-                                // Potentially the last one that needs rating
                                 currentTicketId = ds.getKey();
                                 String tName = ds.child("assignedTechName").getValue(String.class);
                                 String tId = ds.child("assignedTechId").getValue(String.class);
@@ -607,7 +604,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             String currentTechId = callerTechId != null ? callerTechId : assignedTechId;
             String chatId = currentTechId + "_" + mAuth.getUid();
 
-            // 📍 REAL-TIME CALL FIX: Set status AND start time immediately
             Map<String, Object> callUpdates = new HashMap<>();
             callUpdates.put("callStatus", "active");
             callUpdates.put("callStartTime", ServerValue.TIMESTAMP);
@@ -665,7 +661,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         if (notificationIcon != null) notificationIcon.setOnClickListener(v -> startActivity(new Intent(this, NotificationActivity.class)));
         if (editPen != null) editPen.setOnClickListener(v -> unitSelectionLauncher.launch(new Intent(this, UnitSelectionActivity.class)));
 
-        // 📍 FIX: Harang sa pag-submit kung may ongoing request
         findViewById(R.id.requestButton).setOnClickListener(v -> {
             if (hasActiveRequest) {
                 showActiveRequestAlert();

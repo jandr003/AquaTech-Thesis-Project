@@ -133,7 +133,6 @@
                 app:layout_constraintStart_toStartOf="@+id/itemWlCubeFirewall01"
                 app:layout_constraintTop_toBottomOf="@+id/itemWlCubeFirewall01" />
 
-            <!-- REFERENCE NUMBER FIELD -->
             <TextView
                 android:id="@+id/tvReferenceNumberLabel"
                 android:layout_width="wrap_content"
@@ -147,7 +146,6 @@
                 app:layout_constraintStart_toStartOf="@+id/ItemSubName01"
                 app:layout_constraintTop_toBottomOf="@+id/ItemSubName01" />
 
-            <!-- UNIT NUMBER FIELD -->
 
             <EditText
                 android:id="@+id/etReferenceNumber"
@@ -176,7 +174,6 @@
                 app:layout_constraintStart_toStartOf="@+id/etReferenceNumber"
                 app:layout_constraintTop_toBottomOf="@+id/etReferenceNumber" />
 
-            <!-- PURCHASE TYPE FIELD -->
             <EditText
                 android:id="@+id/etUnitNumber"
                 android:layout_width="170dp"

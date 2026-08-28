@@ -8,7 +8,6 @@
     android:elevation="8dp"
     android:layout_margin="16dp">
 
-    <!-- TEXT CONTENT (Left Side) -->
     <LinearLayout
         android:id="@+id/textContainer"
         android:layout_width="0dp"
@@ -41,7 +40,7 @@
             android:layout_marginTop="1dp" />
     </LinearLayout>
 
-    <!-- OFFICIAL LOGO FRAME (Right Side - Shopee Style) -->
+
     <FrameLayout
         android:id="@+id/ivNotifIconFrame"
         android:layout_width="45dp"

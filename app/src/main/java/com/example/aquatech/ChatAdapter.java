@@ -32,13 +32,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ChatMessage> messageList;
     private int currentMode;
     private String otherPartyName = "";
-    private String currentUserId; // UID ng kasalukuyang user
+    private String currentUserId;
 
     public ChatAdapter(List<ChatMessage> messageList, int mode) {
         this.messageList = messageList;
         this.currentMode = mode;
 
-        // Kunin ang current user ID
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             this.currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         } else {
@@ -77,10 +76,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else {
             ChatViewHolder chatHolder = (ChatViewHolder) holder;
 
-            // ✅ Determine if message is from current user
             boolean isFromMe = message.getSenderId() != null && message.getSenderId().equals(currentUserId);
 
-            // For AquaBuddy mode (special case)
             if (currentMode == MODE_BOT) {
                 isFromMe = "user".equals(message.getSenderId());
             }
@@ -90,7 +87,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             chatHolder.tvMessage.setVisibility(View.VISIBLE);
 
-            // DATE HEADER
             boolean showDateHeader = false;
             if (position == 0) showDateHeader = true;
             else {
@@ -106,12 +102,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 chatHolder.tvDateHeader.setText(displayFmt.format(new Date(message.getTimestamp())));
             }
 
-            // GROUPING LOGIC
             boolean isSameAsPrevious = false;
             boolean isSameAsNext = false;
             if (position > 0) {
                 ChatMessage prev = messageList.get(position - 1);
-                // Same sender and not system
                 if (prev.getSenderId() != null && prev.getSenderId().equals(message.getSenderId()) && !prev.isSystem()) {
                     isSameAsPrevious = true;
                 }
@@ -124,23 +118,19 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             if (showDateHeader) isSameAsPrevious = false;
 
-            // AVATAR & LABEL ASSIGNMENT
             int avatarRes;
             String labelText;
             if (currentMode == MODE_BOT) {
                 avatarRes = R.drawable.aquatech_iconbot;
                 labelText = "AI Model";
             } else if (currentMode == MODE_TECH_CHAT) {
-                // I am the Technician, so the OTHER person is the CUSTOMER
                 avatarRes = R.drawable.man_customer_icon;
                 labelText = (otherPartyName != null && !otherPartyName.isEmpty()) ? otherPartyName : "Customer";
             } else {
-                // I am the Customer, so the OTHER person is the TECHNICIAN
                 avatarRes = R.drawable.new_technician;
                 labelText = (otherPartyName != null && !otherPartyName.isEmpty()) ? otherPartyName : "Technician";
             }
 
-            // Show sender label only for the first message in a group from the other party
             if (!isFromMe && !isSameAsPrevious) {
                 chatHolder.tvSenderLabel.setVisibility(View.VISIBLE);
                 chatHolder.tvSenderLabel.setText(labelText);
@@ -148,7 +138,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 chatHolder.tvSenderLabel.setVisibility(View.GONE);
             }
 
-            // FILE / RECEIPT ATTACHMENT
             if (message.isFile() || message.isReceipt()) {
                 chatHolder.fileAttachmentLayout.setVisibility(View.VISIBLE);
                 chatHolder.tvFileName.setText(message.getFileName() != null ? message.getFileName() : "OfficialServiceForm.pdf");
@@ -175,7 +164,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 chatHolder.fileAttachmentLayout.setVisibility(View.GONE);
             }
 
-            // BUBBLE ALIGNMENT
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) chatHolder.messageContainer.getLayoutParams();
             params.removeRule(RelativeLayout.ALIGN_PARENT_END);
             params.removeRule(RelativeLayout.ALIGN_PARENT_START);
@@ -186,7 +174,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             chatHolder.tvTime.setVisibility(isSameAsNext ? View.GONE : View.VISIBLE);
 
             if (isFromMe) {
-                // RIGHT SIDE (ME)
                 chatHolder.tvMessage.setTextColor(Color.WHITE);
                 chatHolder.tvTime.setTextColor(Color.WHITE);
                 params.addRule(RelativeLayout.ALIGN_PARENT_END);
@@ -198,13 +185,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 else if (!isSameAsNext) chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user_bottom);
                 else chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user_middle);
             } else {
-                // LEFT SIDE (THEM)
                 chatHolder.tvMessage.setTextColor(Color.BLACK);
                 chatHolder.tvTime.setTextColor(Color.BLACK);
                 params.addRule(RelativeLayout.END_OF, R.id.techAvatarIcon);
                 params.setMargins(8, isSameAsPrevious ? 1 : 8, 120, isSameAsNext ? 1 : 8);
 
-                // AVATAR: Show only for the LAST message in a sequence (bottom of the group)
                 if (!isSameAsNext) {
                     chatHolder.techAvatarIcon.setVisibility(View.VISIBLE);
                     Glide.with(chatHolder.itemView.getContext()).load(avatarRes).circleCrop().into(chatHolder.techAvatarIcon);
@@ -212,7 +197,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     chatHolder.techAvatarIcon.setVisibility(View.INVISIBLE);
                 }
 
-                // BUBBLE BACKGROUNDS: Correctly join consecutive messages
                 if (!isSameAsNext) {
                     if (isSameAsPrevious) chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai_bottom);
                     else chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai);

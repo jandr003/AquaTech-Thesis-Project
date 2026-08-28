@@ -3,7 +3,7 @@ package com.example.aquatech;
 public class RequestLogModel {
     private String ticketId;
     private String customerName;
-    private String customerId;      // NEW FIELD
+    private String customerId;
     private String techName;
     private String techId;
     private String status;
@@ -13,7 +13,6 @@ public class RequestLogModel {
     private Long completedTime;
     private Float rating;
 
-    // Updated constructor
     public RequestLogModel(String ticketId, String customerName, String customerId, String techName, String techId,
                            String status, String serviceType, Long timestamp,
                            Long assignedTime, Long completedTime, Float rating) {
@@ -30,7 +29,6 @@ public class RequestLogModel {
         this.rating = rating;
     }
 
-    // Getters
     public String getTicketId() { return ticketId != null ? ticketId : "N/A"; }
     public String getCustomerName() { return customerName != null ? customerName : "N/A"; }
     public String getCustomerId() { return customerId != null ? customerId : "N/A"; }

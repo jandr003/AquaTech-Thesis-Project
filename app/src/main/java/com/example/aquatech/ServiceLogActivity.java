@@ -123,8 +123,6 @@ public class ServiceLogActivity extends AppCompatActivity {
         assignedTechId = ds.child("assignedTechId").getValue(String.class);
         String assignedTechName = ds.child("assignedTechName").getValue(String.class);
         String avatarUrl = ds.child("techAvatarUrl").getValue(String.class);
-
-        // 📍 ACCESS CONTROL: If finished, hide tech info
         boolean isFinished = "Completed".equalsIgnoreCase(currentStatus) || 
                             "Submission".equalsIgnoreCase(currentStatus) ||
                             "Cancelled".equalsIgnoreCase(currentStatus);
@@ -139,13 +137,12 @@ public class ServiceLogActivity extends AppCompatActivity {
 
         if (techProfileAvatar != null) {
             if (isFinished) {
-                techProfileAvatar.setImageResource(R.drawable.new_technician); // Generic placeholder
+                techProfileAvatar.setImageResource(R.drawable.new_technician);
             } else if (avatarUrl != null && !avatarUrl.isEmpty()) {
                 Glide.with(ServiceLogActivity.this).load(avatarUrl).placeholder(R.drawable.new_technician).circleCrop().into(techProfileAvatar);
             }
         }
 
-        // 📍 RATING DIALOG: Show if completed and not yet rated
         if ("Completed".equalsIgnoreCase(currentStatus)) {
             Boolean rated = ds.child("rated").getValue(Boolean.class);
             if (rated == null || !rated) {

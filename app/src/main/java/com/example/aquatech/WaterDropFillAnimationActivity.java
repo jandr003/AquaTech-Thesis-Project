@@ -202,7 +202,6 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         data.put("customerName", customerName);
         data.put("contactNumber", contactNumber);
         data.put("address", address);
-        // 📍 BINAGO: consistently use "referenceNo" para sa SRO ng request
         data.put("referenceNo", referenceNo);
         data.put("date", date);
         data.put("startTime", startTime);

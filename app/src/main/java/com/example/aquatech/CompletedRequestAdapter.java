@@ -34,14 +34,12 @@ public class CompletedRequestAdapter extends RecyclerView.Adapter<CompletedReque
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServiceLogModel model = completedList.get(position);
 
-        // 📍 FIX: Display Customer Name instead of Tech Name
         holder.tvCustomerName.setText(model.getCustomerName() != null ? model.getCustomerName() : "Guest Customer");
         
         holder.tvTicketID.setText(model.getSroNumber() != null ? model.getSroNumber() : "N/A");
         holder.tvServiceType.setText(model.getTechRole() != null ? model.getTechRole() : "N/A");
         holder.tvCompletionTime.setText("Completed on: " + (model.getDateTime() != null ? model.getDateTime() : "N/A"));
-        
-        // 📍 FIX: Display Real Address instead of N/A
+
         holder.tvLocation.setText(model.getAddress() != null ? model.getAddress() : "No address provided");
 
         holder.btnViewDetails.setOnClickListener(v -> {

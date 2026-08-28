@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- 1. HEADER SECTION -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/trackHeader"
         android:layout_width="match_parent"
@@ -45,7 +44,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 2. OPEN STREET MAP (FREE) -->
     <org.osmdroid.views.MapView
         android:id="@+id/mapTrack"
         android:layout_width="match_parent"
@@ -53,7 +51,6 @@
         app:layout_constraintTop_toBottomOf="@id/trackHeader"
         app:layout_constraintBottom_toTopOf="@+id/listContainer" />
 
-    <!-- 3. TECHNICIANS LIST (BOTTOM HALF - FIXED & SCROLLABLE) -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/listContainer"
         android:layout_width="match_parent"

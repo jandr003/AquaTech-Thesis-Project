@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- 1. HEADER SECTION -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/openHeader"
         android:layout_width="match_parent"
@@ -45,7 +44,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 2. OPEN STREET MAP (FREE) -->
     <org.osmdroid.views.MapView
         android:id="@+id/mapOpen"
         android:layout_width="match_parent"

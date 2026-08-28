@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8FAFC">
 
-    <!-- HEADER -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/manageHeader"
         android:layout_width="match_parent"
@@ -58,7 +57,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- TABS OR FILTERS -->
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutTechs"
         android:layout_width="match_parent"
@@ -73,7 +72,6 @@
         <com.google.android.material.tabs.TabItem android:text="Disabled" />
     </com.google.android.material.tabs.TabLayout>
 
-    <!-- SEARCH -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/searchCard"
         android:layout_width="match_parent"
@@ -91,7 +89,6 @@
             app:queryBackground="@android:color/transparent" />
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- LIST -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvManageTechs"
         android:layout_width="match_parent"

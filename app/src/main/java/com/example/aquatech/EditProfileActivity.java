@@ -124,11 +124,9 @@ public class EditProfileActivity extends AppCompatActivity {
         updates.put("avatarResId", selectedAvatarResId);
 
         DatabaseReference db = FirebaseDatabase.getInstance(DB_URL).getReference();
-        
-        // Update Users node
+
         db.child("Users").child(currentUid).updateChildren(updates);
-        
-        // If technician, also update Technicians node
+
         if (isTechnician) {
             db.child("Technicians").child(currentUid).updateChildren(updates);
         }

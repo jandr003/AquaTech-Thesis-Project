@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8F9FA">
 
-    <!-- HEADER -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/perfListHeader"
         android:layout_width="match_parent"
@@ -44,7 +43,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- SEARCH BAR -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/searchCard"
         android:layout_width="match_parent"
@@ -63,7 +61,6 @@
             app:queryHint="Search technician..." />
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- LIST -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTechPerformanceList"
         android:layout_width="match_parent"

@@ -45,7 +45,6 @@ public class VerificationCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification_code);
 
-        // Firebase Init
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
         resetsRef = FirebaseDatabase.getInstance().getReference("PasswordResets");
 
@@ -55,7 +54,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
         yourResendCode = findViewById(R.id.yourResendCode);
 
         phoneNumber = getIntent().getStringExtra("phoneNumber");
-        mobile = getIntent().getStringExtra("mobile"); // e.g. 09123456789
+        mobile = getIntent().getStringExtra("mobile");
         
         yourMobileNum.setText("We sent a code to " + (phoneNumber != null ? phoneNumber : mobile));
 
@@ -99,7 +98,6 @@ public class VerificationCodeActivity extends AppCompatActivity {
     }
 
     private void proceedToChangePassword() {
-        // Hahanapin ang UID base sa mobile number para sa password reset
         usersRef.orderByChild("mobile").equalTo(mobile).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

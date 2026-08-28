@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#37AAFD">
 
-    <!-- 1. ARRIVED STATE SECTION (Default Visible) -->
+
     <LinearLayout
         android:id="@+id/layoutArrived"
         android:layout_width="match_parent"
@@ -38,7 +38,6 @@
             android:layout_marginTop="18dp" />
     </LinearLayout>
 
-    <!-- 2. MAINTENANCE ON-GOING SECTION (Naka-GONE muna) -->
     <LinearLayout
         android:id="@+id/layoutOngoing"
         android:layout_width="match_parent"
@@ -56,7 +55,6 @@
             android:layout_height="334dp"
             android:src="@drawable/maintenance_icon" />
 
-        <!-- ANIMATED DOTS CONTAINER - Binawasan ang margin para lumapit sa icon -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +90,6 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- MAINTENANCE TEXT - Inangat pa lalo gamit ang negative margin -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,7 +102,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- 3. ACTION BUTTON (START muna ang default text) -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnStatusAction"
         android:layout_width="115dp"

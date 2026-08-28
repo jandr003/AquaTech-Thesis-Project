@@ -113,7 +113,6 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
         newList.clear();
         olderList.clear();
 
-        // Top 3 as New, the rest go to Older
         for (int i = 0; i < all.size(); i++) {
             if (i < 3) newList.add(all.get(i));
             else olderList.add(all.get(i));
@@ -122,7 +121,6 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
         newAdapter.notifyDataSetChanged();
         olderAdapter.notifyDataSetChanged();
 
-        // Hide labels if lists are empty
         findViewById(R.id.tvLabelNew).setVisibility(newList.isEmpty() ? View.GONE : View.VISIBLE);
         findViewById(R.id.tvLabelOlder).setVisibility(olderList.isEmpty() ? View.GONE : View.VISIBLE);
     }

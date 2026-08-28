@@ -40,17 +40,14 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
         String lastMsg = ds.child("lastMessage").getValue(String.class);
         String lastSenderId = ds.child("lastSenderId").getValue(String.class);
 
-        // 📍 DYNAMIC NAME & AVATAR DISPLAY LOGIC
         String displayName = "User";
         int avatarRes = R.drawable.man_customer_icon; // Default avatar
         
         if (myId != null) {
             if (myId.equals(customerId)) {
-                // I am the CUSTOMER, show the TECHNICIAN'S name and technician avatar
                 displayName = (techName != null && !techName.isEmpty()) ? techName : "Technician";
                 avatarRes = R.drawable.new_technician;
             } else {
-                // I am the TECHNICIAN, show the CUSTOMER'S name and customer avatar
                 displayName = (customerName != null && !customerName.isEmpty()) ? customerName : "Customer";
                 avatarRes = R.drawable.man_customer_icon;
             }
@@ -60,7 +57,6 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
         holder.ivAvatar.setImageResource(avatarRes);
 
         if (lastMsg != null) {
-            // Show "You: " prefix if I sent the last message
             if (lastSenderId != null && lastSenderId.equals(myId)) {
                 holder.tvLastMsg.setText(Html.fromHtml("<b>You:</b> " + lastMsg));
             } else {

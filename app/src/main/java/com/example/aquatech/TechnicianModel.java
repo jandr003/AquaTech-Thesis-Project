@@ -13,7 +13,7 @@ public class TechnicianModel {
     public String accountStatus; 
     public Verification verification;
     public String profileImageUrl;
-    public float rating; // Dagdag para sa performance rating
+    public float rating;
 
     public TechnicianModel() {}
 

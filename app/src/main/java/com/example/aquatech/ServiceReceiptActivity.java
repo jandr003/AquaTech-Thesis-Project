@@ -222,8 +222,6 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                     String status = snapshot.child("status").getValue(String.class);
                     if (status == null) status = "OPEN";
                     updateStatusUI(status);
-
-                    // 🛠️ FIX: Show Tech Info if a technician is assigned, regardless of specific status string
                     String techId = snapshot.child("assignedTechId").getValue(String.class);
                     if (techId == null || techId.isEmpty()) techId = snapshot.child("technicianId").getValue(String.class);
 
