@@ -26,6 +26,7 @@
         app:tint="@color/white" />
 
     <TextView
+        android:id="@+id/tvTitleAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
@@ -41,37 +42,58 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/aboutHeader">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="32dp">
+            android:padding="24dp">
 
-
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="fitCenter"
-                android:src="@drawable/logoo" />
-
-            <TextView
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logoo"
+                app:layout_constraintWidth_max="250dp"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/poppins"
                 android:text="Version 1.0.0"
                 android:textColor="#888888"
-                android:textSize="12sp" />
-
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivLogo" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tvAppStory"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/poppins"
@@ -79,17 +101,24 @@
                 android:lineSpacingExtra="2dp"
                 android:text="@string/about_app_story"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                app:layout_constraintStart_toEndOf="@id/guideStart"
+                app:layout_constraintTop_toBottomOf="@id/tvVersion" />
 
             <View
+                android:id="@+id/separator"
                 android:layout_width="60dp"
                 android:layout_height="2dp"
                 android:layout_marginTop="32dp"
-                android:background="@color/aqua_secondary" />
-
+                android:background="@color/aqua_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAppStory" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tvMission"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/poppins"
@@ -97,31 +126,43 @@
                 android:lineSpacingExtra="4dp"
                 android:text="@string/about_mission_text"
                 android:textColor="#444444"
-                android:textSize="14sp" />
-
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@id/guideEnd"
+                app:layout_constraintStart_toEndOf="@id/guideStart"
+                app:layout_constraintTop_toBottomOf="@id/separator" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tvCredits"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="48dp"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
                 android:text="@string/about_footer_credits"
                 android:textColor="#999999"
-                android:textSize="11sp"
-                android:textStyle="bold" />
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvMission" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tvAddress"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
                 android:text="GF, Alco Building, Makati City, 1209 Metro Manila"
                 android:textColor="#999999"
-                android:textSize="11sp" />
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCredits" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
