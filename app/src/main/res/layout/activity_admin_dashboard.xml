@@ -11,107 +11,124 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Header Section -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/adminHeader"
             android:layout_width="match_parent"
-            android:layout_height="122dp"
+            android:layout_height="140dp"
             android:background="#1E3A8A"
             android:elevation="8dp"
-            android:paddingHorizontal="18dp"
-            android:paddingTop="40dp"
-            android:paddingBottom="16dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/adminAvatar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="2dp"
-                android:src="@drawable/admin_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/CircleImage"
-                app:strokeColor="#40FFFFFF"
-                app:strokeWidth="1dp" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/hStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/hEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/aquatechLogo"
-                android:layout_width="111dp"
-                android:layout_height="111dp"
-                android:layout_marginBottom="-8dp"
-                android:layout_marginStart="-8dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/all_about_water___2__2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/hStart"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.688"
                 app:shapeAppearanceOverlay="@style/CircleImage" />
 
-            <TextView
-                android:id="@+id/tvWelcomeBack"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:includeFontPadding="false"
-                android:text="WELCOME BACK!"
-                android:textColor="#93C5FD"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.183"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.245"
-                app:layout_constraintVertical_chainStyle="packed" />
+                android:layout_marginStart="12dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/aquatechLogo"
+                app:layout_constraintEnd_toStartOf="@+id/adminAvatar"
+                app:layout_constraintStart_toEndOf="@id/aquatechLogo"
+                app:layout_constraintTop_toTopOf="@id/aquatechLogo">
 
-            <TextView
-                android:id="@+id/tvAdminName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:includeFontPadding="false"
-                android:text="John Andrew"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.228"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvWelcomeBack"
-                app:layout_constraintVertical_bias="0.071" />
+                <TextView
+                    android:id="@+id/tvWelcomeBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="WELCOME BACK!"
+                    android:textColor="#93C5FD"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvAdminName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="John Andrew"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/adminAvatar"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:padding="2dp"
+                android:src="@drawable/admin_icon"
+                app:layout_constraintBottom_toBottomOf="@id/aquatechLogo"
+                app:layout_constraintEnd_toEndOf="@id/hEnd"
+                app:layout_constraintTop_toTopOf="@id/aquatechLogo"
+                app:shapeAppearanceOverlay="@style/CircleImage"
+                app:strokeColor="#40FFFFFF"
+                app:strokeWidth="1dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/adminHeader">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                android:paddingBottom="24dp">
+                android:paddingBottom="32dp">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gStart"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.05" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.95" />
+
+                <!-- Grid of Stats Cards -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/statsGridContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     app:cardBackgroundColor="#F0F0F0"
-                    app:cardCornerRadius="32dp"
+                    app:cardCornerRadius="24dp"
                     app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
+                    app:layout_constraintEnd_toEndOf="@id/gEnd"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_max="800dp">
 
                     <GridLayout
                         android:layout_width="match_parent"
@@ -120,256 +137,110 @@
                         android:columnCount="2"
                         android:padding="8dp">
 
+                        <!-- In Progress Card -->
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardInProgress"
                             android:layout_width="0dp"
-                            android:layout_height="160dp"
+                            android:layout_height="140dp"
                             android:layout_columnWeight="1"
-                            android:layout_margin="8dp"
+                            android:layout_margin="6dp"
                             android:clickable="true"
                             android:focusable="true"
                             app:cardBackgroundColor="#448AFF"
-                            app:cardCornerRadius="24dp"
+                            app:cardCornerRadius="20dp"
                             app:cardElevation="4dp">
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="16dp">
-
-                                <TextView
-                                    android:id="@+id/lblP"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins"
-                                    android:text="In Progress"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="20sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/tvInProgressCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_black_ttf"
-                                    android:text="0"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="32sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins"
-                                    android:text="Assigned to Tech"
-                                    android:textColor="#CCFFFFFF"
-                                    android:textSize="12sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/tvInProgressCount" />
+                                <TextView android:id="@+id/lblP" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="In Progress" android:textColor="#FFFFFF" android:textStyle="bold" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+                                <TextView android:id="@+id/tvInProgressCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#FFFFFF" android:textSize="28sp" android:textStyle="bold" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
 
+                        <!-- Completed Card -->
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardCompleted"
                             android:layout_width="0dp"
-                            android:layout_height="160dp"
+                            android:layout_height="140dp"
                             android:layout_columnWeight="1"
-                            android:layout_margin="8dp"
+                            android:layout_margin="6dp"
                             android:clickable="true"
                             android:focusable="true"
                             app:cardBackgroundColor="#8BC34A"
-                            app:cardCornerRadius="24dp"
+                            app:cardCornerRadius="20dp"
                             app:cardElevation="4dp">
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="16dp">
-
-                                <TextView
-                                    android:id="@+id/lblC"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins"
-                                    android:text="Completed"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="20sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/tvCompletedCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_black_ttf"
-                                    android:text="0"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="32sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins"
-                                    android:text="Finished Jobs"
-                                    android:textColor="#CCFFFFFF"
-                                    android:textSize="12sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/tvCompletedCount" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Completed" android:textColor="#FFFFFF" android:textStyle="bold" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+                                <TextView android:id="@+id/tvCompletedCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#FFFFFF" android:textSize="28sp" android:textStyle="bold" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
 
+                        <!-- Submissions Card -->
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardSubmissions"
                             android:layout_width="0dp"
-                            android:layout_height="160dp"
+                            android:layout_height="140dp"
                             android:layout_columnWeight="1"
-                            android:layout_margin="8dp"
+                            android:layout_margin="6dp"
                             android:clickable="true"
                             android:focusable="true"
                             app:cardBackgroundColor="#FFB300"
-                            app:cardCornerRadius="24dp"
+                            app:cardCornerRadius="20dp"
                             app:cardElevation="4dp">
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="16dp">
-
-                                <TextView
-                                    android:id="@+id/lblS"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins"
-                                    android:text="Submissions"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="20sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/tvSubmissionCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_black_ttf"
-                                    android:text="0"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="32sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins"
-                                    android:text="For Admin Review"
-                                    android:textColor="#CCFFFFFF"
-                                    android:textSize="12sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/tvSubmissionCount" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Submissions" android:textColor="#FFFFFF" android:textStyle="bold" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+                                <TextView android:id="@+id/tvSubmissionCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#FFFFFF" android:textSize="28sp" android:textStyle="bold" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
 
+                        <!-- Open Card -->
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cardOpen"
                             android:layout_width="0dp"
-                            android:layout_height="160dp"
+                            android:layout_height="140dp"
                             android:layout_columnWeight="1"
-                            android:layout_margin="8dp"
+                            android:layout_margin="6dp"
                             android:clickable="true"
                             android:focusable="true"
                             app:cardBackgroundColor="#FF5252"
-                            app:cardCornerRadius="24dp"
+                            app:cardCornerRadius="20dp"
                             app:cardElevation="4dp">
-
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:padding="16dp">
-
-                                <TextView
-                                    android:id="@+id/lblO"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins"
-                                    android:text="Open"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="20sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/tvUrgentBadge"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="#FFFFFF"
-                                    android:fontFamily="@font/poppins"
-                                    android:paddingHorizontal="6dp"
-                                    android:paddingVertical="2dp"
-                                    android:text="URGENT"
-                                    android:textColor="#FF5252"
-                                    android:textSize="8sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/tvOverdueCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_black_ttf"
-                                    android:text="0"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="32sp"
-                                    android:textStyle="bold"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins"
-                                    android:text="For Assignment"
-                                    android:textColor="#CCFFFFFF"
-                                    android:textSize="12sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/tvOverdueCount" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Open" android:textColor="#FFFFFF" android:textStyle="bold" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+                                <TextView android:id="@+id/tvOverdueCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#FFFFFF" android:textSize="28sp" android:textStyle="bold" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#FFFFFF" android:paddingHorizontal="4dp" android:text="URGENT" android:textColor="#FF5252" android:textSize="8sp" android:textStyle="bold" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
+
                     </GridLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
+                    android:id="@+id/lblQuickPanels"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:layout_marginStart="8dp"
                     android:fontFamily="@font/poppins_black_ttf"
                     android:text="QUICK PANELS"
                     android:textColor="#333333"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toBottomOf="@id/statsGridContainer" />
 
+                <!-- Quick Panels (Technician Performance) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardActionTechPerf"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="90dp"
                     android:layout_marginTop="12dp"
                     android:clickable="true"
@@ -377,67 +248,26 @@
                     app:cardBackgroundColor="#4B91C6"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
-                    app:strokeWidth="0dp">
-
+                    app:layout_constraintEnd_toEndOf="@id/gEnd"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toBottomOf="@id/lblQuickPanels"
+                    app:layout_constraintWidth_max="800dp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="16dp">
-
-                        <View
-                            android:id="@+id/circleTech"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:backgroundTint="#40FFFFFF"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="66dp"
-                            android:layout_height="66dp"
-                            android:src="@drawable/manage_tech_icon"
-                            app:layout_constraintBottom_toBottomOf="@id/circleTech"
-                            app:layout_constraintEnd_toEndOf="@id/circleTech"
-                            app:layout_constraintStart_toStartOf="@id/circleTech"
-                            app:layout_constraintTop_toTopOf="@id/circleTech"
-                            app:tint="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/tvTitleTech"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins_black_ttf"
-                            android:text="Technician Performance"
-                            android:textColor="#FFFFFF"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/tvSubTech"
-                            app:layout_constraintStart_toEndOf="@id/circleTech"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_chainStyle="packed" />
-
-                        <TextView
-                            android:id="@+id/tvSubTech"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins"
-                            android:text="Track ratings and service history"
-                            android:textColor="#CCFFFFFF"
-                            android:textSize="11sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/circleTech"
-                            app:layout_constraintTop_toBottomOf="@id/tvTitleTech" />
-
+                        <ImageView android:id="@+id/iconTech" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/manage_tech_icon" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:tint="#FFFFFF" />
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:orientation="vertical" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/iconTech" app:layout_constraintTop_toTopOf="parent">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/poppins_black_ttf" android:text="Technician Performance" android:textColor="#FFFFFF" android:textSize="15sp" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Track ratings and service history" android:textColor="#CCFFFFFF" android:textSize="11sp" />
+                        </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-
+                <!-- Quick Panels (Recent Activity) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardActionLogs"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="90dp"
                     android:layout_marginTop="12dp"
                     android:clickable="true"
@@ -445,66 +275,26 @@
                     app:cardBackgroundColor="#4B91C6"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
-                    app:strokeWidth="0dp">
-
+                    app:layout_constraintEnd_toEndOf="@id/gEnd"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toBottomOf="@id/cardActionTechPerf"
+                    app:layout_constraintWidth_max="800dp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="16dp">
-
-                        <View
-                            android:id="@+id/circleLogs"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:backgroundTint="#40FFFFFF"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:src="@drawable/recent_activity_icon"
-                            app:layout_constraintBottom_toBottomOf="@id/circleLogs"
-                            app:layout_constraintEnd_toEndOf="@id/circleLogs"
-                            app:layout_constraintStart_toStartOf="@id/circleLogs"
-                            app:layout_constraintTop_toTopOf="@id/circleLogs"
-                            app:tint="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/tvTitleLogs"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins_black_ttf"
-                            android:text="Recent Activity"
-                            android:textColor="#FFFFFF"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/tvSubLogs"
-                            app:layout_constraintStart_toEndOf="@id/circleLogs"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_chainStyle="packed" />
-
-                        <TextView
-                            android:id="@+id/tvSubLogs"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins"
-                            android:text="Real-time updates on system processes"
-                            android:textColor="#CCFFFFFF"
-                            android:textSize="11sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/circleLogs"
-                            app:layout_constraintTop_toBottomOf="@id/tvTitleLogs" />
-
+                        <ImageView android:id="@+id/iconLogs" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/recent_activity_icon" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:tint="#FFFFFF" />
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:orientation="vertical" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/iconLogs" app:layout_constraintTop_toTopOf="parent">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/poppins_black_ttf" android:text="Recent Activity" android:textColor="#FFFFFF" android:textSize="15sp" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Real-time system updates" android:textColor="#CCFFFFFF" android:textSize="11sp" />
+                        </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Quick Panels (Manage Technicians) -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardActionManageTechs"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="90dp"
                     android:layout_marginTop="12dp"
                     android:clickable="true"
@@ -512,65 +302,25 @@
                     app:cardBackgroundColor="#4B91C6"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="4dp"
-                    app:strokeWidth="0dp">
-
+                    app:layout_constraintEnd_toEndOf="@id/gEnd"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toBottomOf="@id/cardActionLogs"
+                    app:layout_constraintWidth_max="800dp">
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="16dp">
-
-                        <View
-                            android:id="@+id/circleManage"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:backgroundTint="#40FFFFFF"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:layout_width="64dp"
-                            android:layout_height="65dp"
-                            android:src="@drawable/manage_tech_icon_1"
-                            app:layout_constraintBottom_toBottomOf="@id/circleManage"
-                            app:layout_constraintEnd_toEndOf="@id/circleManage"
-                            app:layout_constraintStart_toStartOf="@id/circleManage"
-                            app:layout_constraintTop_toTopOf="@id/circleManage"
-                            app:tint="#FFFFFF" />
-
-                        <TextView
-                            android:id="@+id/tvTitleManage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins_black_ttf"
-                            android:text="Manage Technicians"
-                            android:textColor="#FFFFFF"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/tvSubManage"
-                            app:layout_constraintStart_toEndOf="@id/circleManage"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_chainStyle="packed" />
-
-                        <TextView
-                            android:id="@+id/tvSubManage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:fontFamily="@font/poppins"
-                            android:text="Add, review, or disable accounts"
-                            android:textColor="#CCFFFFFF"
-                            android:textSize="11sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/circleManage"
-                            app:layout_constraintTop_toBottomOf="@id/tvTitleManage" />
-
+                        <ImageView android:id="@+id/iconManage" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/manage_tech_icon_1" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:tint="#FFFFFF" />
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:orientation="vertical" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/iconManage" app:layout_constraintTop_toTopOf="parent">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/poppins_black_ttf" android:text="Manage Technicians" android:textColor="#FFFFFF" android:textSize="15sp" android:textStyle="bold" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Add, review, or disable accounts" android:textColor="#CCFFFFFF" android:textSize="11sp" />
+                        </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.drawerlayout.widget.DrawerLayout>
