@@ -1,4 +1,4 @@
-# AquaTech - Enterprise Service Management Platform
+# AquaTech - Aqua Smartguard Corp
 
 AquaTech is a proprietary mobile solution developed for **Aqua Smartguard Corp**, a leading water purification provider based in **Makati City, Philippines**. The platform is engineered to modernize and digitize the end-to-end service lifecycle, ensuring high-efficiency coordination between the management, field technicians, and enterprise clients.
 
