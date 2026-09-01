@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <dimen name="valid_id_width">287dp</dimen>
-        <dimen name="valid_id_height">158dp</dimen>
-    </resources>
+<resources>
+    <dimen name="valid_id_width">287dp</dimen>
+    <dimen name="valid_id_height">158dp</dimen>
+
+    <!-- Admin Dashboard Dimensions -->
+    <dimen name="admin_header_height">240dp</dimen>
+    <dimen name="header_wave_height">80dp</dimen>
+    <dimen name="admin_logo_size">100dp</dimen>
+    <dimen name="menu_icon_size">40dp</dimen>
+    <dimen name="menu_icon_margin">36dp</dimen>
+    <dimen name="header_margin_top">40dp</dimen>
+    <dimen name="header_margin_start">16dp</dimen>
+    <dimen name="header_logo_width">142dp</dimen>
+    <dimen name="header_logo_height">75dp</dimen>
+    <dimen name="header_logo_margin_start">7dp</dimen>
+    <dimen name="header_logo_margin_top">84dp</dimen>
+    <dimen name="header_text_margin_start">12dp</dimen>
+    <dimen name="header_text_margin_top">88dp</dimen>
+
+    <dimen name="admin_avatar_size">60dp</dimen>
+    <dimen name="header_greeting_margin_top">28dp</dimen>
+    <dimen name="text_size_greeting">14sp</dimen>
+    <dimen name="text_size_admin_name_large">26sp</dimen>
+
+
+    <dimen name="dashboard_stats_card_height">140dp</dimen>
+    <dimen name="dashboard_quick_panel_height">90dp</dimen>
+
+    <dimen name="dashboard_padding_horizontal">24dp</dimen>
+    <dimen name="dashboard_padding_bottom">32dp</dimen>
+    <dimen name="dashboard_margin_top">20dp</dimen>
+
+    <dimen name="text_size_welcome">11sp</dimen>
+    <dimen name="text_size_admin_name">20sp</dimen>
+    <dimen name="text_size_stats_count">28sp</dimen>
+    <dimen name="text_size_panel_title">15sp</dimen>
+</resources>

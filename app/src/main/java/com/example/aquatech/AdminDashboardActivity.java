@@ -1,3 +1,4 @@
+/*
 package com.example.aquatech;
 
 import android.app.Dialog;
@@ -38,7 +39,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
         mAuth = FirebaseAuth.getInstance();
-        
+
         setupStatusBar();
         initializeViews();
         setAdminIdentity();
@@ -65,10 +66,10 @@ public class AdminDashboardActivity extends AppCompatActivity {
             startActivity(new Intent(this, TechnicianPerformanceListActivity.class));
         });
 
-        findViewById(R.id.cardActionLogs).setOnClickListener(v -> 
+        findViewById(R.id.cardActionLogs).setOnClickListener(v ->
                 startActivity(new Intent(this, AdminLogsActivity.class))
         );
-        
+
         findViewById(R.id.cardActionManageTechs).setOnClickListener(v ->
                 startActivity(new Intent(this, ManageTechniciansActivity.class))
         );
@@ -89,7 +90,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
                     if (status != null) {
                         String s = status.trim().toLowerCase();
                         if (s.equals("completed")) completed++;
-                        else if (s.equals("submission") || s.equals("submitted")) submission++; // ✅ Handle both internal and display status
+                        else if (s.equals("submission") || s.equals("submitted")) submission++;
                         else if (s.equals("in progress") || s.equals("ongoing") || s.equals("arrived")) inProgress++;
                         else if (s.equals("open") || s.equals("assigned")) {
                             if (assignedTechName != null && !assignedTechName.isEmpty()) inProgress++;
@@ -122,12 +123,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_admin_profile);
         if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        
+
         TextView dialogEmail = dialog.findViewById(R.id.dialogEmail);
         TextView dialogName = dialog.findViewById(R.id.dialogName);
         String email = getAdminEmail();
         dialogEmail.setText(email);
-        
+
         if (email.equals("management@aquasmartguard.ph")) dialogName.setText("Glenn Jean");
         else if (email.equals("admin@aquasmartguard.ph")) dialogName.setText("John Andrew");
 
@@ -166,3 +167,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
     }
 }
+
+FOR NEW UPDATE:
+ GOOD MORNING
+ GOOD AFTERNOON
+ GOOD EVENING
+*/

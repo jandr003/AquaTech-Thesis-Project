@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/logoo"
+        android:title="Dashboard" />
+    <item
+        android:id="@+id/nav_jobs"
+        android:icon="@drawable/manage_tech_icon"
+        android:title="Jobs" />
+    <item
+        android:id="@+id/nav_techs"
+        android:icon="@drawable/admin_icon"
+        android:title="Technicians" />
+    <item
+        android:id="@+id/nav_activity"
+        android:icon="@drawable/recent_activity_icon"
+        android:title="Activity" />
+    <item
+        android:id="@+id/nav_more"
+        android:icon="@drawable/settingicon"
+        android:title="More" />
+</menu>
