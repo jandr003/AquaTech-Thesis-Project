@@ -1,4 +1,7 @@
 # AquaTech Mobile Application
+
+  🚧 Notice: The Admin Dashboard design is currently undergoing updates and improvements. The interface is still being refined, and further design changes may be implemented as development continues.
+  
 AquaTech is the official mobile application of **Aqua Smartguard Corp**, based in **Makati City**, Philippines. The platform is designed to manage water purification services, maintenance scheduling, and technician coordination through a centralized mobile interface.
 
 ## Project Overview
