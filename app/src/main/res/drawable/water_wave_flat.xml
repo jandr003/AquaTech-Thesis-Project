@@ -6,7 +6,6 @@
     android:viewportWidth="400"
     android:viewportHeight="220">
 
-    <!-- Single flat wave shape: smooth S-curve rising into a rounded crest -->
     <path
         android:pathData="M0,200 C60,190 110,194 150,180 C185,168 205,150 220,128 C232,110 245,95 265,88 C285,81 305,88 315,105 C322,118 320,132 330,142 C345,155 370,150 400,138 L400,220 L0,220 Z">
         <aapt:attr name="android:fillColor">
@@ -22,7 +21,6 @@
         </aapt:attr>
     </path>
 
-    <!-- Foam highlight tracing the crest -->
     <path
         android:fillColor="#00000000"
         android:strokeColor="#EAF7FD"
@@ -31,12 +29,10 @@
         android:strokeAlpha="0.8"
         android:pathData="M35,190 C90,182 135,182 165,166 C195,150 215,128 232,108" />
 
-    <!-- Droplet trail below the crest -->
     <path android:fillColor="#6EC2EC" android:fillAlpha="0.9" android:pathData="M258.4,105 A3.4,3.4 0 1,1 251.6,105 A3.4,3.4 0 1,1 258.4,105" />
     <path android:fillColor="#8FD0F0" android:fillAlpha="0.85" android:pathData="M252.4,122 A2.4,2.4 0 1,1 247.6,122 A2.4,2.4 0 1,1 252.4,122" />
     <path android:fillColor="#BFE3F6" android:fillAlpha="0.75" android:pathData="M248.7,137 A1.7,1.7 0 1,1 245.3,137 A1.7,1.7 0 1,1 248.7,137" />
 
-    <!-- Scattered droplets -->
     <path android:fillColor="#3FA9E0" android:fillAlpha="0.9" android:pathData="M273.6,60 A3.6,3.6 0 1,1 266.4,60 A3.6,3.6 0 1,1 273.6,60" />
     <path android:fillColor="#6EC2EC" android:fillAlpha="0.85" android:pathData="M212.6,95 A2.6,2.6 0 1,1 207.4,95 A2.6,2.6 0 1,1 212.6,95" />
     <path android:fillColor="#8FD0F0" android:fillAlpha="0.75" android:pathData="M196.8,112 A1.8,1.8 0 1,1 193.2,112 A1.8,1.8 0 1,1 196.8,112" />
