@@ -4,8 +4,8 @@
     <dimen name="valid_id_height">158dp</dimen>
 
     <!-- Admin Dashboard Slim Dimensions -->
-    <dimen name="admin_header_height">110dp</dimen>
-    <dimen name="header_wave_height">35dp</dimen>
+    <dimen name="admin_header_height">220dp</dimen>
+    <dimen name="header_wave_height">60dp</dimen>
     <dimen name="admin_avatar_size">40dp</dimen>
 
     <dimen name="menu_icon_size">40dp</dimen>

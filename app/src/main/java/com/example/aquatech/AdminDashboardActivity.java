@@ -1,4 +1,3 @@
-/*
 package com.example.aquatech;
 
 import android.app.Dialog;
@@ -7,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -23,12 +23,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AdminDashboardActivity extends AppCompatActivity {
 
-    private TextView tvCompletedCount, tvInProgressCount, tvSubmissionCount, tvOverdueCount, tvAdminName;
+    private TextView tvCompletedCount, tvInProgressCount, tvSubmissionCount, tvOverdueCount, tvAdminName, tvGreeting;
     private DatabaseReference dbRef;
     private FirebaseAuth mAuth;
 
@@ -52,6 +53,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
         tvSubmissionCount = findViewById(R.id.tvSubmissionCount);
         tvOverdueCount = findViewById(R.id.tvOverdueCount);
         tvAdminName = findViewById(R.id.tvAdminName);
+        tvGreeting = findViewById(R.id.tvGreeting);
+
+        updateGreetingText();
 
         findViewById(R.id.cardInProgress).setOnClickListener(v ->
                 startActivity(new Intent(this, TrackTechniciansActivity.class))
@@ -115,7 +119,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
             log.put("timestamp", ServerValue.TIMESTAMP);
             logRef.setValue(log);
         } catch (Exception e) {
-            android.util.Log.e("LOG_ERROR", "Failed to add log: " + e.getMessage());
+            Log.e("LOG_ERROR", "Failed to add log: " + e.getMessage());
         }
     }
 
@@ -166,10 +170,20 @@ public class AdminDashboardActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
+
+    private void updateGreetingText() {
+        if (tvGreeting == null) return;
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+        if (timeOfDay >= 0 && timeOfDay < 12) {
+            tvGreeting.setText("Good morning,");
+        } else if (timeOfDay >= 12 && timeOfDay < 16) {
+            tvGreeting.setText("Good afternoon,");
+        } else {
+            tvGreeting.setText("Good evening,");
+        }
+    }
 }
 
-FOR NEW UPDATE:
- GOOD MORNING
- GOOD AFTERNOON
- GOOD EVENING
-*/
+
