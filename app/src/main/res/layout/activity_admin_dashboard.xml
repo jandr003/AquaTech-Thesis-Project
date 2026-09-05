@@ -14,7 +14,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerContainer"
             android:layout_width="410dp"
-            android:layout_height="136dp"
+            android:layout_height="141dp"
             android:background="@drawable/bg_header_gradient_premium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +38,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.285" />
+
+            <ImageView
+                android:id="@+id/waveSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_wave_height"
+                android:scaleType="fitXY"
+                android:src="@drawable/header_wave_overlay_secondary"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/wavePrimary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_wave_height"
+                android:scaleType="fitXY"
+                android:src="@drawable/header_wave_overlay"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
