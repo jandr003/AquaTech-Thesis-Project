@@ -5,10 +5,12 @@
     android:viewportWidth="3000"
     android:viewportHeight="100">
 
+    <!-- Premium Wave Shadow: Perfectly synced with the curve logic below -->
     <path
-        android:fillColor="#15000000"
-        android:pathData="M0,55 C750,25 2250,85 3000,55 L3000,100 L0,100 Z" />
+        android:fillColor="#12000000"
+        android:pathData="M0,54 C750,24 2250,84 3000,54 L3000,100 L0,100 Z" />
 
+    <!-- Main Content Background Wave -->
     <path
         android:fillColor="#F8FAFC"
         android:pathData="M0,50 C750,20 2250,80 3000,50 L3000,100 L0,100 Z" />
