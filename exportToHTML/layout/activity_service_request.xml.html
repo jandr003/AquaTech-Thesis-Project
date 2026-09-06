@@ -1,0 +1,1517 @@
+<html>
+<head>
+<title>activity_service_request.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+activity_service_request.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;?</span><span class="s1">xml version</span><span class="s2">=&quot;1.0&quot; </span><span class="s1">encoding</span><span class="s2">=&quot;utf-8&quot;</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+    <span class="s1">xmlns:android</span><span class="s2">=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="s1">xmlns:app</span><span class="s2">=&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+    <span class="s1">xmlns:tools</span><span class="s2">=&quot;http://schemas.android.com/tools&quot;</span>
+    <span class="s1">android:id</span><span class="s2">=&quot;@+id/rootConstraintLayout&quot;</span>
+    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span><span class="s0">&gt;</span>
+
+    <span class="s0">&lt;ImageView</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;@color/aqua_background&quot;</span>
+        <span class="s1">android:scaleType</span><span class="s2">=&quot;centerCrop&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;View</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;@drawable/wave_curve_request&quot; </span><span class="s0">/&gt;</span>
+
+
+    <span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span><span class="s0">&gt;</span>
+
+
+        <span class="s0">&lt;ImageView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/CustomerIcon&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;26dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;25dp&quot;</span>
+            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;26dp&quot;</span>
+            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/man_user_circle_icon&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.0&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.0&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;ImageView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/ExitIcon&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;21dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;21dp&quot;</span>
+            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;26dp&quot;</span>
+            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/exit&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;1.0&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.0&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;TextView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/serviceForm&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;23dp&quot;</span>
+            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+            <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;@string/service_request_form&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;22sp&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/CustomerIcon&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/cardWhite&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;355dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;535dp&quot;</span>
+            <span class="s1">app:cardBackgroundColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+            <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;24dp&quot;</span>
+            <span class="s1">app:cardElevation</span><span class="s2">=&quot;12dp&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span><span class="s0">&gt;</span>
+
+
+            <span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:padding</span><span class="s2">=&quot;4dp&quot;</span>
+                <span class="s1">tools:ignore</span><span class="s2">=&quot;ExtraText&quot;</span><span class="s0">&gt;</span>
+
+
+                <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/circleNumber1&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;16dp&quot;</span>
+                    <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;50dp&quot;</span>
+                    <span class="s1">app:cardElevation</span><span class="s2">=&quot;6dp&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/circleNumber2&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_chainStyle</span><span class="s2">=&quot;spread&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span><span class="s0">&gt;</span>
+
+
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/circleText1&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                        <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;1&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerLabel&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Customer Name&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber1&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvCustomerNameValue&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;4dp&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@id/customerUnderline&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">tools:text</span><span class="s2">=&quot;Juan Dela Cruz&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerUnderline&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;36dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.0&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/customerLabel&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerNumber&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;104dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Contact Number&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber1&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;EditText</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/etCustomerNumber&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@android:color/transparent&quot;</span>
+                    <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:focusableInTouchMode</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:hint</span><span class="s2">=&quot;Your contact number&quot;</span>
+                    <span class="s1">android:inputType</span><span class="s2">=&quot;number&quot;</span>
+                    <span class="s1">android:maxLength</span><span class="s2">=&quot;11&quot;</span>
+                    <span class="s1">android:paddingBottom</span><span class="s2">=&quot;4dp&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@id/customerUnderline2&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/EditPen1&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;@id/customerUnderline2&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerUnderline2&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;108dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/customerLabel&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;ImageView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/EditPen1&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;18dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;18dp&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;304dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;45dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+                    <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:src</span><span class="s2">=&quot;@drawable/image_241&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/customerUnderline&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerAddress&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;174dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Address&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber1&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;EditText</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/etCustomerAddress&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@android:color/transparent&quot;</span>
+                    <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:focusableInTouchMode</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:hint</span><span class="s2">=&quot;Your current address&quot;</span>
+                    <span class="s1">android:inputType</span><span class="s2">=&quot;textPostalAddress&quot;</span>
+                    <span class="s1">android:paddingBottom</span><span class="s2">=&quot;4dp&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/customerUnderline3&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/EditPen2&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.0&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;@id/customerUnderline3&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerUnderline3&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;170dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/customerLabel&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;ImageView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/EditPen2&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;18dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;18dp&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;304dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;36dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+                    <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:src</span><span class="s2">=&quot;@drawable/image_241&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/customerUnderline2&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerRefNum&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;236dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Reference Number&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber1&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvCustomerRefValue&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;4dp&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@id/customerUnderline4&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">tools:text</span><span class="s2">=&quot;REF123456&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerUnderline4&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;36dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/customerRefNum&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerDate&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;298dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Date&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber1&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/displayDate&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@id/customerUnderline5&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;@id/customerUnderline5&quot;</span>
+                    <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;4dp&quot;</span>
+                    <span class="s1">tools:text</span><span class="s2">=&quot;January 09, 2026&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerUnderline5&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;296dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.0&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/customerLabel&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/circleNumber2&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;50dp&quot;</span>
+                    <span class="s1">app:cardElevation</span><span class="s2">=&quot;6dp&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/circleNumber3&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/circleNumber1&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/circleNumber1&quot;</span><span class="s0">&gt;</span>
+
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/circleText2&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black&quot;</span>
+                        <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;2&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/serviceTimeLabel&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Service Time&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber2&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/serviceTimeRow&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Start Time&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/serviceTimeLabel&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/startTimeText&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;--:--&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;@android:color/black&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@id/startTimeUnderline&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;@id/startTimeUnderline&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.409&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;@id/startTimeUnderline&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/startTimeUnderline&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;105dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/serviceTimeRow&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;ImageView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/startTimeArrow&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;200dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+                    <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_chevron_down&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/serviceTimeRow&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/toLabel&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;28dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;TO&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#828282&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;12sp&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/startTimeArrow&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@id/startTimeUnderline&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/startTimeArrow&quot;</span>
+                    <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.75&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/serviceEndTimeRow&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;204dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;End Time&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/serviceTimeLabel&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/endTimeText&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;--:--&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;@android:color/black&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@id/endTimeUnderline&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;@id/endTimeUnderline&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.289&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;@id/endTimeUnderline&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/endTimeUnderline&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;105dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;32dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#000000&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@id/toLabel&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/serviceTimeRow&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/purchaseTypeLabel&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;48dp&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Type of Purchase&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/serviceEndTimeRow&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;ImageView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/endTimeArrow&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;17dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+                    <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_chevron_down&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/serviceEndTimeRow&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;androidx.appcompat.widget.AppCompatSpinner</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/purchaseTypeDropdown&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;150dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;10dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@drawable/spinner_background&quot;</span>
+                    <span class="s1">android:elevation</span><span class="s2">=&quot;6dp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:foreground</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+                    <span class="s1">android:paddingStart</span><span class="s2">=&quot;16dp&quot;</span>
+                    <span class="s1">android:paddingEnd</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">android:spinnerMode</span><span class="s2">=&quot;dropdown&quot;</span>
+                    <span class="s1">android:overlapAnchor</span><span class="s2">=&quot;false&quot;</span>
+                    <span class="s1">android:dropDownVerticalOffset</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:dropDownHorizontalOffset</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/purchaseTypeLabel&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerValidIdLabel&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;18dp&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/purchaseTypeDropdown&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/customerCard&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;287dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;158dp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;55dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:scaleType</span><span class="s2">=&quot;centerCrop&quot;</span>
+                    <span class="s1">app:cardBackgroundColor</span><span class="s2">=&quot;#D9D9D9&quot;</span>
+                    <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">app:cardElevation</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">app:cardForegroundColor</span><span class="s2">=&quot;?attr/selectableItemBackground&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.0&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/purchaseTypeDropdown&quot;</span><span class="s0">&gt;</span>
+
+                    <span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;ImageView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/imgPreview&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;287dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;158dp&quot;</span>
+                            <span class="s1">android:adjustViewBounds</span><span class="s2">=&quot;true&quot;</span>
+                            <span class="s1">android:scaleType</span><span class="s2">=&quot;centerCrop&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;1.0&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.0&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;ImageView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/imgPlaceHolder&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;33dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;33dp&quot;</span>
+                            <span class="s1">android:adjustViewBounds</span><span class="s2">=&quot;true&quot;</span>
+                            <span class="s1">android:scaleType</span><span class="s2">=&quot;centerInside&quot;</span>
+                            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/img_place_holder&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot; </span><span class="s0">/&gt;</span>
+
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/takePhotoOrUpload&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;Take a photo or Upload&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#4E4E4E&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;12sp&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.676&quot; </span><span class="s0">/&gt;</span>
+
+
+                    <span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+                <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/step1Layout&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                    <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span><span class="s0">&gt;</span>
+
+
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/step2Layout&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                    <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span><span class="s0">&gt;</span>
+
+
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/circleNumber3&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;40dp&quot;</span>
+                    <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;50dp&quot;</span>
+                    <span class="s1">app:cardElevation</span><span class="s2">=&quot;6dp&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/circleNumber2&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/circleNumber1&quot;</span><span class="s0">&gt;</span>
+
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/circleText3&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;37dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black&quot;</span>
+                        <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;3&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/underline3&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@drawable/underline_submit_request&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber3&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;ScrollView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/circle3ScrollContainer&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">android:fadeScrollbars</span><span class="s2">=&quot;false&quot;</span>
+                    <span class="s1">android:scrollbars</span><span class="s2">=&quot;vertical&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/underline3&quot;</span><span class="s0">&gt;</span>
+
+                    <span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:paddingBottom</span><span class="s2">=&quot;32dp&quot;</span><span class="s0">&gt;</span>
+
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/filterPreventiveLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;FILTER PREVENTIVE&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtyLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;QUANTITY&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/filterPreventiveLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/cbcLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;0064–CBC&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/filterPreventiveLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementCBC&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/cbcLabel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/cbcLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtyCBC&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementCBC&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementCBC&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementCBC&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementCBC&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtyCBC&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtyCBC&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtyCBC&quot; </span><span class="s0">/&gt;</span>
+
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/sedimentLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;0055–SEDIMENT&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/cbcLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementSEDIMENT&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/sedimentLabel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/sedimentLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtySEDIMENT&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementSEDIMENT&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementSEDIMENT&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementSEDIMENT&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementSEDIMENT&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtySEDIMENT&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtySEDIMENT&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtySEDIMENT&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/OtherPartsLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;OTHER PARTS&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/sedimentLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/AquatalLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;AQUATAL&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/OtherPartsLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementAquaTal&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/AquatalLabel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/AquatalLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtyAquatal&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementAquaTal&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementAquaTal&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementAquaTal&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementAquatal&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtyAquatal&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtyAquatal&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtyAquatal&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/InlineFilterLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;INLINE FILTER&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/AquatalLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementInlineFilter&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/InlineFilterLabel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/InlineFilterLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtyInlineFilter&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementInlineFilter&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementInlineFilter&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementInlineFilter&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementInlineFilter&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtyInlineFilter&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtyInlineFilter&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtyInlineFilter&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/UvLampLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;UV LAMP&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/InlineFilterLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementUvLampLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/UvLampLabel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/UvLampLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtyUvLampLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementUvLampLabel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementUvLampLabel&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementUvLampLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementUvLampLabel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtyUvLampLabel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtyUvLampLabel&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtyUvLampLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/TouchPanel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;TOUCH PANEL&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/UvLampLabel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementTouchPanel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/TouchPanel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/TouchPanel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtyTouchPanel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementTouchPanel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementTouchPanel&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementTouchPanel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementTouchPanel&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtyTouchPanel&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtyTouchPanel&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtyTouchPanel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/PbcBoard&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;PBC BOARD&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/TouchPanel&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementPbcBoard&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/PbcBoard&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/PbcBoard&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtyPbcBoard&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementPbcBoard&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementPbcBoard&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementPbcBoard&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementPbcBoard&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtyPbcBoard&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtyPbcBoard&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtyPbcBoard&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/SMSF1µ&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;SMSF  1µ CBC&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/PbcBoard&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementSMSF1µCBC&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/SMSF1µ&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/SMSF1µ&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtySMSF1µCBC2&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementSMSF1µCBC&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementSMSF1µCBC&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementSMSF1µCBC&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementSMSF1µCBC1&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtySMSF1µCBC2&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtySMSF1µCBC2&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtySMSF1µCBC2&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/SMSF10µSED&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;SMSF  10µ SED&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/SMSF1µ&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementSMSF10µSED&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;20dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/SMSF10µSED&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/SMSF10µSED&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;TextView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtySMSF10µSED2&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/incrementSMSF10µSED&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/incrementSMSF10µSED&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/incrementSMSF10µSED&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementSMSF10µSED_1&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                            <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                            <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/qtySMSF10µSED2&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@id/qtySMSF10µSED2&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/qtySMSF10µSED2&quot; </span><span class="s0">/&gt;</span>
+
+                    <span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+                <span class="s0">&lt;/ScrollView&gt;</span>
+
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/UnderLine&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@drawable/underline_submit_request&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;@id/circleNumber1&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber1&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/underline2&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@drawable/underline_submit_request&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;@id/circleNumber2&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber2&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/CompleteUnderline&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@drawable/underline_submit_request&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/circleNumber3&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;EditText</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/remarksInput&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;296dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;216dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;50dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@drawable/rounded_edittext&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:gravity</span><span class="s2">=&quot;top|start&quot;</span>
+                    <span class="s1">android:hint</span><span class="s2">=&quot;Enter remarks here...&quot;</span>
+                    <span class="s1">android:inputType</span><span class="s2">=&quot;textMultiLine&quot;</span>
+                    <span class="s1">android:maxLines</span><span class="s2">=&quot;5&quot;</span>
+                    <span class="s1">android:padding</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">android:scrollbars</span><span class="s2">=&quot;vertical&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textColorHint</span><span class="s2">=&quot;#999999&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;14sp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.633&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/remarksLabel&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;REMARKS&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.128&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.334&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/installationKitLabel&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;25dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:gravity</span><span class="s2">=&quot;center_vertical&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.069&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.181&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/Wayvalve&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;139dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;4dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;48dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;3-way Valve&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#7D7D7D&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.148&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.213&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/incrementWayvalve&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@drawable/round_button&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;@string/plus_sign&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;@android:color/white&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;15sp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/Wayvalve&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/Wayvalve&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;androidx.appcompat.widget.AppCompatButton</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/decrementWayvalve1&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;30dp&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;10dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;@drawable/square_button&quot;</span>
+                    <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;@string/minus_sign&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;@android:color/white&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;15sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/Wayvalve&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/qtyWayvalve2&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/Wayvalve&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/qtyWayvalve2&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;10dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;@string/zero&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/Wayvalve&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/incrementWayvalve&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/Wayvalve&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/remarksNotice&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;71dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;21dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;NOTICE&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;14sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.081&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/remarksInput&quot;</span>
+                    <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.093&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/remarksNotice1&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;281dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;33dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Please review your details before adding remarks. Add special instructions if needed.&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#5B5B5B&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;12sp&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.411&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/remarksInput&quot;</span>
+                    <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.446&quot; </span><span class="s0">/&gt;</span>
+
+            <span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+
+        <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+
+
+        <span class="s0">&lt;Button</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/buttonBack&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;15dp&quot;</span>
+            <span class="s1">android:backgroundTint</span><span class="s2">=&quot;#3EB5E8&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;@string/back&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+            <span class="s1">app:cornerRadius</span><span class="s2">=&quot;20dp&quot;</span>
+            <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;-12dp&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.298&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.959&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;Button</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/buttonNext&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:backgroundTint</span><span class="s2">=&quot;#3EB5E8&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;@string/next&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+            <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+            <span class="s1">app:cornerRadius</span><span class="s2">=&quot;20dp&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.498&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.959&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;Button</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/buttonNext2&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;15dp&quot;</span>
+            <span class="s1">android:backgroundTint</span><span class="s2">=&quot;#3EB5E8&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;@string/next&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+            <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;-12dp&quot;</span>
+            <span class="s1">app:cornerRadius</span><span class="s2">=&quot;20dp&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.682&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.959&quot; </span><span class="s0">/&gt;</span>
+
+
+        <span class="s0">&lt;Button</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/buttonNext3&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;15dp&quot;</span>
+            <span class="s1">android:backgroundTint</span><span class="s2">=&quot;#3EB5E8&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;@string/next&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;-12dp&quot;</span>
+            <span class="s1">app:cornerRadius</span><span class="s2">=&quot;20dp&quot;</span>
+            <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.682&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.959&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;Button</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/buttonBack3&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;15dp&quot;</span>
+            <span class="s1">android:backgroundTint</span><span class="s2">=&quot;#3EB5E8&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;@string/back&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+            <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+            <span class="s1">app:cornerRadius</span><span class="s2">=&quot;20dp&quot;</span>
+            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;-12dp&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.298&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.959&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;Button</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/buttonSubmit&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;150dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;60dp&quot;</span>
+            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;15dp&quot;</span>
+            <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;40dp&quot;</span>
+            <span class="s1">android:backgroundTint</span><span class="s2">=&quot;#3EB5E8&quot;</span>
+            <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;@string/submit_now&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+            <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+            <span class="s1">app:cornerRadius</span><span class="s2">=&quot;20dp&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.46&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.974&quot; </span><span class="s0">/&gt;</span>
+
+
+    <span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+
+<span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span></pre>
+</body>
+</html>

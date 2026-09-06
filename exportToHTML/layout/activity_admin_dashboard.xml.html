@@ -1,0 +1,208 @@
+<html>
+<head>
+<title>activity_admin_dashboard.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #bcbec4;}
+.s4 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+activity_admin_dashboard.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;?</span><span class="s1">xml version</span><span class="s2">=&quot;1.0&quot; </span><span class="s1">encoding</span><span class="s2">=&quot;utf-8&quot;</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;androidx.drawerlayout.widget.DrawerLayout </span><span class="s1">xmlns:android</span><span class="s2">=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="s1">xmlns:app</span><span class="s2">=&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+    <span class="s1">xmlns:tools</span><span class="s2">=&quot;http://schemas.android.com/tools&quot;</span>
+    <span class="s1">android:id</span><span class="s2">=&quot;@+id/drawer_layout_admin&quot;</span>
+    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:background</span><span class="s2">=&quot;#F5FAFC&quot;</span><span class="s0">&gt;</span>
+
+    <span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span><span class="s0">&gt;</span>
+
+        <span class="s0">&lt;View</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/headerBg&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;160dp&quot;</span>
+            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/bg_header_gradient_premium&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;ImageView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/adminLogo&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;110dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;20dp&quot;</span>
+            <span class="s1">android:adjustViewBounds</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/asc_logooo&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@+id/adminAvatar&quot;</span>
+            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@+id/adminAvatar&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;ImageView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/notificationIcon&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;32dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;32dp&quot;</span>
+            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;12dp&quot;</span>
+            <span class="s1">android:background</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+            <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:padding</span><span class="s2">=&quot;4dp&quot;</span>
+            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/notification_icon&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@+id/adminAvatar&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/adminAvatar&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@+id/adminAvatar&quot;</span>
+            <span class="s1">app:tint</span><span class="s2">=&quot;@color/white&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;ImageView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/adminAvatar&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;55dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;55dp&quot;</span>
+            <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+            <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;16dp&quot;</span>
+            <span class="s1">android:background</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+            <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_person_outline_white&quot;</span>
+            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s4">&lt;!-- Waves --&gt;</span>
+        <span class="s0">&lt;ImageView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/waveSecondary&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;70dp&quot;</span>
+            <span class="s1">android:scaleType</span><span class="s2">=&quot;fitXY&quot;</span>
+            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/header_wave_overlay_secondary&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@+id/headerBg&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;ImageView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/wavePrimary&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;70dp&quot;</span>
+            <span class="s1">android:scaleType</span><span class="s2">=&quot;fitXY&quot;</span>
+            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/header_wave_overlay&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@+id/headerBg&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;androidx.core.widget.NestedScrollView</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;0dp&quot;</span>
+            <span class="s1">android:fillViewport</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+            <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/headerBg&quot;</span><span class="s0">&gt;</span>
+
+            <span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:paddingBottom</span><span class="s2">=&quot;40dp&quot;</span><span class="s0">&gt;</span>
+
+                <span class="s0">&lt;androidx.constraintlayout.widget.Guideline</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/gStart&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                    <span class="s1">app:layout_constraintGuide_percent</span><span class="s2">=&quot;0.05&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;androidx.constraintlayout.widget.Guideline</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/gEnd&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                    <span class="s1">app:layout_constraintGuide_percent</span><span class="s2">=&quot;0.95&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/mainDashboardCard&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;180dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;16dp&quot;</span>
+                    <span class="s1">app:cardBackgroundColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+                    <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;24dp&quot;</span>
+                    <span class="s1">app:cardElevation</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;@id/gEnd&quot;</span>
+                    <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;@id/gStart&quot;</span>
+                    <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span><span class="s0">&gt;</span>
+
+                    <span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;ImageView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/ivCardWave&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+                            <span class="s1">android:alpha</span><span class="s2">=&quot;0.8&quot;</span>
+                            <span class="s1">android:scaleType</span><span class="s2">=&quot;centerCrop&quot;</span>
+                            <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_card_water_wave&quot;</span>
+                            <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s4">&lt;!-- Text Content --&gt;</span>
+                        <span class="s0">&lt;LinearLayout</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                            <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                            <span class="s1">android:padding</span><span class="s2">=&quot;24dp&quot;</span>
+                            <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span><span class="s0">&gt;</span>
+
+                            <span class="s0">&lt;TextView</span>
+                                <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvGreeting&quot;</span>
+                                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                                <span class="s1">android:text</span><span class="s2">=&quot;Good morning,&quot;</span>
+                                <span class="s1">android:textColor</span><span class="s2">=&quot;#334155&quot;</span>
+                                <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+                                <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                            <span class="s0">&lt;TextView</span>
+                                <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvAdminName&quot;</span>
+                                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+                                <span class="s1">android:text</span><span class="s2">=&quot;Administrator&quot;</span>
+                                <span class="s1">android:textColor</span><span class="s2">=&quot;#0F172A&quot;</span>
+                                <span class="s1">android:textSize</span><span class="s2">=&quot;32sp&quot;</span>
+                                <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                            <span class="s0">&lt;TextView</span>
+                                <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvCardSubtitle&quot;</span>
+                                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                                <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;4dp&quot;</span>
+                                <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                                <span class="s1">android:text</span><span class="s2">=&quot;Let's keep everything flowing smoothly today.&quot;</span>
+                                <span class="s1">android:textColor</span><span class="s2">=&quot;#64748B&quot;</span>
+                                <span class="s1">android:textSize</span><span class="s2">=&quot;14sp&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                    <span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+                <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+
+            <span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+        <span class="s0">&lt;/androidx.core.widget.NestedScrollView&gt;</span>
+
+    <span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+
+    <span class="s0">&lt;com.google.android.material.navigation.NavigationView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/nav_view_admin&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;280dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_gravity</span><span class="s2">=&quot;start&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;@android:color/white&quot;</span>
+        <span class="s1">app:headerLayout</span><span class="s2">=&quot;@layout/nav_header_admin&quot;</span>
+        <span class="s1">app:menu</span><span class="s2">=&quot;@menu/admin_drawer_menu&quot; </span><span class="s0">/&gt;</span>
+
+<span class="s0">&lt;/androidx.drawerlayout.widget.DrawerLayout&gt;</span></pre>
+</body>
+</html>

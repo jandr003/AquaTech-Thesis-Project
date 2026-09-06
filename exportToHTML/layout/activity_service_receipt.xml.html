@@ -1,0 +1,466 @@
+<html>
+<head>
+<title>activity_service_receipt.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #d5b778;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+activity_service_receipt.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;?</span><span class="s1">xml version</span><span class="s2">=&quot;1.0&quot; </span><span class="s1">encoding</span><span class="s2">=&quot;utf-8&quot;</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout </span><span class="s1">xmlns:android</span><span class="s2">=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="s1">xmlns:app</span><span class="s2">=&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+    <span class="s1">xmlns:tools</span><span class="s2">=&quot;http://schemas.android.com/tools&quot;</span>
+    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:background</span><span class="s2">=&quot;@color/aqua_background&quot;</span><span class="s0">&gt;</span>
+
+    <span class="s0">&lt;View</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/receiptHeader&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;80dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;@drawable/header_gradient&quot;</span>
+        <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptTitle&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins_black_ttf&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;SERVICE RECEIPT&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/white&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/receiptHeader&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/receiptHeader&quot;</span>
+        <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;0.75&quot; </span><span class="s0">/&gt;</span>
+
+
+    <span class="s0">&lt;ImageView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/btnDownloadReceipt&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;56dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;56dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;4dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+        <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+        <span class="s1">android:elevation</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+        <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span>
+        <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_download&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/receiptHeader&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/receiptHeader&quot;</span>
+        <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;1.0&quot;</span>
+        <span class="s1">app:tint</span><span class="s2">=&quot;@color/white&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;androidx.core.widget.NestedScrollView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/receiptScrollView&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;0dp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@id/receiptHeader&quot;</span><span class="s0">&gt;</span>
+
+        <span class="s0">&lt;androidx.cardview.widget.CardView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/receiptCard&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_margin</span><span class="s2">=&quot;16dp&quot;</span>
+            <span class="s1">app:cardBackgroundColor</span><span class="s2">=&quot;@android:color/white&quot;</span>
+            <span class="s1">app:cardCornerRadius</span><span class="s2">=&quot;12dp&quot;</span>
+            <span class="s1">app:cardElevation</span><span class="s2">=&quot;8dp&quot;</span><span class="s0">&gt;</span>
+
+            <span class="s0">&lt;LinearLayout</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span><span class="s0">&gt;</span>
+
+                <span class="s0">&lt;ImageView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/ivReceiptLogo&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;238dp&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;80dp&quot;</span>
+                    <span class="s1">android:layout_gravity</span><span class="s2">=&quot;center_horizontal&quot;</span>
+                    <span class="s1">android:adjustViewBounds</span><span class="s2">=&quot;true&quot;</span>
+                    <span class="s1">android:scaleType</span><span class="s2">=&quot;fitCenter&quot;</span>
+                    <span class="s1">android:src</span><span class="s2">=&quot;@drawable/asc_logo_all_about_water&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptSubtitle&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_gravity</span><span class="s2">=&quot;center_horizontal&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;0dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Receipt Summary&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#888888&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;12sp&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                    <span class="s1">android:layout_marginVertical</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#EEEEEE&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;CUSTOMER INFORMATION&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#AAAAAA&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;10sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptCustomerName&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Name&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_text_dark&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;15sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptAddress&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                    <span class="s1">android:lineSpacingExtra</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Address&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#777777&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;12sp&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                    <span class="s1">android:layout_marginVertical</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#F5F5F5&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;SERVICE DETAILS&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#AAAAAA&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;10sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Ticket ID:&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;#888888&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot; </span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvTicketId&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_weight</span><span class="s2">=&quot;1&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                        <span class="s1">android:gravity</span><span class="s2">=&quot;end&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;#ASC000&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_primary&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Service Type:&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;#888888&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot; </span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptServiceType&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_weight</span><span class="s2">=&quot;1&quot;</span>
+                        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;12dp&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                        <span class="s1">android:gravity</span><span class="s2">=&quot;end&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Service Type&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_text_dark&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Preferred Schedule:&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;#888888&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot; </span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptSchedule&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_weight</span><span class="s2">=&quot;1&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                        <span class="s1">android:gravity</span><span class="s2">=&quot;end&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Schedule&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_text_dark&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Request Date:&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;#888888&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot; </span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptRequestDate&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_weight</span><span class="s2">=&quot;1&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                        <span class="s1">android:gravity</span><span class="s2">=&quot;end&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Date&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_text_dark&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                    <span class="s1">android:layout_marginVertical</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#F5F5F5&quot; </span><span class="s0">/&gt;</span>
+
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;UNIT INFORMATION&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#AAAAAA&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;10sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptUnitName&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;2dp&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;Unit Name&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_text_dark&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;13sp&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                    <span class="s1">android:layout_marginVertical</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#F5F5F5&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;BILLING SUMMARY&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#AAAAAA&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;10sp&quot;</span>
+                    <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/containerReceiptItems&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;4dp&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#EEEEEE&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span>
+                    <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;8dp&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_weight</span><span class="s2">=&quot;1&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;TOTAL AMOUNT&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_text_dark&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;14sp&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptTotalAmount&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;₱ 0.00&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_primary&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;16sp&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                    <span class="s1">android:layout_marginVertical</span><span class="s2">=&quot;12dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#F5F5F5&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/technicianInfoLayout&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+                    <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+                    <span class="s1">tools:visibility</span><span class="s2">=&quot;visible&quot;</span><span class="s0">&gt;</span>
+
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;ASSIGNED TECHNICIAN&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;#AAAAAA&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;10sp&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                    <span class="s0">&lt;FrameLayout</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;160dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;50dp&quot;</span>
+                        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;4dp&quot;</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;ImageView</span>
+                            <span class="s1">android:id</span><span class="s2">=&quot;@+id/ivReceiptTechSignature&quot;</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+                            <span class="s1">android:scaleType</span><span class="s2">=&quot;fitCenter&quot; </span><span class="s0">/&gt;</span>
+
+                        <span class="s0">&lt;View</span>
+                            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                            <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                            <span class="s1">android:layout_gravity</span><span class="s2">=&quot;bottom&quot;</span>
+                            <span class="s1">android:background</span><span class="s2">=&quot;#CCCCCC&quot; </span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;/FrameLayout&gt;</span>
+
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptTechName&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;2dp&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Technician Name&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/aqua_text_dark&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;14sp&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptTechRole&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Aqua Technician&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;#777777&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;12sp&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                    <span class="s1">android:layout_marginVertical</span><span class="s2">=&quot;8dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#EEEEEE&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;LinearLayout</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:gravity</span><span class="s2">=&quot;center_vertical&quot;</span>
+                    <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;0dp&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_weight</span><span class="s2">=&quot;1&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;CURRENT STATUS&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;#AAAAAA&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;10sp&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+
+                    <span class="s0">&lt;TextView</span>
+                        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptStatus&quot;</span>
+                        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                        <span class="s1">android:layout_height</span><span class="s2">=&quot;28dp&quot;</span>
+                        <span class="s1">android:background</span><span class="s2">=&quot;@drawable/status_completed_green&quot;</span>
+                        <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                        <span class="s1">android:paddingHorizontal</span><span class="s2">=&quot;12dp&quot;</span>
+                        <span class="s1">android:paddingVertical</span><span class="s2">=&quot;4dp&quot;</span>
+                        <span class="s1">android:text</span><span class="s2">=&quot;Status&quot;</span>
+                        <span class="s1">android:textColor</span><span class="s2">=&quot;@android:color/white&quot;</span>
+                        <span class="s1">android:textSize</span><span class="s2">=&quot;11sp&quot;</span>
+                        <span class="s1">android:textStyle</span><span class="s2">=&quot;bold&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;/LinearLayout&gt;</span>
+
+                <span class="s0">&lt;View</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;1dp&quot;</span>
+                    <span class="s1">android:layout_marginVertical</span><span class="s2">=&quot;16dp&quot;</span>
+                    <span class="s1">android:background</span><span class="s2">=&quot;#EEEEEE&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;TextView</span>
+                    <span class="s1">android:id</span><span class="s2">=&quot;@+id/tvReceiptPolicyTerms&quot;</span>
+                    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                    <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                    <span class="s1">android:fontFamily</span><span class="s2">=&quot;@font/poppins&quot;</span>
+                    <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+                    <span class="s1">android:lineSpacingExtra</span><span class="s2">=&quot;4dp&quot;</span>
+                    <span class="s1">android:text</span><span class="s2">=&quot;By viewing this receipt, you agree to our\nTerms of Use and Privacy Policy.&quot;</span>
+                    <span class="s1">android:textColor</span><span class="s2">=&quot;#AAAAAA&quot;</span>
+                    <span class="s1">android:textSize</span><span class="s2">=&quot;11sp&quot; </span><span class="s0">/&gt;</span>
+
+            <span class="s0">&lt;/LinearLayout&gt;</span>
+
+        <span class="s0">&lt;/androidx.cardview.widget.CardView&gt;</span>
+
+    <span class="s0">&lt;/androidx.core.widget.NestedScrollView&gt;</span>
+
+    <span class="s0">&lt;ImageView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/btnBackReceipt&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;56dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;56dp&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;16dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;?attr/selectableItemBackgroundBorderless&quot;</span>
+        <span class="s1">android:clickable</span><span class="s2">=&quot;true&quot;</span>
+        <span class="s1">android:contentDescription</span><span class="s2">=&quot;Back to Dashboard&quot;</span>
+        <span class="s1">android:elevation</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:focusable</span><span class="s2">=&quot;true&quot;</span>
+        <span class="s1">android:padding</span><span class="s2">=&quot;16dp&quot;</span>
+        <span class="s1">android:src</span><span class="s2">=&quot;@drawable/ic_arrow_back_gray&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;@id/receiptHeader&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;@id/receiptHeader&quot;</span>
+        <span class="s1">app:layout_constraintVertical_bias</span><span class="s2">=&quot;1.0&quot;</span>
+        <span class="s1">app:tint</span><span class="s2">=&quot;@color/white&quot; </span><span class="s0">/&gt;</span>
+
+<span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span>
+</pre>
+</body>
+</html>

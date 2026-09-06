@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Header Background -->
         <View
             android:id="@+id/headerBg"
             android:layout_width="match_parent"
@@ -20,8 +21,8 @@
 
         <ImageView
             android:id="@+id/adminLogo"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
+            android:layout_width="141dp"
+            android:layout_height="78dp"
             android:layout_marginStart="20dp"
             android:adjustViewBounds="true"
             android:src="@drawable/asc_logooo"
@@ -103,13 +104,14 @@
                     android:id="@+id/mainDashboardCard"
                     android:layout_width="0dp"
                     android:layout_height="180dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="8dp"
                     app:layout_constraintEnd_toEndOf="@id/gEnd"
                     app:layout_constraintStart_toStartOf="@id/gStart"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_max="750dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -119,19 +121,17 @@
                             android:id="@+id/ivCardWave"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:alpha="0.8"
-                            android:scaleType ="centerCrop"
-                            android:src="@drawable/water_wave_flat"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:alpha="0.85"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/water_wave_flat" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:elevation="10dp"
                             android:orientation="vertical"
                             android:padding="24dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
@@ -139,6 +139,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
+                                android:shadowColor="#FFFFFF"
+                                android:shadowRadius="10"
                                 android:text="Good morning,"
                                 android:textColor="#334155"
                                 android:textSize="18sp"
@@ -149,6 +151,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_black_ttf"
+                                android:shadowColor="#FFFFFF"
+                                android:shadowRadius="12"
                                 android:text="Administrator"
                                 android:textColor="#0F172A"
                                 android:textSize="32sp"
@@ -163,11 +167,305 @@
                                 android:text="Let's keep everything flowing smoothly today."
                                 android:textColor="#64748B"
                                 android:textSize="14sp" />
-
                         </LinearLayout>
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvOverviewLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="System Overview"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/gEnd"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toBottomOf="@id/mainDashboardCard"
+                    app:layout_constraintWidth_max="750dp" />
+
+                <GridLayout
+                    android:id="@+id/statsGrid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:alignmentMode="alignMargins"
+                    android:columnCount="2"
+                    android:columnOrderPreserved="false"
+                    app:layout_constraintEnd_toEndOf="@id/gEnd"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toBottomOf="@id/tvOverviewLabel"
+                    app:layout_constraintWidth_max="750dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardInProgress"
+                        android:layout_width="0dp"
+                        android:layout_height="110dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvInProgressCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="#1D3A8A"
+                                android:textSize="28sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="In Progress"
+                                android:textColor="#666666"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/poppins"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardOpen"
+                        android:layout_width="0dp"
+                        android:layout_height="110dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvOverdueCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="#E53935"
+                                android:textSize="28sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Open Request"
+                                android:textColor="#666666"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/poppins"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardCompleted"
+                        android:layout_width="0dp"
+                        android:layout_height="110dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvCompletedCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="#43A047"
+                                android:textSize="28sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Complete"
+                                android:textColor="#666666"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/poppins"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardSubmissions"
+                        android:layout_width="0dp"
+                        android:layout_height="110dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tvSubmissionCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="#FB8C00"
+                                android:textSize="28sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Submission"
+                                android:textColor="#666666"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/poppins"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </GridLayout>
+
+                <TextView
+                    android:id="@+id/tvToolsLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="Administrative Tools"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/gEnd"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toBottomOf="@id/statsGrid"
+                    app:layout_constraintWidth_max="750dp" />
+
+                <LinearLayout
+                    android:id="@+id/toolsContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="@id/gEnd"
+                    app:layout_constraintStart_toStartOf="@id/gStart"
+                    app:layout_constraintTop_toBottomOf="@id/tvToolsLabel"
+                    app:layout_constraintWidth_max="750dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardActionManageTechs"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="3dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="20dp">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/new_technician" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/poppins_black_ttf"
+                                android:text="Manage Technicians"
+                                android:textColor="#333333"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardActionTechPerf"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="3dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="20dp">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/send_1" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/poppins_black_ttf"
+                                android:text="Work Performance"
+                                android:textColor="#333333"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardActionLogs"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="3dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="20dp">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/maps_and_flags__2__1" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/poppins_black_ttf"
+                                android:text="Admin Activity Logs"
+                                android:textColor="#333333"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
