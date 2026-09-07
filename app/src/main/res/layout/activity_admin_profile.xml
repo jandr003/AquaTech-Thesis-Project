@@ -47,6 +47,7 @@
                 android:layout_marginTop="-10dp"
                 android:src="@drawable/ic_person_outline_white"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +55,7 @@
                 android:id="@+id/profileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/poppins_black_ttf"
                 android:text="Administrator"
                 android:textColor="#FFFFFF"
@@ -80,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="65dp"
+                android:layout_marginTop="95dp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="28dp"
                 app:cardElevation="10dp"

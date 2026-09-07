@@ -1,7 +1,5 @@
 # AquaTech Mobile Application
 
-> **🚧 Notice:** The **Admin Dashboard design is currently undergoing updates and improvements.** The interface is still being refined, and further design changes may be implemented as development continues.
-
 AquaTech is the official mobile application of **Aqua Smartguard Corp**, based in **Makati City**, Philippines. The platform is designed to manage water purification services, maintenance scheduling, and technician coordination through a centralized mobile interface.
 
 ## Project Overview
@@ -10,18 +8,21 @@ The application serves as a comprehensive tool for Aqua Smartguard Corp to digit
 
 ## Key Features
 
+* **Premium Admin Dashboard:** A modernized, water-themed interface featuring real-time greeting logic, dynamic status tracking, and adaptive layouts optimized for both Phone and Tablet devices.
+* **Admin Profile Activity:** A dedicated profile management screen with premium action tiles for Monthly Analytics, System Settings, and secure account management.
 * **AquaBuddy Assistant:** An automated support system using Dialogflow to handle client inquiries and scheduling.
 * **Field Tracking:** Real-time geolocation of technicians using OpenStreetMap (OSMDroid) to provide arrival estimations.
 * **Communication Suite:** Integrated messaging and voice-over-IP (VoIP) for direct coordination between technicians and clients.
-* **Administrative Dashboard:** Monitoring tools for service history, performance ratings, and system logs.
+* **Quick Panels:** Simplified administrative tools for monitoring technician performance, viewing activity logs, and managing technician accounts.
 * **Verification System:** Secure management of technician credentials and documentation for administrative review.
 
 ## Technical Specifications
 
 * **Platform:** Native Android (Java) targeting SDK 34.
-* **User Interface:** Responsive XML layouts utilizing ConstraintLayout for cross-device compatibility (mobile and tablet).
-* **Backend:** Firebase integration for authentication, real-time data synchronization, and cloud storage.
-* **Networking:** Implementation of gRPC and OkHttp for stable API communication.
+* **User Interface:** Responsive XML layouts utilizing **ConstraintLayout** and **Guidelines** for 100% cross-device compatibility (Mobile, Tablet, and Foldables).
+* **Design Language:** Premium Water-themed UI with realistic wave overlays and consistent branding.
+* **Backend:** Firebase Real-time Database integration for instant data synchronization and cloud storage.
+* **Authentication:** Secure Firebase Auth system with role-based identity management (Admin, Technician, Customer).
 
 ## Security and Data Integrity
 
