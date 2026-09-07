@@ -31,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ConfirmPasswordActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private EditText yourNewPass, reNewPass;
     private TextView yourNewPassWarning, reNewPassWarning;
     private Button btnDonePassword;
@@ -135,7 +136,7 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
         pd.setCancelable(false);
         pd.show();
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(userId);
         userRef.child("password").setValue(pass1).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 FirebaseUser user = mAuth.getCurrentUser();

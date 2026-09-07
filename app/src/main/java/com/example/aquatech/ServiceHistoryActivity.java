@@ -1,5 +1,7 @@
 package com.example.aquatech;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +29,7 @@ import java.util.Locale;
 
 public class ServiceHistoryActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private RecyclerView rvCalendar, rvServiceHistory;
     private TextView tvCurrentMonth, tvSelectedDateLabel;
     private ImageView btnBack;
@@ -49,7 +52,7 @@ public class ServiceHistoryActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser() != null) {
             currentUid = mAuth.getCurrentUser().getUid();
-            dbRef = FirebaseDatabase.getInstance().getReference("ServiceRequests");
+            dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
         }
 
         setupStatusBar();
@@ -62,9 +65,9 @@ public class ServiceHistoryActivity extends AppCompatActivity {
     }
 
     private void setupStatusBar() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
     }
 

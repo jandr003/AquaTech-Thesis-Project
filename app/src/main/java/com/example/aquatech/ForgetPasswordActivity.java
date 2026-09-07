@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import java.util.Map;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private TextView tvForgotHeader, tvForgotPassword;
     private EditText etMobileNumber;
     private Button btnResetPassword;
@@ -51,8 +53,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        usersRef = FirebaseDatabase.getInstance().getReference("Users");
-        resetsRef = FirebaseDatabase.getInstance().getReference("PasswordResets");
+        usersRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users");
+        resetsRef = FirebaseDatabase.getInstance(DB_URL).getReference("PasswordResets");
 
         setupStatusBar();
         handlePermissions();
@@ -77,9 +79,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
     private void handlePermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
             }
         }
     }

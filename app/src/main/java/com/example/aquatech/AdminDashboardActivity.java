@@ -1,9 +1,7 @@
 package com.example.aquatech;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,19 +50,23 @@ public class AdminDashboardActivity extends AppCompatActivity {
         tvInProgressCount = findViewById(R.id.tvInProgressCount);
         tvSubmissionCount = findViewById(R.id.tvSubmissionCount);
         tvOverdueCount = findViewById(R.id.tvOverdueCount);
+
         tvAdminName = findViewById(R.id.tvAdminName);
         tvGreeting = findViewById(R.id.tvGreeting);
-
         updateGreetingText();
 
-        findViewById(R.id.cardInProgress).setOnClickListener(v ->
-                startActivity(new Intent(this, TrackTechniciansActivity.class))
-        );
-        findViewById(R.id.cardOpen).setOnClickListener(v -> startActivity(new Intent(this, OpenRequestsActivity.class)));
-        findViewById(R.id.cardCompleted).setOnClickListener(v -> startActivity(new Intent(this, CompletedRequestsActivity.class)));
-        findViewById(R.id.cardSubmissions).setOnClickListener(v -> startActivity(new Intent(this, SubmissionsActivity.class)));
+        findViewById(R.id.adminAvatar).setOnClickListener(v -> {
+            startActivity(new Intent(this, AdminProfileActivity.class));
+        });
+        findViewById(R.id.notificationIcon).setOnClickListener(v -> {
+            Log.d("ADMIN_DASHBOARD", "Notification icon clicked");
+        });
 
-        findViewById(R.id.adminAvatar).setOnClickListener(v -> showAdminProfileDialog());
+
+        findViewById(R.id.cardOpen).setOnClickListener(v -> startActivity(new Intent(this, OpenRequestsActivity.class)));
+        findViewById(R.id.cardInProgress).setOnClickListener(v -> startActivity(new Intent(this, TrackTechniciansActivity.class)));
+        findViewById(R.id.cardSubmissions).setOnClickListener(v -> startActivity(new Intent(this, SubmissionsActivity.class)));
+        findViewById(R.id.cardCompleted).setOnClickListener(v -> startActivity(new Intent(this, CompletedRequestsActivity.class)));
 
         findViewById(R.id.cardActionTechPerf).setOnClickListener(v -> {
             startActivity(new Intent(this, TechnicianPerformanceListActivity.class));
@@ -123,34 +125,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void showAdminProfileDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_admin_profile);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        TextView dialogEmail = dialog.findViewById(R.id.dialogEmail);
-        TextView dialogName = dialog.findViewById(R.id.dialogName);
-        String email = getAdminEmail();
-        dialogEmail.setText(email);
-
-        if (email.equals("management@aquasmartguard.ph")) dialogName.setText("Glenn Jean");
-        else if (email.equals("admin@aquasmartguard.ph")) dialogName.setText("John Andrew");
-
-
-        View btnDialogSettings = dialog.findViewById(R.id.btnDialogSettings);
-        if (btnDialogSettings != null) {
-            btnDialogSettings.setOnClickListener(v -> {
-                startActivity(new Intent(this, AdminSettingsActivity.class));
-                dialog.dismiss();
-            });
-        }
-
-        dialog.findViewById(R.id.btnMonthlyAnalytics).setOnClickListener(v -> { startActivity(new Intent(this, MonthlyAnalyticsActivity.class)); dialog.dismiss(); });
-        dialog.findViewById(R.id.btnLogout).setOnClickListener(v -> { mAuth.signOut(); startActivity(new Intent(this, SplashActivity.class)); finishAffinity(); });
-        dialog.findViewById(R.id.btnCloseProfileDialog).setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
-    }
-
     private String getAdminEmail() {
         if (getIntent() != null && getIntent().hasExtra("USER_EMAIL")) return getIntent().getStringExtra("USER_EMAIL").toLowerCase().trim();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -159,8 +133,19 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
     private void setAdminIdentity() {
         String email = getAdminEmail();
-        if (email.equals("management@aquasmartguard.ph")) tvAdminName.setText("Glenn Jean");
-        else if (email.equals("admin@aquasmartguard.ph")) tvAdminName.setText("John Andrew");
+        tvAdminName.setText(getDisplayNameByEmail(email));
+    }
+
+    private String getDisplayNameByEmail(String email) {
+        if (email.equals("management@aquasmartguard.ph") || email.equals("admin@aquasmartguard.ph")) {
+            return "Administrator";
+        } else {
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user != null && user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
+                return user.getDisplayName();
+            }
+        }
+        return "Administrator";
     }
 
     private void setupStatusBar() {
@@ -185,5 +170,3 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
     }
 }
-
-

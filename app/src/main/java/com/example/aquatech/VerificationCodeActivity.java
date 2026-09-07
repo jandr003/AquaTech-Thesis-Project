@@ -34,6 +34,7 @@ import java.util.Map;
 
 public class VerificationCodeActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private String phoneNumber, mobile;
     private EditText etOtpCode;
     private Button btnResetPassword;
@@ -45,8 +46,8 @@ public class VerificationCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification_code);
 
-        usersRef = FirebaseDatabase.getInstance().getReference("Users");
-        resetsRef = FirebaseDatabase.getInstance().getReference("PasswordResets");
+        usersRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users");
+        resetsRef = FirebaseDatabase.getInstance(DB_URL).getReference("PasswordResets");
 
         etOtpCode = findViewById(R.id.etOtpCode);
         btnResetPassword = findViewById(R.id.btnResetPassword);

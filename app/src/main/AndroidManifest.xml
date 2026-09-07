@@ -322,6 +322,13 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
+            android:name=".AdminProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
             android:name=".WaterDropFillAnimationActivity"
             android:theme="@style/Theme.AquaTech"
             android:exported="true"

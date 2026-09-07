@@ -11,11 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Header Background -->
         <View
             android:id="@+id/headerBg"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="125dp"
             android:background="@drawable/bg_header_gradient_premium"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,7 +103,7 @@
                     android:id="@+id/mainDashboardCard"
                     android:layout_width="0dp"
                     android:layout_height="180dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="24dp"
                     app:cardElevation="8dp"
@@ -138,12 +137,14 @@
                                 android:id="@+id/tvGreeting"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
+                                android:fontFamily="@font/poppins_black_ttf"
                                 android:shadowColor="#FFFFFF"
-                                android:shadowRadius="10"
+                                android:shadowDx="0"
+                                android:shadowDy="0"
+                                android:shadowRadius="25"
                                 android:text="Good morning,"
-                                android:textColor="#334155"
-                                android:textSize="18sp"
+                                android:textColor="#1D3A8A"
+                                android:textSize="20sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -152,193 +153,263 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_black_ttf"
                                 android:shadowColor="#FFFFFF"
-                                android:shadowRadius="12"
+                                android:shadowDx="0"
+                                android:shadowDy="0"
+                                android:shadowRadius="30"
                                 android:text="Administrator"
                                 android:textColor="#0F172A"
-                                android:textSize="32sp"
+                                android:textSize="38sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tvCardSubtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:fontFamily="@font/poppins"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/poppins_black_ttf"
+                                android:shadowColor="#FFFFFF"
+                                android:shadowRadius="15"
                                 android:text="Let's keep everything flowing smoothly today."
-                                android:textColor="#64748B"
-                                android:textSize="14sp" />
+                                android:textColor="#1E293B"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:id="@+id/tvOverviewLabel"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/statsBackgroundContainer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_black_ttf"
-                    android:text="System Overview"
-                    android:textColor="#333333"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="#DFF1FF"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="@id/gEnd"
                     app:layout_constraintStart_toStartOf="@id/gStart"
                     app:layout_constraintTop_toBottomOf="@id/mainDashboardCard"
-                    app:layout_constraintWidth_max="750dp" />
-
-                <GridLayout
-                    android:id="@+id/statsGrid"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:alignmentMode="alignMargins"
-                    android:columnCount="2"
-                    android:columnOrderPreserved="false"
-                    app:layout_constraintEnd_toEndOf="@id/gEnd"
-                    app:layout_constraintStart_toStartOf="@id/gStart"
-                    app:layout_constraintTop_toBottomOf="@id/tvOverviewLabel"
                     app:layout_constraintWidth_max="750dp">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardInProgress"
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="6dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="4dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/tvInProgressCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textColor="#1D3A8A"
-                                android:textSize="28sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="In Progress"
-                                android:textColor="#666666"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/poppins"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    <GridLayout
+                        android:id="@+id/statsGrid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="8dp"
+                        android:alignmentMode="alignMargins"
+                        android:columnCount="2"
+                        android:columnOrderPreserved="false">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardOpen"
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="6dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="4dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/tvOverdueCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textColor="#E53935"
-                                android:textSize="28sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Open Request"
-                                android:textColor="#666666"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/poppins"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardOpen"
+                            android:layout_width="0dp"
+                            android:layout_height="140dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            app:cardBackgroundColor="#FF5152"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="16dp">
+                                <TextView
+                                    android:id="@+id/tvOpenLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_black_ttf"
+                                    android:text="Open"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="22sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:cardBackgroundColor="#FFFFFF"
+                                    app:cardCornerRadius="12dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:paddingVertical="2dp"
+                                        android:text="URGENT"
+                                        android:textColor="#FF5152"
+                                        android:textSize="10sp"
+                                        android:textStyle="bold" />
+                                </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:id="@+id/tvOverdueCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_black_ttf"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="36sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintBottom_toTopOf="@+id/tvOpenSub"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/tvOpenLabel"
+                                    tools:ignore="MissingConstraints" />
+                                <TextView
+                                    android:id="@+id/tvOpenSub"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="For Assignment"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="14sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardCompleted"
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="6dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="4dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/tvCompletedCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textColor="#43A047"
-                                android:textSize="28sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Complete"
-                                android:textColor="#666666"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/poppins"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardInProgress"
+                            android:layout_width="0dp"
+                            android:layout_height="140dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            app:cardBackgroundColor="#4489FE"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="In Progress"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_black_ttf"/>
+                                <TextView
+                                    android:id="@+id/tvInProgressCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="32sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_black_ttf"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Assigned to Tech"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/poppins"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardSubmissions"
-                        android:layout_width="0dp"
-                        android:layout_height="110dp"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="6dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="4dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/tvSubmissionCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textColor="#FB8C00"
-                                android:textSize="28sp"
-                                android:textStyle="bold" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Submission"
-                                android:textColor="#666666"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/poppins"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </GridLayout>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardSubmissions"
+                            android:layout_width="0dp"
+                            android:layout_height="140dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            app:cardBackgroundColor="#FFB100"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="For Submission"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_black_ttf"/>
+                                <TextView
+                                    android:id="@+id/tvSubmissionCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="32sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_black_ttf" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="For Admin Review"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/poppins"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- COMPLETED -->
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardCompleted"
+                            android:layout_width="0dp"
+                            android:layout_height="140dp"
+                            android:layout_columnWeight="1"
+                            android:layout_margin="8dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            app:cardBackgroundColor="#8AC348"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="16dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Completed"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_black_ttf"/>
+                                <TextView
+                                    android:id="@+id/tvCompletedCount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:text="0"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="32sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_black_ttf" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Finished Jobs"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/poppins"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </GridLayout>
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/tvToolsLabel"
@@ -346,13 +417,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:fontFamily="@font/poppins_black_ttf"
-                    android:text="Administrative Tools"
+                    android:text="Quick Panels"
                     android:textColor="#333333"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@id/gEnd"
                     app:layout_constraintStart_toStartOf="@id/gStart"
-                    app:layout_constraintTop_toBottomOf="@id/statsGrid"
+                    app:layout_constraintTop_toBottomOf="@id/statsBackgroundContainer"
                     app:layout_constraintWidth_max="750dp" />
 
                 <LinearLayout
@@ -367,101 +438,140 @@
                     app:layout_constraintWidth_max="750dp">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/cardActionManageTechs"
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:layout_marginBottom="12dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="3dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="20dp">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/new_technician" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:fontFamily="@font/poppins_black_ttf"
-                                android:text="Manage Technicians"
-                                android:textColor="#333333"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
                         android:id="@+id/cardActionTechPerf"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="90dp"
                         android:layout_marginBottom="12dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="#3DAADB"
+                        app:cardCornerRadius="20dp"
                         app:cardElevation="3dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingStart="20dp">
+                            android:paddingHorizontal="20dp">
                             <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/send_1" />
-                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/maintenance"
+                                app:tint="#FFFFFF" />
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:fontFamily="@font/poppins_black_ttf"
-                                android:text="Work Performance"
-                                android:textColor="#333333"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:layout_marginStart="12dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_black_ttf"
+                                    android:text="Technician Performance"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Tracks ratings and service history"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardActionLogs"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="90dp"
                         android:layout_marginBottom="12dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?attr/selectableItemBackground"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="#4CB5E1"
+                        app:cardCornerRadius="20dp"
                         app:cardElevation="3dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingStart="20dp">
+                            android:paddingHorizontal="20dp">
                             <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/maps_and_flags__2__1" />
-                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_performance"
+                                app:tint="#FFFFFF" />
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:fontFamily="@font/poppins_black_ttf"
-                                android:text="Admin Activity Logs"
-                                android:textColor="#333333"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:layout_marginStart="12dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_black_ttf"
+                                    android:text="Recent Activity"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Real-time updates on system process"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardActionManageTechs"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:layout_marginBottom="12dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        app:cardBackgroundColor="#4CB5E1"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="3dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="20dp">
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/maintenance_icon"
+                                app:tint="#FFFFFF" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_black_ttf"
+                                    android:text="Manage Technicians"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins"
+                                    android:text="Add, review, or disable accounts"
+                                    android:textColor="#FFFFFF"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -471,14 +581,5 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view_admin"
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@android:color/white"
-        app:headerLayout="@layout/nav_header_admin"
-        app:menu="@menu/admin_drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

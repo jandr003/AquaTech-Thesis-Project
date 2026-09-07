@@ -30,6 +30,7 @@ import java.util.List;
 
 public class TechnicianNotificationActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private ImageView btnBack;
     private RecyclerView rvNew, rvOlder;
     private NotificationAdapter newAdapter, olderAdapter;
@@ -53,7 +54,7 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
 
         if (mAuth.getCurrentUser() != null) {
             String currentUid = mAuth.getCurrentUser().getUid();
-            dbRef = FirebaseDatabase.getInstance().getReference("Notifications").child(currentUid);
+            dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("Notifications").child(currentUid);
             connectToFirebase();
         } else {
             updateEmptyState(true);

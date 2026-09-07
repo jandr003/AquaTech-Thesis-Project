@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CustomerSetupActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private CardView card1, card2, card3, card4;
     private TextView setUpAccountTitle;
     private FirebaseAuth mAuth;
@@ -51,7 +52,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
     private void fetchUserData() {
         String uid = mAuth.getUid();
         if (uid != null) {
-            userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+            userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

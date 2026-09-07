@@ -21,6 +21,7 @@ import java.util.List;
 
 public class UnitSelectionActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private CardView card1, card2, cardAdd;
     private TextView tvNoUnits;
     private FirebaseAuth mAuth;
@@ -56,7 +57,7 @@ public class UnitSelectionActivity extends AppCompatActivity {
     private void setupFirebaseListener() {
         String uid = mAuth.getUid();
         if (uid == null) return;
-        unitsRef = FirebaseDatabase.getInstance().getReference("Users").child(uid).child("units");
+        unitsRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid).child("units");
         unitsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -75,7 +76,7 @@ public class UnitSelectionActivity extends AppCompatActivity {
     }
 
     private void fetchLegacyUnit(String uid) {
-        FirebaseDatabase.getInstance().getReference("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot s) {
                 if (s.exists() && s.hasChild("unitName")) {
@@ -150,7 +151,7 @@ public class UnitSelectionActivity extends AppCompatActivity {
     private void selectUnit(String name, String serial, String refNo, int imgRes) {
         String uid = mAuth.getUid();
         if (uid != null) {
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
+            DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
             userRef.child("unitName").setValue(name);
             userRef.child("serialNo").setValue(serial);
             userRef.child("referenceNo").setValue(refNo);

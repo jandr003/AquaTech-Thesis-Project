@@ -38,6 +38,7 @@ import java.util.Locale;
 
 public class TechnicianSettingsActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private SharedPreferences prefs;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef, notifRef;
@@ -54,8 +55,8 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
-            userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);
-            notifRef = FirebaseDatabase.getInstance().getReference("Notifications").child(uid);
+            userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
+            notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("Notifications").child(uid);
 
             setupRealtimePopupListener();
         }
