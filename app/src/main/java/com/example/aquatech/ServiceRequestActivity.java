@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -30,6 +31,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +69,7 @@ import java.util.Map;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.util.Random;
 
 public class ServiceRequestActivity extends AppCompatActivity {
 
@@ -81,9 +85,12 @@ public class ServiceRequestActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> fileLauncher;
 
     private EditText etCustomerNumber, etCustomerAddress, remarksInput;
-    private TextView displayDate, startTimeText, endTimeText;
+    private TextView displayDate, startTimeText, endTimeText, tvPaymentTotal;
     private AppCompatSpinner purchaseTypeDropdown;
     private String unitModel;
+
+    private RadioGroup rgPaymentMethod;
+    private RadioButton rbCOD, rbGCash, rbMaya;
 
     private TextView qtyCBC, qtySEDIMENT, qtyAquatal, qtyInlineFilter, qtyUvLampLabel, qtyTouchPanel, qtyPbcBoard, qtySMSF1µCBC2, qtySMSF10µSED2, qtyWayvalve2;
     private AppCompatButton incrementCBC, decrementCBC, incrementSEDIMENT, decrementSEDIMENT, incrementAquaTal, decrementAquatal, incrementInlineFilter, decrementInlineFilter, incrementUvLampLabel, decrementUvLampLabel, incrementTouchPanel, decrementTouchPanel, incrementPbcBoard, decrementPbcBoard, incrementSMSF1µCBC, decrementSMSF1µCBC1, incrementSMSF10µSED, decrementSMSF10µSED_1, incrementWayvalve, decrementWayvalve1;
@@ -308,6 +315,9 @@ public class ServiceRequestActivity extends AppCompatActivity {
         purchaseTypeDropdown = findViewById(R.id.purchaseTypeDropdown);
         customerValidIdLabel = findViewById(R.id.customerValidIdLabel);
 
+        rgPaymentMethod = findViewById(R.id.rgPaymentMethod);
+        tvPaymentTotal = findViewById(R.id.tvPaymentTotal);
+
         findViewById(R.id.EditPen1).setOnClickListener(v -> { etCustomerNumber.requestFocus(); InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); imm.showSoftInput(etCustomerNumber, 0); });
         findViewById(R.id.EditPen2).setOnClickListener(v -> { etCustomerAddress.requestFocus(); ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(etCustomerAddress, 0); });
 
@@ -362,7 +372,7 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void proceedToAnimation() {
-        String ticketId = "ASC2026-" + (new java.util.Random().nextInt(9000) + 1000);
+        String ticketId = "ASC2026-" + (new Random().nextInt(9000) + 1000);
         Intent intent = new Intent(this, WaterDropFillAnimationActivity.class);
 
         intent.putExtra("TICKET_ID", ticketId);
@@ -432,37 +442,136 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void setupQuantityHandlers() {
-        qtyCBC = findViewById(R.id.qtyCBC); incrementCBC = findViewById(R.id.incrementCBC); decrementCBC = findViewById(R.id.decrementCBC);
-        qtySEDIMENT = findViewById(R.id.qtySEDIMENT); incrementSEDIMENT = findViewById(R.id.incrementSEDIMENT); decrementSEDIMENT = findViewById(R.id.decrementSEDIMENT);
-        qtyAquatal = findViewById(R.id.qtyAquatal); incrementAquaTal = findViewById(R.id.incrementAquaTal); decrementAquatal = findViewById(R.id.decrementAquatal);
-        qtyInlineFilter = findViewById(R.id.qtyInlineFilter); incrementInlineFilter = findViewById(R.id.incrementInlineFilter); decrementInlineFilter = findViewById(R.id.decrementInlineFilter);
-        qtyUvLampLabel = findViewById(R.id.qtyUvLampLabel); incrementUvLampLabel = findViewById(R.id.incrementUvLampLabel); decrementUvLampLabel = findViewById(R.id.decrementUvLampLabel);
-        qtyTouchPanel = findViewById(R.id.qtyTouchPanel); incrementTouchPanel = findViewById(R.id.incrementTouchPanel); decrementTouchPanel = findViewById(R.id.decrementTouchPanel);
-        qtyPbcBoard = findViewById(R.id.qtyPbcBoard); incrementPbcBoard = findViewById(R.id.incrementPbcBoard); decrementPbcBoard = findViewById(R.id.decrementPbcBoard);
-        qtySMSF1µCBC2 = findViewById(R.id.qtySMSF1µCBC2); incrementSMSF1µCBC = findViewById(R.id.incrementSMSF1µCBC); decrementSMSF1µCBC1 = findViewById(R.id.decrementSMSF1µCBC1);
-        qtySMSF10µSED2 = findViewById(R.id.qtySMSF10µSED2); incrementSMSF10µSED = findViewById(R.id.incrementSMSF10µSED); decrementSMSF10µSED_1 = findViewById(R.id.decrementSMSF10µSED_1);
-        qtyWayvalve2 = findViewById(R.id.qtyWayvalve2); incrementWayvalve = findViewById(R.id.incrementWayvalve); decrementWayvalve1 = findViewById(R.id.decrementWayvalve1);
+        qtyCBC = findViewById(R.id.qtyCBC);
+        incrementCBC = findViewById(R.id.incrementCBC);
+        decrementCBC = findViewById(R.id.decrementCBC);
+        qtySEDIMENT = findViewById(R.id.qtySEDIMENT);
+        incrementSEDIMENT = findViewById(R.id.incrementSEDIMENT);
+        decrementSEDIMENT = findViewById(R.id.decrementSEDIMENT);
+        qtyAquatal = findViewById(R.id.qtyAquatal);
+        incrementAquaTal = findViewById(R.id.incrementAquaTal);
+        decrementAquatal = findViewById(R.id.decrementAquatal);
+        qtyInlineFilter = findViewById(R.id.qtyInlineFilter);
+        incrementInlineFilter = findViewById(R.id.incrementInlineFilter);
+        decrementInlineFilter = findViewById(R.id.decrementInlineFilter);
+        qtyUvLampLabel = findViewById(R.id.qtyUvLampLabel);
+        incrementUvLampLabel = findViewById(R.id.incrementUvLampLabel);
+        decrementUvLampLabel = findViewById(R.id.decrementUvLampLabel);
+        qtyTouchPanel = findViewById(R.id.qtyTouchPanel);
+        incrementTouchPanel = findViewById(R.id.incrementTouchPanel);
+        decrementTouchPanel = findViewById(R.id.decrementTouchPanel);
+        qtyPbcBoard = findViewById(R.id.qtyPbcBoard);
+        incrementPbcBoard = findViewById(R.id.incrementPbcBoard);
+        decrementPbcBoard = findViewById(R.id.decrementPbcBoard);
+        qtySMSF1µCBC2 = findViewById(R.id.qtySMSF1µCBC2);
+        incrementSMSF1µCBC = findViewById(R.id.incrementSMSF1µCBC);
+        decrementSMSF1µCBC1 = findViewById(R.id.decrementSMSF1µCBC1);
+        qtySMSF10µSED2 = findViewById(R.id.qtySMSF10µSED2);
+        incrementSMSF10µSED = findViewById(R.id.incrementSMSF10µSED);
+        decrementSMSF10µSED_1 = findViewById(R.id.decrementSMSF10µSED_1);
+        qtyWayvalve2 = findViewById(R.id.qtyWayvalve2);
+        incrementWayvalve = findViewById(R.id.incrementWayvalve);
+        decrementWayvalve1 = findViewById(R.id.decrementWayvalve1);
 
-        incrementCBC.setOnClickListener(v -> { if (currentQtyCBC < 8) currentQtyCBC++; qtyCBC.setText(String.valueOf(currentQtyCBC)); });
-        decrementCBC.setOnClickListener(v -> { if (currentQtyCBC > 0) currentQtyCBC--; qtyCBC.setText(String.valueOf(currentQtyCBC)); });
-        incrementSEDIMENT.setOnClickListener(v -> { if (currentQtySEDIMENT < 8) currentQtySEDIMENT++; qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT)); });
-        decrementSEDIMENT.setOnClickListener(v -> { if (currentQtySEDIMENT > 0) currentQtySEDIMENT--; qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT)); });
-        incrementAquaTal.setOnClickListener(v -> { if (currentQtyAquatal < 8) currentQtyAquatal++; qtyAquatal.setText(String.valueOf(currentQtyAquatal)); });
-        decrementAquatal.setOnClickListener(v -> { if (currentQtyAquatal > 0) currentQtyAquatal--; qtyAquatal.setText(String.valueOf(currentQtyAquatal)); });
-        incrementInlineFilter.setOnClickListener(v -> { if (currentQtyInlineFilter < 8) currentQtyInlineFilter++; qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter)); });
-        decrementInlineFilter.setOnClickListener(v -> { if (currentQtyInlineFilter > 0) currentQtyInlineFilter--; qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter)); });
-        incrementUvLampLabel.setOnClickListener(v -> { if (currentQtyUvLamp < 8) currentQtyUvLamp++; qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp)); });
-        decrementUvLampLabel.setOnClickListener(v -> { if (currentQtyUvLamp > 0) currentQtyUvLamp--; qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp)); });
-        incrementTouchPanel.setOnClickListener(v -> { if (currentQtyTouchPanel < 8) currentQtyTouchPanel++; qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel)); });
-        decrementTouchPanel.setOnClickListener(v -> { if (currentQtyTouchPanel > 0) currentQtyTouchPanel--; qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel)); });
-        incrementPbcBoard.setOnClickListener(v -> { if (currentQtyPbcBoard < 8) currentQtyPbcBoard++; qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard)); });
-        decrementPbcBoard.setOnClickListener(v -> { if (currentQtyPbcBoard > 0) currentQtyPbcBoard--; qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard)); });
-        incrementSMSF1µCBC.setOnClickListener(v -> { if (currentQtySmsf1Cbc < 8) currentQtySmsf1Cbc++; qtySMSF1µCBC2.setText(String.valueOf(currentQtySmsf1Cbc)); });
-        decrementSMSF1µCBC1.setOnClickListener(v -> { if (currentQtySmsf1Cbc > 0) currentQtySmsf1Cbc--; qtySMSF1µCBC2.setText(String.valueOf(currentQtySmsf1Cbc)); });
-        incrementSMSF10µSED.setOnClickListener(v -> { if (currentQtySmsf10Sed < 8) currentQtySmsf10Sed++; qtySMSF10µSED2.setText(String.valueOf(currentQtySmsf10Sed)); });
-        decrementSMSF10µSED_1.setOnClickListener(v -> { if (currentQtySmsf10Sed > 0) currentQtySmsf10Sed--; qtySMSF10µSED2.setText(String.valueOf(currentQtySmsf10Sed)); });
-        incrementWayvalve.setOnClickListener(v -> { if (currentQtyWayValve < 8) currentQtyWayValve++; qtyWayvalve2.setText(String.valueOf(currentQtyWayValve)); });
-        decrementWayvalve1.setOnClickListener(v -> { if (currentQtyWayValve > 0) currentQtyWayValve--; qtyWayvalve2.setText(String.valueOf(currentQtyWayValve)); });
+        incrementCBC.setOnClickListener(v -> {
+            if (currentQtyCBC < 8) currentQtyCBC++;
+            qtyCBC.setText(String.valueOf(currentQtyCBC));
+        });
+
+        decrementCBC.setOnClickListener(v -> {
+            if (currentQtyCBC > 0) currentQtyCBC--;
+            qtyCBC.setText(String.valueOf(currentQtyCBC));
+        });
+
+        incrementSEDIMENT.setOnClickListener(v -> {
+            if (currentQtySEDIMENT < 8) currentQtySEDIMENT++;
+            qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT));
+        });
+
+        decrementSEDIMENT.setOnClickListener(v -> {
+            if (currentQtySEDIMENT > 0) currentQtySEDIMENT--;
+            qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT));
+        });
+
+        incrementAquaTal.setOnClickListener(v -> {
+            if (currentQtyAquatal < 8) currentQtyAquatal++;
+            qtyAquatal.setText(String.valueOf(currentQtyAquatal));
+        });
+
+        decrementAquatal.setOnClickListener(v -> {
+            if (currentQtyAquatal > 0) currentQtyAquatal--;
+            qtyAquatal.setText(String.valueOf(currentQtyAquatal));
+        });
+
+        incrementInlineFilter.setOnClickListener(v -> {
+            if (currentQtyInlineFilter < 8) currentQtyInlineFilter++;
+            qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter));
+        });
+
+        decrementInlineFilter.setOnClickListener(v -> {
+            if (currentQtyInlineFilter > 0) currentQtyInlineFilter--;
+            qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter));
+        });
+
+        incrementUvLampLabel.setOnClickListener(v -> {
+            if (currentQtyUvLamp < 8) currentQtyUvLamp++;
+            qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp));
+        });
+
+        decrementUvLampLabel.setOnClickListener(v -> {
+            if (currentQtyUvLamp > 0) currentQtyUvLamp--;
+            qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp));
+        });
+
+        incrementTouchPanel.setOnClickListener(v -> {
+            if (currentQtyTouchPanel < 8) currentQtyTouchPanel++;
+            qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel));
+        });
+
+        decrementTouchPanel.setOnClickListener(v -> {
+            if (currentQtyTouchPanel > 0) currentQtyTouchPanel--;
+            qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel));
+        });
+
+        incrementPbcBoard.setOnClickListener(v -> {
+            if (currentQtyPbcBoard < 8) currentQtyPbcBoard++;
+            qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard));
+        });
+
+        decrementPbcBoard.setOnClickListener(v -> {
+            if (currentQtyPbcBoard > 0) currentQtyPbcBoard--;
+            qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard));
+        });
+
+        incrementSMSF1µCBC.setOnClickListener(v -> {
+            if (currentQtySmsf1Cbc < 8) currentQtySmsf1Cbc++;
+            qtySMSF1µCBC2.setText(String.valueOf(currentQtySmsf1Cbc));
+        });
+
+        decrementSMSF1µCBC1.setOnClickListener(v -> {
+            if (currentQtySmsf1Cbc > 0) currentQtySmsf1Cbc--;
+            qtySMSF1µCBC2.setText(String.valueOf(currentQtySmsf1Cbc));
+        });
+
+        incrementSMSF10µSED.setOnClickListener(v -> {
+            if (currentQtySmsf10Sed < 8) currentQtySmsf10Sed++;
+            qtySMSF10µSED2.setText(String.valueOf(currentQtySmsf10Sed));
+        });
+
+        decrementSMSF10µSED_1.setOnClickListener(v -> {
+            if (currentQtySmsf10Sed > 0) currentQtySmsf10Sed--;
+            qtySMSF10µSED2.setText(String.valueOf(currentQtySmsf10Sed));
+        });
+
+        incrementWayvalve.setOnClickListener(v -> {
+            if (currentQtyWayValve < 8) currentQtyWayValve++;
+            qtyWayvalve2.setText(String.valueOf(currentQtyWayValve));
+        });
+
+        decrementWayvalve1.setOnClickListener(v -> {
+            if (currentQtyWayValve > 0) currentQtyWayValve--;
+            qtyWayvalve2.setText(String.valueOf(currentQtyWayValve));
+        });
     }
 
     private void setupNavigation() {
@@ -501,9 +610,19 @@ public class ServiceRequestActivity extends AppCompatActivity {
             currentStep = 4;
             updateStepUI();
         });
+
+        findViewById(R.id.buttonNext4).setOnClickListener(v -> {
+            hideKeyboard();
+            currentStep = 5;
+            updateStepUI();
+            
+            int total = calculateTotalAmount();
+            tvPaymentTotal.setText(String.format(Locale.getDefault(), "₱ %,d.00", total));
+        });
         
         findViewById(R.id.buttonBack).setOnClickListener(v -> { if (currentStep > 1) { currentStep--; updateStepUI(); } });
         findViewById(R.id.buttonBack3).setOnClickListener(v -> { currentStep = 2; updateStepUI(); });
+        findViewById(R.id.buttonBack4).setOnClickListener(v -> { currentStep = 4; updateStepUI(); });
     }
 
     private void hideKeyboard() {
@@ -530,57 +649,162 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void updateStepUI() {
-        TextView tv1 = findViewById(R.id.circleText1), tv2 = findViewById(R.id.circleText2), tv3 = findViewById(R.id.circleText3);
-        CardView circle1 = findViewById(R.id.circleNumber1), circle2 = findViewById(R.id.circleNumber2), circle3 = findViewById(R.id.circleNumber3);
-        View underline1 = findViewById(R.id.UnderLine), underline2 = findViewById(R.id.underline2), underline3 = findViewById(R.id.underline3), completeUnderline = findViewById(R.id.CompleteUnderline);
+        TextView tv1 = findViewById(R.id.circleText1),
+                 tv2 = findViewById(R.id.circleText2),
+                 tv3 = findViewById(R.id.circleText3),
+                 tv4 = findViewById(R.id.circleText4);
 
-        resetCircle(tv1, circle1, "1"); resetCircle(tv2, circle2, "2"); resetCircle(tv3, circle3, "3");
-        underline1.setVisibility(View.GONE); underline2.setVisibility(View.GONE); underline3.setVisibility(View.GONE); completeUnderline.setVisibility(View.GONE);
+        CardView circle1 = findViewById(R.id.circleNumber1),
+                 circle2 = findViewById(R.id.circleNumber2),
+                 circle3 = findViewById(R.id.circleNumber3),
+                 circle4 = findViewById(R.id.circleNumber4);
 
-        if (currentStep == 1) { setActive(tv1, circle1, "1"); underline1.setVisibility(View.VISIBLE); }
-        else if (currentStep == 2) { setCompleted(tv1, circle1); setActive(tv2, circle2, "2"); underline2.setVisibility(View.VISIBLE); }
-        else if (currentStep == 3) { setCompleted(tv1, circle1); setCompleted(tv2, circle2); setActive(tv3, circle3, "3"); underline3.setVisibility(View.VISIBLE); }
-        else if (currentStep == 4) { setCompleted(tv1, circle1); setCompleted(tv2, circle2); setCompleted(tv3, circle3); completeUnderline.setVisibility(View.VISIBLE); }
+        View underline1 = findViewById(R.id.UnderLine),
+             underline2 = findViewById(R.id.underline2),
+             underline3 = findViewById(R.id.underline3),
+             completeUnderline = findViewById(R.id.CompleteUnderline);
+
+        resetCircle(tv1, circle1, "1");
+        resetCircle(tv2, circle2, "2");
+        resetCircle(tv3, circle3, "3");
+        resetCircle(tv4, circle4, "4");
+
+        underline1.setVisibility(View.GONE);
+        underline2.setVisibility(View.GONE);
+        underline3.setVisibility(View.GONE);
+        completeUnderline.setVisibility(View.GONE);
+
+        if (currentStep == 1) {
+            setActive(tv1, circle1, "1"); underline1.setVisibility(View.VISIBLE);
+        }
+        else if (currentStep == 2) {
+            setCompleted(tv1, circle1);
+            setActive(tv2, circle2, "2");
+            underline2.setVisibility(View.VISIBLE);
+        }
+        else if (currentStep == 3) {
+            setCompleted(tv1, circle1);
+            setCompleted(tv2, circle2);
+            setActive(tv3, circle3, "3");
+            underline3.setVisibility(View.VISIBLE);
+        }
+        else if (currentStep == 4) {
+            setCompleted(tv1, circle1);
+            setCompleted(tv2, circle2);
+            setCompleted(tv3, circle3);
+            setActive(tv4, circle4, "4");
+        }
+        else if (currentStep == 5) {
+            setCompleted(tv1, circle1);
+            setCompleted(tv2, circle2);
+            setCompleted(tv3, circle3);
+            setCompleted(tv4, circle4);
+            completeUnderline.setVisibility(View.VISIBLE);
+        }
 
         int s1 = (currentStep == 1) ? View.VISIBLE : View.GONE;
         int s2 = (currentStep == 2) ? View.VISIBLE : View.GONE;
         int s3 = (currentStep == 3) ? View.VISIBLE : View.GONE;
         int s4 = (currentStep == 4) ? View.VISIBLE : View.GONE;
+        int s5 = (currentStep == 5) ? View.VISIBLE : View.GONE;
 
-        findViewById(R.id.customerLabel).setVisibility(s1); tvCustomerNameValue.setVisibility(s1); etCustomerNumber.setVisibility(s1); etCustomerAddress.setVisibility(s1);
-        findViewById(R.id.customerUnderline).setVisibility(s1); findViewById(R.id.customerUnderline2).setVisibility(s1);
-        findViewById(R.id.customerUnderline3).setVisibility(s1); findViewById(R.id.customerUnderline4).setVisibility(s1);
-        findViewById(R.id.customerUnderline5).setVisibility(s1); findViewById(R.id.customerNumber).setVisibility(s1);
-        findViewById(R.id.customerAddress).setVisibility(s1); findViewById(R.id.customerRefNum).setVisibility(s1);
+        findViewById(R.id.customerLabel).setVisibility(s1);
+        tvCustomerNameValue.setVisibility(s1);
+        etCustomerNumber.setVisibility(s1);
+        etCustomerAddress.setVisibility(s1);
+
+        findViewById(R.id.customerUnderline).setVisibility(s1);
+        findViewById(R.id.customerUnderline2).setVisibility(s1);
+        findViewById(R.id.customerUnderline3).setVisibility(s1);
+        findViewById(R.id.customerUnderline4).setVisibility(s1);
+        findViewById(R.id.customerUnderline5).setVisibility(s1);
+        findViewById(R.id.customerNumber).setVisibility(s1);
+        findViewById(R.id.customerAddress).setVisibility(s1);
+        findViewById(R.id.customerRefNum).setVisibility(s1);
         tvCustomerRefValue.setVisibility(s1);
-        findViewById(R.id.customerDate).setVisibility(s1); displayDate.setVisibility(s1);
-        findViewById(R.id.EditPen1).setVisibility(s1); findViewById(R.id.EditPen2).setVisibility(s1); findViewById(R.id.buttonNext).setVisibility(s1);
+        findViewById(R.id.customerDate).setVisibility(s1);
+        displayDate.setVisibility(s1);
+        findViewById(R.id.EditPen1).setVisibility(s1);
+        findViewById(R.id.EditPen2).setVisibility(s1);
+        findViewById(R.id.buttonNext).setVisibility(s1);
 
-        findViewById(R.id.serviceTimeLabel).setVisibility(s2); findViewById(R.id.serviceTimeRow).setVisibility(s2); findViewById(R.id.startTimeUnderline).setVisibility(s2);
-        findViewById(R.id.startTimeArrow).setVisibility(s2); startTimeText.setVisibility(s2); findViewById(R.id.toLabel).setVisibility(s2);
-        findViewById(R.id.serviceEndTimeRow).setVisibility(s2); findViewById(R.id.endTimeUnderline).setVisibility(s2); findViewById(R.id.endTimeArrow).setVisibility(s2);
-        endTimeText.setVisibility(s2); findViewById(R.id.purchaseTypeLabel).setVisibility(s2); purchaseTypeDropdown.setVisibility(s2);
-        customerValidIdLabel.setVisibility(s2); if (currentStep == 2) customerValidIdLabel.setText(android.text.Html.fromHtml("<b>Customer Valid ID</b> (optional)"));
-        customerCard.setVisibility(s2); findViewById(R.id.buttonBack).setVisibility(s2); findViewById(R.id.buttonNext2).setVisibility(s2);
+        findViewById(R.id.serviceTimeLabel).setVisibility(s2);
+        findViewById(R.id.serviceTimeRow).setVisibility(s2);
+        findViewById(R.id.startTimeUnderline).setVisibility(s2);
+        findViewById(R.id.startTimeArrow).setVisibility(s2);
+        startTimeText.setVisibility(s2); findViewById(R.id.toLabel).setVisibility(s2);
+        findViewById(R.id.serviceEndTimeRow).setVisibility(s2);
+        findViewById(R.id.endTimeUnderline).setVisibility(s2);
+        findViewById(R.id.endTimeArrow).setVisibility(s2);
+        endTimeText.setVisibility(s2);
+        findViewById(R.id.purchaseTypeLabel).setVisibility(s2);
+        purchaseTypeDropdown.setVisibility(s2);
+        customerValidIdLabel.setVisibility(s2);
+            if (currentStep == 2) customerValidIdLabel.setText(Html.fromHtml("<b>Customer Valid ID</b> (optional)"));
+        customerCard.setVisibility(s2);
+        findViewById(R.id.buttonBack).setVisibility(s2);
+        findViewById(R.id.buttonNext2).setVisibility(s2);
 
-        findViewById(R.id.circle3ScrollContainer).setVisibility((currentStep == 3 || currentStep == 4) ? View.VISIBLE : View.GONE);
-        findViewById(R.id.filterPreventiveLabel).setVisibility(s3); findViewById(R.id.qtyLabel).setVisibility(s3); findViewById(R.id.cbcLabel).setVisibility(s3);
-        qtyCBC.setVisibility(s3); incrementCBC.setVisibility(s3); decrementCBC.setVisibility(s3); findViewById(R.id.sedimentLabel).setVisibility(s3);
-        qtySEDIMENT.setVisibility(s3); incrementSEDIMENT.setVisibility(s3); decrementSEDIMENT.setVisibility(s3); findViewById(R.id.OtherPartsLabel).setVisibility(s3);
-        findViewById(R.id.AquatalLabel).setVisibility(s3); qtyAquatal.setVisibility(s3); incrementAquaTal.setVisibility(s3); decrementAquatal.setVisibility(s3);
-        findViewById(R.id.InlineFilterLabel).setVisibility(s3); qtyInlineFilter.setVisibility(s3); incrementInlineFilter.setVisibility(s3); decrementInlineFilter.setVisibility(s3);
-        findViewById(R.id.UvLampLabel).setVisibility(s3); qtyUvLampLabel.setVisibility(s3); incrementUvLampLabel.setVisibility(s3); decrementUvLampLabel.setVisibility(s3);
-        findViewById(R.id.TouchPanel).setVisibility(s3); qtyTouchPanel.setVisibility(s3); incrementTouchPanel.setVisibility(s3); decrementTouchPanel.setVisibility(s3);
-        findViewById(R.id.PbcBoard).setVisibility(s3); qtyPbcBoard.setVisibility(s3); incrementPbcBoard.setVisibility(s3); decrementPbcBoard.setVisibility(s3);
-        findViewById(R.id.SMSF1µ).setVisibility(s3); qtySMSF1µCBC2.setVisibility(s3); incrementSMSF1µCBC.setVisibility(s3); decrementSMSF1µCBC1.setVisibility(s3);
-        findViewById(R.id.SMSF10µSED).setVisibility(s3); qtySMSF10µSED2.setVisibility(s3); incrementSMSF10µSED.setVisibility(s3); decrementSMSF10µSED_1.setVisibility(s3);
-        findViewById(R.id.buttonBack3).setVisibility(s3); findViewById(R.id.buttonNext3).setVisibility(s3);
+        findViewById(R.id.circle3ScrollContainer).setVisibility((currentStep == 3 || currentStep == 4 || currentStep == 5) ? View.VISIBLE : View.GONE);
+        findViewById(R.id.filterPreventiveLabel).setVisibility(s3);
+        findViewById(R.id.qtyLabel).setVisibility(s3);
+        findViewById(R.id.cbcLabel).setVisibility(s3);
+        qtyCBC.setVisibility(s3);
+        incrementCBC.setVisibility(s3);
+        decrementCBC.setVisibility(s3);
+        findViewById(R.id.sedimentLabel).setVisibility(s3);
+        qtySEDIMENT.setVisibility(s3);
+        incrementSEDIMENT.setVisibility(s3);
+        decrementSEDIMENT.setVisibility(s3);
+        findViewById(R.id.OtherPartsLabel).setVisibility(s3);
+        findViewById(R.id.AquatalLabel).setVisibility(s3);
+        qtyAquatal.setVisibility(s3);
+        incrementAquaTal.setVisibility(s3);
+        decrementAquatal.setVisibility(s3);
+        findViewById(R.id.InlineFilterLabel).setVisibility(s3);
+        qtyInlineFilter.setVisibility(s3);
+        incrementInlineFilter.setVisibility(s3);
+        decrementInlineFilter.setVisibility(s3);
+        findViewById(R.id.UvLampLabel).setVisibility(s3);
+        qtyUvLampLabel.setVisibility(s3);
+        incrementUvLampLabel.setVisibility(s3);
+        decrementUvLampLabel.setVisibility(s3);
+        findViewById(R.id.TouchPanel).setVisibility(s3);
+        qtyTouchPanel.setVisibility(s3);
+        incrementTouchPanel.setVisibility(s3);
+        decrementTouchPanel.setVisibility(s3);
+        findViewById(R.id.PbcBoard).setVisibility(s3);
+        qtyPbcBoard.setVisibility(s3);
+        incrementPbcBoard.setVisibility(s3);
+        decrementPbcBoard.setVisibility(s3);
+        findViewById(R.id.SMSF1µ).setVisibility(s3);
+        qtySMSF1µCBC2.setVisibility(s3);
+        incrementSMSF1µCBC.setVisibility(s3);
+        decrementSMSF1µCBC1.setVisibility(s3);
+        findViewById(R.id.SMSF10µSED).setVisibility(s3);
+        qtySMSF10µSED2.setVisibility(s3);
+        incrementSMSF10µSED.setVisibility(s3);
+        decrementSMSF10µSED_1.setVisibility(s3);
+        findViewById(R.id.buttonBack3).setVisibility(s3);
+        findViewById(R.id.buttonNext3).setVisibility(s3);
 
-        findViewById(R.id.installationKitLabel).setVisibility(s4); findViewById(R.id.Wayvalve).setVisibility(s4);
-        incrementWayvalve.setVisibility(s4); decrementWayvalve1.setVisibility(s4); qtyWayvalve2.setVisibility(s4);
-        findViewById(R.id.remarksLabel).setVisibility(s4); remarksInput.setVisibility(s4);
-        findViewById(R.id.remarksNotice).setVisibility(s4); findViewById(R.id.remarksNotice1).setVisibility(s4);
-        findViewById(R.id.buttonSubmit).setVisibility(s4);
+        findViewById(R.id.installationKitLabel).setVisibility(s4);
+        findViewById(R.id.Wayvalve).setVisibility(s4);
+        incrementWayvalve.setVisibility(s4); decrementWayvalve1.setVisibility(s4);
+        qtyWayvalve2.setVisibility(s4);
+        findViewById(R.id.remarksLabel).setVisibility(s4);
+        remarksInput.setVisibility(s4);
+        findViewById(R.id.remarksNotice).setVisibility(s4);
+        findViewById(R.id.remarksNotice1).setVisibility(s4);
+        findViewById(R.id.buttonBack4).setVisibility(s4);
+        findViewById(R.id.buttonNext4).setVisibility(s4);
+
+        findViewById(R.id.paymentLabel).setVisibility(s5);
+        if (rgPaymentMethod != null) rgPaymentMethod.setVisibility(s5);
+        findViewById(R.id.paymentSummaryLabel).setVisibility(s5);
+        if (tvPaymentTotal != null) tvPaymentTotal.setVisibility(s5);
+        findViewById(R.id.buttonSubmit).setVisibility(s5);
+
         if (currentStep == 4) {
             String text = "INSTALLATION KIT (Add if Needed)";
             SpannableString spannable = new SpannableString(text);

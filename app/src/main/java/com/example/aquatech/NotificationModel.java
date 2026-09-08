@@ -61,15 +61,15 @@ public class NotificationModel {
     public int getIconResId() {
         if (iconResId != -1) return iconResId;
 
-        if (type == null) return R.drawable.asc_logooo;
-        switch (type) {
+        if (type == null) return R.drawable.ic_bell_notification;
+        switch (type.toUpperCase()) {
             case "PDF": return R.drawable.robot_icon_new;
-            case "ASSIGNED":
-            case "COMPLETED": return R.drawable.maintenance_technician1;
             case "MESSAGE": return R.drawable.message_notification_1;
             case "CALL": return R.drawable.telephone_icon;
-            case "RESUBMIT": return R.drawable.alert_icon;
-            default: return R.drawable.asc_logooo;
+            case "ASSIGNED":
+            case "COMPLETED":
+            case "RESUBMIT":
+            default: return R.drawable.ic_bell_notification;
         }
     }
 }

@@ -657,17 +657,37 @@
                     android:layout_height="40dp"
                     app:cardCornerRadius="50dp"
                     app:cardElevation="6dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/circleNumber4"
                     app:layout_constraintStart_toEndOf="@+id/circleNumber2"
                     app:layout_constraintTop_toTopOf="@id/circleNumber1">
 
                     <TextView
                         android:id="@+id/circleText3"
-                        android:layout_width="37dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/poppins_black"
                         android:gravity="center"
                         android:text="3"
+                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/circleNumber4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="50dp"
+                    app:cardElevation="6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/circleNumber3"
+                    app:layout_constraintTop_toTopOf="@id/circleNumber1">
+
+                    <TextView
+                        android:id="@+id/circleText4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins_black"
+                        android:gravity="center"
+                        android:text="4"
                         android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
 
@@ -1374,6 +1394,89 @@
                     app:layout_constraintTop_toBottomOf="@+id/remarksInput"
                     app:layout_constraintVertical_bias="0.446" />
 
+                <TextView
+                    android:id="@+id/paymentLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="PAYMENT METHOD"
+                    android:textColor="#5B5B5B"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/rgPaymentMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/paymentLabel">
+
+                    <RadioButton
+                        android:id="@+id/rbCOD"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Cash on Delivery"
+                        android:textColor="#334155"
+                        android:textSize="16sp"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/rbGCash"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="GCash"
+                        android:textColor="#334155"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbMaya"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Maya"
+                        android:textColor="#334155"
+                        android:textSize="16sp" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/paymentSummaryLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="TOTAL AMOUNT"
+                    android:textColor="#94A3B8"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rgPaymentMethod" />
+
+                <TextView
+                    android:id="@+id/tvPaymentTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/poppins_black_ttf"
+                    android:text="₱ 0.00"
+                    android:textColor="#0F172A"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/paymentSummaryLabel" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -1450,6 +1553,44 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.682"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.959" />
+
+        <Button
+            android:id="@+id/buttonNext4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:backgroundTint="#3EB5E8"
+            android:text="@string/next"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="-12dp"
+            app:cornerRadius="20dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.682"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.959" />
+
+        <Button
+            android:id="@+id/buttonBack4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:backgroundTint="#3EB5E8"
+            android:text="@string/back"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:textStyle="bold"
+            app:cornerRadius="20dp"
+            android:layout_marginTop="-12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.298"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.959" />

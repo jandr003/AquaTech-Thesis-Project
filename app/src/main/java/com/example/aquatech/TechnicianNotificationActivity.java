@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,12 +32,12 @@ import java.util.List;
 public class TechnicianNotificationActivity extends AppCompatActivity {
 
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
-    private ImageView btnBack;
-    private RecyclerView rvNew, rvOlder;
-    private NotificationAdapter newAdapter, olderAdapter;
-    private List<NotificationModel> newList, olderList;
-    private View notifScroll;
+    private ImageView btnBack, btnSettings;
+    private RecyclerView rvToday, rvEarlier;
+    private TechnicianNotificationAdapter todayAdapter, earlierAdapter;
+    private List<NotificationModel> todayList, earlierList;
     private LinearLayout noNotifLayout;
+    private TextView chipAll, chipReminders, chipPayment, chipBooking;
 
     private DatabaseReference dbRef;
     private FirebaseAuth mAuth;
@@ -61,6 +62,54 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
         }
     }
 
+    private void initializeViews() {
+        btnBack = findViewById(R.id.btnBack);
+        btnSettings = findViewById(R.id.btnSettings);
+        rvToday = findViewById(R.id.rvTodayNotifications);
+        rvEarlier = findViewById(R.id.rvEarlierNotifications);
+        noNotifLayout = findViewById(R.id.noNotifLayout);
+
+        chipAll = findViewById(R.id.chipAll);
+        chipReminders = findViewById(R.id.chipReminders);
+        chipPayment = findViewById(R.id.chipPayment);
+        chipBooking = findViewById(R.id.chipBooking);
+
+        btnBack.setOnClickListener(v -> finish());
+        btnSettings.setOnClickListener(v -> {
+            Toast.makeText(this, "Settings coming soon", Toast.LENGTH_SHORT).show();
+        });
+
+        rvToday.setLayoutManager(new LinearLayoutManager(this));
+        todayList = new ArrayList<>();
+        todayAdapter = new TechnicianNotificationAdapter(todayList);
+        rvToday.setAdapter(todayAdapter);
+
+        rvEarlier.setLayoutManager(new LinearLayoutManager(this));
+        earlierList = new ArrayList<>();
+        earlierAdapter = new TechnicianNotificationAdapter(earlierList);
+        rvEarlier.setAdapter(earlierAdapter);
+
+        setupFilterClickListeners();
+    }
+
+    private void setupFilterClickListeners() {
+        View.OnClickListener filterListener = v -> {
+            chipAll.setSelected(false);
+            chipReminders.setSelected(false);
+            chipPayment.setSelected(false);
+            chipBooking.setSelected(false);
+            v.setSelected(true);
+            
+            // Logic for actual filtering can be added here
+            Toast.makeText(this, "Filtering...", Toast.LENGTH_SHORT).show();
+        };
+
+        chipAll.setOnClickListener(filterListener);
+        chipReminders.setOnClickListener(filterListener);
+        chipPayment.setOnClickListener(filterListener);
+        chipBooking.setOnClickListener(filterListener);
+    }
+
     private void connectToFirebase() {
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -69,7 +118,6 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     NotificationModel notif = data.getValue(NotificationModel.class);
                     if (notif != null) {
-                        notif.setIconResId(getIconForType(notif.getType()));
                         allNotifs.add(notif);
                     }
                 }
@@ -111,67 +159,46 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
     }
 
     private void distributeToSections(List<NotificationModel> all) {
-        newList.clear();
-        olderList.clear();
+        todayList.clear();
+        earlierList.clear();
 
-        for (int i = 0; i < all.size(); i++) {
-            if (i < 3) newList.add(all.get(i));
-            else olderList.add(all.get(i));
+        long now = System.currentTimeMillis();
+        long oneDayMillis = 24 * 60 * 60 * 1000;
+
+        for (NotificationModel notif : all) {
+            if (now - notif.getTimestamp() < oneDayMillis) {
+                todayList.add(notif);
+            } else {
+                earlierList.add(notif);
+            }
         }
 
-        newAdapter.notifyDataSetChanged();
-        olderAdapter.notifyDataSetChanged();
+        todayAdapter.notifyDataSetChanged();
+        earlierAdapter.notifyDataSetChanged();
 
-        findViewById(R.id.tvLabelNew).setVisibility(newList.isEmpty() ? View.GONE : View.VISIBLE);
-        findViewById(R.id.tvLabelOlder).setVisibility(olderList.isEmpty() ? View.GONE : View.VISIBLE);
+        findViewById(R.id.tvLabelToday).setVisibility(todayList.isEmpty() ? View.GONE : View.VISIBLE);
+        findViewById(R.id.tvLabelEarlier).setVisibility(earlierList.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     private void updateEmptyState(boolean isEmpty) {
         if (isEmpty) {
             noNotifLayout.setVisibility(View.VISIBLE);
-            notifScroll.setVisibility(View.GONE);
+            findViewById(R.id.rvTodayNotifications).setVisibility(View.GONE);
+            findViewById(R.id.rvEarlierNotifications).setVisibility(View.GONE);
+            findViewById(R.id.tvLabelToday).setVisibility(View.GONE);
+            findViewById(R.id.tvLabelEarlier).setVisibility(View.GONE);
         } else {
             noNotifLayout.setVisibility(View.GONE);
-            notifScroll.setVisibility(View.VISIBLE);
+            findViewById(R.id.rvTodayNotifications).setVisibility(View.VISIBLE);
+            findViewById(R.id.rvEarlierNotifications).setVisibility(View.VISIBLE);
         }
-    }
-
-    private int getIconForType(String type) {
-        if (type == null) return R.drawable.maintenance_technician1;
-        switch (type.toUpperCase()) {
-            case "MESSAGE": return R.drawable.message_notification_1;
-            case "REVISION": return R.drawable.alert_icon;
-            case "APPROVED": return R.drawable.maintenance_technician1;
-            case "ASSIGNED":
-            default: return R.drawable.maintenance_technician1;
-        }
-    }
-
-    private void initializeViews() {
-        btnBack = findViewById(R.id.btnBack);
-        rvNew = findViewById(R.id.rvNewNotifications);
-        rvOlder = findViewById(R.id.rvOlderNotifications);
-        notifScroll = findViewById(R.id.notifScroll);
-        noNotifLayout = findViewById(R.id.noNotifLayout);
-
-        btnBack.setOnClickListener(v -> finish());
-        
-        rvNew.setLayoutManager(new LinearLayoutManager(this));
-        newList = new ArrayList<>();
-        newAdapter = new NotificationAdapter(newList);
-        rvNew.setAdapter(newAdapter);
-
-        rvOlder.setLayoutManager(new LinearLayoutManager(this));
-        olderList = new ArrayList<>();
-        olderAdapter = new NotificationAdapter(olderList);
-        rvOlder.setAdapter(olderAdapter);
     }
 
     private void setupStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.setStatusBarColor(Color.TRANSPARENT);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            window.setStatusBarColor(Color.WHITE);
         }
     }
 }
