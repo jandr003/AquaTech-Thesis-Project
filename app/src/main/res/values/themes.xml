@@ -12,7 +12,6 @@
         <item name="colorOnSurface">@color/aqua_text_dark</item>
     </style>
 
-    <!-- Ito yung nawawalang style para sa panel -->
     <style name="TopRoundedCorners">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">32dp</item>
