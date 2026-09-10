@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="#F8FAFC">
 
+    <!-- TOP NAVIGATION -->
     <ImageView
         android:id="@+id/ExitIcon"
         android:layout_width="40dp"
@@ -21,408 +22,246 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="#0F172A" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ExitIcon">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/circleNumber1"
-                android:layout_width="1dp"
-                android:layout_height="1dp">
-
-                <TextView
-                    android:id="@+id/circleText1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/circleNumber2"
-                android:layout_width="1dp"
-                android:layout_height="1dp">
-
-                <TextView
-                    android:id="@+id/circleText2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/circleNumber3"
-                android:layout_width="1dp"
-                android:layout_height="1dp">
-
-                <TextView
-                    android:id="@+id/circleText3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/circleNumber4"
-                android:layout_width="1dp"
-                android:layout_height="1dp">
-
-                <TextView
-                    android:id="@+id/circleText4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </androidx.cardview.widget.CardView>
-
-            <View
-                android:id="@+id/UnderLine"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
-
-            <View
-                android:id="@+id/underline2"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
-
-            <View
-                android:id="@+id/underline3"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
-
-            <View
-                android:id="@+id/CompleteUnderline"
-                android:layout_width="1dp"
-                android:layout_height="1dp" />
-
-            <TextView
-                android:id="@+id/customerLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tvCustomerNameValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/customerNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/etCustomerNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-
-            <ImageView
-                android:id="@+id/EditPen1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/customerUnderline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/customerUnderline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/customerAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <EditText
-                android:id="@+id/etCustomerAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-
-            <ImageView
-                android:id="@+id/EditPen2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/customerUnderline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/customerRefNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tvCustomerRefValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/customerUnderline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/customerDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/displayDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/customerUnderline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/serviceTimeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/serviceTimeRow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/startTimeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:id="@+id/startTimeArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/startTimeUnderline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/toLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/endTimeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:id="@+id/endTimeArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/endTimeUnderline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/serviceEndTimeRow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/purchaseTypeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/purchaseTypeDropdown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/customerValidIdLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/customerCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:id="@+id/imgPreview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:id="@+id/imgPlaceHolder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/takePhotoOrUpload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <!-- Filters & Parts IDs -->
-            <ScrollView
-                android:id="@+id/circle3ScrollContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/filterPreventiveLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/qtyLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/cbcLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/incrementCBC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/qtyCBC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/decrementCBC"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/sedimentLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/incrementSEDIMENT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/qtySEDIMENT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/decrementSEDIMENT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/OtherPartsLabel"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/AquatalLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementAquaTal" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtyAquatal" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementAquatal" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/InlineFilterLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementInlineFilter" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtyInlineFilter" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementInlineFilter" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/UvLampLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementUvLampLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtyUvLampLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementUvLampLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/TouchPanel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementTouchPanel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtyTouchPanel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementTouchPanel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/PbcBoard" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementPbcBoard" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtyPbcBoard" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementPbcBoard" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/SMSF1µ" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementSMSF1µCBC" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtySMSF1µCBC2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementSMSF1µCBC1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/SMSF10µSED" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementSMSF10µSED" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtySMSF10µSED2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementSMSF10µSED_1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                </LinearLayout>
-            </ScrollView>
-
-            <!-- Kit & Remarks IDs -->
-            <TextView android:id="@+id/installationKitLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/Wayvalve" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementWayvalve" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/qtyWayvalve2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementWayvalve1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/remarksLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <EditText android:id="@+id/remarksInput" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="text" />
-            <TextView android:id="@+id/remarksNotice" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/remarksNotice1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-
-            <!-- Payment IDs -->
-            <TextView android:id="@+id/paymentLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <RadioGroup android:id="@+id/rgPaymentMethod" android:layout_width="wrap_content" android:layout_height="wrap_content">
-                <RadioButton android:id="@+id/rbCOD" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                <RadioButton android:id="@+id/rbGCash" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                <RadioButton android:id="@+id/rbMaya" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            </RadioGroup>
-            <TextView android:id="@+id/paymentSummaryLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/tvPaymentTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-
-            <!-- Navigation Buttons IDs -->
-            <Button android:id="@+id/buttonBack" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <Button android:id="@+id/buttonBack3" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <Button android:id="@+id/buttonBack4" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <Button android:id="@+id/buttonNext" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <Button android:id="@+id/buttonNext2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <Button android:id="@+id/buttonNext3" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <Button android:id="@+id/buttonNext4" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <Button android:id="@+id/buttonSubmit" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <!-- Missing view for btnNeedHelp check -->
-            <TextView android:id="@+id/serviceForm" android:layout_width="1dp" android:layout_height="1dp" />
-
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- Visible Need Help button -->
+    <TextView
+        android:id="@+id/tvTopTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_black_ttf"
+        android:text="Service Request"
+        android:textColor="#0F172A"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/ExitIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ExitIcon" />
+
+    <!-- NEED HELP (NO ICON) -->
     <androidx.cardview.widget.CardView
         android:id="@+id/btnNeedHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="#F0F9FF"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="@id/ExitIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/ExitIcon">
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="14dp"
-            android:paddingVertical="8dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:fontFamily="@font/poppins_black_ttf" android:text="Need help?" android:textColor="#0284C7" android:textSize="12sp" android:textStyle="bold" />
-        </LinearLayout>
+            android:paddingVertical="8dp"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Need help?"
+            android:textColor="#0284C7"
+            android:textSize="12sp"
+            android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
+
+    <!-- STEPPER LAYOUT -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/stepperContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTopTitle">
+
+        <View android:id="@+id/line1" android:layout_width="0dp" android:layout_height="2dp" android:background="#E2E8F0" app:layout_constraintBottom_toBottomOf="@id/circleNumber1" app:layout_constraintEnd_toStartOf="@id/circleNumber2" app:layout_constraintStart_toEndOf="@id/circleNumber1" app:layout_constraintTop_toTopOf="@id/circleNumber1" />
+        <View android:id="@+id/line2" android:layout_width="0dp" android:layout_height="2dp" android:background="#E2E8F0" app:layout_constraintBottom_toBottomOf="@id/circleNumber2" app:layout_constraintEnd_toStartOf="@id/circleNumber3" app:layout_constraintStart_toEndOf="@id/circleNumber2" app:layout_constraintTop_toTopOf="@id/circleNumber2" />
+        <View android:id="@+id/line3" android:layout_width="0dp" android:layout_height="2dp" android:background="#E2E8F0" app:layout_constraintBottom_toBottomOf="@id/circleNumber3" app:layout_constraintEnd_toStartOf="@id/circleNumber4" app:layout_constraintStart_toEndOf="@id/circleNumber3" app:layout_constraintTop_toTopOf="@id/circleNumber3" />
+
+        <androidx.cardview.widget.CardView android:id="@+id/circleNumber1" android:layout_width="32dp" android:layout_height="32dp" app:cardBackgroundColor="#3DAADB" app:cardCornerRadius="16dp" app:cardElevation="0dp" app:layout_constraintEnd_toStartOf="@id/circleNumber2" app:layout_constraintHorizontal_chainStyle="spread" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"><TextView android:id="@+id/circleText1" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="1" android:textColor="@android:color/white" android:textSize="14sp" android:textStyle="bold" /></androidx.cardview.widget.CardView>
+        <TextView android:id="@+id/label1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:fontFamily="@font/poppins" android:text="Request" android:textColor="#3DAADB" android:textSize="12sp" android:textStyle="bold" app:layout_constraintEnd_toEndOf="@id/circleNumber1" app:layout_constraintStart_toStartOf="@id/circleNumber1" app:layout_constraintTop_toBottomOf="@id/circleNumber1" />
+
+        <androidx.cardview.widget.CardView android:id="@+id/circleNumber2" android:layout_width="32dp" android:layout_height="32dp" app:cardBackgroundColor="#E2E8F0" app:cardCornerRadius="16dp" app:cardElevation="0dp" app:layout_constraintEnd_toStartOf="@id/circleNumber3" app:layout_constraintStart_toEndOf="@id/circleNumber1" app:layout_constraintTop_toTopOf="parent"><TextView android:id="@+id/circleText2" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="2" android:textColor="#94A3B8" android:textSize="14sp" /></androidx.cardview.widget.CardView>
+        <TextView android:id="@+id/label2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:fontFamily="@font/poppins" android:text="Schedule" android:textColor="#94A3B8" android:textSize="12sp" app:layout_constraintEnd_toEndOf="@id/circleNumber2" app:layout_constraintStart_toStartOf="@id/circleNumber2" app:layout_constraintTop_toBottomOf="@id/circleNumber2" />
+
+        <androidx.cardview.widget.CardView android:id="@+id/circleNumber3" android:layout_width="32dp" android:layout_height="32dp" app:cardBackgroundColor="#E2E8F0" app:cardCornerRadius="16dp" app:cardElevation="0dp" app:layout_constraintEnd_toStartOf="@id/circleNumber4" app:layout_constraintStart_toEndOf="@id/circleNumber2" app:layout_constraintTop_toTopOf="parent"><TextView android:id="@+id/circleText3" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="3" android:textColor="#94A3B8" android:textSize="14sp" /></androidx.cardview.widget.CardView>
+        <TextView android:id="@+id/label3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:fontFamily="@font/poppins" android:text="Item" android:textColor="#94A3B8" android:textSize="12sp" app:layout_constraintEnd_toEndOf="@id/circleNumber3" app:layout_constraintStart_toStartOf="@id/circleNumber3" app:layout_constraintTop_toBottomOf="@id/circleNumber3" />
+
+        <androidx.cardview.widget.CardView android:id="@+id/circleNumber4" android:layout_width="32dp" android:layout_height="32dp" app:cardBackgroundColor="#E2E8F0" app:cardCornerRadius="16dp" app:cardElevation="0dp" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@id/circleNumber3" app:layout_constraintTop_toTopOf="parent"><TextView android:id="@+id/circleText4" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="4" android:textColor="#94A3B8" android:textSize="14sp" /></androidx.cardview.widget.CardView>
+        <TextView android:id="@+id/label4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:fontFamily="@font/poppins" android:text="Payment" android:textColor="#94A3B8" android:textSize="12sp" app:layout_constraintEnd_toEndOf="@id/circleNumber4" app:layout_constraintStart_toStartOf="@id/circleNumber4" app:layout_constraintTop_toBottomOf="@id/circleNumber4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- CONTENT SCROLL AREA -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintTop_toBottomOf="@id/stepperContainer">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp">
+
+            <!-- Step Header Box -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/step1InfoBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:layout_constraintTop_toTopOf="parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        app:cardBackgroundColor="#F0F9FF"
+                        app:cardCornerRadius="14dp"
+                        app:cardElevation="0dp">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_submission"
+                            app:tint="#0284C7" />
+                    </androidx.cardview.widget.CardView>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/serviceForm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="1. Service Request"
+                            android:textColor="#0F172A"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Fill in the details of your service request."
+                            android:textColor="#64748B"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- FORM FIELDS -->
+            <LinearLayout
+                android:id="@+id/step1FormContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/step1InfoBox">
+
+                <TextView android:id="@+id/customerLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/poppins" android:text="Full Name" android:textColor="#475569" android:textSize="14sp" android:textStyle="bold" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="8dp" android:background="@drawable/bg_input_field" android:gravity="center_vertical" android:paddingHorizontal="16dp">
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_person_white" app:tint="#94A3B8" />
+                    <TextView android:id="@+id/tvCustomerNameValue" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:fontFamily="@font/poppins" android:textColor="#0F172A" android:textSize="15sp" tools:text="Juan Dela Cruz" />
+                </LinearLayout>
+
+                <TextView android:id="@+id/customerNumber" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:fontFamily="@font/poppins" android:text="Contact Number" android:textColor="#475569" android:textSize="14sp" android:textStyle="bold" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="8dp" android:background="@drawable/bg_input_field" android:gravity="center_vertical" android:paddingHorizontal="16dp">
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/telephone_icon" app:tint="#94A3B8" />
+                    <EditText android:id="@+id/etCustomerNumber" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:background="@android:color/transparent" android:fontFamily="@font/poppins" android:inputType="phone" android:textColor="#0F172A" android:textSize="15sp" tools:text="0912 345 6789" />
+                </LinearLayout>
+
+                <TextView android:id="@+id/customerAddress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:fontFamily="@font/poppins" android:text="Service Address" android:textColor="#475569" android:textSize="14sp" android:textStyle="bold" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="8dp" android:background="@drawable/bg_input_field" android:gravity="center_vertical" android:paddingHorizontal="16dp">
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/location_marker_png" app:tint="#94A3B8" />
+                    <EditText android:id="@+id/etCustomerAddress" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:layout_weight="1" android:background="@android:color/transparent" android:fontFamily="@font/poppins" android:inputType="textPostalAddress" android:textColor="#0F172A" android:textSize="15sp" tools:text="1234 Water St., Makati City" />
+                    <ImageView android:id="@+id/EditPen2" android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/technician_pin_point_customer_loc_png" app:tint="#3DAADB" />
+                </LinearLayout>
+
+                <TextView android:id="@+id/remarksLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:fontFamily="@font/poppins" android:text="Additional Notes (Optional)" android:textColor="#475569" android:textSize="14sp" android:textStyle="bold" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="120dp" android:layout_marginTop="8dp" android:background="@drawable/bg_input_field" android:gravity="top" android:padding="16dp">
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:layout_marginTop="2dp" android:src="@drawable/ic_submission" app:tint="#94A3B8" />
+                    <EditText android:id="@+id/remarksInput" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginStart="12dp" android:background="@android:color/transparent" android:fontFamily="@font/poppins" android:gravity="top" android:hint="e.g. Landmark, special instructions..." android:inputType="textMultiLine" android:textColor="#0F172A" android:textSize="14sp" />
+                </LinearLayout>
+                <TextView android:id="@+id/remarksNotice1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="end" android:layout_marginTop="4dp" android:fontFamily="@font/poppins" android:text="0/200" android:textColor="#94A3B8" android:textSize="11sp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- BOTTOM NEXT BUTTON -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonNext"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/button_blue_rounded"
+            android:fontFamily="@font/poppins_black_ttf"
+            android:text="Next  →"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- HIDDEN LOGIC ELEMENTS (MUST REMAIN FOR JAVA CODE) -->
+    <View android:id="@+id/UnderLine" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+    <View android:id="@+id/underline2" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+    <View android:id="@+id/underline3" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+    <View android:id="@+id/CompleteUnderline" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent" />
+    <ImageView android:id="@+id/EditPen1" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/customerUnderline" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/customerUnderline2" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/customerUnderline3" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/customerRefNum" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/tvCustomerRefValue" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/customerUnderline4" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/customerDate" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/displayDate" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/customerUnderline5" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/serviceTimeLabel" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/serviceTimeRow" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/startTimeText" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <ImageView android:id="@+id/startTimeArrow" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/startTimeUnderline" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/toLabel" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/endTimeText" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <ImageView android:id="@+id/endTimeArrow" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/endTimeUnderline" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <View android:id="@+id/serviceEndTimeRow" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/purchaseTypeLabel" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/purchaseTypeDropdown" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/customerValidIdLabel" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <androidx.cardview.widget.CardView android:id="@+id/customerCard" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <ImageView android:id="@+id/imgPreview" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <ImageView android:id="@+id/imgPlaceHolder" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/takePhotoOrUpload" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <ScrollView android:id="@+id/circle3ScrollContainer" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone"><LinearLayout android:layout_width="1dp" android:layout_height="1dp" android:orientation="vertical"><TextView android:id="@+id/filterPreventiveLabel" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtyLabel" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/cbcLabel" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementCBC" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtyCBC" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementCBC" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/sedimentLabel" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementSEDIMENT" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtySEDIMENT" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementSEDIMENT" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/OtherPartsLabel" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/AquatalLabel" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementAquaTal" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtyAquatal" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementAquatal" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/InlineFilterLabel" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementInlineFilter" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtyInlineFilter" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementInlineFilter" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/UvLampLabel" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementUvLampLabel" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtyUvLampLabel" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementUvLampLabel" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/TouchPanel" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementTouchPanel" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtyTouchPanel" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementTouchPanel" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/PbcBoard" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementPbcBoard" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtyPbcBoard" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementPbcBoard" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/SMSF1µ" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementSMSF1µCBC" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtySMSF1µCBC2" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementSMSF1µCBC1" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/SMSF10µSED" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementSMSF10µSED" android:layout_width="1dp" android:layout_height="1dp" /><TextView android:id="@+id/qtySMSF10µSED2" android:layout_width="1dp" android:layout_height="1dp" /><androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementSMSF10µSED_1" android:layout_width="1dp" android:layout_height="1dp" /></LinearLayout></ScrollView>
+    <TextView android:id="@+id/installationKitLabel" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/Wayvalve" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementWayvalve" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/qtyWayvalve2" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementWayvalve1" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/remarksNotice" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/paymentLabel" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <RadioGroup android:id="@+id/rgPaymentMethod" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/paymentSummaryLabel" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <TextView android:id="@+id/tvPaymentTotal" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <Button android:id="@+id/buttonBack" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <Button android:id="@+id/buttonBack3" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <Button android:id="@+id/buttonBack4" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <Button android:id="@+id/buttonNext2" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <Button android:id="@+id/buttonNext3" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <Button android:id="@+id/buttonNext4" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
+    <Button android:id="@+id/buttonSubmit" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
