@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- BACK ICON (Refined for Professional Look) -->
     <ImageView
         android:id="@+id/ExitIcon"
         android:layout_width="40dp"
@@ -20,44 +19,7 @@
         android:src="@drawable/arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="#0F172A"
-        android:contentDescription="Back" />
-
-    <!-- NEED HELP BUTTON (Professional Pill Design) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/btnNeedHelp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="#F0F9FF"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/ExitIcon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ExitIcon">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="8dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:text="Need help?"
-                android:textColor="#0284C7"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        app:tint="#0F172A" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -71,64 +33,310 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView android:id="@+id/circleNumber1" android:layout_width="1dp" android:layout_height="1dp"><TextView android:id="@+id/circleText1" android:layout_width="wrap_content" android:layout_height="wrap_content" /></androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/circleNumber2" android:layout_width="1dp" android:layout_height="1dp"><TextView android:id="@+id/circleText2" android:layout_width="wrap_content" android:layout_height="wrap_content" /></androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/circleNumber3" android:layout_width="1dp" android:layout_height="1dp"><TextView android:id="@+id/circleText3" android:layout_width="wrap_content" android:layout_height="wrap_content" /></androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView android:id="@+id/circleNumber4" android:layout_width="1dp" android:layout_height="1dp"><TextView android:id="@+id/circleText4" android:layout_width="wrap_content" android:layout_height="wrap_content" /></androidx.cardview.widget.CardView>
-            <View android:id="@+id/UnderLine" android:layout_width="1dp" android:layout_height="1dp" />
-            <View android:id="@+id/underline2" android:layout_width="1dp" android:layout_height="1dp" />
-            <View android:id="@+id/underline3" android:layout_width="1dp" android:layout_height="1dp" />
-            <View android:id="@+id/CompleteUnderline" android:layout_width="1dp" android:layout_height="1dp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/circleNumber1"
+                android:layout_width="1dp"
+                android:layout_height="1dp">
 
-            <TextView android:id="@+id/customerLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/tvCustomerNameValue" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/customerNumber" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <EditText android:id="@+id/etCustomerNumber" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="text" />
-            <ImageView android:id="@+id/EditPen1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/customerUnderline" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/customerUnderline2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/customerAddress" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <EditText android:id="@+id/etCustomerAddress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:inputType="text" />
-            <ImageView android:id="@+id/EditPen2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/customerUnderline3" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/customerRefNum" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/tvCustomerRefValue" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/customerUnderline4" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/customerDate" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/displayDate" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/customerUnderline5" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/circleText1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-            <TextView android:id="@+id/serviceTimeLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/serviceTimeRow" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/startTimeText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <ImageView android:id="@+id/startTimeArrow" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/startTimeUnderline" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/toLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/endTimeText" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <ImageView android:id="@+id/endTimeArrow" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/endTimeUnderline" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <View android:id="@+id/serviceEndTimeRow" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/purchaseTypeLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <androidx.appcompat.widget.AppCompatSpinner android:id="@+id/purchaseTypeDropdown" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/customerValidIdLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <androidx.cardview.widget.CardView android:id="@+id/customerCard" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <ImageView android:id="@+id/imgPreview" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <ImageView android:id="@+id/imgPlaceHolder" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-            <TextView android:id="@+id/takePhotoOrUpload" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </androidx.cardview.widget.CardView>
 
-            <ScrollView android:id="@+id/circle3ScrollContainer" android:layout_width="match_parent" android:layout_height="wrap_content">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
-                    <TextView android:id="@+id/filterPreventiveLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtyLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/cbcLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementCBC" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtyCBC" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementCBC" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/sedimentLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementSEDIMENT" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/qtySEDIMENT" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <androidx.appcompat.widget.AppCompatButton android:id="@+id/decrementSEDIMENT" android:layout_width="wrap_content" android:layout_height="wrap_content" />
-                    <TextView android:id="@+id/OtherPartsLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/circleNumber2"
+                android:layout_width="1dp"
+                android:layout_height="1dp">
+
+                <TextView
+                    android:id="@+id/circleText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/circleNumber3"
+                android:layout_width="1dp"
+                android:layout_height="1dp">
+
+                <TextView
+                    android:id="@+id/circleText3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/circleNumber4"
+                android:layout_width="1dp"
+                android:layout_height="1dp">
+
+                <TextView
+                    android:id="@+id/circleText4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/UnderLine"
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
+
+            <View
+                android:id="@+id/underline2"
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
+
+            <View
+                android:id="@+id/underline3"
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
+
+            <View
+                android:id="@+id/CompleteUnderline"
+                android:layout_width="1dp"
+                android:layout_height="1dp" />
+
+            <TextView
+                android:id="@+id/customerLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvCustomerNameValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/customerNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/etCustomerNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+            <ImageView
+                android:id="@+id/EditPen1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/customerUnderline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/customerUnderline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/customerAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/etCustomerAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+            <ImageView
+                android:id="@+id/EditPen2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/customerUnderline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/customerRefNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvCustomerRefValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/customerUnderline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/customerDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/displayDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/customerUnderline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/serviceTimeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/serviceTimeRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/startTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/startTimeArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/startTimeUnderline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/toLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/endTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/endTimeArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/endTimeUnderline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/serviceEndTimeRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/purchaseTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/purchaseTypeDropdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/customerValidIdLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/customerCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imgPreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imgPlaceHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/takePhotoOrUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- Filters & Parts IDs -->
+            <ScrollView
+                android:id="@+id/circle3ScrollContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/filterPreventiveLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/qtyLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/cbcLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/incrementCBC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/qtyCBC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/decrementCBC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/sedimentLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/incrementSEDIMENT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/qtySEDIMENT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/decrementSEDIMENT"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/OtherPartsLabel"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" />
                     <TextView android:id="@+id/AquatalLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
                     <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementAquaTal" android:layout_width="wrap_content" android:layout_height="wrap_content" />
                     <TextView android:id="@+id/qtyAquatal" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -160,6 +368,7 @@
                 </LinearLayout>
             </ScrollView>
 
+            <!-- Kit & Remarks IDs -->
             <TextView android:id="@+id/installationKitLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <TextView android:id="@+id/Wayvalve" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <androidx.appcompat.widget.AppCompatButton android:id="@+id/incrementWayvalve" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -170,6 +379,7 @@
             <TextView android:id="@+id/remarksNotice" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <TextView android:id="@+id/remarksNotice1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
+            <!-- Payment IDs -->
             <TextView android:id="@+id/paymentLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <RadioGroup android:id="@+id/rgPaymentMethod" android:layout_width="wrap_content" android:layout_height="wrap_content">
                 <RadioButton android:id="@+id/rbCOD" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -179,6 +389,7 @@
             <TextView android:id="@+id/paymentSummaryLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <TextView android:id="@+id/tvPaymentTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
+            <!-- Navigation Buttons IDs -->
             <Button android:id="@+id/buttonBack" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <Button android:id="@+id/buttonBack3" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <Button android:id="@+id/buttonBack4" android:layout_width="wrap_content" android:layout_height="wrap_content" />
@@ -187,8 +398,31 @@
             <Button android:id="@+id/buttonNext3" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <Button android:id="@+id/buttonNext4" android:layout_width="wrap_content" android:layout_height="wrap_content" />
             <Button android:id="@+id/buttonSubmit" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <!-- Missing view for btnNeedHelp check -->
+            <TextView android:id="@+id/serviceForm" android:layout_width="1dp" android:layout_height="1dp" />
 
         </LinearLayout>
     </ScrollView>
+
+    <!-- Visible Need Help button -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnNeedHelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="#F0F9FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/ExitIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ExitIcon">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:fontFamily="@font/poppins_black_ttf" android:text="Need help?" android:textColor="#0284C7" android:textSize="12sp" android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
