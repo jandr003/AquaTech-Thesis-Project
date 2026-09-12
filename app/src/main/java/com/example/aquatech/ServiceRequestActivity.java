@@ -368,8 +368,6 @@ public class ServiceRequestActivity extends AppCompatActivity {
             // Set selected to Blue/White
             v.setBackgroundResource(R.drawable.button_blue_rounded);
             ((AppCompatButton)v).setTextColor(Color.WHITE);
-
-            updatePurchaseInfo((AppCompatButton) v);
         };
 
         btnSubscription.setOnClickListener(listener);
@@ -377,20 +375,7 @@ public class ServiceRequestActivity extends AppCompatActivity {
         btnOccular.setOnClickListener(listener);
     }
 
-    private void updatePurchaseInfo(AppCompatButton btn) {
-        TextView title = findViewById(R.id.tvInfoTitle);
-        TextView desc = findViewById(R.id.tvInfoDesc);
-        String text = btn.getText().toString();
 
-        title.setText(text);
-        if (text.equals("Subscription")) {
-            desc.setText("Your service will be automatically renewed based on your chosen plan.");
-        } else if (text.equals("Outright")) {
-            desc.setText("One-time payment for full ownership of the unit and components.");
-        } else {
-            desc.setText("Schedule an on-site inspection for technical assessment and sizing.");
-        }
-    }
 
     private void setupLaunchers() {
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> { if (result && photoUri != null) showPreview(photoUri); });

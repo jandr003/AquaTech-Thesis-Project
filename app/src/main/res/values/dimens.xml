@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="valid_id_width">287dp</dimen>
-    <dimen name="valid_id_height">158dp</dimen>
+    <dimen name="valid_id_width">match_parent</dimen>
+    <dimen name="valid_id_height">220dp</dimen>
+    <dimen name="valid_id_icon_size">80dp</dimen>
+    <dimen name="purchase_button_height">56dp</dimen>
+    <dimen name="purchase_button_text_size">14sp</dimen>
+    <dimen name="form_max_width">600dp</dimen>
 
-    <!-- Admin Dashboard Slim Dimensions -->
+    <dimen name="stepper_height">80dp</dimen>
+    <dimen name="stepper_circle_size">32dp</dimen>
+    <dimen name="stepper_line_height">2dp</dimen>
+    <dimen name="stepper_text_size">12sp</dimen>
+
+    <dimen name="bottom_nav_height">88dp</dimen>
+    <dimen name="next_button_height">56dp</dimen>
+
+    <dimen name="screen_padding">20dp</dimen>
+    <dimen name="section_margin_top">24dp</dimen>
+
     <dimen name="admin_header_height">220dp</dimen>
     <dimen name="header_wave_height">60dp</dimen>
     <dimen name="admin_avatar_size">40dp</dimen>
