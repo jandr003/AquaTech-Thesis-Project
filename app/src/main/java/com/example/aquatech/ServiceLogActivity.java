@@ -266,14 +266,14 @@ public class ServiceLogActivity extends AppCompatActivity {
         switch (key) {
             case "qty_cbc": return R.drawable.cbc0064_carbon_black_filter;
             case "qty_sediment": return R.drawable.sediment0055_sediment_filter;
-            case "qty_uvlamp": return R.drawable.uvlamp_png;
-            case "qty_aquatal": return R.drawable.uvlamp_png;
+            case "qty_uvlamp": return R.drawable.AQUATAL_png;
+            case "qty_aquatal": return R.drawable.AQUATAL_png;
             case "qty_inline": return R.drawable.sediment0055_sediment_filter;
             case "qty_touchpanel": return R.drawable.sediment0055_sediment_filter;
             case "qty_pbcboard": return R.drawable.sediment0055_sediment_filter;
             case "qty_smsf1": return R.drawable.cbc0064_carbon_black_filter;
             case "qty_smsf10": return R.drawable.cbc0064_carbon_black_filter;
-            case "qty_wayvalve": return R.drawable.uvlamp_png;
+            case "qty_wayvalve": return R.drawable.AQUATAL_png;
             default: return R.drawable.cbc0064_carbon_black_filter;
         }
     }

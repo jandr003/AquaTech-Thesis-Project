@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,7 +91,14 @@ public class ServiceRequestActivity extends AppCompatActivity {
     private String unitModel;
 
     private RadioGroup rgPaymentMethod;
-    private RadioButton rbCOD, rbGCash, rbMaya;
+    private RadioButton rbCOD, rbGCash, rbMaya, rbBank;
+    private LinearLayout bankDetailsContainer;
+    private TextView tvBankAmount, tvBankAccNum, tvBankAccName;
+    private EditText etBankRef;
+    private AppCompatSpinner bankSpinner;
+    private ImageView imgReceiptPreview;
+    private boolean isUploadingReceipt = false;
+    private Uri receiptUri;
 
     private TextView qtyCBC, qtySEDIMENT, qtyAquatal, qtyInlineFilter, qtyUvLampLabel, qtyTouchPanel, qtyPbcBoard, qtySMSF1µCBC2, qtySMSF10µSED2, qtyWayvalve2;
     private AppCompatButton incrementCBC, decrementCBC, incrementSEDIMENT, decrementSEDIMENT, incrementAquaTal, decrementAquatal, incrementInlineFilter, decrementInlineFilter, incrementUvLampLabel, decrementUvLampLabel, incrementTouchPanel, decrementTouchPanel, incrementPbcBoard, decrementPbcBoard, incrementSMSF1µCBC, decrementSMSF1µCBC1, incrementSMSF10µSED, decrementSMSF10µSED_1, incrementWayvalve, decrementWayvalve1;
@@ -317,7 +325,36 @@ public class ServiceRequestActivity extends AppCompatActivity {
         customerValidIdLabel = findViewById(R.id.customerValidIdLabel);
 
         rgPaymentMethod = findViewById(R.id.rgPaymentMethod);
+        rbCOD = findViewById(R.id.rbCOD);
+        rbGCash = findViewById(R.id.rbGCash);
+        rbMaya = findViewById(R.id.rbMaya);
+        rbBank = findViewById(R.id.rbBank);
         tvPaymentTotal = findViewById(R.id.tvPaymentTotal);
+
+        bankDetailsContainer = findViewById(R.id.bankDetailsContainer);
+        tvBankAmount = findViewById(R.id.tvBankAmount);
+        tvBankAccNum = findViewById(R.id.tvBankAccNum);
+        tvBankAccName = findViewById(R.id.tvBankAccName);
+        etBankRef = findViewById(R.id.etBankRef);
+        imgReceiptPreview = findViewById(R.id.imgReceiptPreview);
+        bankSpinner = findViewById(R.id.bankSpinner);
+
+        ArrayAdapter<CharSequence> bankAdapter = ArrayAdapter.createFromResource(this, R.array.bank_options, android.R.layout.simple_spinner_item);
+        bankAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bankSpinner.setAdapter(bankAdapter);
+
+        bankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedBank = parent.getItemAtPosition(position).toString();
+                if (selectedBank.contains("BPI")) tvBankAccNum.setText("1234 5678 90");
+                else if (selectedBank.contains("BDO")) tvBankAccNum.setText("0012 3456 7890");
+                else if (selectedBank.contains("Metrobank")) tvBankAccNum.setText("987 654 321");
+                else if (selectedBank.contains("Unionbank")) tvBankAccNum.setText("1094 1234 5678");
+                else tvBankAccNum.setText("0000 0000 0000");
+            }
+            @Override public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
         btnSubscription = findViewById(R.id.btnSubscription);
         btnOutright = findViewById(R.id.btnOutright);
@@ -345,42 +382,95 @@ public class ServiceRequestActivity extends AppCompatActivity {
             });
         });
 
-        View.OnClickListener uploadTrigger = v -> showUploadDialog();
-        customerCard.setOnClickListener(uploadTrigger);
-        imgPlaceHolder.setOnClickListener(uploadTrigger);
-        takePhotoOrUpload.setOnClickListener(uploadTrigger);
+        rgPaymentMethod.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbBank) {
+                bankDetailsContainer.setVisibility(View.VISIBLE);
+                int total = calculateTotalAmount();
+                tvBankAmount.setText(String.format(Locale.getDefault(), "₱ %,d.00", total));
+            } else {
+                bankDetailsContainer.setVisibility(View.GONE);
+            }
+        });
+
+        findViewById(R.id.btnUploadReceipt).setOnClickListener(v -> {
+            isUploadingReceipt = true;
+            showUploadDialog();
+        });
+
+        View.OnClickListener idUploadTrigger = v -> {
+            isUploadingReceipt = false;
+            showUploadDialog();
+        };
+        customerCard.setOnClickListener(idUploadTrigger);
+        imgPlaceHolder.setOnClickListener(idUploadTrigger);
+        takePhotoOrUpload.setOnClickListener(idUploadTrigger);
 
         setupPurchaseTypeHandlers();
     }
 
     private void setupPurchaseTypeHandlers() {
         View.OnClickListener listener = v -> {
-            // Reset all to default (White/Gray)
-            btnSubscription.setBackgroundResource(R.drawable.bg_input_field);
-            btnSubscription.setTextColor(Color.parseColor("#475569"));
+            // Unselect all first
+            btnSubscription.setSelected(false);
+            btnOutright.setSelected(false);
+            btnOccular.setSelected(false);
 
-            btnOutright.setBackgroundResource(R.drawable.bg_input_field);
-            btnOutright.setTextColor(Color.parseColor("#475569"));
-
-            btnOccular.setBackgroundResource(R.drawable.bg_input_field);
-            btnOccular.setTextColor(Color.parseColor("#475569"));
-
-            // Set selected to Blue/White
-            v.setBackgroundResource(R.drawable.button_blue_rounded);
-            ((AppCompatButton)v).setTextColor(Color.WHITE);
+            // Select the clicked one
+            v.setSelected(true);
         };
 
         btnSubscription.setOnClickListener(listener);
         btnOutright.setOnClickListener(listener);
         btnOccular.setOnClickListener(listener);
+
+        // Optional: Set default selection
+        btnSubscription.setSelected(true);
     }
 
 
 
     private void setupLaunchers() {
-        cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> { if (result && photoUri != null) showPreview(photoUri); });
-        galleryLauncher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> { if (uri != null) { photoUri = uri; showPreview(uri); } });
-        fileLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> { if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) { Uri uri = result.getData().getData(); if (uri != null) { photoUri = uri; showPreview(uri); } } });
+        cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> { 
+            if (result && photoUri != null) {
+                if (isUploadingReceipt) {
+                    receiptUri = photoUri;
+                    showReceiptPreview(photoUri);
+                } else {
+                    showPreview(photoUri);
+                }
+            } 
+        });
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> { 
+            if (uri != null) { 
+                if (isUploadingReceipt) {
+                    receiptUri = uri;
+                    showReceiptPreview(uri);
+                } else {
+                    photoUri = uri; 
+                    showPreview(uri); 
+                }
+            } 
+        });
+        fileLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> { 
+            if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) { 
+                Uri uri = result.getData().getData(); 
+                if (uri != null) { 
+                    if (isUploadingReceipt) {
+                        receiptUri = uri;
+                        showReceiptPreview(uri);
+                    } else {
+                        photoUri = uri; 
+                        showPreview(uri); 
+                    }
+                } 
+            } 
+        });
+    }
+
+    private void showReceiptPreview(Uri uri) {
+        imgReceiptPreview.setVisibility(View.VISIBLE);
+        findViewById(R.id.receiptPlaceholder).setVisibility(View.GONE);
+        Glide.with(this).load(uri).centerCrop().into(imgReceiptPreview);
     }
 
     private void showUploadDialog() {
@@ -587,12 +677,12 @@ public class ServiceRequestActivity extends AppCompatActivity {
 
     private void setActive(TextView tv, CardView bg, String number) {
         tv.setText(number); tv.setTextColor(Color.WHITE); tv.setVisibility(View.VISIBLE);
-        bg.setCardBackgroundColor(Color.parseColor("#3DAADB")); bg.setElevation(4f);
+        bg.setCardBackgroundColor(Color.parseColor("#2196F3")); bg.setElevation(4f);
     }
 
     private void setCompleted(TextView tv, CardView bg) {
         tv.setVisibility(View.VISIBLE); tv.setText("\u2713"); tv.setTextColor(Color.WHITE);
-        bg.setCardBackgroundColor(Color.parseColor("#3DAADB")); bg.setElevation(0f);
+        bg.setCardBackgroundColor(Color.parseColor("#2196F3")); bg.setElevation(0f);
     }
 
     private void resetCircle(TextView tv, CardView bg, String number) {
@@ -641,41 +731,41 @@ public class ServiceRequestActivity extends AppCompatActivity {
 
         if (currentStep == 1) {
             setActive(tv1, circle1, "1");
-            lb1.setTextColor(Color.parseColor("#3DAADB"));
+            lb1.setTextColor(Color.parseColor("#2196F3"));
             lb1.setTypeface(null, Typeface.BOLD);
         }
         else if (currentStep == 2) {
             setCompleted(tv1, circle1);
             setActive(tv2, circle2, "2");
-            lb1.setTextColor(Color.parseColor("#3DAADB"));
-            lb2.setTextColor(Color.parseColor("#3DAADB"));
+            lb1.setTextColor(Color.parseColor("#2196F3"));
+            lb2.setTextColor(Color.parseColor("#2196F3"));
             lb2.setTypeface(null, Typeface.BOLD);
-            line1.setBackgroundColor(Color.parseColor("#3DAADB"));
+            line1.setBackgroundColor(Color.parseColor("#2196F3"));
         }
         else if (currentStep == 3 || currentStep == 4) {
             setCompleted(tv1, circle1);
             setCompleted(tv2, circle2);
             setActive(tv3, circle3, "3");
-            lb1.setTextColor(Color.parseColor("#3DAADB"));
-            lb2.setTextColor(Color.parseColor("#3DAADB"));
-            lb3.setTextColor(Color.parseColor("#3DAADB"));
+            lb1.setTextColor(Color.parseColor("#2196F3"));
+            lb2.setTextColor(Color.parseColor("#2196F3"));
+            lb3.setTextColor(Color.parseColor("#2196F3"));
             lb3.setTypeface(null, Typeface.BOLD);
-            line1.setBackgroundColor(Color.parseColor("#3DAADB"));
-            line2.setBackgroundColor(Color.parseColor("#3DAADB"));
+            line1.setBackgroundColor(Color.parseColor("#2196F3"));
+            line2.setBackgroundColor(Color.parseColor("#2196F3"));
         }
         else if (currentStep == 5) {
             setCompleted(tv1, circle1);
             setCompleted(tv2, circle2);
             setCompleted(tv3, circle3);
             setActive(tv4, circle4, "4");
-            lb1.setTextColor(Color.parseColor("#3DAADB"));
-            lb2.setTextColor(Color.parseColor("#3DAADB"));
-            lb3.setTextColor(Color.parseColor("#3DAADB"));
-            lb4.setTextColor(Color.parseColor("#3DAADB"));
+            lb1.setTextColor(Color.parseColor("#2196F3"));
+            lb2.setTextColor(Color.parseColor("#2196F3"));
+            lb3.setTextColor(Color.parseColor("#2196F3"));
+            lb4.setTextColor(Color.parseColor("#2196F3"));
             lb4.setTypeface(null, Typeface.BOLD);
-            line1.setBackgroundColor(Color.parseColor("#3DAADB"));
-            line2.setBackgroundColor(Color.parseColor("#3DAADB"));
-            line3.setBackgroundColor(Color.parseColor("#3DAADB"));
+            line1.setBackgroundColor(Color.parseColor("#2196F3"));
+            line2.setBackgroundColor(Color.parseColor("#2196F3"));
+            line3.setBackgroundColor(Color.parseColor("#2196F3"));
         }
 
         int s1 = (currentStep == 1) ? View.VISIBLE : View.GONE;
