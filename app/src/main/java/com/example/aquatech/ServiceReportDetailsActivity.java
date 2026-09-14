@@ -5,7 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +28,9 @@ import java.util.List;
 public class ServiceReportDetailsActivity extends AppCompatActivity {
 
     private ImageView ivProof;
-    private TextView tvTicketID, tvCustomerName, tvCustomerPhone, tvUnitSro, tvAddress, tvTechName, tvServiceType, tvRemarks, tvStatus;
+    private TextView tvTicketID, tvCustomerName, tvCustomerPhone, tvUnitSro, tvAddress, tvTechName, tvServiceType, tvRemarks, tvStatus,
+                     tvPaymentMethod, tvBankName, tvBankRef;
+    private LinearLayout layoutBankDetails;
     private RatingBar rbRating;
     private String ticketId;
     private DatabaseReference dbRef;
@@ -64,6 +68,11 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
         rbRating = findViewById(R.id.rbCustomerRating);
         tvStatus = findViewById(R.id.tvHeaderTitle); 
 
+        tvPaymentMethod = findViewById(R.id.tvPaymentMethodDetails);
+        tvBankName = findViewById(R.id.tvBankNameDetails);
+        tvBankRef = findViewById(R.id.tvBankRefDetails);
+        layoutBankDetails = findViewById(R.id.layoutBankDetailsDetails);
+
         findViewById(R.id.btnBackDetails).setOnClickListener(v -> finish());
     }
 
@@ -98,13 +107,24 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
                     tvServiceType.setText(service);
                     tvRemarks.setText((remarks != null && !remarks.isEmpty()) ? remarks : "No technician remarks provided.");
                     
+                    String pm = snapshot.child("paymentMethod").getValue(String.class);
+                    tvPaymentMethod.setText(pm != null ? pm : "COD");
+
+                    if (pm != null && pm.equals("Bank Transfer")) {
+                        layoutBankDetails.setVisibility(View.VISIBLE);
+                        tvBankName.setText(snapshot.child("bankName").getValue(String.class));
+                        tvBankRef.setText(snapshot.child("bankReference").getValue(String.class));
+                    } else {
+                        layoutBankDetails.setVisibility(View.GONE);
+                    }
+
                     if (rating != null) rbRating.setRating(rating);
                     else rbRating.setRating(0f);
 
                     if (imageUrl != null && !imageUrl.isEmpty()) {
-                        ivProof.setLayoutParams(new android.widget.FrameLayout.LayoutParams(
-                                android.widget.FrameLayout.LayoutParams.MATCH_PARENT, 
-                                android.widget.FrameLayout.LayoutParams.MATCH_PARENT));
+                        ivProof.setLayoutParams(new FrameLayout.LayoutParams(
+                                FrameLayout.LayoutParams.MATCH_PARENT,
+                                FrameLayout.LayoutParams.MATCH_PARENT));
                         Glide.with(ServiceReportDetailsActivity.this)
                                 .load(imageUrl)
                                 .placeholder(R.drawable.img_place_holder)

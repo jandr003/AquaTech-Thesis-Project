@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_black_ttf"
-            android:text="₱ 2,500"
+            android:text="&#8369; 2,500"
             android:textColor="#1A3C40"
             android:textSize="16sp"
             android:textStyle="bold"

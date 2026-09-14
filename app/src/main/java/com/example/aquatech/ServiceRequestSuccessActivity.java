@@ -54,7 +54,7 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
 
     private TextView displayTicketID, displayCustomerName, displayContactNumber,
             displayAddress, displayRefNo, displayUnit,
-            displayValidIDStatus, displayRemarks, displayTotalAmount;
+            displayValidIDStatus, displayRemarks, displayTotalAmount, displayPaymentMethod;
 
     private LinearLayout ordersListContainer;
     private Button btnReturnDashboard;
@@ -114,6 +114,7 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         displayRemarks = findViewById(R.id.displayRemarks);
         displayTotalAmount = findViewById(R.id.displayTotalAmount);
         displayStatus = findViewById(R.id.displayStatus);
+        displayPaymentMethod = findViewById(R.id.displayPaymentMethod);
 
         ivValidID = findViewById(R.id.ivValidID);
         cardValidID = findViewById(R.id.cardValidID);
@@ -136,6 +137,9 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
 
         String remarks = intent.getStringExtra("REMARKS");
         if (displayRemarks != null) displayRemarks.setText((remarks == null || remarks.trim().isEmpty()) ? "N/A" : remarks);
+
+        String paymentMethod = intent.getStringExtra("PAYMENT_METHOD");
+        if (displayPaymentMethod != null) displayPaymentMethod.setText(paymentMethod != null ? paymentMethod : "COD");
 
         double total = intent.getDoubleExtra("TOTAL_AMOUNT", 0.0);
         if (displayTotalAmount != null) displayTotalAmount.setText(String.format("₱%,.2f", total));
@@ -221,6 +225,9 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         String remarksFromDb = snapshot.child("remarks").getValue(String.class);
         if (displayRemarks != null) displayRemarks.setText((remarksFromDb == null || remarksFromDb.trim().isEmpty()) ? "N/A" : remarksFromDb);
 
+        String pm = snapshot.child("paymentMethod").getValue(String.class);
+        if (displayPaymentMethod != null) displayPaymentMethod.setText(pm != null ? pm : "COD");
+
         String status = snapshot.child("status").getValue(String.class);
         if (status != null && displayStatus != null) displayStatus.setText(status.toUpperCase());
 
@@ -239,8 +246,8 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             addOrderItem(snapshot, "qty_uvlamp", "UV Lamp");
             addOrderItem(snapshot, "qty_touchpanel", "Touch Panel");
             addOrderItem(snapshot, "qty_pbcboard", "PBC Board");
-            addOrderItem(snapshot, "qty_smsf1", "SMSF 1µ CBC");
-            addOrderItem(snapshot, "qty_smsf10", "SMSF 10µ SED");
+            addOrderItem(snapshot, "qty_smsf1", "SMSF 1u CBC");
+            addOrderItem(snapshot, "qty_smsf10", "SMSF 1u SED");
         }
 
         String date = snapshot.child("date").getValue(String.class);

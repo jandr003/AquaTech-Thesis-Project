@@ -381,13 +381,40 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/labelRemarks" />
 
+                        <TextView
+                            android:id="@+id/labelPaymentMethod"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:text="PAYMENT METHOD"
+                            android:textColor="#5B5B5B"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/displayRemarks" />
+
+                        <TextView
+                            android:id="@+id/displayPaymentMethod"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/poppins_black_ttf"
+                            android:gravity="end"
+                            android:text="COD"
+                            android:textColor="#7D7D7D"
+                            android:textSize="14sp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/labelPaymentMethod"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/labelPaymentMethod" />
+
                         <View
                             android:id="@+id/summaryDivider"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginTop="20dp"
                             android:background="#E0E0E0"
-                            app:layout_constraintTop_toBottomOf="@id/displayRemarks" />
+                            app:layout_constraintTop_toBottomOf="@id/displayPaymentMethod" />
 
                         <TextView
                             android:id="@+id/labelOrdersHeader"
@@ -438,7 +465,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:fontFamily="@font/poppins_black_ttf"
-                            android:text="₱ 0.00"
+                            android:text="&#8369; 0.00"
                             android:textColor="#000000"
                             android:textSize="18sp"
                             android:textStyle="bold"

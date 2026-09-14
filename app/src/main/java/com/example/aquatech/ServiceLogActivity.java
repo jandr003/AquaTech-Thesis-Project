@@ -249,8 +249,8 @@ public class ServiceLogActivity extends AppCompatActivity {
             case "qty_inline": return "Inline Filter";
             case "qty_touchpanel": return "Touch Panel";
             case "qty_pbcboard": return "PBC Board";
-            case "qty_smsf1": return "SMSF 1µ CBC";
-            case "qty_smsf10": return "SMSF 10µ SED";
+            case "qty_smsf1": return "SMSF 1u CBC";
+            case "qty_smsf10": return "SMSF 10u SED";
             case "qty_wayvalve": return "3-Way Valve";
             default: return "Service Item";
         }
@@ -266,14 +266,14 @@ public class ServiceLogActivity extends AppCompatActivity {
         switch (key) {
             case "qty_cbc": return R.drawable.cbc0064_carbon_black_filter;
             case "qty_sediment": return R.drawable.sediment0055_sediment_filter;
-            case "qty_uvlamp": return R.drawable.AQUATAL_png;
-            case "qty_aquatal": return R.drawable.AQUATAL_png;
-            case "qty_inline": return R.drawable.sediment0055_sediment_filter;
-            case "qty_touchpanel": return R.drawable.sediment0055_sediment_filter;
-            case "qty_pbcboard": return R.drawable.sediment0055_sediment_filter;
+            case "qty_uvlamp": return R.drawable.uv_lamp;
+            case "qty_aquatal": return R.drawable.aquatal_png;
+            case "qty_inline": return R.drawable.inline_filter;
+            case "qty_touchpanel": return R.drawable.touch_panel;
+            case "qty_pbcboard": return R.drawable.pbc_board;
             case "qty_smsf1": return R.drawable.cbc0064_carbon_black_filter;
-            case "qty_smsf10": return R.drawable.cbc0064_carbon_black_filter;
-            case "qty_wayvalve": return R.drawable.AQUATAL_png;
+            case "qty_smsf10": return R.drawable.sediment0055_sediment_filter;
+            case "qty_wayvalve": return R.drawable._3_way_valve;
             default: return R.drawable.cbc0064_carbon_black_filter;
         }
     }

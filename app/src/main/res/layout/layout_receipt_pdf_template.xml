@@ -290,7 +290,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:fontFamily="@font/poppins_black_ttf"
-            android:text="₱ 0.00"
+            android:text="&#8369; 0.00"
             android:textColor="#1C4E75"
             android:textSize="20sp"
             android:textStyle="bold" />

@@ -28,7 +28,6 @@
         app:layout_constraintTop_toTopOf="@id/receiptHeader"
         app:layout_constraintVertical_bias="0.75" />
 
-
     <ImageView
         android:id="@+id/btnDownloadReceipt"
         android:layout_width="56dp"
@@ -300,10 +299,73 @@
                         android:id="@+id/tvReceiptTotalAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="₱ 0.00"
+                        android:text="&#8369; 0.00"
                         android:textColor="@color/aqua_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="12dp"
+                    android:background="#F5F5F5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAYMENT INFORMATION"
+                    android:textColor="#AAAAAA"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Method:"
+                        android:textColor="#888888"
+                        android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/tvReceiptPaymentMethod"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="end"
+                        android:text="COD"
+                        android:textColor="@color/aqua_text_dark"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutReceiptBankRef"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ref No:"
+                        android:textColor="#888888"
+                        android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/tvReceiptBankRef"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="end"
+                        android:text="XXXXXXXX"
+                        android:textColor="@color/aqua_text_dark"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <View

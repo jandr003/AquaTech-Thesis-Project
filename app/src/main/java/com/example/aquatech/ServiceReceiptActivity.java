@@ -33,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class ServiceReceiptActivity extends AppCompatActivity {
@@ -41,10 +43,10 @@ public class ServiceReceiptActivity extends AppCompatActivity {
     private TextView tvTicketId, tvReceiptCustomerName, tvReceiptAddress, 
                      tvReceiptServiceType, tvReceiptSchedule, tvReceiptRequestDate,
                      tvReceiptUnitName, tvReceiptTechName, tvReceiptTechRole, 
-                     tvReceiptStatus, tvReceiptTotalAmount;
+                     tvReceiptStatus, tvReceiptTotalAmount, tvReceiptPaymentMethod, tvReceiptBankRef;
     private CardView receiptCard;
     private NestedScrollView receiptScrollView;
-    private LinearLayout containerReceiptItems, technicianInfoLayout;
+    private LinearLayout containerReceiptItems, technicianInfoLayout, layoutReceiptBankRef;
     
     private DataSnapshot currentSnapshot;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -82,11 +84,15 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         tvReceiptTechRole = findViewById(R.id.tvReceiptTechRole);
         tvReceiptStatus = findViewById(R.id.tvReceiptStatus);
         tvReceiptTotalAmount = findViewById(R.id.tvReceiptTotalAmount);
+        tvReceiptPaymentMethod = findViewById(R.id.tvReceiptPaymentMethod);
+        tvReceiptBankRef = findViewById(R.id.tvReceiptBankRef);
+        
         ivReceiptTechSignature = findViewById(R.id.ivReceiptTechSignature);
         receiptCard = findViewById(R.id.receiptCard);
         receiptScrollView = findViewById(R.id.receiptScrollView);
         containerReceiptItems = findViewById(R.id.containerReceiptItems);
         technicianInfoLayout = findViewById(R.id.technicianInfoLayout);
+        layoutReceiptBankRef = findViewById(R.id.layoutReceiptBankRef);
     }
 
     private void setupClickListeners() {
@@ -152,11 +158,11 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                 Uri uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
                 fos = getContentResolver().openOutputStream(uri);
             } else {
-                java.io.File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                java.io.File folder = new java.io.File(downloadDir, "AquaTech");
+                File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File folder = new File(downloadDir, "AquaTech");
                 if (!folder.exists()) folder.mkdirs();
-                java.io.File file = new java.io.File(folder, fileName);
-                fos = new java.io.FileOutputStream(file);
+                File file = new File(folder, fileName);
+                fos = new FileOutputStream(file);
             }
 
             document.writeTo(fos);
@@ -219,6 +225,17 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                         tvReceiptServiceType.setText(serviceType);
                     }
 
+                    String pm = snapshot.child("paymentMethod").getValue(String.class);
+                    if (pm != null) tvReceiptPaymentMethod.setText(pm);
+                    
+                    String bankRef = snapshot.child("bankReference").getValue(String.class);
+                    if (bankRef != null && !bankRef.isEmpty()) {
+                        layoutReceiptBankRef.setVisibility(View.VISIBLE);
+                        tvReceiptBankRef.setText(bankRef);
+                    } else {
+                        layoutReceiptBankRef.setVisibility(View.GONE);
+                    }
+
                     String status = snapshot.child("status").getValue(String.class);
                     if (status == null) status = "OPEN";
                     updateStatusUI(status);
@@ -257,8 +274,8 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                     addOrder(snapshot, "qty_uvlamp", "UV Lamp", 1500);
                     addOrder(snapshot, "qty_touchpanel", "Touch Panel", 750);
                     addOrder(snapshot, "qty_pbcboard", "PBC Board", 3000);
-                    addOrder(snapshot, "qty_smsf1", "SMSF 1µ CBC", 2000);
-                    addOrder(snapshot, "qty_smsf10", "SMSF 10µ SED", 1000);
+                    addOrder(snapshot, "qty_smsf1", "SMSF 1u CBC", 2000);
+                    addOrder(snapshot, "qty_smsf10", "SMSF 1u SED", 1000);
 
                     Double total = snapshot.child("totalAmount").getValue(Double.class);
                     tvReceiptTotalAmount.setText("₱ " + String.format("%,.2f", total != null ? total : 0.0));

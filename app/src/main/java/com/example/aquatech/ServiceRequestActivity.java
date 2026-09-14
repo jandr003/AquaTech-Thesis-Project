@@ -44,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
+import com.google.android.material.card.MaterialCardView;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -51,21 +52,16 @@ import androidx.core.content.FileProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.Priority;
-import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Date;
-import java.util.Map;
 
 import com.bumptech.glide.Glide;
 
@@ -74,10 +70,10 @@ import java.util.Random;
 
 public class ServiceRequestActivity extends AppCompatActivity {
 
-    private int currentStep = 1;
+    private int currentStep = 4;
     private ImageView imgPreview, imgPlaceHolder, exitIcon;
     private TextView customerLabel, customerRefNum, customerValidIdLabel, tvCustomerNameValue, tvCustomerRefValue, takePhotoOrUpload;
-    private CardView customerCard;
+    private CardView customerCard, btnNeedHelp;
     private File photoFile;
     private Uri photoUri;
 
@@ -90,8 +86,8 @@ public class ServiceRequestActivity extends AppCompatActivity {
     private AppCompatSpinner purchaseTypeDropdown;
     private String unitModel;
 
-    private RadioGroup rgPaymentMethod;
     private RadioButton rbCOD, rbGCash, rbMaya, rbBank;
+    private MaterialCardView cardGCash, cardMaya, cardBank, cardCOD;
     private LinearLayout bankDetailsContainer;
     private TextView tvBankAmount, tvBankAccNum, tvBankAccName;
     private EditText etBankRef;
@@ -100,9 +96,10 @@ public class ServiceRequestActivity extends AppCompatActivity {
     private boolean isUploadingReceipt = false;
     private Uri receiptUri;
 
-    private TextView qtyCBC, qtySEDIMENT, qtyAquatal, qtyInlineFilter, qtyUvLampLabel, qtyTouchPanel, qtyPbcBoard, qtySMSF1µCBC2, qtySMSF10µSED2, qtyWayvalve2;
-    private AppCompatButton incrementCBC, decrementCBC, incrementSEDIMENT, decrementSEDIMENT, incrementAquaTal, decrementAquatal, incrementInlineFilter, decrementInlineFilter, incrementUvLampLabel, decrementUvLampLabel, incrementTouchPanel, decrementTouchPanel, incrementPbcBoard, decrementPbcBoard, incrementSMSF1µCBC, decrementSMSF1µCBC1, incrementSMSF10µSED, decrementSMSF10µSED_1, incrementWayvalve, decrementWayvalve1;
-    private AppCompatButton btnSubscription, btnOutright, btnOccular;
+    private TextView qtyCBC, qtySEDIMENT, qtyAquatal, qtyInlineFilter, qtyUvLampLabel, qtyTouchPanel, qtyPbcBoard, qtySMSF1uCBC2, qtySMSF10uSED2, qtyWayvalve2;
+    private AppCompatButton incrementCBC, decrementCBC, incrementSEDIMENT, decrementSEDIMENT, incrementAquaTal, decrementAquatal, incrementInlineFilter, decrementInlineFilter, incrementUvLampLabel, decrementUvLampLabel, incrementTouchPanel, decrementTouchPanel, incrementPbcBoard, decrementPbcBoard, incrementSMSF1uCBC, decrementSMSF1uCBC1, incrementSMSF10uSED, decrementSMSF10uSED_1, incrementWayvalve, decrementWayvalve1;
+    private AppCompatButton btnSubscription, btnOutright, btnOccular, btnBackNav;
+    private TextView tvServiceFee;
 
     private int currentQtyCBC = 0, currentQtySEDIMENT = 0, currentQtyAquatal = 0, currentQtyInlineFilter = 0, currentQtyUvLamp = 0, currentQtyTouchPanel = 0, currentQtyPbcBoard = 0, currentQtySmsf1Cbc = 0, currentQtySmsf10Sed = 0, currentQtyWayValve = 0;
 
@@ -323,13 +320,21 @@ public class ServiceRequestActivity extends AppCompatActivity {
         endTimeText = findViewById(R.id.endTimeText);
         purchaseTypeDropdown = findViewById(R.id.purchaseTypeDropdown);
         customerValidIdLabel = findViewById(R.id.customerValidIdLabel);
+        btnNeedHelp = findViewById(R.id.btnNeedHelp);
+        btnNeedHelp.setOnClickListener(v -> showHelpDialog());
 
-        rgPaymentMethod = findViewById(R.id.rgPaymentMethod);
         rbCOD = findViewById(R.id.rbCOD);
         rbGCash = findViewById(R.id.rbGCash);
         rbMaya = findViewById(R.id.rbMaya);
         rbBank = findViewById(R.id.rbBank);
+        
+        cardGCash = findViewById(R.id.cardGCash);
+        cardMaya = findViewById(R.id.cardMaya);
+        cardBank = findViewById(R.id.cardBank);
+        cardCOD = findViewById(R.id.cardCOD);
+        
         tvPaymentTotal = findViewById(R.id.tvPaymentTotal);
+        tvServiceFee = findViewById(R.id.tvServiceFee);
 
         bankDetailsContainer = findViewById(R.id.bankDetailsContainer);
         tvBankAmount = findViewById(R.id.tvBankAmount);
@@ -359,12 +364,14 @@ public class ServiceRequestActivity extends AppCompatActivity {
         btnSubscription = findViewById(R.id.btnSubscription);
         btnOutright = findViewById(R.id.btnOutright);
         btnOccular = findViewById(R.id.btnOccular);
+        btnBackNav = findViewById(R.id.btnBackNav);
+        btnBackNav.setOnClickListener(v -> handleBackNavigation());
 
         findViewById(R.id.EditPen1).setOnClickListener(v -> { etCustomerNumber.requestFocus(); InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); imm.showSoftInput(etCustomerNumber, 0); });
         findViewById(R.id.EditPen2).setOnClickListener(v -> { etCustomerAddress.requestFocus(); ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(etCustomerAddress, 0); });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.purchase_type_options, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_item);
+        // Hidden purchase type setup for data compatibility
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.purchase_type_options, android.R.layout.simple_spinner_item);
         purchaseTypeDropdown.setAdapter(adapter);
 
         findViewById(R.id.startTimeArrow).setOnClickListener(v -> {
@@ -382,15 +389,33 @@ public class ServiceRequestActivity extends AppCompatActivity {
             });
         });
 
-        rgPaymentMethod.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rbBank) {
+        View.OnClickListener paymentClickListener = v -> {
+            rbGCash.setChecked(v.getId() == R.id.cardGCash);
+            rbMaya.setChecked(v.getId() == R.id.cardMaya);
+            rbBank.setChecked(v.getId() == R.id.cardBank);
+            rbCOD.setChecked(v.getId() == R.id.cardCOD);
+
+            cardGCash.setStrokeColor(v.getId() == R.id.cardGCash ? Color.parseColor("#2196F3") : Color.parseColor("#E2E8F0"));
+            cardMaya.setStrokeColor(v.getId() == R.id.cardMaya ? Color.parseColor("#2196F3") : Color.parseColor("#E2E8F0"));
+            cardBank.setStrokeColor(v.getId() == R.id.cardBank ? Color.parseColor("#2196F3") : Color.parseColor("#E2E8F0"));
+            cardCOD.setStrokeColor(v.getId() == R.id.cardCOD ? Color.parseColor("#2196F3") : Color.parseColor("#E2E8F0"));
+
+            if (v.getId() == R.id.cardBank) {
                 bankDetailsContainer.setVisibility(View.VISIBLE);
-                int total = calculateTotalAmount();
-                tvBankAmount.setText(String.format(Locale.getDefault(), "₱ %,d.00", total));
+                refreshTotal();
             } else {
                 bankDetailsContainer.setVisibility(View.GONE);
             }
-        });
+        };
+
+        cardGCash.setOnClickListener(paymentClickListener);
+        cardMaya.setOnClickListener(paymentClickListener);
+        cardBank.setOnClickListener(paymentClickListener);
+        cardCOD.setOnClickListener(paymentClickListener);
+
+        // Set Default
+        rbCOD.setChecked(true);
+        cardCOD.setStrokeColor(Color.parseColor("#2196F3"));
 
         findViewById(R.id.btnUploadReceipt).setOnClickListener(v -> {
             isUploadingReceipt = true;
@@ -402,69 +427,57 @@ public class ServiceRequestActivity extends AppCompatActivity {
             showUploadDialog();
         };
         customerCard.setOnClickListener(idUploadTrigger);
-        imgPlaceHolder.setOnClickListener(idUploadTrigger);
+        findViewById(R.id.idPlaceholder).setOnClickListener(idUploadTrigger);
         takePhotoOrUpload.setOnClickListener(idUploadTrigger);
 
         setupPurchaseTypeHandlers();
     }
 
+    private void handleBackNavigation() {
+        if (currentStep > 1) {
+            currentStep--;
+            updateStepUI();
+        }
+    }
+
     private void setupPurchaseTypeHandlers() {
         View.OnClickListener listener = v -> {
-            // Unselect all first
             btnSubscription.setSelected(false);
             btnOutright.setSelected(false);
             btnOccular.setSelected(false);
-
-            // Select the clicked one
             v.setSelected(true);
         };
-
         btnSubscription.setOnClickListener(listener);
         btnOutright.setOnClickListener(listener);
         btnOccular.setOnClickListener(listener);
-
-        // Optional: Set default selection
         btnSubscription.setSelected(true);
     }
 
+    private void showFAQs() {
+        new AlertDialog.Builder(this)
+                .setTitle("Quick Service Guide")
+                .setMessage("• Process: Fill info > Pick schedule > Select items > Choose payment.\n\n" +
+                        "• Office Hours: Service is only available from 8:00 AM to 5:00 PM.\n\n" +
+                        "• ID Upload: Attaching a valid ID helps us verify your request faster.\n\n" +
+                        "• Payment: For Bank Transfers, please upload your receipt for verification.")
+                .setPositiveButton("Got it", null)
+                .show();
+    }
 
+    private void showHelpDialog() {
+        String[] options = {"📞 Call Support", "💬 Message Support", "❓ FAQ Guide", "📍 Our Office"};
+        new AlertDialog.Builder(this).setTitle("Support Center").setItems(options, (dialog, which) -> {
+            if (which == 0) { Intent i = new Intent(Intent.ACTION_DIAL); i.setData(Uri.parse("tel:09171234567")); startActivity(i); }
+            else if (which == 1) Toast.makeText(this, "Support chat opening...", Toast.LENGTH_SHORT).show();
+            else if (which == 2) showFAQs();
+            else if (which == 3) { new AlertDialog.Builder(this).setTitle("Office").setMessage("123 Purity Ave, Quezon City").setPositiveButton("OK", null).show(); }
+        }).setNegativeButton("Close", null).show();
+    }
 
     private void setupLaunchers() {
-        cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> { 
-            if (result && photoUri != null) {
-                if (isUploadingReceipt) {
-                    receiptUri = photoUri;
-                    showReceiptPreview(photoUri);
-                } else {
-                    showPreview(photoUri);
-                }
-            } 
-        });
-        galleryLauncher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> { 
-            if (uri != null) { 
-                if (isUploadingReceipt) {
-                    receiptUri = uri;
-                    showReceiptPreview(uri);
-                } else {
-                    photoUri = uri; 
-                    showPreview(uri); 
-                }
-            } 
-        });
-        fileLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> { 
-            if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) { 
-                Uri uri = result.getData().getData(); 
-                if (uri != null) { 
-                    if (isUploadingReceipt) {
-                        receiptUri = uri;
-                        showReceiptPreview(uri);
-                    } else {
-                        photoUri = uri; 
-                        showPreview(uri); 
-                    }
-                } 
-            } 
-        });
+        cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> { if (result && photoUri != null) { if (isUploadingReceipt) showReceiptPreview(photoUri); else showPreview(photoUri); } });
+        galleryLauncher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> { if (uri != null) { if (isUploadingReceipt) { receiptUri = uri; showReceiptPreview(uri); } else { photoUri = uri; showPreview(uri); } } });
+        fileLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> { if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) { Uri uri = result.getData().getData(); if (uri != null) { if (isUploadingReceipt) { receiptUri = uri; showReceiptPreview(uri); } else { photoUri = uri; showPreview(uri); } } } });
     }
 
     private void showReceiptPreview(Uri uri) {
@@ -482,21 +495,13 @@ public class ServiceRequestActivity extends AppCompatActivity {
         }).show();
     }
 
-    private void openCamera() {
-        try { photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "id_" + System.currentTimeMillis() + ".jpg"); photoUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", photoFile); cameraLauncher.launch(photoUri); }
-        catch (Exception e) { Toast.makeText(this, "Camera error", Toast.LENGTH_SHORT).show(); }
-    }
+    private void openCamera() { try { photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "id_" + System.currentTimeMillis() + ".jpg"); photoUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", photoFile); cameraLauncher.launch(photoUri); } catch (Exception e) { Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show(); } }
 
-    private void showPreview(Uri uri) {
-        imgPreview.setVisibility(View.VISIBLE); imgPlaceHolder.setVisibility(View.GONE); takePhotoOrUpload.setVisibility(View.GONE);
-        Glide.with(this).load(uri).fitCenter().into(imgPreview);
-    }
+    private void showPreview(Uri uri) { imgPreview.setVisibility(View.VISIBLE); findViewById(R.id.idPlaceholder).setVisibility(View.GONE); Glide.with(this).load(uri).fitCenter().into(imgPreview); }
 
     private void proceedToAnimation() {
-        String ticketId = "ASC2026-" + (new Random().nextInt(9000) + 1000);
         Intent intent = new Intent(this, WaterDropFillAnimationActivity.class);
-
-        intent.putExtra("TICKET_ID", ticketId);
+        intent.putExtra("TICKET_ID", "ASC2026-" + (new Random().nextInt(9000) + 1000));
         intent.putExtra("CUSTOMER_NAME", tvCustomerNameValue.getText().toString());
         intent.putExtra("CONTACT_NUMBER", etCustomerNumber.getText().toString());
         intent.putExtra("ADDRESS", etCustomerAddress.getText().toString());
@@ -504,37 +509,35 @@ public class ServiceRequestActivity extends AppCompatActivity {
         intent.putExtra("DATE", displayDate.getText().toString());
         intent.putExtra("START_TIME", startTimeText.getText().toString());
         intent.putExtra("END_TIME", endTimeText.getText().toString());
-        intent.putExtra("PURCHASE_TYPE", purchaseTypeDropdown.getSelectedItem().toString());
         intent.putExtra("REMARKS", remarksInput.getText().toString());
-        intent.putExtra("TOTAL_AMOUNT", (double)calculateTotalAmount());
+        
+        int itemsTotal = calculateTotalAmount();
+        int serviceFee = 0; // Matching screenshot: PHP 0.00
+        intent.putExtra("TOTAL_AMOUNT", (double)(itemsTotal + serviceFee));
+        intent.putExtra("SERVICE_FEE", (double)serviceFee);
+        
+        // Payment Details
+        String method = "COD";
+        if (rbGCash.isChecked()) method = "GCash";
+        else if (rbMaya.isChecked()) method = "Maya";
+        else if (rbBank.isChecked()) method = "Bank Transfer";
+        
+        intent.putExtra("PAYMENT_METHOD", method);
+        if (method.equals("Bank Transfer")) {
+            intent.putExtra("BANK_NAME", bankSpinner.getSelectedItem().toString());
+            intent.putExtra("BANK_REF", etBankRef.getText().toString());
+            if (receiptUri != null) intent.putExtra("RECEIPT_URI", receiptUri.toString());
+        }
+
         intent.putExtra("UNIT_MODEL", unitModel);
         intent.putExtra("LATITUDE", currentLat);
         intent.putExtra("LONGITUDE", currentLng);
-
-        if (photoUri != null) {
-            intent.putExtra("SELECTED_ID_URI", photoUri.toString());
-            intent.setClipData(ClipData.newRawUri("ID", photoUri));
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        }
-
-        intent.putExtra("QTY_CBC", currentQtyCBC);
-        intent.putExtra("QTY_SEDIMENT", currentQtySEDIMENT);
-        intent.putExtra("QTY_AQUATAL", currentQtyAquatal);
-        intent.putExtra("QTY_INLINE", currentQtyInlineFilter);
-        intent.putExtra("QTY_UV_LAMP", currentQtyUvLamp);
-        intent.putExtra("QTY_TOUCH_PANEL", currentQtyTouchPanel);
-        intent.putExtra("QTY_PBC_BOARD", currentQtyPbcBoard);
-        intent.putExtra("QTY_SMSF_1_CBC", currentQtySmsf1Cbc);
-        intent.putExtra("QTY_SMSF_10_SED", currentQtySmsf10Sed);
-        intent.putExtra("QTY_WAY_VALVE", currentQtyWayValve);
-
-        startActivity(intent);
-        finish();
+        if (photoUri != null) { intent.putExtra("SELECTED_ID_URI", photoUri.toString()); intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); }
+        intent.putExtra("QTY_CBC", currentQtyCBC); intent.putExtra("QTY_SEDIMENT", currentQtySEDIMENT); intent.putExtra("QTY_AQUATAL", currentQtyAquatal); intent.putExtra("QTY_INLINE", currentQtyInlineFilter); intent.putExtra("QTY_UV_LAMP", currentQtyUvLamp); intent.putExtra("QTY_TOUCH_PANEL", currentQtyTouchPanel); intent.putExtra("QTY_PBC_BOARD", currentQtyPbcBoard); intent.putExtra("QTY_SMSF_1_CBC", currentQtySmsf1Cbc); intent.putExtra("QTY_SMSF_10_SED", currentQtySmsf10Sed); intent.putExtra("QTY_WAY_VALVE", currentQtyWayValve);
+        startActivity(intent); finish();
     }
 
-    private int calculateTotalAmount() {
-        return (currentQtyWayValve * PRICE_3WAY_VALVE) + (currentQtyCBC * PRICE_0064_CBC) + (currentQtySEDIMENT * PRICE_0055_SED) + (currentQtyAquatal * PRICE_AQUATAL) + (currentQtyInlineFilter * PRICE_INLINE) + (currentQtyUvLamp * PRICE_UV_LAMP) + (currentQtyTouchPanel * PRICE_TOUCH_PANEL) + (currentQtyPbcBoard * PRICE_PBC_BOARD) + (currentQtySmsf1Cbc * PRICE_SMSF_1_CBC) + (currentQtySmsf10Sed * PRICE_SMSF_10_SED);
-    }
+    private int calculateTotalAmount() { return (currentQtyWayValve * PRICE_3WAY_VALVE) + (currentQtyCBC * PRICE_0064_CBC) + (currentQtySEDIMENT * PRICE_0055_SED) + (currentQtyAquatal * PRICE_AQUATAL) + (currentQtyInlineFilter * PRICE_INLINE) + (currentQtyUvLamp * PRICE_UV_LAMP) + (currentQtyTouchPanel * PRICE_TOUCH_PANEL) + (currentQtyPbcBoard * PRICE_PBC_BOARD) + (currentQtySmsf1Cbc * PRICE_SMSF_1_CBC) + (currentQtySmsf10Sed * PRICE_SMSF_10_SED); }
 
     private void fetchCustomerDetails() {
         String uid = mAuth.getUid(); if (uid == null) return;
@@ -542,20 +545,13 @@ public class ServiceRequestActivity extends AppCompatActivity {
             @Override public void onDataChange(@NonNull DataSnapshot s) {
                 if (s.exists()) {
                     tvCustomerNameValue.setText(s.child("fullName").getValue(String.class));
-                    String mobile = s.child("mobile").getValue(String.class);
-                    etCustomerNumber.setText(mobile);
-                    String addr = s.child("address").getValue(String.class);
-                    etCustomerAddress.setText(addr);
+                    etCustomerNumber.setText(s.child("mobile").getValue(String.class));
+                    String addr = s.child("address").getValue(String.class); etCustomerAddress.setText(addr);
                     originalProfileAddress = addr != null ? addr : "";
                     tvCustomerRefValue.setText(s.child("referenceNo").getValue(String.class));
-                    Double lat = s.child("latitude").getValue(Double.class);
-                    Double lng = s.child("longitude").getValue(Double.class);
-                    if (lat != null && lng != null) {
-                        currentLat = lat; currentLng = lng;
-                    }
-                    if (unitModel == null || unitModel.isEmpty()) {
-                        unitModel = s.child("unitModel").getValue(String.class);
-                    }
+                    if (s.hasChild("latitude")) currentLat = s.child("latitude").getValue(Double.class);
+                    if (s.hasChild("longitude")) currentLng = s.child("longitude").getValue(Double.class);
+                    if (unitModel == null || unitModel.isEmpty()) unitModel = s.child("unitModel").getValue(String.class);
                 }
             }
             @Override public void onCancelled(@NonNull DatabaseError e) {}
@@ -563,312 +559,107 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void setupQuantityHandlers() {
-        qtyCBC = findViewById(R.id.qtyCBC);
-        incrementCBC = findViewById(R.id.incrementCBC);
-        decrementCBC = findViewById(R.id.decrementCBC);
-        qtySEDIMENT = findViewById(R.id.qtySEDIMENT);
-        incrementSEDIMENT = findViewById(R.id.incrementSEDIMENT);
-        decrementSEDIMENT = findViewById(R.id.decrementSEDIMENT);
-        qtyAquatal = findViewById(R.id.qtyAquatal);
-        incrementAquaTal = findViewById(R.id.incrementAquaTal);
-        decrementAquatal = findViewById(R.id.decrementAquatal);
-        qtyInlineFilter = findViewById(R.id.qtyInlineFilter);
-        incrementInlineFilter = findViewById(R.id.incrementInlineFilter);
-        decrementInlineFilter = findViewById(R.id.decrementInlineFilter);
-        qtyUvLampLabel = findViewById(R.id.qtyUvLampLabel);
-        incrementUvLampLabel = findViewById(R.id.incrementUvLampLabel);
-        decrementUvLampLabel = findViewById(R.id.decrementUvLampLabel);
-        qtyTouchPanel = findViewById(R.id.qtyTouchPanel);
-        incrementTouchPanel = findViewById(R.id.incrementTouchPanel);
-        decrementTouchPanel = findViewById(R.id.decrementTouchPanel);
-        qtyPbcBoard = findViewById(R.id.qtyPbcBoard);
-        incrementPbcBoard = findViewById(R.id.incrementPbcBoard);
-        decrementPbcBoard = findViewById(R.id.decrementPbcBoard);
-        qtySMSF1µCBC2 = findViewById(R.id.qtySMSF1µCBC2);
-        incrementSMSF1µCBC = findViewById(R.id.incrementSMSF1µCBC);
-        decrementSMSF1µCBC1 = findViewById(R.id.decrementSMSF1µCBC1);
-        qtySMSF10µSED2 = findViewById(R.id.qtySMSF10µSED2);
-        incrementSMSF10µSED = findViewById(R.id.incrementSMSF10µSED);
-        decrementSMSF10µSED_1 = findViewById(R.id.decrementSMSF10µSED_1);
-        qtyWayvalve2 = findViewById(R.id.qtyWayvalve2);
-        incrementWayvalve = findViewById(R.id.incrementWayvalve);
-        decrementWayvalve1 = findViewById(R.id.decrementWayvalve1);
+        qtyCBC = findViewById(R.id.qtyCBC); incrementCBC = findViewById(R.id.incrementCBC); decrementCBC = findViewById(R.id.decrementCBC);
+        qtySEDIMENT = findViewById(R.id.qtySEDIMENT); incrementSEDIMENT = findViewById(R.id.incrementSEDIMENT); decrementSEDIMENT = findViewById(R.id.decrementSEDIMENT);
+        qtyAquatal = findViewById(R.id.qtyAquatal); incrementAquaTal = findViewById(R.id.incrementAquaTal); decrementAquatal = findViewById(R.id.decrementAquatal);
+        qtyInlineFilter = findViewById(R.id.qtyInlineFilter); incrementInlineFilter = findViewById(R.id.incrementInlineFilter); decrementInlineFilter = findViewById(R.id.decrementInlineFilter);
+        qtyUvLampLabel = findViewById(R.id.qtyUvLampLabel); incrementUvLampLabel = findViewById(R.id.incrementUvLampLabel); decrementUvLampLabel = findViewById(R.id.decrementUvLampLabel);
+        qtyTouchPanel = findViewById(R.id.qtyTouchPanel); incrementTouchPanel = findViewById(R.id.incrementTouchPanel); decrementTouchPanel = findViewById(R.id.decrementTouchPanel);
+        qtyPbcBoard = findViewById(R.id.qtyPbcBoard); incrementPbcBoard = findViewById(R.id.incrementPbcBoard); decrementPbcBoard = findViewById(R.id.decrementPbcBoard);
+        qtySMSF1uCBC2 = findViewById(R.id.qtySMSF1uCBC2); incrementSMSF1uCBC = findViewById(R.id.incrementSMSF1uCBC); decrementSMSF1uCBC1 = findViewById(R.id.decrementSMSF1uCBC1);
+        qtySMSF10uSED2 = findViewById(R.id.qtySMSF10uSED2); incrementSMSF10uSED = findViewById(R.id.incrementSMSF10uSED); decrementSMSF10uSED_1 = findViewById(R.id.decrementSMSF10uSED_1);
+        qtyWayvalve2 = findViewById(R.id.qtyWayvalve2); incrementWayvalve = findViewById(R.id.incrementWayvalve); decrementWayvalve1 = findViewById(R.id.decrementWayvalve1);
 
-        incrementCBC.setOnClickListener(v -> { if (currentQtyCBC < 8) currentQtyCBC++; qtyCBC.setText(String.valueOf(currentQtyCBC)); });
-        decrementCBC.setOnClickListener(v -> { if (currentQtyCBC > 0) currentQtyCBC--; qtyCBC.setText(String.valueOf(currentQtyCBC)); });
-        incrementSEDIMENT.setOnClickListener(v -> { if (currentQtySEDIMENT < 8) currentQtySEDIMENT++; qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT)); });
-        decrementSEDIMENT.setOnClickListener(v -> { if (currentQtySEDIMENT > 0) currentQtySEDIMENT--; qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT)); });
-        incrementAquaTal.setOnClickListener(v -> { if (currentQtyAquatal < 8) currentQtyAquatal++; qtyAquatal.setText(String.valueOf(currentQtyAquatal)); });
-        decrementAquatal.setOnClickListener(v -> { if (currentQtyAquatal > 0) currentQtyAquatal--; qtyAquatal.setText(String.valueOf(currentQtyAquatal)); });
-        incrementInlineFilter.setOnClickListener(v -> { if (currentQtyInlineFilter < 8) currentQtyInlineFilter++; qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter)); });
-        decrementInlineFilter.setOnClickListener(v -> { if (currentQtyInlineFilter > 0) currentQtyInlineFilter--; qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter)); });
-        incrementUvLampLabel.setOnClickListener(v -> { if (currentQtyUvLamp < 8) currentQtyUvLamp++; qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp)); });
-        decrementUvLampLabel.setOnClickListener(v -> { if (currentQtyUvLamp > 0) currentQtyUvLamp--; qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp)); });
-        incrementTouchPanel.setOnClickListener(v -> { if (currentQtyTouchPanel < 8) currentQtyTouchPanel++; qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel)); });
-        decrementTouchPanel.setOnClickListener(v -> { if (currentQtyTouchPanel > 0) currentQtyTouchPanel--; qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel)); });
-        incrementPbcBoard.setOnClickListener(v -> { if (currentQtyPbcBoard < 8) currentQtyPbcBoard++; qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard)); });
-        decrementPbcBoard.setOnClickListener(v -> { if (currentQtyPbcBoard > 0) currentQtyPbcBoard--; qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard)); });
-        incrementSMSF1µCBC.setOnClickListener(v -> { if (currentQtySmsf1Cbc < 8) currentQtySmsf1Cbc++; qtySMSF1µCBC2.setText(String.valueOf(currentQtySmsf1Cbc)); });
-        decrementSMSF1µCBC1.setOnClickListener(v -> { if (currentQtySmsf1Cbc > 0) currentQtySmsf1Cbc--; qtySMSF1µCBC2.setText(String.valueOf(currentQtySmsf1Cbc)); });
-        incrementSMSF10µSED.setOnClickListener(v -> { if (currentQtySmsf10Sed < 8) currentQtySmsf10Sed++; qtySMSF10µSED2.setText(String.valueOf(currentQtySmsf10Sed)); });
-        decrementSMSF10µSED_1.setOnClickListener(v -> { if (currentQtySmsf10Sed > 0) currentQtySmsf10Sed--; qtySMSF10µSED2.setText(String.valueOf(currentQtySmsf10Sed)); });
-        incrementWayvalve.setOnClickListener(v -> { if (currentQtyWayValve < 8) currentQtyWayValve++; qtyWayvalve2.setText(String.valueOf(currentQtyWayValve)); });
-        decrementWayvalve1.setOnClickListener(v -> { if (currentQtyWayValve > 0) currentQtyWayValve--; qtyWayvalve2.setText(String.valueOf(currentQtyWayValve)); });
+        incrementCBC.setOnClickListener(v -> { if (currentQtyCBC < 8) currentQtyCBC++; qtyCBC.setText(String.valueOf(currentQtyCBC)); refreshTotal(); });
+        decrementCBC.setOnClickListener(v -> { if (currentQtyCBC > 0) currentQtyCBC--; qtyCBC.setText(String.valueOf(currentQtyCBC)); refreshTotal(); });
+        incrementSEDIMENT.setOnClickListener(v -> { if (currentQtySEDIMENT < 8) currentQtySEDIMENT++; qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT)); refreshTotal(); });
+        decrementSEDIMENT.setOnClickListener(v -> { if (currentQtySEDIMENT > 0) currentQtySEDIMENT--; qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT)); refreshTotal(); });
+        incrementAquaTal.setOnClickListener(v -> { if (currentQtyAquatal < 8) currentQtyAquatal++; qtyAquatal.setText(String.valueOf(currentQtyAquatal)); refreshTotal(); });
+        decrementAquatal.setOnClickListener(v -> { if (currentQtyAquatal > 0) currentQtyAquatal--; qtyAquatal.setText(String.valueOf(currentQtyAquatal)); refreshTotal(); });
+        incrementInlineFilter.setOnClickListener(v -> { if (currentQtyInlineFilter < 8) currentQtyInlineFilter++; qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter)); refreshTotal(); });
+        decrementInlineFilter.setOnClickListener(v -> { if (currentQtyInlineFilter > 0) currentQtyInlineFilter--; qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter)); refreshTotal(); });
+        incrementUvLampLabel.setOnClickListener(v -> { if (currentQtyUvLamp < 8) currentQtyUvLamp++; qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp)); refreshTotal(); });
+        decrementUvLampLabel.setOnClickListener(v -> { if (currentQtyUvLamp > 0) currentQtyUvLamp--; qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp)); refreshTotal(); });
+        incrementTouchPanel.setOnClickListener(v -> { if (currentQtyTouchPanel < 8) currentQtyTouchPanel++; qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel)); refreshTotal(); });
+        decrementTouchPanel.setOnClickListener(v -> { if (currentQtyTouchPanel > 0) currentQtyTouchPanel--; qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel)); refreshTotal(); });
+        incrementPbcBoard.setOnClickListener(v -> { if (currentQtyPbcBoard < 8) currentQtyPbcBoard++; qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard)); refreshTotal(); });
+        decrementPbcBoard.setOnClickListener(v -> { if (currentQtyPbcBoard > 0) currentQtyPbcBoard--; qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard)); refreshTotal(); });
+        incrementSMSF1uCBC.setOnClickListener(v -> { if (currentQtySmsf1Cbc < 8) currentQtySmsf1Cbc++; qtySMSF1uCBC2.setText(String.valueOf(currentQtySmsf1Cbc)); refreshTotal(); });
+        decrementSMSF1uCBC1.setOnClickListener(v -> { if (currentQtySmsf1Cbc > 0) currentQtySmsf1Cbc--; qtySMSF1uCBC2.setText(String.valueOf(currentQtySmsf1Cbc)); refreshTotal(); });
+        incrementSMSF10uSED.setOnClickListener(v -> { if (currentQtySmsf10Sed < 8) currentQtySmsf10Sed++; qtySMSF10uSED2.setText(String.valueOf(currentQtySmsf10Sed)); refreshTotal(); });
+        decrementSMSF10uSED_1.setOnClickListener(v -> { if (currentQtySmsf10Sed > 0) currentQtySmsf10Sed--; qtySMSF10uSED2.setText(String.valueOf(currentQtySmsf10Sed)); refreshTotal(); });
+        incrementWayvalve.setOnClickListener(v -> { if (currentQtyWayValve < 8) currentQtyWayValve++; qtyWayvalve2.setText(String.valueOf(currentQtyWayValve)); refreshTotal(); });
+        decrementWayvalve1.setOnClickListener(v -> { if (currentQtyWayValve > 0) currentQtyWayValve--; qtyWayvalve2.setText(String.valueOf(currentQtyWayValve)); refreshTotal(); });
+    }
+
+    private void refreshTotal() {
+        int itemsTotal = calculateTotalAmount();
+        int serviceFee = 0; // Matching screenshot: PHP 0.00
+        int grandTotal = itemsTotal + serviceFee;
+        
+        String formattedFee = String.format(Locale.getDefault(), "PHP %,d.00", serviceFee);
+        String formattedGrand = String.format(Locale.getDefault(), "PHP %,d.00", grandTotal);
+        
+        if (tvServiceFee != null) tvServiceFee.setText(formattedFee);
+        if (tvPaymentTotal != null) tvPaymentTotal.setText(formattedGrand);
+        if (tvBankAmount != null) tvBankAmount.setText(formattedGrand);
     }
 
     private void setupNavigation() {
-        findViewById(R.id.buttonNext).setOnClickListener(v -> { hideKeyboard(); currentStep = 2; updateStepUI(); });
-
+        findViewById(R.id.buttonNext).setOnClickListener(v -> { currentStep = 2; updateStepUI(); });
         findViewById(R.id.buttonNext2).setOnClickListener(v -> {
-            String sTime = startTimeText.getText().toString();
-            String eTime = endTimeText.getText().toString();
-
-            validateAndColorTime();
-
-            if (isOutsideOfficeHours(sTime) || isOutsideOfficeHours(eTime)) {
-                showTimeWarning();
-                return;
-            }
-
-            hideKeyboard();
-            currentStep = 3;
-            updateStepUI();
+            if (isOutsideOfficeHours(startTimeText.getText().toString()) || isOutsideOfficeHours(endTimeText.getText().toString())) { showTimeWarning(); return; }
+            currentStep = 3; updateStepUI();
         });
-
         findViewById(R.id.buttonNext3).setOnClickListener(v -> {
-            if (currentQtyCBC == 0 && currentQtySEDIMENT == 0 && currentQtyAquatal == 0 &&
-                    currentQtyInlineFilter == 0 && currentQtyUvLamp == 0 && currentQtyTouchPanel == 0 &&
-                    currentQtyPbcBoard == 0 && currentQtySmsf1Cbc == 0 && currentQtySmsf10Sed == 0) {
-
-                new AlertDialog.Builder(this)
-                        .setTitle("No Items Selected")
-                        .setMessage("Please add at least one item (Filter or Other Parts) to your service request before proceeding.")
-                        .setPositiveButton("OK", null)
-                        .show();
-                return;
+            if (currentQtyCBC == 0 && currentQtySEDIMENT == 0 && currentQtyAquatal == 0 && currentQtyInlineFilter == 0 && currentQtyUvLamp == 0 && currentQtyTouchPanel == 0 && currentQtyPbcBoard == 0 && currentQtySmsf1Cbc == 0 && currentQtySmsf10Sed == 0) {
+                new AlertDialog.Builder(this).setTitle("No Items").setMessage("Please select at least one item.").setPositiveButton("OK", null).show(); return;
             }
-
-            hideKeyboard();
-            currentStep = 4;
-            updateStepUI();
+            currentStep = 4; updateStepUI();
         });
-
-        findViewById(R.id.buttonNext4).setOnClickListener(v -> {
-            hideKeyboard();
-            currentStep = 5;
-            updateStepUI();
-            
-            int total = calculateTotalAmount();
-            tvPaymentTotal.setText(String.format(Locale.getDefault(), "₱ %,d.00", total));
-        });
-        
-        findViewById(R.id.buttonBack).setOnClickListener(v -> { if (currentStep > 1) { currentStep--; updateStepUI(); } });
-        findViewById(R.id.buttonBack3).setOnClickListener(v -> { currentStep = 2; updateStepUI(); });
-        findViewById(R.id.buttonBack4).setOnClickListener(v -> { currentStep = 4; updateStepUI(); });
     }
 
-    private void hideKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    private void setActive(TextView tv, CardView bg, String number) {
-        tv.setText(number); tv.setTextColor(Color.WHITE); tv.setVisibility(View.VISIBLE);
-        bg.setCardBackgroundColor(Color.parseColor("#2196F3")); bg.setElevation(4f);
-    }
-
-    private void setCompleted(TextView tv, CardView bg) {
-        tv.setVisibility(View.VISIBLE); tv.setText("\u2713"); tv.setTextColor(Color.WHITE);
-        bg.setCardBackgroundColor(Color.parseColor("#2196F3")); bg.setElevation(0f);
-    }
-
-    private void resetCircle(TextView tv, CardView bg, String number) {
-        tv.setVisibility(View.VISIBLE); tv.setText(number); tv.setTextColor(Color.parseColor("#94A3B8"));
-        bg.setCardBackgroundColor(Color.parseColor("#E2E8F0")); bg.setElevation(0f);
-    }
+    private void setActive(TextView tv, CardView bg, String num) { tv.setText(num); tv.setTextColor(Color.WHITE); bg.setCardBackgroundColor(Color.parseColor("#2196F3")); }
+    private void setCompleted(TextView tv, CardView bg) { tv.setText("\u2713"); tv.setTextColor(Color.WHITE); bg.setCardBackgroundColor(Color.parseColor("#2196F3")); }
+    private void resetCircle(TextView tv, CardView bg, String num) { tv.setText(num); tv.setTextColor(Color.parseColor("#94A3B8")); bg.setCardBackgroundColor(Color.parseColor("#E2E8F0")); }
 
     private void updateStepUI() {
-        TextView tv1 = findViewById(R.id.circleText1),
-                 tv2 = findViewById(R.id.circleText2),
-                 tv3 = findViewById(R.id.circleText3),
-                 tv4 = findViewById(R.id.circleText4);
+        TextView tv1 = findViewById(R.id.circleText1), tv2 = findViewById(R.id.circleText2), tv3 = findViewById(R.id.circleText3), tv4 = findViewById(R.id.circleText4);
+        CardView c1 = findViewById(R.id.circleNumber1), c2 = findViewById(R.id.circleNumber2), c3 = findViewById(R.id.circleNumber3), c4 = findViewById(R.id.circleNumber4);
+        TextView lb1 = findViewById(R.id.label1), lb2 = findViewById(R.id.label2), lb3 = findViewById(R.id.label3), lb4 = findViewById(R.id.label4);
+        View l1 = findViewById(R.id.line1), l2 = findViewById(R.id.line2), l3 = findViewById(R.id.line3);
 
-        CardView circle1 = findViewById(R.id.circleNumber1),
-                 circle2 = findViewById(R.id.circleNumber2),
-                 circle3 = findViewById(R.id.circleNumber3),
-                 circle4 = findViewById(R.id.circleNumber4);
+        resetCircle(tv1, c1, "1"); resetCircle(tv2, c2, "2"); resetCircle(tv3, c3, "3"); resetCircle(tv4, c4, "4");
+        lb1.setTextColor(Color.parseColor("#94A3B8")); lb2.setTextColor(Color.parseColor("#94A3B8")); lb3.setTextColor(Color.parseColor("#94A3B8")); lb4.setTextColor(Color.parseColor("#94A3B8"));
+        l1.setBackgroundColor(Color.parseColor("#E2E8F0")); l2.setBackgroundColor(Color.parseColor("#E2E8F0")); l3.setBackgroundColor(Color.parseColor("#E2E8F0"));
 
-        TextView lb1 = findViewById(R.id.label1),
-                 lb2 = findViewById(R.id.label2),
-                 lb3 = findViewById(R.id.label3),
-                 lb4 = findViewById(R.id.label4);
-
-        View line1 = findViewById(R.id.line1),
-             line2 = findViewById(R.id.line2),
-             line3 = findViewById(R.id.line3);
-
-        // Reset all
-        resetCircle(tv1, circle1, "1");
-        resetCircle(tv2, circle2, "2");
-        resetCircle(tv3, circle3, "3");
-        resetCircle(tv4, circle4, "4");
-
-        lb1.setTextColor(Color.parseColor("#94A3B8"));
-        lb2.setTextColor(Color.parseColor("#94A3B8"));
-        lb3.setTextColor(Color.parseColor("#94A3B8"));
-        lb4.setTextColor(Color.parseColor("#94A3B8"));
-        lb1.setTypeface(null, Typeface.NORMAL);
-        lb2.setTypeface(null, Typeface.NORMAL);
-        lb3.setTypeface(null, Typeface.NORMAL);
-        lb4.setTypeface(null, Typeface.NORMAL);
-
-        line1.setBackgroundColor(Color.parseColor("#E2E8F0"));
-        line2.setBackgroundColor(Color.parseColor("#E2E8F0"));
-        line3.setBackgroundColor(Color.parseColor("#E2E8F0"));
-
-        if (currentStep == 1) {
-            setActive(tv1, circle1, "1");
-            lb1.setTextColor(Color.parseColor("#2196F3"));
-            lb1.setTypeface(null, Typeface.BOLD);
-        }
-        else if (currentStep == 2) {
-            setCompleted(tv1, circle1);
-            setActive(tv2, circle2, "2");
-            lb1.setTextColor(Color.parseColor("#2196F3"));
-            lb2.setTextColor(Color.parseColor("#2196F3"));
-            lb2.setTypeface(null, Typeface.BOLD);
-            line1.setBackgroundColor(Color.parseColor("#2196F3"));
-        }
-        else if (currentStep == 3 || currentStep == 4) {
-            setCompleted(tv1, circle1);
-            setCompleted(tv2, circle2);
-            setActive(tv3, circle3, "3");
-            lb1.setTextColor(Color.parseColor("#2196F3"));
-            lb2.setTextColor(Color.parseColor("#2196F3"));
-            lb3.setTextColor(Color.parseColor("#2196F3"));
-            lb3.setTypeface(null, Typeface.BOLD);
-            line1.setBackgroundColor(Color.parseColor("#2196F3"));
-            line2.setBackgroundColor(Color.parseColor("#2196F3"));
-        }
-        else if (currentStep == 5) {
-            setCompleted(tv1, circle1);
-            setCompleted(tv2, circle2);
-            setCompleted(tv3, circle3);
-            setActive(tv4, circle4, "4");
-            lb1.setTextColor(Color.parseColor("#2196F3"));
-            lb2.setTextColor(Color.parseColor("#2196F3"));
-            lb3.setTextColor(Color.parseColor("#2196F3"));
-            lb4.setTextColor(Color.parseColor("#2196F3"));
-            lb4.setTypeface(null, Typeface.BOLD);
-            line1.setBackgroundColor(Color.parseColor("#2196F3"));
-            line2.setBackgroundColor(Color.parseColor("#2196F3"));
-            line3.setBackgroundColor(Color.parseColor("#2196F3"));
-        }
+        if (currentStep == 1) { setActive(tv1, c1, "1"); lb1.setTextColor(Color.parseColor("#2196F3")); }
+        else if (currentStep == 2) { setCompleted(tv1, c1); setActive(tv2, c2, "2"); lb1.setTextColor(Color.parseColor("#2196F3")); lb2.setTextColor(Color.parseColor("#2196F3")); l1.setBackgroundColor(Color.parseColor("#2196F3")); }
+        else if (currentStep == 3) { setCompleted(tv1, c1); setCompleted(tv2, c2); setActive(tv3, c3, "3"); lb1.setTextColor(Color.parseColor("#2196F3")); lb2.setTextColor(Color.parseColor("#2196F3")); lb3.setTextColor(Color.parseColor("#2196F3")); l1.setBackgroundColor(Color.parseColor("#2196F3")); l2.setBackgroundColor(Color.parseColor("#2196F3")); }
+        else if (currentStep == 4) { setCompleted(tv1, c1); setCompleted(tv2, c2); setCompleted(tv3, c3); setActive(tv4, c4, "4"); lb1.setTextColor(Color.parseColor("#2196F3")); lb2.setTextColor(Color.parseColor("#2196F3")); lb3.setTextColor(Color.parseColor("#2196F3")); lb4.setTextColor(Color.parseColor("#2196F3")); l1.setBackgroundColor(Color.parseColor("#2196F3")); l2.setBackgroundColor(Color.parseColor("#2196F3")); l3.setBackgroundColor(Color.parseColor("#2196F3")); }
 
         int s1 = (currentStep == 1) ? View.VISIBLE : View.GONE;
         int s2 = (currentStep == 2) ? View.VISIBLE : View.GONE;
         int s3 = (currentStep == 3) ? View.VISIBLE : View.GONE;
         int s4 = (currentStep == 4) ? View.VISIBLE : View.GONE;
-        int s5 = (currentStep == 5) ? View.VISIBLE : View.GONE;
 
-        // Step 1 Layout
-        findViewById(R.id.step1InfoBox).setVisibility(s1);
-        findViewById(R.id.step1FormContainer).setVisibility(s1);
+        // Display current step container
+        findViewById(R.id.step1MainContainer).setVisibility(s1);
+        findViewById(R.id.step2MainContainer).setVisibility(s2);
+        findViewById(R.id.step3MainContainer).setVisibility(s3);
+        findViewById(R.id.step4MainContainer).setVisibility(s4);
+
+        // Manage Bottom Navigation Buttons
         findViewById(R.id.buttonNext).setVisibility(s1);
-
-        // Step 2 Layout
-        findViewById(R.id.serviceTimeLabel).setVisibility(s2);
-        findViewById(R.id.serviceTimeRow).setVisibility(s2);
-        findViewById(R.id.startTimeUnderline).setVisibility(s2);
-        findViewById(R.id.startTimeArrow).setVisibility(s2);
-        startTimeText.setVisibility(s2); 
-        findViewById(R.id.toLabel).setVisibility(s2);
-        findViewById(R.id.serviceEndTimeRow).setVisibility(s2);
-        findViewById(R.id.endTimeUnderline).setVisibility(s2);
-        findViewById(R.id.endTimeArrow).setVisibility(s2);
-        endTimeText.setVisibility(s2);
-        findViewById(R.id.purchaseTypeLabel).setVisibility(s2);
-        purchaseTypeDropdown.setVisibility(s2);
-        customerValidIdLabel.setVisibility(s2);
-        if (currentStep == 2) customerValidIdLabel.setText(Html.fromHtml("<b>Customer Valid ID</b> (optional)"));
-        customerCard.setVisibility(s2);
-        findViewById(R.id.buttonBack).setVisibility(s2);
         findViewById(R.id.buttonNext2).setVisibility(s2);
-
-        // Steps 3 & 4 Scroll Container
-        findViewById(R.id.circle3ScrollContainer).setVisibility((currentStep == 3 || currentStep == 4) ? View.VISIBLE : View.GONE);
-        
-        // Step 3 specific
-        findViewById(R.id.filterPreventiveLabel).setVisibility(s3);
-        findViewById(R.id.qtyLabel).setVisibility(s3);
-        findViewById(R.id.cbcLabel).setVisibility(s3);
-        qtyCBC.setVisibility(s3); 
-        incrementCBC.setVisibility(s3); 
-        decrementCBC.setVisibility(s3); 
-        findViewById(R.id.sedimentLabel).setVisibility(s3);
-        qtySEDIMENT.setVisibility(s3); 
-        incrementSEDIMENT.setVisibility(s3); 
-        decrementSEDIMENT.setVisibility(s3); 
-        findViewById(R.id.OtherPartsLabel).setVisibility(s3);
-        findViewById(R.id.AquatalLabel).setVisibility(s3); 
-        qtyAquatal.setVisibility(s3); 
-        incrementAquaTal.setVisibility(s3); 
-        decrementAquatal.setVisibility(s3);
-        findViewById(R.id.InlineFilterLabel).setVisibility(s3); 
-        qtyInlineFilter.setVisibility(s3); 
-        incrementInlineFilter.setVisibility(s3); 
-        decrementInlineFilter.setVisibility(s3);
-        findViewById(R.id.UvLampLabel).setVisibility(s3); 
-        qtyUvLampLabel.setVisibility(s3); 
-        incrementUvLampLabel.setVisibility(s3); 
-        decrementUvLampLabel.setVisibility(s3);
-        findViewById(R.id.TouchPanel).setVisibility(s3); 
-        qtyTouchPanel.setVisibility(s3); 
-        incrementTouchPanel.setVisibility(s3); 
-        decrementTouchPanel.setVisibility(s3);
-        findViewById(R.id.PbcBoard).setVisibility(s3); 
-        qtyPbcBoard.setVisibility(s3); 
-        incrementPbcBoard.setVisibility(s3); 
-        decrementPbcBoard.setVisibility(s3);
-        findViewById(R.id.SMSF1µ).setVisibility(s3); 
-        qtySMSF1µCBC2.setVisibility(s3); 
-        incrementSMSF1µCBC.setVisibility(s3); 
-        decrementSMSF1µCBC1.setVisibility(s3);
-        findViewById(R.id.SMSF10µSED).setVisibility(s3); 
-        qtySMSF10µSED2.setVisibility(s3); 
-        incrementSMSF10µSED.setVisibility(s3); 
-        decrementSMSF10µSED_1.setVisibility(s3);
-        findViewById(R.id.buttonBack3).setVisibility(s3); 
         findViewById(R.id.buttonNext3).setVisibility(s3);
+        findViewById(R.id.buttonSubmit).setVisibility(s4);
 
-        // Step 4 specific
-        findViewById(R.id.installationKitLabel).setVisibility(s4); 
-        findViewById(R.id.Wayvalve).setVisibility(s4);
-        incrementWayvalve.setVisibility(s4); 
-        decrementWayvalve1.setVisibility(s4); 
-        qtyWayvalve2.setVisibility(s4);
-        findViewById(R.id.remarksLabel).setVisibility(s4); 
-        remarksInput.setVisibility(s4);
-        findViewById(R.id.remarksNotice1).setVisibility(s4);
-        findViewById(R.id.buttonBack4).setVisibility(s4); 
-        findViewById(R.id.buttonNext4).setVisibility(s4);
+        if (currentStep == 4) refreshTotal();
 
-        // Step 5
-        findViewById(R.id.paymentLabel).setVisibility(s5);
-        if (rgPaymentMethod != null) rgPaymentMethod.setVisibility(s5);
-        findViewById(R.id.paymentSummaryLabel).setVisibility(s5);
-        if (tvPaymentTotal != null) tvPaymentTotal.setVisibility(s5);
-        findViewById(R.id.buttonSubmit).setVisibility(s5);
-
-        if (currentStep == 4) {
-            String text = "INSTALLATION KIT (Add if Needed)";
-            SpannableString spannable = new SpannableString(text);
-            spannable.setSpan(new StyleSpan(Typeface.BOLD), 0, "INSTALLATION KIT".length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            spannable.setSpan(new RelativeSizeSpan(0.8f), "INSTALLATION KIT ".length(), text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ((TextView)findViewById(R.id.installationKitLabel)).setText(spannable);
+        // Professional Back Button visibility (Show on steps 2, 3, 4)
+        if (btnBackNav != null) {
+            btnBackNav.setVisibility(currentStep > 1 ? View.VISIBLE : View.GONE);
         }
     }
 }

@@ -43,8 +43,8 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
     private StorageReference storageRef;
 
-    private String ticketId, savedUri, remarks, customerName, contactNumber, address, referenceNo, date, startTime, endTime, purchaseType, unitModel;
-    private double totalAmount, latitude, longitude;
+    private String ticketId, savedUri, remarks, customerName, contactNumber, address, referenceNo, date, startTime, endTime, purchaseType, unitModel, paymentMethod, bankName, bankRef, receiptUriStr;
+    private double totalAmount, latitude, longitude, serviceFee;
     private int qtyCBC, qtySediment, qtyWayValve, qtyAquatal, qtyInline, qtyUvLamp, qtyTouchPanel, qtyPbcBoard, qtySmsf1Cbc, qtySmsf10Sed;
 
     private boolean isFirebaseDone = false;
@@ -84,6 +84,12 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         endTime = intent.getStringExtra("END_TIME");
         purchaseType = intent.getStringExtra("PURCHASE_TYPE");
         totalAmount = intent.getDoubleExtra("TOTAL_AMOUNT", 0.0);
+        serviceFee = intent.getDoubleExtra("SERVICE_FEE", 0.0);
+        paymentMethod = intent.getStringExtra("PAYMENT_METHOD");
+        bankName = intent.getStringExtra("BANK_NAME");
+        bankRef = intent.getStringExtra("BANK_REF");
+        receiptUriStr = intent.getStringExtra("RECEIPT_URI");
+
         unitModel = intent.getStringExtra("UNIT_MODEL");
         latitude = intent.getDoubleExtra("LATITUDE", 0.0);
         longitude = intent.getDoubleExtra("LONGITUDE", 0.0);
@@ -178,22 +184,36 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
 
     private void uploadRequestToFirebase() {
         if (savedUri != null && !savedUri.isEmpty()) {
-            try {
-                StorageReference fileRef = storageRef.child(ticketId + ".jpg");
-                fileRef.putFile(Uri.parse(savedUri))
-                        .addOnSuccessListener(ts -> fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            firebaseImageUrl = uri.toString();
-                            pushDataToDatabase();
-                        }).addOnFailureListener(e -> { firebaseImageUrl = "Upload Failed"; pushDataToDatabase(); }))
-                        .addOnFailureListener(e -> { firebaseImageUrl = "Upload Failed"; pushDataToDatabase(); });
-            } catch (Exception e) {
-                firebaseImageUrl = "Upload Failed";
-                pushDataToDatabase();
-            }
+            uploadFile(Uri.parse(savedUri), "validIdUrl", this::uploadReceiptIfNeeded);
         } else {
             firebaseImageUrl = "None Provided";
+            uploadReceiptIfNeeded();
+        }
+    }
+
+    private void uploadReceiptIfNeeded() {
+        if (receiptUriStr != null && !receiptUriStr.isEmpty()) {
+            uploadFile(Uri.parse(receiptUriStr), "receiptUrl", this::pushDataToDatabase);
+        } else {
             pushDataToDatabase();
         }
+    }
+
+    private interface UploadCallback { void onComplete(); }
+
+    private void uploadFile(Uri uri, String fieldName, UploadCallback callback) {
+        String fileName = (fieldName.equals("receiptUrl") ? "receipt_" : "id_") + ticketId + ".jpg";
+        StorageReference fileRef = (fieldName.equals("receiptUrl") ? 
+            FirebaseStorage.getInstance().getReference("Receipts") : 
+            storageRef).child(fileName);
+
+        fileRef.putFile(uri)
+            .addOnSuccessListener(ts -> fileRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                if (fieldName.equals("validIdUrl")) firebaseImageUrl = downloadUri.toString();
+                else if (fieldName.equals("receiptUrl")) receiptUriStr = downloadUri.toString(); // Reuse var to store URL
+                callback.onComplete();
+            }).addOnFailureListener(e -> callback.onComplete()))
+            .addOnFailureListener(e -> callback.onComplete());
     }
 
     private void pushDataToDatabase() {
@@ -209,6 +229,13 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         data.put("timeRange", startTime + " - " + endTime);
         data.put("purchaseType", purchaseType);
         data.put("validIdUrl", firebaseImageUrl);
+        data.put("paymentMethod", paymentMethod);
+        data.put("serviceFee", serviceFee);
+        if (paymentMethod != null && paymentMethod.equals("Bank Transfer")) {
+            data.put("bankName", bankName);
+            data.put("bankReference", bankRef);
+            data.put("receiptUrl", receiptUriStr);
+        }
         data.put("remarks", remarks);
         data.put("totalAmount", totalAmount);
         data.put("unitName", unitModel);
@@ -254,6 +281,8 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         intent.putExtra("DATE", date);
         intent.putExtra("VALID_ID_URL", firebaseImageUrl);
         intent.putExtra("UNIT_MODEL", unitModel);
+        intent.putExtra("PAYMENT_METHOD", paymentMethod);
+        intent.putExtra("SERVICE_FEE", serviceFee);
 
         intent.putExtra("qty_wayvalve", qtyWayValve);
         intent.putExtra("qty_cbc", qtyCBC);
