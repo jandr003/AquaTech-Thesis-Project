@@ -44,6 +44,11 @@ public class NotificationHistoryAdapter extends RecyclerView.Adapter<Notificatio
                     intent.putExtra("RESUBMIT_TICKET_ID", model.getTicketId());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(intent);
+                } else if ("SCHEDULE".equalsIgnoreCase(model.getType()) || "AQUABUDDY".equalsIgnoreCase(model.getType())) {
+                    Intent intent = new Intent(context, AquaBuddyActivity.class);
+                    intent.putExtra("SHOW_SCHEDULE_MSG", true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                 } else {
                     Intent intent = new Intent(context, ServiceReceiptActivity.class);
                     intent.putExtra("TICKET_ID", model.getTicketId());

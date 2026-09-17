@@ -44,6 +44,7 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
     private StorageReference storageRef;
 
     private String ticketId, savedUri, remarks, customerName, contactNumber, address, referenceNo, date, startTime, endTime, purchaseType, unitModel, paymentMethod, bankName, bankRef, receiptUriStr;
+    private boolean adminWillSchedule = false;
     private double totalAmount, latitude, longitude, serviceFee;
     private int qtyCBC, qtySediment, qtyWayValve, qtyAquatal, qtyInline, qtyUvLamp, qtyTouchPanel, qtyPbcBoard, qtySmsf1Cbc, qtySmsf10Sed;
 
@@ -79,6 +80,7 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         contactNumber = intent.getStringExtra("CONTACT_NUMBER");
         address = intent.getStringExtra("ADDRESS");
         referenceNo = intent.getStringExtra("REF_NO");
+        adminWillSchedule = intent.getBooleanExtra("ADMIN_WILL_SCHEDULE", false);
         date = intent.getStringExtra("DATE");
         startTime = intent.getStringExtra("START_TIME");
         endTime = intent.getStringExtra("END_TIME");
@@ -226,6 +228,7 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         data.put("date", date);
         data.put("startTime", startTime);
         data.put("endTime", endTime);
+        data.put("adminWillSchedule", adminWillSchedule);
         data.put("timeRange", startTime + " - " + endTime);
         data.put("purchaseType", purchaseType);
         data.put("validIdUrl", firebaseImageUrl);

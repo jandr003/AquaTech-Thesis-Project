@@ -189,6 +189,11 @@ public class AquaBuddyActivity extends AppCompatActivity {
     }
 
     private void handleIncomingFiles() {
+        if (getIntent().getBooleanExtra("SHOW_SCHEDULE_MSG", false)) {
+            String msg = "Hi buddy! Great news! Your service request has been processed and your schedule is now confirmed. You can view the details in your request history. See you soon! 😊";
+            saveMessage(msg, false, false);
+        }
+        
         if (getIntent().getBooleanExtra("SEND_FILE_MESSAGE", false)) {
             String fileName = getIntent().getStringExtra("FILE_NAME");
             String fileUri = getIntent().getStringExtra("FILE_URI");

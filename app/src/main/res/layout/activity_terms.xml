@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/poppins"
-                android:text="GF, Alco Building, Makati City, 1209 Metro Manila"
+                android:text="GF, Makati City, 1209 Metro Manila"
                 android:textColor="#888888"
                 android:textSize="12sp" />
 

@@ -390,6 +390,12 @@
             android:theme="@style/Theme.AquaTech"
             tools:ignore="LockedOrientationActivity" />
 
+        <activity
+            android:name=".MapPickerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

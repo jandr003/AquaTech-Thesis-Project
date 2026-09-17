@@ -12,8 +12,8 @@ public class AquaTimePickerDialog {
         void onPicked(String startTime, String endTime);
     }
 
-    private static final int OFFICE_START_HOUR = 8; // 8 AM
-    private static final int OFFICE_END_HOUR = 17; // 5 PM
+    private static final int OFFICE_START_HOUR = 8;
+    private static final int OFFICE_END_HOUR = 17;
 
     public static void showStart(FragmentManager fm, OnTimePicked callback) {
         Calendar calendar = Calendar.getInstance();
@@ -68,7 +68,8 @@ public class AquaTimePickerDialog {
                 startCal.set(Calendar.HOUR_OF_DAY, startHour);
                 startCal.set(Calendar.MINUTE, startMin);
             }
-            catch (Exception e) { /* default to now */ }
+            catch (Exception e) {
+            }
         }
 
         MaterialTimePicker picker = new MaterialTimePicker.Builder()
