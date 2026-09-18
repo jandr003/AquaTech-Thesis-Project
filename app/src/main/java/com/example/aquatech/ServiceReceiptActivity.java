@@ -2,6 +2,7 @@ package com.example.aquatech;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.core.widget.TextViewCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -108,15 +110,71 @@ public class ServiceReceiptActivity extends AppCompatActivity {
 
         View pdfView = LayoutInflater.from(this).inflate(R.layout.layout_receipt_pdf_template, null);
         
+        String date = tvReceiptRequestDate.getText().toString();
+        ((TextView)pdfView.findViewById(R.id.pdfSubmittedTime)).setText(date + " • 4:32 PM");
+        ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(tvReceiptSchedule.getText());
+        
+        TextView pdfStatusBadge = pdfView.findViewById(R.id.pdfStatusBadge);
+        String status = tvReceiptStatus.getText().toString().toUpperCase();
+        pdfStatusBadge.setText(status);
+        if (status.contains("COMPLETED")) {
+            pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+            pdfStatusBadge.setTextColor(Color.parseColor("#166534")); // Dark Green
+            TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
+        } else if (status.contains("PENDING")) {
+            pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
+            pdfStatusBadge.setTextColor(Color.parseColor("#D97706")); // Dark Orange
+            TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#D97706")));
+        } else {
+            pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
+            pdfStatusBadge.setTextColor(Color.parseColor("#2563EB")); // Blue
+            TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+        }
+
+        ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText("Request No.\nSR-" + tvTicketId.getText().toString().replace("#", ""));
+
         ((TextView)pdfView.findViewById(R.id.pdfCustomerName)).setText(tvReceiptCustomerName.getText());
+        String phone = currentSnapshot.child("customerPhone").getValue(String.class);
+        if (phone == null) phone = currentSnapshot.child("userPhone").getValue(String.class);
+        ((TextView)pdfView.findViewById(R.id.pdfContact)).setText(phone != null ? phone : "Not Provided");
         ((TextView)pdfView.findViewById(R.id.pdfAddress)).setText(tvReceiptAddress.getText());
-        ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText(tvTicketId.getText());
-        ((TextView)pdfView.findViewById(R.id.pdfServiceType)).setText(tvReceiptServiceType.getText());
-        ((TextView)pdfView.findViewById(R.id.pdfSchedule)).setText(tvReceiptSchedule.getText());
-        ((TextView)pdfView.findViewById(R.id.pdfDate)).setText(tvReceiptRequestDate.getText());
+
         ((TextView)pdfView.findViewById(R.id.pdfUnit)).setText(tvReceiptUnitName.getText());
+        String uCode = currentSnapshot.child("referenceNo").getValue(String.class);
+        if (uCode == null) uCode = currentSnapshot.child("sroNumber").getValue(String.class);
+        ((TextView)pdfView.findViewById(R.id.pdfUnitCode)).setText(uCode != null ? uCode : "AT-001245");
+        String loc = currentSnapshot.child("installationLocation").getValue(String.class);
+        ((TextView)pdfView.findViewById(R.id.pdfLocation)).setText(loc != null ? loc : "Kitchen Area");
+
+        ((TextView)pdfView.findViewById(R.id.pdfServiceType)).setText(tvReceiptServiceType.getText());
+        String concern = currentSnapshot.child("concern").getValue(String.class);
+        ((TextView)pdfView.findViewById(R.id.pdfConcern)).setText(concern != null ? concern : "Filter replacement recommended.");
+        String remarks = currentSnapshot.child("technicianRemarks").getValue(String.class);
+        if (remarks == null) remarks = currentSnapshot.child("remarks").getValue(String.class);
+        ((TextView)pdfView.findViewById(R.id.pdfRemarks)).setText(remarks != null ? remarks : "Customer reported issues.");
+
+        String pm = tvReceiptPaymentMethod.getText().toString();
+        ((TextView)pdfView.findViewById(R.id.pdfPaymentMethod)).setText(pm);
         ((TextView)pdfView.findViewById(R.id.pdfTotalAmount)).setText(tvReceiptTotalAmount.getText());
-        ((TextView)pdfView.findViewById(R.id.pdfStatus)).setText(tvReceiptStatus.getText());
+
+        TextView pdfPaymentStatus = pdfView.findViewById(R.id.pdfPaymentStatus);
+        if (pm.equalsIgnoreCase("GCash") || pm.equalsIgnoreCase("Maya") || pm.equalsIgnoreCase("Bank Transfer")) {
+            pdfPaymentStatus.setText("FOR VERIFICATION");
+            pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
+            pdfPaymentStatus.setTextColor(Color.parseColor("#2563EB")); // Blue
+            TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+        } else if (pm.equalsIgnoreCase("COD")) {
+            pdfPaymentStatus.setText("UNPAID / COD");
+            pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
+            pdfPaymentStatus.setTextColor(Color.parseColor("#EA580C")); // Orange
+            TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#EA580C")));
+        }
+
+        ((TextView)pdfView.findViewById(R.id.pdfTechName)).setText(tvReceiptTechName.getText());
+        ImageView pdfTechSig = pdfView.findViewById(R.id.pdfTechSignature);
+        if (ivReceiptTechSignature.getDrawable() != null) {
+            pdfTechSig.setImageDrawable(ivReceiptTechSignature.getDrawable());
+        }
 
         LinearLayout pdfOrdersContainer = pdfView.findViewById(R.id.pdfOrdersContainer);
         addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
@@ -130,13 +188,15 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_smsf1", "SMSF 1µ CBC", 2000);
         addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_smsf10", "SMSF 10µ SED", 1000);
 
-        pdfView.measure(View.MeasureSpec.makeMeasureSpec(450, View.MeasureSpec.EXACTLY), 
-                       View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        pdfView.layout(0, 0, pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight());
-
         try {
+            int width = 1200;
+            pdfView.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), 
+                          View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            pdfView.layout(0, 0, pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight());
+
             Bitmap bitmap = Bitmap.createBitmap(pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
+            
             canvas.drawColor(Color.WHITE);
             pdfView.draw(canvas);
 
@@ -183,7 +243,8 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         
         if (q > 0) {
             View row = getLayoutInflater().inflate(R.layout.item_pdf_billing_row, container, false);
-            ((TextView)row.findViewById(R.id.pdfItemName)).setText(name + " x" + q);
+            ((TextView)row.findViewById(R.id.pdfItemName)).setText(name);
+            ((TextView)row.findViewById(R.id.pdfItemQty)).setText(String.valueOf(q));
             ((TextView)row.findViewById(R.id.pdfItemPrice)).setText("₱ " + String.format("%,d", q * price) + ".00");
             container.addView(row);
         }

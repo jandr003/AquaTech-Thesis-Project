@@ -339,14 +339,48 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
 
         try {
             View pdfView = LayoutInflater.from(this).inflate(R.layout.layout_receipt_pdf_template, null);
-            TextView name = pdfView.findViewById(R.id.pdfCustomerName);
-            if (name != null) name.setText(displayCustomerName.getText());
+            
+            ((TextView)pdfView.findViewById(R.id.pdfCustomerName)).setText(displayCustomerName.getText());
+            ((TextView)pdfView.findViewById(R.id.pdfAddress)).setText(displayAddress.getText());
+            ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText(displayTicketID.getText());
+            ((TextView)pdfView.findViewById(R.id.pdfDate)).setText(timeDateReq.getText());
+            
+            String startTime = currentSnapshot.child("startTime").getValue(String.class);
+            String endTime = currentSnapshot.child("endTime").getValue(String.class);
+            if (startTime != null && endTime != null) {
+                ((TextView)pdfView.findViewById(R.id.pdfTime)).setText(startTime + " - " + endTime);
+            }
+            
+            String pType = currentSnapshot.child("purchaseType").getValue(String.class);
+            if (pType != null) {
+                ((TextView)pdfView.findViewById(R.id.pdfPurchaseType)).setText(pType);
+            }
+
+            ((TextView)pdfView.findViewById(R.id.pdfUnit)).setText(displayUnit.getText());
+            ((TextView)pdfView.findViewById(R.id.pdfTotalAmount)).setText(displayTotalAmount.getText());
+            ((TextView)pdfView.findViewById(R.id.pdfSubtotal)).setText(displayTotalAmount.getText());
+            ((TextView)pdfView.findViewById(R.id.pdfStatus)).setText(displayStatus.getText());
+
+            LinearLayout pdfOrdersContainer = pdfView.findViewById(R.id.pdfOrdersContainer);
+            pdfOrdersContainer.removeAllViews();
+            
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_cbc", "Filter 0064-CBC", 2000);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_sediment", "Filter 0055-SEDIMENT", 1000);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_aquatal", "Aquatal Replacement", 2000);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_inline", "Inline Filter", 3000);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_uvlamp", "UV Lamp", 1500);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_touchpanel", "Touch Panel", 750);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_pbcboard", "PBC Board", 3000);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_smsf1", "SMSF 1µ CBC", 2000);
+            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_smsf10", "SMSF 10µ SED", 1000);
 
             pdfView.measure(View.MeasureSpec.makeMeasureSpec(1200, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
             pdfView.layout(0, 0, pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight());
 
             Bitmap bitmap = Bitmap.createBitmap(pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
+            
             canvas.drawColor(Color.WHITE);
             pdfView.draw(canvas);
 
@@ -374,6 +408,19 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             Toast.makeText(this, "Failed to generate PDF: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void addPdfItem(DataSnapshot snapshot, LinearLayout container, String key, String name, int price) {
+        Object val = snapshot.child(key).getValue();
+        int q = 0;
+        if (val instanceof Number) q = ((Number) val).intValue();
+        
+        if (q > 0) {
+            View row = getLayoutInflater().inflate(R.layout.item_pdf_billing_row, container, false);
+            ((TextView)row.findViewById(R.id.pdfItemName)).setText(name);
+            ((TextView)row.findViewById(R.id.pdfItemQty)).setText(String.valueOf(q));
+            container.addView(row);
         }
     }
 
