@@ -10,18 +10,6 @@
         android:layout_height="wrap_content"
         android:padding="2dp">
 
-        <!-- Outer Frame / Border -->
-        <View
-            android:id="@+id/pdfMainFrame"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/bg_card_premium_outline"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <!-- Top Decorative Wave -->
         <ImageView
             android:layout_width="200dp"
             android:layout_height="80dp"
@@ -39,12 +27,10 @@
             android:paddingVertical="32dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!-- HEADER SECTION -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Logo using official PNG asset -->
                 <ImageView
                     android:id="@+id/pdfLogoImg"
                     android:layout_width="190dp"
@@ -52,7 +38,6 @@
                     android:scaleType="fitStart"
                     android:src="@drawable/asc_logo_all_about_water" />
 
-                <!-- Corporate Slogan (Right Aligned) -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Safer Water,"
-                        android:textColor="#3DAADB"
+                        android:textColor="#2196F3"
                         android:textSize="14sp"
                         android:textStyle="italic" />
 
@@ -72,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Healthier Tomorrow."
-                        android:textColor="#3DAADB"
+                        android:textColor="#2196F3"
                         android:textSize="14sp"
                         android:textStyle="italic" />
 
@@ -80,11 +65,11 @@
                         android:layout_width="45dp"
                         android:layout_height="2.5dp"
                         android:layout_marginTop="4dp"
-                        android:background="#3DAADB" />
+                        android:background="#2196F3" />
                 </LinearLayout>
             </RelativeLayout>
 
-            <!-- TITLE SECTION (Responsive Single Line Prevention) -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,7 +78,6 @@
                 android:orientation="horizontal"
                 android:baselineAligned="false">
 
-                <!-- Weighted Title Container to ensure full visibility without overlap -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -122,7 +106,6 @@
                         android:textSize="15sp" />
                 </LinearLayout>
 
-                <!-- Request ID Badge Pill (Fixed position to the right) -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -136,7 +119,7 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_pdf_document"
-                        app:tint="#3DAADB" />
+                        app:tint="#2196F3" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -147,7 +130,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Request No."
+                            android:text="Reference No."
                             android:textColor="#64748B"
                             android:textSize="10sp" />
 
@@ -155,15 +138,15 @@
                             android:id="@+id/pdfTicketId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SR-2026-0001"
+                            android:text="SRO-0000000"
                             android:textColor="#1E293B"
                             android:textSize="14sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- META DATA ROW (Timestamps & Status) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -188,26 +171,38 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Submitted"
+                            android:text="DATE SUBMITTED"
                             android:textColor="#64748B"
-                            android:textSize="11sp" />
+                            android:textSize="9sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/pdfSubmittedDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="October 24, 2026"
+                            android:textColor="#1E293B"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
                         <TextView
                             android:id="@+id/pdfSubmittedTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sep 18, 2026 • 4:32 PM"
-                            android:textColor="#1E293B"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:text="09:15 AM"
+                            android:textColor="#64748B"
+                            android:textSize="11sp" />
+
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="28dp"
+                    android:layout_height="32dp"
                     android:layout_marginHorizontal="12dp"
                     android:background="#E2E8F0" />
 
@@ -228,12 +223,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Preferred Schedule"
+                            android:text="PREFERRED SCHEDULE"
                             android:textColor="#64748B"
-                            android:textSize="11sp" />
+                            android:textSize="9sp"
+                            android:textStyle="bold" />
+
                         <TextView
                             android:id="@+id/pdfScheduleSummary"
                             android:layout_width="wrap_content"
@@ -242,6 +240,7 @@
                             android:textColor="#1E293B"
                             android:textSize="12sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -251,7 +250,6 @@
                     android:layout_marginHorizontal="12dp"
                     android:background="#E2E8F0" />
 
-                <!-- STATUS BADGE (Styled exactly like 2nd image) -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -320,14 +318,69 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
-                        <TextView android:id="@+id/l1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Name" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfCustomerName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/l1" android:text="Juan Dela Cruz" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
 
-                        <TextView android:id="@+id/l2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/l1" android:layout_marginTop="10dp" android:text="Contact Number" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfContact" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/l1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/l2" android:text="0917 123 4567" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/l1"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
 
-                        <TextView android:id="@+id/l3" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/l2" android:layout_marginTop="10dp" android:text="Address" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfAddress" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/l2" android:layout_marginTop="10dp" android:layout_toEndOf="@id/l3" android:text="123 Santos St., Brgy. San Miguel, Makati City, Metro Manila" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/pdfCustomerName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/l1"
+                            android:text="Juan Dela Cruz"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/l2"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/l1"
+                            android:layout_marginTop="10dp"
+                            android:text="Contact Number"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/pdfContact"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/l1"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/l2"
+                            android:text="0917 123 4567"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/l3"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/l2"
+                            android:layout_marginTop="10dp"
+                            android:text="Address"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/pdfAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/l2"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/l3"
+                            android:text="123 Santos St., Brgy. San Miguel, Makati City, Metro Manila"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -343,12 +396,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:background="@drawable/circle_blue"
                             android:padding="6dp"
                             android:src="@drawable/ic_pdf_house" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -357,20 +412,77 @@
                             android:textColor="#1C4E75"
                             android:textSize="13sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
-                        <TextView android:id="@+id/u1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Product" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfUnit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/u1" android:text="AquaTal" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
 
-                        <TextView android:id="@+id/u2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/u1" android:layout_marginTop="10dp" android:text="Unit Code" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfUnitCode" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/u1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/u2" android:text="AT-001245" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/u1"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:text="Product"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
 
-                        <TextView android:id="@+id/u3" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/u2" android:layout_marginTop="10dp" android:text="Installation Location" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfLocation" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/u2" android:layout_marginTop="10dp" android:layout_toEndOf="@id/u3" android:text="Building A - 3rd Floor" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/pdfUnit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/u1"
+                            android:text="AquaTal"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/u2"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/u1"
+                            android:layout_marginTop="10dp"
+                            android:text="Unit Code"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/pdfUnitCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/u1"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/u2"
+                            android:text="F-FXCU1-M-HCA-TT-K1-**-***"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/u3"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/u2"
+                            android:layout_marginTop="10dp"
+                            android:text="Type of Purchase"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+
+                        <TextView
+                            android:id="@+id/pdfLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/u2"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/u3"
+                            android:text="SUBSCRIPTION"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -386,12 +498,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:background="@drawable/circle_blue"
                             android:padding="6dp"
                             android:src="@drawable/ic_pdf_wrench" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -400,23 +514,97 @@
                             android:textColor="#1C4E75"
                             android:textSize="13sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
-                        <TextView android:id="@+id/s1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Service Type" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfServiceType" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/s1" android:text="Maintenance" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
 
-                        <TextView android:id="@+id/s2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/s1" android:layout_marginTop="10dp" android:text="Description" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/s1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/s2" android:text="Water Quality Check &amp; Maintenance" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/s1"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:text="Service Type"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
 
-                        <TextView android:id="@+id/s3" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/s2" android:layout_marginTop="10dp" android:text="Concern" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfConcern" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/s2" android:layout_marginTop="10dp" android:layout_toEndOf="@id/s3" android:text="Filter replacement recommended." android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/pdfServiceType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/s1"
+                            android:text="Maintenance"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
 
-                        <TextView android:id="@+id/s4" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/s3" android:layout_marginTop="10dp" android:text="Remarks" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfRemarks" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/s3" android:layout_marginTop="10dp" android:layout_toEndOf="@id/s4" android:text="Customer reported reduced water flow." android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/s2"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/s1"
+                            android:layout_marginTop="10dp"
+                            android:text="Description"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/s1"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/s2"
+                            android:text="Water Quality Check &amp; Maintenance"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/s3"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/s2"
+                            android:layout_marginTop="10dp"
+                            android:text="Concern"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/pdfConcern"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/s2"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/s3"
+                            android:text="Filter replacement recommended."
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/s4"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/s3"
+                            android:layout_marginTop="10dp"
+                            android:text="Remarks"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/pdfRemarks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/s3"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/s4"
+                            android:text="Customer reported reduced water flow."
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
 
                     <LinearLayout
@@ -425,6 +613,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:orientation="vertical" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -438,16 +627,19 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical">
+
                             <ImageView
                                 android:layout_width="28dp"
                                 android:layout_height="28dp"
                                 android:background="@drawable/circle_blue"
                                 android:padding="6dp"
                                 android:src="@drawable/ic_pdf_card" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -456,6 +648,7 @@
                                 android:textColor="#1C4E75"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -463,6 +656,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:gravity="center_vertical">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -471,21 +665,23 @@
                                 android:textSize="10sp"
                                 android:layout_marginEnd="8dp" />
 
+
                             <TextView
                                 android:id="@+id/pdfPaymentStatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/bg_pdf_status_blue_pill"
-                                app:drawableStartCompat="@drawable/ic_pdf_clock"
-                                android:drawablePadding="6dp"
-                                app:drawableTint="#2563EB"
-                                android:gravity="center_vertical"
                                 android:paddingHorizontal="10dp"
                                 android:paddingVertical="4dp"
                                 android:text="FOR VERIFICATION"
                                 android:textColor="#2563EB"
                                 android:textSize="11sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:gravity="center_vertical"
+                                app:drawableStartCompat="@drawable/ic_pdf_dot"
+                                android:drawablePadding="6dp"
+                                app:drawableTint="#2563EB" />
+
                         </LinearLayout>
                     </RelativeLayout>
 
@@ -493,18 +689,135 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
-                        <TextView android:id="@+id/p1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Payment Method" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfPaymentMethod" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/p1" android:text="GCash" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
 
-                        <TextView android:id="@+id/p2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/p1" android:layout_marginTop="10dp" android:text="Amount" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/pdfTotalAmount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/p1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/p2" android:text="₱ 2,500.00" android:textColor="#2563EB" android:textSize="16sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/p1"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:text="Payment Method"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/pdfPaymentMethod"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/p1"
+                            android:text="GCash"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/p2"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/p1"
+                            android:layout_marginTop="8dp"
+                            android:text="Amount"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/pdfTotalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/p1"
+                            android:layout_marginTop="8dp"
+                            android:layout_toEndOf="@id/p2"
+                            android:text="₱ 2,500.00"
+                            android:textColor="#2563EB"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutPdfReference"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/p2"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:text="Reference No."
+                                android:textColor="#64748B"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/pdfReferenceNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1234567890"
+                                android:textColor="#1E293B"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutPdfVerifiedOn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/layoutPdfReference"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/lblPdfVerifiedOn"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:text="Verified On"
+                                android:textColor="#64748B"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/pdfVerifiedPaidOn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Sep 18, 2026 • 5:02 PM"
+                                android:textColor="#1E293B"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutPdfCollectedBy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/layoutPdfVerifiedOn"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:text="Collected By"
+                                android:textColor="#64748B"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/pdfCollectedBy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Juan Dela Cruz"
+                                android:textColor="#1E293B"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="12dp"
                     android:background="@drawable/bg_pdf_card_light"
                     android:orientation="vertical"
                     android:padding="16dp">
@@ -513,12 +826,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:background="@drawable/circle_blue"
                             android:padding="6dp"
                             android:src="@drawable/ic_pdf_person" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -527,25 +842,45 @@
                             android:textColor="#1C4E75"
                             android:textSize="13sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Technician" android:textColor="#64748B" android:textSize="13sp" />
-                            <TextView android:id="@+id/pdfTechName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Not yet assigned" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Technician"
+                                android:textColor="#64748B"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/pdfTechName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Not yet assigned"
+                                android:textColor="#1E293B"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
                         </LinearLayout>
+
                         <ImageView
                             android:id="@+id/pdfTechSignature"
                             android:layout_width="140dp"
                             android:layout_height="50dp"
                             android:layout_alignParentEnd="true"
                             android:scaleType="fitCenter" />
+
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -553,60 +888,123 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="4dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="cursive"
                         android:text="Thank you!"
-                        android:textColor="#3DAADB"
+                        android:textColor="#2196F3"
                         android:textSize="32sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="For choosing AquaTech!\nWe're committed to keeping your water safe and clean."
                         android:textColor="#94A3B8"
                         android:textSize="11sp" />
-                </LinearLayout>
 
+                </LinearLayout>
 
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:gravity="center">
 
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:src="@drawable/ic_phone" app:tint="#3DAADB" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:text="(02) 8888 1234" android:textColor="#64748B" android:textSize="10sp" />
-
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:layout_marginStart="20dp" android:src="@drawable/ic_message" app:tint="#3DAADB" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:text="support@aquatech.ph" android:textColor="#64748B" android:textSize="10sp" />
-
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:layout_marginStart="20dp"
-                    android:src="@drawable/ic_pinpoint"
-                    app:tint="#3DAADB" />
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="GF, Makati City, 1209 Metro Manila"
-                    android:textColor="#64748B"
-                    android:textSize="10sp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_phone"
+                        app:tint="#2196F3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Sales: +63 998 557 9144"
+                        android:textColor="#64748B"
+                        android:textSize="9sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="10dp"
+                        android:background="#CBD5E1"
+                        android:layout_marginHorizontal="12dp" />
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_phone"
+                        app:tint="#2196F3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Technical: +63 998 961 9695"
+                        android:textColor="#64748B"
+                        android:textSize="9sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_pdf_gmail"
+                        app:tint="#2196F3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="ask@smartguard.ph"
+                        android:textColor="#64748B"
+                        android:textSize="9sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="10dp"
+                        android:background="#CBD5E1"
+                        android:layout_marginHorizontal="12dp" />
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_pinpoint"
+                        app:tint="#2196F3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="GF, Makati City, 1209 Metro Manila"
+                        android:textColor="#64748B"
+                        android:textSize="9sp" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

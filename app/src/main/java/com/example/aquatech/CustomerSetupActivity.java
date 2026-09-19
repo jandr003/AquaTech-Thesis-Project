@@ -78,19 +78,16 @@ public class CustomerSetupActivity extends AppCompatActivity {
     }
 
     private void selectCard(CardView selectedCard, String unitName) {
-        // Reset colors
         card1.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
         card2.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
         card3.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
         card4.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
         selectedCard.setCardBackgroundColor(Color.parseColor("#E3F2FD"));
 
-        // FIREBASE LOGIC: Save the selected unit to the user's profile
         if (userRef != null) {
             userRef.child("selectedUnit").setValue(unitName)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            // Proceed to details after saving
                             Intent intent = new Intent(CustomerSetupActivity.this, UnitDetailsActivity.class);
                             intent.putExtra("UNIT_NAME", unitName);
                             startActivity(intent);

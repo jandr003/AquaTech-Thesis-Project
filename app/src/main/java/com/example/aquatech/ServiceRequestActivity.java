@@ -152,7 +152,8 @@ public class ServiceRequestActivity extends AppCompatActivity {
         if (uid == null) return;
 
         ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Checking for active requests...");
+        pd.setMessage("Verifying active service records...");
+        pd.setCancelable(false);
         pd.show();
 
         FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests")
@@ -200,23 +201,25 @@ public class ServiceRequestActivity extends AppCompatActivity {
         String inputAddress = etCustomerAddress.getText().toString().trim();
         String inputMobile = etCustomerNumber.getText().toString().trim();
 
-        validateAndColorTime();
-        String sTime = startTimeText.getText().toString();
-        String eTime = endTimeText.getText().toString();
+        if (!adminWillSchedule) {
+            validateAndColorTime();
+            String sTime = startTimeText.getText().toString();
+            String eTime = endTimeText.getText().toString();
 
-        if (sTime.equals("---") || eTime.equals("---") || isOutsideOfficeHours(sTime) || isOutsideOfficeHours(eTime)) {
-            showTimeWarning();
-            return;
+            if (sTime.equals("---") || eTime.equals("---") || isOutsideOfficeHours(sTime) || isOutsideOfficeHours(eTime)) {
+                showTimeWarning();
+                return;
+            }
         }
 
-        if (inputAddress.isEmpty() || inputMobile.isEmpty()) {
-            Toast.makeText(this, "Please provide complete address and number", Toast.LENGTH_SHORT).show();
+            if (inputAddress.isEmpty() || inputMobile.isEmpty()) {
+            Toast.makeText(this, "Please ensure all contact details are complete.", Toast.LENGTH_SHORT).show();
             currentStep = 1;
             updateStepUI();
             return;
         }
 
-        Toast.makeText(this, "Pinpointing address location...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Optimizing service coordinates...", Toast.LENGTH_SHORT).show();
 
         new Thread(() -> {
             try {
@@ -260,6 +263,7 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void validateAndColorTime() {
+        if (adminWillSchedule) return;
         String sTime = startTimeText.getText().toString();
         String eTime = endTimeText.getText().toString();
 
@@ -299,8 +303,8 @@ public class ServiceRequestActivity extends AppCompatActivity {
     private void showTimeWarning() {
         validateAndColorTime();
         new AlertDialog.Builder(this)
-                .setTitle("Schedule Conflict")
-                .setMessage("Appointments are available only from 8:00 AM to 5:00 PM. Please choose a preferred time within the allowed service hours.")
+                .setTitle("Preferred Schedule Conflict")
+                .setMessage("Our onsite services are strictly available from 8:00 AM to 5:00 PM, Monday to Saturday. Please select a time within these operating hours.")
                 .setPositiveButton("OK", null)
                 .show();
     }
@@ -610,7 +614,7 @@ public class ServiceRequestActivity extends AppCompatActivity {
 
     private void proceedToAnimation() {
         Intent intent = new Intent(this, WaterDropFillAnimationActivity.class);
-        intent.putExtra("TICKET_ID", "ASC2026-" + (new Random().nextInt(9000) + 1000));
+        intent.putExtra("TICKET_ID", "ASC2026-" + String.format(Locale.getDefault(), "%04d", new Random().nextInt(9000) + 1));
         intent.putExtra("CUSTOMER_NAME", tvCustomerNameValue.getText().toString());
         intent.putExtra("CONTACT_NUMBER", etCustomerNumber.getText().toString());
         intent.putExtra("ADMIN_WILL_SCHEDULE", adminWillSchedule);
@@ -641,8 +645,12 @@ public class ServiceRequestActivity extends AppCompatActivity {
         intent.putExtra("UNIT_MODEL", unitModel);
         intent.putExtra("LATITUDE", currentLat);
         intent.putExtra("LONGITUDE", currentLng);
-        if (photoUri != null) { intent.putExtra("SELECTED_ID_URI", photoUri.toString()); intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); }
-        
+
+        if (photoUri != null) {
+            intent.putExtra("SELECTED_ID_URI", photoUri.toString());
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+
         intent.putExtra("QTY_CBC", currentQtyCBC);
         intent.putExtra("QTY_SEDIMENT", currentQtySEDIMENT);
         intent.putExtra("QTY_AQUATAL", currentQtyAquatal);

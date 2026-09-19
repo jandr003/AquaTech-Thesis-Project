@@ -38,6 +38,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ServiceReceiptActivity extends AppCompatActivity {
 
@@ -110,28 +113,54 @@ public class ServiceReceiptActivity extends AppCompatActivity {
 
         View pdfView = LayoutInflater.from(this).inflate(R.layout.layout_receipt_pdf_template, null);
         
-        String date = tvReceiptRequestDate.getText().toString();
-        ((TextView)pdfView.findViewById(R.id.pdfSubmittedTime)).setText(date + " • 4:32 PM");
-        ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(tvReceiptSchedule.getText());
+        String dateStr = tvReceiptRequestDate.getText().toString();
+        String timeStr = "09:15 AM";
+
+        Long ts = currentSnapshot.child("timestamp").getValue(Long.class);
+        if (ts != null) {
+            Date submissionDate = new Date(ts);
+            dateStr = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(submissionDate);
+            timeStr = new SimpleDateFormat("hh:mm A", Locale.getDefault()).format(submissionDate);
+        } else {
+            timeStr = new SimpleDateFormat("hh:mm A", Locale.getDefault()).format(new Date());
+        }
+        
+        ((TextView)pdfView.findViewById(R.id.pdfSubmittedDate)).setText(dateStr);
+        ((TextView)pdfView.findViewById(R.id.pdfSubmittedTime)).setText(timeStr);
+        String startTimeVal = currentSnapshot.child("startTime").getValue(String.class);
+        String schedDate = currentSnapshot.child("date").getValue(String.class);
+        String schedSession = "";
+
+        if (startTimeVal != null && !startTimeVal.equalsIgnoreCase("To be confirmed")) {
+            String upperSched = startTimeVal.toUpperCase();
+            if (upperSched.contains("AM")) schedSession = "MORNING";
+            else if (upperSched.contains("PM")) schedSession = "AFTERNOON";
+            
+            ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(schedDate + " • " + upperSched + " (" + schedSession + ")");
+        } else {
+            ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(schedDate + " • TBC (PENDING CONFIRMATION)");
+        }
         
         TextView pdfStatusBadge = pdfView.findViewById(R.id.pdfStatusBadge);
         String status = tvReceiptStatus.getText().toString().toUpperCase();
         pdfStatusBadge.setText(status);
         if (status.contains("COMPLETED")) {
             pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-            pdfStatusBadge.setTextColor(Color.parseColor("#166534")); // Dark Green
+            pdfStatusBadge.setTextColor(Color.parseColor("#166534"));
             TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
         } else if (status.contains("PENDING")) {
             pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
-            pdfStatusBadge.setTextColor(Color.parseColor("#D97706")); // Dark Orange
+            pdfStatusBadge.setTextColor(Color.parseColor("#D97706"));
             TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#D97706")));
         } else {
             pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
-            pdfStatusBadge.setTextColor(Color.parseColor("#2563EB")); // Blue
+            pdfStatusBadge.setTextColor(Color.parseColor("#2563EB"));
             TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#2563EB")));
         }
 
-        ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText("Request No.\nSR-" + tvTicketId.getText().toString().replace("#", ""));
+        String sroAtTop = currentSnapshot.child("referenceNo").getValue(String.class);
+        if (sroAtTop == null) sroAtTop = currentSnapshot.child("sroNumber").getValue(String.class);
+        ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText(sroAtTop != null ? sroAtTop : "SRO-0000000");
 
         ((TextView)pdfView.findViewById(R.id.pdfCustomerName)).setText(tvReceiptCustomerName.getText());
         String phone = currentSnapshot.child("customerPhone").getValue(String.class);
@@ -139,10 +168,38 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         ((TextView)pdfView.findViewById(R.id.pdfContact)).setText(phone != null ? phone : "Not Provided");
         ((TextView)pdfView.findViewById(R.id.pdfAddress)).setText(tvReceiptAddress.getText());
 
-        ((TextView)pdfView.findViewById(R.id.pdfUnit)).setText(tvReceiptUnitName.getText());
-        String uCode = currentSnapshot.child("referenceNo").getValue(String.class);
-        if (uCode == null) uCode = currentSnapshot.child("sroNumber").getValue(String.class);
-        ((TextView)pdfView.findViewById(R.id.pdfUnitCode)).setText(uCode != null ? uCode : "AT-001245");
+        String unitModel = currentSnapshot.child("unitName").getValue(String.class);
+        if (unitModel == null) unitModel = currentSnapshot.child("unitModel").getValue(String.class);
+        if (unitModel == null) unitModel = "";
+        
+        String unitNumber = currentSnapshot.child("unitNumber").getValue(String.class);
+        if (unitNumber == null) unitNumber = currentSnapshot.child("itemUnitNumber").getValue(String.class);
+        if (unitNumber == null) unitNumber = "0000";
+
+        String friendlyProductName = "STANDING WATER PURIFIER";
+        String baseUnitTemplate = "ST-FXCU1-M-HCA-WT-**-***";
+
+        if (unitModel.toUpperCase().contains("CUBE")) {
+            friendlyProductName = "WL CUBE FIREWALL";
+            baseUnitTemplate = "F-FXCU1-M-HCA-TT-K1-**-***";
+        } else if (unitModel.toUpperCase().contains("SLIM")) {
+            friendlyProductName = "SMART SLIM";
+            baseUnitTemplate = "S-FXCU1-M-HCA-AA-B2-**-***";
+        } else if (unitModel.toUpperCase().contains("COUNTER")) {
+            friendlyProductName = "COUNTER TOP WATER PURIFIER";
+            baseUnitTemplate = "CT-FXCU1-M-HCA-WT-**-***";
+        } else if (unitModel.toUpperCase().contains("STANDING") || unitModel.toUpperCase().contains("ST")) {
+            friendlyProductName = "STANDING WATER PURIFIER";
+            baseUnitTemplate = "ST-FXCU1-M-HCA-WT-**-***";
+        }
+
+        String finalUnitCode = baseUnitTemplate.replace("**-***", unitNumber);
+
+        ((TextView)pdfView.findViewById(R.id.pdfUnit)).setText(friendlyProductName);
+        ((TextView)pdfView.findViewById(R.id.pdfUnitCode)).setText(finalUnitCode);
+        
+        String pt = currentSnapshot.child("purchaseType").getValue(String.class);
+        ((TextView)pdfView.findViewById(R.id.pdfLocation)).setText(pt != null ? pt : "SUBSCRIPTION");
         String loc = currentSnapshot.child("installationLocation").getValue(String.class);
         ((TextView)pdfView.findViewById(R.id.pdfLocation)).setText(loc != null ? loc : "Kitchen Area");
 
@@ -158,16 +215,66 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         ((TextView)pdfView.findViewById(R.id.pdfTotalAmount)).setText(tvReceiptTotalAmount.getText());
 
         TextView pdfPaymentStatus = pdfView.findViewById(R.id.pdfPaymentStatus);
+        View layoutPdfReference = pdfView.findViewById(R.id.layoutPdfReference);
+        TextView pdfReferenceNo = pdfView.findViewById(R.id.pdfReferenceNo);
+        View layoutPdfVerifiedOn = pdfView.findViewById(R.id.layoutPdfVerifiedOn);
+        TextView lblPdfVerifiedOn = pdfView.findViewById(R.id.lblPdfVerifiedOn);
+        TextView pdfVerifiedPaidOn = pdfView.findViewById(R.id.pdfVerifiedPaidOn);
+        View layoutPdfCollectedBy = pdfView.findViewById(R.id.layoutPdfCollectedBy);
+        TextView pdfCollectedBy = pdfView.findViewById(R.id.pdfCollectedBy);
+
+        String refNo = currentSnapshot.child("paymentReference").getValue(String.class);
+        String verifiedDate = currentSnapshot.child("paymentVerifiedAt").getValue(String.class);
+        String paidDate = currentSnapshot.child("paidAt").getValue(String.class);
+        String collectedBy = currentSnapshot.child("paymentCollectedBy").getValue(String.class);
+        String statusStr = currentSnapshot.child("paymentStatus").getValue(String.class);
+        boolean isPaid = "PAID".equalsIgnoreCase(statusStr);
+
         if (pm.equalsIgnoreCase("GCash") || pm.equalsIgnoreCase("Maya") || pm.equalsIgnoreCase("Bank Transfer")) {
-            pdfPaymentStatus.setText("FOR VERIFICATION");
-            pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
-            pdfPaymentStatus.setTextColor(Color.parseColor("#2563EB")); // Blue
-            TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+            if (isPaid) {
+                pdfPaymentStatus.setText("PAID");
+                pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+                pdfPaymentStatus.setTextColor(Color.parseColor("#166534"));
+                TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#166534")));
+                
+                if (verifiedDate != null) {
+                    layoutPdfVerifiedOn.setVisibility(View.VISIBLE);
+                    lblPdfVerifiedOn.setText("Verified On");
+                    pdfVerifiedPaidOn.setText(verifiedDate);
+                }
+            } else {
+                pdfPaymentStatus.setText("FOR VERIFICATION");
+                pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
+                pdfPaymentStatus.setTextColor(Color.parseColor("#2563EB"));
+                TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+            }
+            
+            if (refNo != null && !refNo.isEmpty()) {
+                layoutPdfReference.setVisibility(View.VISIBLE);
+                pdfReferenceNo.setText(refNo);
+            }
         } else if (pm.equalsIgnoreCase("COD")) {
-            pdfPaymentStatus.setText("UNPAID / COD");
-            pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
-            pdfPaymentStatus.setTextColor(Color.parseColor("#EA580C")); // Orange
-            TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#EA580C")));
+            if (isPaid) {
+                pdfPaymentStatus.setText("PAID");
+                pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+                pdfPaymentStatus.setTextColor(Color.parseColor("#166534"));
+                TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#166534")));
+                
+                if (paidDate != null) {
+                    layoutPdfVerifiedOn.setVisibility(View.VISIBLE);
+                    lblPdfVerifiedOn.setText("Paid On");
+                    pdfVerifiedPaidOn.setText(paidDate);
+                }
+                if (collectedBy != null) {
+                    layoutPdfCollectedBy.setVisibility(View.VISIBLE);
+                    pdfCollectedBy.setText(collectedBy);
+                }
+            } else {
+                pdfPaymentStatus.setText("PAYMENT DUE");
+                pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
+                pdfPaymentStatus.setTextColor(Color.parseColor("#D97706"));
+                TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#D97706")));
+            }
         }
 
         ((TextView)pdfView.findViewById(R.id.pdfTechName)).setText(tvReceiptTechName.getText());

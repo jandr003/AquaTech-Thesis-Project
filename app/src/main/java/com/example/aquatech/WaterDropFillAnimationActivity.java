@@ -27,6 +27,7 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -212,7 +213,7 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         fileRef.putFile(uri)
             .addOnSuccessListener(ts -> fileRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
                 if (fieldName.equals("validIdUrl")) firebaseImageUrl = downloadUri.toString();
-                else if (fieldName.equals("receiptUrl")) receiptUriStr = downloadUri.toString(); // Reuse var to store URL
+                else if (fieldName.equals("receiptUrl")) receiptUriStr = downloadUri.toString();
                 callback.onComplete();
             }).addOnFailureListener(e -> callback.onComplete()))
             .addOnFailureListener(e -> callback.onComplete());
@@ -261,6 +262,21 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
 
         dbRef.child(ticketId).setValue(data).addOnCompleteListener(task -> {
             AdminDashboardActivity.addAdminLog("New Service Request Form submitted by " + customerName);
+
+            if (adminWillSchedule) {
+                String waitMsg = "Your service schedule is <b>Pending Confirmation</b>. ";
+                Calendar now = Calendar.getInstance();
+                int day = now.get(Calendar.DAY_OF_WEEK);
+                int hour = now.get(Calendar.HOUR_OF_DAY);
+
+                if ((day == Calendar.SATURDAY && hour >= 17) || day == Calendar.SUNDAY) {
+                    waitMsg += "Our office is currently closed. We will confirm your schedule this coming Monday.";
+                } else {
+                    waitMsg += "Please wait for the confirmation of your scheduled service time on the next business day.";
+                }
+                NotificationActivity.addNotification(mAuth.getUid(), waitMsg, "SYSTEM", ticketId);
+            }
+            
             isFirebaseDone = true;
             checkReadyToNavigate();
         });

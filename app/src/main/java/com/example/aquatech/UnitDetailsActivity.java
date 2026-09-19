@@ -80,8 +80,9 @@ public class UnitDetailsActivity extends AppCompatActivity {
         String finalSerial = serialTemplate.replace("**-***", unitNo);
         String formattedSro = sroNo.toUpperCase();
 
-        if (formattedSro.contains("ASC")) formattedSro = formattedSro.replace("ASC", "SRO");
-        if (!formattedSro.startsWith("SRO-")) formattedSro = "SRO-" + formattedSro;
+        if (!formattedSro.startsWith("SRO-") && !formattedSro.startsWith("SR0-") && !formattedSro.startsWith("ASC-")) {
+            formattedSro = "SRO-" + formattedSro;
+        }
 
         Map<String, Object> unitData = new HashMap<>();
         unitData.put("unitName", name);
