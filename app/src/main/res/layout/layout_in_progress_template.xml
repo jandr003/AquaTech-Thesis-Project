@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:alpha="0.8"
+            android:scaleType="fitXY"
+            android:src="@drawable/header_wave_overlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="32dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ipLogoImg"
+                    android:layout_width="190dp"
+                    android:layout_height="52dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/asc_logo_all_about_water" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="end"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Service in Progress"
+                        android:textColor="#2196F3"
+                        android:textSize="14sp"
+                        android:textStyle="italic|bold" />
+                    <View
+                        android:layout_width="45dp"
+                        android:layout_height="2.5dp"
+                        android:layout_marginTop="4dp"
+                        android:background="#2196F3" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SERVICE IN PROGRESS"
+                        android:textColor="#1C4E75"
+                        android:textStyle="bold"
+                        android:textSize="26sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Live Tracking Receipt"
+                        android:textColor="#64748B"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pdf_card_light"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="10dp">
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_pdf_document"
+                        app:tint="#2196F3" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reference No."
+                            android:textColor="#64748B"
+                            android:textSize="10sp" />
+                        <TextView
+                            android:id="@+id/ipTicketId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SRO-0000000"
+                            android:textColor="#1E293B"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CONFIRMED SCHEDULE"
+                        android:textColor="#64748B"
+                        android:textSize="9sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/ipScheduleSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Oct 26, 2026 • 09:00 AM"
+                        android:textColor="#1E293B"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="28dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:background="#E2E8F0" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="end">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Live Status"
+                        android:textColor="#64748B"
+                        android:textSize="10sp" />
+                    <TextView
+                        android:id="@+id/ipStatusBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/bg_pdf_status_blue_pill"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="IN PROGRESS"
+                        android:textColor="#2563EB"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        app:drawableStartCompat="@drawable/ic_pdf_dot"
+                        android:drawablePadding="6dp"
+                        app:drawableTint="#2563EB" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_pdf_card_light"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_person" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="ASSIGNED TECHNICIAN"
+                            android:textColor="#1C4E75"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+                        <TextView android:id="@+id/lblT1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Name" android:textColor="#64748B" android:textSize="13sp" />
+                        <TextView android:id="@+id/ipTechName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/lblT1" android:text="John Andrew" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+
+                        <TextView android:id="@+id/lblT2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/lblT1" android:layout_marginTop="10dp" android:text="Designation" android:textColor="#64748B" android:textSize="13sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/lblT1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblT2" android:text="AquaTech Specialist" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_pdf_card_light"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_wrench" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="SERVICE DETAILS"
+                            android:textColor="#1C4E75"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+                        <TextView android:id="@+id/lblS1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Product" android:textColor="#64748B" android:textSize="13sp" />
+                        <TextView android:id="@+id/ipUnitName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/lblS1" android:text="WL CUBE FIREWALL" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+
+                        <TextView android:id="@+id/lblS2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/lblS1" android:layout_marginTop="10dp" android:text="Unit Code" android:textColor="#64748B" android:textSize="13sp" />
+                        <TextView android:id="@+id/ipUnitCode" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/lblS1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblS2" android:text="F-FXCU1-M-HCA-TT-K1-0000" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/bg_pdf_card_light"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_card" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="PAYMENT"
+                            android:textColor="#1C4E75"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+                        <TextView android:id="@+id/lblP1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Total Amount" android:textColor="#64748B" android:textSize="13sp" />
+                        <TextView android:id="@+id/ipTotalAmount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/lblP1" android:text="₱ 2,500.00" android:textColor="#2196F3" android:textSize="15sp" android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="cursive"
+                android:text="Assisting you shortly!"
+                android:textColor="#2196F3"
+                android:textSize="28sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Our technician is on the way to your location.\nPlease keep your lines open for coordination."
+                android:textColor="#94A3B8"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
