@@ -1,8 +1,11 @@
 # AquaTech Mobile Application
 
 > [!NOTE]
-> **Product Modernization Notice:**
-> We are currently executing a high-fidelity redesign of the **Service Request Ecosystem** and the **Technician Operations Dashboard** to ensure a best-in-class, user-centric experience. Upcoming architectural updates will introduce **Integrated Customer Payment Gateways** and **Advanced Administrative Inventory Controls** (Dynamic "Add Item" protocols), further solidifying AquaTech as a leading enterprise water purification management platform.
+> **Post-Thesis Independent Development**
+>
+> After completing my thesis, I continued working on AquaTech independently to further improve the application. My current work focuses on refining the Service Request, Service Receipt, and Service Request Success modules, as well as updating the PDF layouts for a cleaner and more consistent output.
+>
+> I am also improving the Technician Dashboard and its workflow, including Pending Requests, In Progress, Submission, and Completion. I am currently refining the Chat Messaging, Voice Calling, and AI Chatbot features as well, with a focus on making the application more consistent and practical across Android phones and tablets.
 
 AquaTech is the flagship enterprise mobile solution of **Aqua Smartguard Corp**, strategically engineered in **Makati City**, Philippines. The platform serves as a centralized hub for managing advanced water purification services, logistics scheduling, and field technician operations with professional-grade efficiency.
 
