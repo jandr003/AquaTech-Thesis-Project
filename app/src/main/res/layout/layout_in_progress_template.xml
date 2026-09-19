@@ -30,6 +30,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/ipLogoImg"
                     android:layout_width="190dp"
@@ -43,6 +44,7 @@
                     android:layout_alignParentEnd="true"
                     android:gravity="end"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -50,11 +52,13 @@
                         android:textColor="#2196F3"
                         android:textSize="14sp"
                         android:textStyle="italic|bold" />
+
                     <View
                         android:layout_width="45dp"
                         android:layout_height="2.5dp"
                         android:layout_marginTop="4dp"
                         android:background="#2196F3" />
+
                 </LinearLayout>
             </RelativeLayout>
 
@@ -70,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -77,12 +82,14 @@
                         android:textColor="#1C4E75"
                         android:textStyle="bold"
                         android:textSize="26sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Live Tracking Receipt"
                         android:textColor="#64748B"
                         android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -92,22 +99,26 @@
                     android:gravity="center_vertical"
                     android:paddingHorizontal="14dp"
                     android:paddingVertical="10dp">
+
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/ic_pdf_document"
                         app:tint="#2196F3" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Reference No."
                             android:textColor="#64748B"
                             android:textSize="10sp" />
+
                         <TextView
                             android:id="@+id/ipTicketId"
                             android:layout_width="wrap_content"
@@ -116,6 +127,7 @@
                             android:textColor="#1E293B"
                             android:textSize="14sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -132,6 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -139,6 +152,7 @@
                         android:textColor="#64748B"
                         android:textSize="9sp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/ipScheduleSummary"
                         android:layout_width="wrap_content"
@@ -147,6 +161,7 @@
                         android:textColor="#1E293B"
                         android:textSize="12sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
 
                 <View
@@ -160,12 +175,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="end">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Live Status"
                         android:textColor="#64748B"
                         android:textSize="10sp" />
+
                     <TextView
                         android:id="@+id/ipStatusBadge"
                         android:layout_width="wrap_content"
@@ -182,6 +199,7 @@
                         app:drawableStartCompat="@drawable/ic_pdf_dot"
                         android:drawablePadding="6dp"
                         app:drawableTint="#2563EB" />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -198,16 +216,19 @@
                     android:background="@drawable/bg_pdf_card_light"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:background="@drawable/circle_blue"
                             android:padding="6dp"
                             android:src="@drawable/ic_pdf_person" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -216,16 +237,53 @@
                             android:textColor="#1C4E75"
                             android:textSize="13sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
-                        <TextView android:id="@+id/lblT1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Name" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/ipTechName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/lblT1" android:text="John Andrew" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
 
-                        <TextView android:id="@+id/lblT2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/lblT1" android:layout_marginTop="10dp" android:text="Designation" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/lblT1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblT2" android:text="AquaTech Specialist" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/lblT1"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/ipTechName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/lblT1"
+                            android:text="John Andrew"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblT2"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblT1"
+                            android:layout_marginTop="10dp"
+                            android:text="Designation"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblT1"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblT2"
+                            android:text="AquaTech Specialist"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -236,16 +294,19 @@
                     android:background="@drawable/bg_pdf_card_light"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:background="@drawable/circle_blue"
                             android:padding="6dp"
                             android:src="@drawable/ic_pdf_wrench" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -254,16 +315,54 @@
                             android:textColor="#1C4E75"
                             android:textSize="13sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
-                        <TextView android:id="@+id/lblS1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Product" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/ipUnitName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/lblS1" android:text="WL CUBE FIREWALL" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
 
-                        <TextView android:id="@+id/lblS2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/lblS1" android:layout_marginTop="10dp" android:text="Unit Code" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/ipUnitCode" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/lblS1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblS2" android:text="F-FXCU1-M-HCA-TT-K1-0000" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/lblS1"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:text="Product"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/ipUnitName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/lblS1"
+                            android:text="WL CUBE FIREWALL"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblS2"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblS1"
+                            android:layout_marginTop="10dp"
+                            android:text="Unit Code"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/ipUnitCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblS1"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblS2"
+                            android:text="F-FXCU1-M-HCA-TT-K1-0000"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -274,16 +373,19 @@
                     android:background="@drawable/bg_pdf_card_light"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:background="@drawable/circle_blue"
                             android:padding="6dp"
                             android:src="@drawable/ic_pdf_card" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -292,13 +394,32 @@
                             android:textColor="#1C4E75"
                             android:textSize="13sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
-                        <TextView android:id="@+id/lblP1" android:layout_width="140dp" android:layout_height="wrap_content" android:text="Total Amount" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/ipTotalAmount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/lblP1" android:text="₱ 2,500.00" android:textColor="#2196F3" android:textSize="15sp" android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblP1"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:text="Total Amount"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/ipTotalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/lblP1"
+                            android:text="₱ 2,500.00"
+                            android:textColor="#2196F3"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
