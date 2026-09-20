@@ -138,7 +138,7 @@
                             android:id="@+id/pdfTicketId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SRO-0000000"
+                            android:text="SR-2026-0001"
                             android:textColor="#1E293B"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -150,26 +150,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:gravity="center_vertical"
+                android:layout_marginTop="28dp"
+                android:gravity="top"
                 android:orientation="horizontal">
 
+                <!-- 1. DATE SUBMITTED SECTION -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="top">
 
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
+                        android:layout_marginTop="2dp"
                         android:src="@drawable/ic_pdf_calendar" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -178,7 +180,8 @@
                             android:text="DATE SUBMITTED"
                             android:textColor="#64748B"
                             android:textSize="9sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/pdfSubmittedDate"
@@ -186,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:text="October 24, 2026"
                             android:textColor="#1E293B"
-                            android:textSize="12sp"
+                            android:textSize="13sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -197,31 +200,40 @@
                             android:textColor="#64748B"
                             android:textSize="11sp" />
 
+                        <!-- Placeholder for alignment parity -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" "
+                            android:textSize="11sp" />
+
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="32dp"
+                    android:layout_height="56dp"
                     android:layout_marginHorizontal="12dp"
                     android:background="#E2E8F0" />
 
+                <!-- 2. PREFERRED SCHEDULE SECTION -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="top">
 
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
+                        android:layout_marginTop="2dp"
                         android:src="@drawable/ic_pdf_calendar" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="10dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -230,13 +242,14 @@
                             android:text="PREFERRED SCHEDULE"
                             android:textColor="#64748B"
                             android:textSize="9sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:maxLines="1" />
 
                         <TextView
                             android:id="@+id/pdfScheduleSummary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sep 19, 2026 • Morning"
+                            android:text="Sep 19, 2026 • 9:15 AM (MORNING)"
                             android:textColor="#1E293B"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -246,7 +259,7 @@
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="28dp"
+                    android:layout_height="64dp"
                     android:layout_marginHorizontal="12dp"
                     android:background="#E2E8F0" />
 
@@ -402,7 +415,7 @@
                             android:layout_height="28dp"
                             android:background="@drawable/circle_blue"
                             android:padding="6dp"
-                            android:src="@drawable/ic_pdf_house" />
+                            android:src="@drawable/ic_pdf_droplet" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -551,6 +564,7 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/pdfDescription"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/s1"
@@ -917,8 +931,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="24dp"
                 android:orientation="vertical"
                 android:gravity="center">
 
@@ -929,80 +943,84 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_phone"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="6dp"
                         android:text="Sales: +63 998 557 9144"
                         android:textColor="#64748B"
-                        android:textSize="9sp" />
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                     <View
-                        android:layout_width="1dp"
-                        android:layout_height="10dp"
+                        android:layout_width="1.5dp"
+                        android:layout_height="14dp"
                         android:background="#CBD5E1"
-                        android:layout_marginHorizontal="12dp" />
+                        android:layout_marginHorizontal="16dp" />
 
                     <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_phone"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="6dp"
                         android:text="Technical: +63 998 961 9695"
                         android:textColor="#64748B"
-                        android:textSize="9sp" />
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_pdf_gmail"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="6dp"
                         android:text="ask@smartguard.ph"
                         android:textColor="#64748B"
-                        android:textSize="9sp" />
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                     <View
-                        android:layout_width="1dp"
-                        android:layout_height="10dp"
+                        android:layout_width="1.5dp"
+                        android:layout_height="14dp"
                         android:background="#CBD5E1"
-                        android:layout_marginHorizontal="12dp" />
+                        android:layout_marginHorizontal="16dp" />
 
                     <ImageView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_pinpoint"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="6dp"
                         android:text="GF, Makati City, 1209 Metro Manila"
                         android:textColor="#64748B"
-                        android:textSize="9sp" />
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

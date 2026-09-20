@@ -129,30 +129,33 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         ((TextView)pdfView.findViewById(R.id.pdfSubmittedTime)).setText(timeStr);
         String startTimeVal = currentSnapshot.child("startTime").getValue(String.class);
         String schedDate = currentSnapshot.child("date").getValue(String.class);
-        String schedSession = "";
-
+        
         if (startTimeVal != null && !startTimeVal.equalsIgnoreCase("To be confirmed")) {
-            String upperSched = startTimeVal.toUpperCase();
-            if (upperSched.contains("AM")) schedSession = "MORNING";
-            else if (upperSched.contains("PM")) schedSession = "AFTERNOON";
+            String timeOnly = startTimeVal.toUpperCase();
+            String sessionTag = timeOnly.contains("AM") ? "MORNING" : "AFTERNOON";
             
-            ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(schedDate + " • " + upperSched + " (" + schedSession + ")");
+            String finalSchedText = (schedDate != null ? schedDate : "TBC") + " • " + timeOnly + " (" + sessionTag + ")";
+            ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(finalSchedText);
         } else {
-            ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(schedDate + " • TBC (PENDING CONFIRMATION)");
+            String waitText = (schedDate != null ? schedDate : "Pending") + " • TBC (PENDING CONFIRMATION)";
+            ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(waitText);
         }
         
         TextView pdfStatusBadge = pdfView.findViewById(R.id.pdfStatusBadge);
-        String status = tvReceiptStatus.getText().toString().toUpperCase();
-        pdfStatusBadge.setText(status);
-        if (status.contains("COMPLETED")) {
-            pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-            pdfStatusBadge.setTextColor(Color.parseColor("#166534"));
-            TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
-        } else if (status.contains("PENDING")) {
+        String currentStatus = tvReceiptStatus.getText().toString().toUpperCase();
+
+        if (currentStatus.equalsIgnoreCase("OPEN")) {
+            pdfStatusBadge.setText("PENDING");
             pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
             pdfStatusBadge.setTextColor(Color.parseColor("#D97706"));
             TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#D97706")));
+        } else if (currentStatus.contains("COMPLETED")) {
+            pdfStatusBadge.setText("COMPLETED");
+            pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+            pdfStatusBadge.setTextColor(Color.parseColor("#166534"));
+            TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
         } else {
+            pdfStatusBadge.setText(currentStatus);
             pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
             pdfStatusBadge.setTextColor(Color.parseColor("#2563EB"));
             TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#2563EB")));
@@ -160,7 +163,7 @@ public class ServiceReceiptActivity extends AppCompatActivity {
 
         String sroAtTop = currentSnapshot.child("referenceNo").getValue(String.class);
         if (sroAtTop == null) sroAtTop = currentSnapshot.child("sroNumber").getValue(String.class);
-        ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText(sroAtTop != null ? sroAtTop : "SRO-0000000");
+        ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText(sroAtTop != null ? sroAtTop : "SRO-00000000");
 
         ((TextView)pdfView.findViewById(R.id.pdfCustomerName)).setText(tvReceiptCustomerName.getText());
         String phone = currentSnapshot.child("customerPhone").getValue(String.class);
@@ -203,12 +206,40 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         String loc = currentSnapshot.child("installationLocation").getValue(String.class);
         ((TextView)pdfView.findViewById(R.id.pdfLocation)).setText(loc != null ? loc : "Kitchen Area");
 
-        ((TextView)pdfView.findViewById(R.id.pdfServiceType)).setText(tvReceiptServiceType.getText());
-        String concern = currentSnapshot.child("concern").getValue(String.class);
-        ((TextView)pdfView.findViewById(R.id.pdfConcern)).setText(concern != null ? concern : "Filter replacement recommended.");
-        String remarks = currentSnapshot.child("technicianRemarks").getValue(String.class);
-        if (remarks == null) remarks = currentSnapshot.child("remarks").getValue(String.class);
-        ((TextView)pdfView.findViewById(R.id.pdfRemarks)).setText(remarks != null ? remarks : "Customer reported issues.");
+        String rawInput = currentSnapshot.child("remarks").getValue(String.class);
+        if (rawInput == null) rawInput = "";
+        String p = rawInput.toLowerCase();
+
+        String serviceCategory = "General Service";
+        String serviceDesc = "Technical system inspection and evaluation.";
+        String concernSummary = "General System Check";
+
+        if (matchKeywords(p, "leak", "tulo", "baha", "basâ", "dripping", "leakage", "broken", "damage")) {
+            serviceCategory = "Technical Repair";
+            serviceDesc = "Onsite technical repair and parts verification.";
+            concernSummary = "System Leakage & Repair";
+        } else if (matchKeywords(p, "power", "board", "bukas", "patay", "electricity", "fuse", "dead", "error", "faulty")) {
+            serviceCategory = "Technical Repair";
+            serviceDesc = "Electrical system troubleshooting and repair.";
+            concernSummary = "Electrical & Power Issue";
+        } else if (matchKeywords(p, "mahina", "slow", "barado", "low pressure", "clogged", "no water")) {
+            serviceCategory = "Technical Repair";
+            serviceDesc = "Flow optimization and system restoration.";
+            concernSummary = "Flow Optimization & Restoration";
+        } else if (matchKeywords(p, "amoy", "mabaho", "malabo", "lasa", "filter", "odor", "smell", "stink", "dirty", "taste", "maintenance", "cleaning", "check")) {
+            serviceCategory = "System Maintenance";
+            serviceDesc = "Scheduled preventive maintenance and health check.";
+            concernSummary = "Water Quality & Filter Care";
+        } else if (matchKeywords(p, "install", "lipat", "kabit", "setup", "move", "relocate")) {
+            serviceCategory = "Unit Installation";
+            serviceDesc = "Professional unit setup and system calibration.";
+            concernSummary = "Professional Unit Setup";
+        }
+
+        ((TextView)pdfView.findViewById(R.id.pdfServiceType)).setText(serviceCategory);
+        ((TextView)pdfView.findViewById(R.id.pdfDescription)).setText(serviceDesc);
+        ((TextView)pdfView.findViewById(R.id.pdfConcern)).setText(concernSummary);
+        ((TextView)pdfView.findViewById(R.id.pdfRemarks)).setText(rawInput.isEmpty() ? "Standard maintenance request." : rawInput);
 
         String pm = tvReceiptPaymentMethod.getText().toString();
         ((TextView)pdfView.findViewById(R.id.pdfPaymentMethod)).setText(pm);
@@ -417,7 +448,6 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                         if (techName == null || techName.isEmpty()) techName = snapshot.child("technicianName").getValue(String.class);
                         tvReceiptTechName.setText(techName != null ? techName : "Aqua Technician");
                         
-                        // 🛠️ FIX: Correctly load signature resource from string name
                         String sigName = snapshot.child("technicianSignature").getValue(String.class);
                         if (sigName != null && !sigName.isEmpty()) {
                             int resId = getResources().getIdentifier(sigName, "drawable", getPackageName());
@@ -475,6 +505,13 @@ public class ServiceReceiptActivity extends AppCompatActivity {
             ((TextView)row.findViewById(R.id.tvItemPrice)).setText("₱ " + String.format("%,d", q * price) + ".00");
             containerReceiptItems.addView(row);
         }
+    }
+
+    private boolean matchKeywords(String input, String... keywords) {
+        for (String k : keywords) {
+            if (input.contains(k)) return true;
+        }
+        return false;
     }
 
     @Override

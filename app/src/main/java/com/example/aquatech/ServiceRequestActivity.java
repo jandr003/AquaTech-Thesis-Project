@@ -858,9 +858,10 @@ public class ServiceRequestActivity extends AppCompatActivity {
     private void setupNavigation() {
         findViewById(R.id.buttonNext).setOnClickListener(v -> {
             String problem = remarksInput.getText().toString().trim();
-            if (problem.isEmpty()) {
-                remarksInput.setError("Please describe the problem");
-                Toast.makeText(this, "Problem description is required.", Toast.LENGTH_SHORT).show();
+            if (problem.isEmpty() || problem.length() < 5) {
+                remarksInput.setError("Detailing your concern is required for a better service assessment.");
+                Toast.makeText(this, "Please provide a brief description of the issue to proceed.", Toast.LENGTH_SHORT).show();
+                remarksInput.requestFocus();
                 return;
             }
 

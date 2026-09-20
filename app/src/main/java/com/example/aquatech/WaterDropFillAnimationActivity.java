@@ -270,11 +270,15 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
                 int hour = now.get(Calendar.HOUR_OF_DAY);
 
                 if ((day == Calendar.SATURDAY && hour >= 17) || day == Calendar.SUNDAY) {
-                    waitMsg += "Our office is currently closed. We will confirm your schedule this coming Monday.";
+                    waitMsg += "Our office is currently closed. We will confirm your schedule and send your receipt this coming Monday.";
                 } else {
-                    waitMsg += "Please wait for the confirmation of your scheduled service time on the next business day.";
+                    waitMsg += "We will confirm your schedule and send your receipt on the next business day.";
                 }
                 NotificationActivity.addNotification(mAuth.getUid(), waitMsg, "SYSTEM", ticketId);
+            } else {
+                NotificationActivity.addNotification(mAuth.getUid(),
+                    "Your service request has been received. Your <b>Pending Receipt</b> has been generated and sent to your messages.", 
+                    "SYSTEM", ticketId);
             }
             
             isFirebaseDone = true;
