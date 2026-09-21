@@ -102,14 +102,26 @@ public class ServiceInProgressActivity extends AppCompatActivity {
 
         String unitModel = snapshot.child("unitName").getValue(String.class);
         if (unitModel == null) unitModel = snapshot.child("unitModel").getValue(String.class);
-        ((TextView)findViewById(R.id.ipUnitName)).setText(unitModel != null ? unitModel : "---");
         
         String unitNo = snapshot.child("unitNumber").getValue(String.class);
         if (unitNo == null) unitNo = snapshot.child("itemUnitNumber").getValue(String.class);
-        ((TextView)findViewById(R.id.ipUnitCode)).setText(unitNo != null ? unitNo : "---");
+        if (unitNo == null) unitNo = "0000";
+
+        String product = "STANDING WATER PURIFIER";
+        String template = "ST-FXCU1-M-HCA-WT-**-***";
         
-        String loc = snapshot.child("installationLocation").getValue(String.class);
-        ((TextView)findViewById(R.id.ipLocation)).setText(loc != null ? loc : "---");
+        if (unitModel != null) {
+            String upper = unitModel.toUpperCase();
+            if (upper.contains("CUBE")) { product = "WL CUBE FIREWALL"; template = "F-FXCU1-M-HCA-TT-K1-**-***"; }
+            else if (upper.contains("SLIM")) { product = "SMART SLIM"; template = "S-FXCU1-M-HCA-AA-B2-**-***"; }
+            else if (upper.contains("COUNTER")) { product = "COUNTER TOP WATER PURIFIER"; template = "CT-FXCU1-M-HCA-WT-**-***"; }
+        }
+
+        ((TextView)findViewById(R.id.ipUnitName)).setText(product);
+        ((TextView)findViewById(R.id.ipUnitCode)).setText(template.replace("**-***", unitNo));
+        
+        String pType = snapshot.child("purchaseType").getValue(String.class);
+        ((TextView)findViewById(R.id.ipLocation)).setText(pType != null ? pType.toUpperCase() : "SUBSCRIPTION");
 
         String type = snapshot.child("serviceType").getValue(String.class);
         ((TextView)findViewById(R.id.ipServiceType)).setText(type != null ? type : "General Service");
@@ -133,10 +145,38 @@ public class ServiceInProgressActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.ipItemName)).setText(items.length() > 0 ? items.toString().trim() : "Standard Parts");
         ((TextView)findViewById(R.id.ipItemQty)).setText(String.valueOf(totalQty));
 
-        ((TextView)findViewById(R.id.ipPaymentMethod)).setText(snapshot.child("paymentMethod").getValue(String.class));
+        String pm = snapshot.child("paymentMethod").getValue(String.class);
+        ((TextView)findViewById(R.id.ipPaymentMethod)).setText(pm);
         Object totalAmount = snapshot.child("totalAmount").getValue();
         if (totalAmount instanceof Number) {
             ((TextView)findViewById(R.id.ipTotalAmount)).setText(String.format(Locale.getDefault(), "₱ %,.2f", ((Number)totalAmount).doubleValue()));
+        }
+
+        // Show Payment Reference & Verification for non-COD methods
+        View layoutIpReference = findViewById(R.id.layoutIpReference);
+        View layoutIpVerified = findViewById(R.id.layoutIpVerified);
+        
+        if (pm != null && !pm.equalsIgnoreCase("COD")) {
+            String pRef = snapshot.child("paymentReference").getValue(String.class);
+            String vDate = snapshot.child("paymentVerifiedAt").getValue(String.class);
+            String pStatus = snapshot.child("paymentStatus").getValue(String.class);
+
+            if (pRef != null && !pRef.isEmpty()) {
+                layoutIpReference.setVisibility(View.VISIBLE);
+                ((TextView)findViewById(R.id.ipPaymentRef)).setText(pRef);
+            } else {
+                layoutIpReference.setVisibility(View.GONE);
+            }
+
+            if ("PAID".equalsIgnoreCase(pStatus) && vDate != null) {
+                layoutIpVerified.setVisibility(View.VISIBLE);
+                ((TextView)findViewById(R.id.ipVerifiedPaidOn)).setText(vDate);
+            } else {
+                layoutIpVerified.setVisibility(View.GONE);
+            }
+        } else {
+            layoutIpReference.setVisibility(View.GONE);
+            layoutIpVerified.setVisibility(View.GONE);
         }
 
         String techName = snapshot.child("assignedTechName").getValue(String.class);

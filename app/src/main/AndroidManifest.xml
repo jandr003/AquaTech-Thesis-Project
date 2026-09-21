@@ -349,6 +349,13 @@
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
+            android:name=".ServiceCompletedReceiptActivity"
+            android:theme="@style/Theme.AquaTech"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
             android:name=".ServiceStatusActivity"
             android:exported="false"
             android:screenOrientation="portrait"

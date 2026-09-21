@@ -138,7 +138,7 @@
                             android:id="@+id/pdfTicketId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SR-2026-0001"
+                            android:text="SRO-00000001"
                             android:textColor="#1E293B"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -154,7 +154,6 @@
                 android:gravity="top"
                 android:orientation="horizontal">
 
-                <!-- 1. DATE SUBMITTED SECTION -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -200,7 +199,6 @@
                             android:textColor="#64748B"
                             android:textSize="11sp" />
 
-                        <!-- Placeholder for alignment parity -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -216,7 +214,6 @@
                     android:layout_marginHorizontal="12dp"
                     android:background="#E2E8F0" />
 
-                <!-- 2. PREFERRED SCHEDULE SECTION -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -267,6 +264,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -290,6 +288,7 @@
                         app:drawableStartCompat="@drawable/ic_pdf_dot"
                         android:drawablePadding="6dp"
                         app:drawableTint="#D97706" />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -311,12 +310,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical">
+
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:background="@drawable/circle_blue"
-                            android:padding="6dp"
+                            android:padding="8dp"
                             android:src="@drawable/ic_pdf_person" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -411,10 +412,10 @@
                         android:gravity="center_vertical">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:background="@drawable/circle_blue"
-                            android:padding="6dp"
+                            android:padding="8dp"
                             android:src="@drawable/ic_pdf_droplet" />
 
                         <TextView
@@ -513,8 +514,8 @@
                         android:gravity="center_vertical">
 
                         <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:background="@drawable/circle_blue"
                             android:padding="6dp"
                             android:src="@drawable/ic_pdf_wrench" />
@@ -537,7 +538,7 @@
 
                         <TextView
                             android:id="@+id/s1"
-                            android:layout_width="140dp"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:text="Service Type"
                             android:textColor="#64748B"
@@ -545,7 +546,7 @@
 
                         <TextView
                             android:id="@+id/pdfServiceType"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/s1"
                             android:text="Maintenance"
@@ -555,9 +556,9 @@
 
                         <TextView
                             android:id="@+id/s2"
-                            android:layout_width="140dp"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/s1"
+                            android:layout_below="@id/pdfServiceType"
                             android:layout_marginTop="10dp"
                             android:text="Description"
                             android:textColor="#64748B"
@@ -565,9 +566,9 @@
 
                         <TextView
                             android:id="@+id/pdfDescription"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/s1"
+                            android:layout_below="@id/pdfServiceType"
                             android:layout_marginTop="10dp"
                             android:layout_toEndOf="@id/s2"
                             android:text="Water Quality Check &amp; Maintenance"
@@ -577,9 +578,9 @@
 
                         <TextView
                             android:id="@+id/s3"
-                            android:layout_width="140dp"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/s2"
+                            android:layout_below="@id/pdfDescription"
                             android:layout_marginTop="10dp"
                             android:text="Concern"
                             android:textColor="#64748B"
@@ -587,9 +588,9 @@
 
                         <TextView
                             android:id="@+id/pdfConcern"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/s2"
+                            android:layout_below="@id/pdfDescription"
                             android:layout_marginTop="10dp"
                             android:layout_toEndOf="@id/s3"
                             android:text="Filter replacement recommended."
@@ -599,9 +600,9 @@
 
                         <TextView
                             android:id="@+id/s4"
-                            android:layout_width="140dp"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/s3"
+                            android:layout_below="@id/pdfConcern"
                             android:layout_marginTop="10dp"
                             android:text="Remarks"
                             android:textColor="#64748B"
@@ -611,7 +612,7 @@
                             android:id="@+id/pdfRemarks"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/s3"
+                            android:layout_below="@id/pdfConcern"
                             android:layout_marginTop="10dp"
                             android:layout_toEndOf="@id/s4"
                             android:text="Customer reported reduced water flow."
@@ -648,8 +649,8 @@
                             android:gravity="center_vertical">
 
                             <ImageView
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:background="@drawable/circle_blue"
                                 android:padding="6dp"
                                 android:src="@drawable/ic_pdf_card" />
@@ -658,7 +659,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
-                                android:text="PAYMENT"
+                                android:text="PAYMENT STATUS"
                                 android:textColor="#1C4E75"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
@@ -672,15 +673,6 @@
                             android:gravity="center_vertical">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Payment Status"
-                                android:textColor="#64748B"
-                                android:textSize="10sp"
-                                android:layout_marginEnd="8dp" />
-
-
-                            <TextView
                                 android:id="@+id/pdfPaymentStatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -689,7 +681,7 @@
                                 android:paddingVertical="4dp"
                                 android:text="FOR VERIFICATION"
                                 android:textColor="#2563EB"
-                                android:textSize="11sp"
+                                android:textSize="12sp"
                                 android:textStyle="bold"
                                 android:gravity="center_vertical"
                                 app:drawableStartCompat="@drawable/ic_pdf_dot"
@@ -750,8 +742,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/p2"
                             android:layout_marginTop="8dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="140dp"
@@ -765,61 +756,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1234567890"
-                                android:textColor="#1E293B"
-                                android:textSize="13sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layoutPdfVerifiedOn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/layoutPdfReference"
-                            android:layout_marginTop="8dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:id="@+id/lblPdfVerifiedOn"
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:text="Verified On"
-                                android:textColor="#64748B"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:id="@+id/pdfVerifiedPaidOn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Sep 18, 2026 • 5:02 PM"
-                                android:textColor="#1E293B"
-                                android:textSize="13sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/layoutPdfCollectedBy"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/layoutPdfVerifiedOn"
-                            android:layout_marginTop="8dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="140dp"
-                                android:layout_height="wrap_content"
-                                android:text="Collected By"
-                                android:textColor="#64748B"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:id="@+id/pdfCollectedBy"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Juan Dela Cruz"
                                 android:textColor="#1E293B"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
@@ -922,7 +858,7 @@
                         android:layout_height="wrap_content"
                         android:text="For choosing AquaTech!\nWe're committed to keeping your water safe and clean."
                         android:textColor="#94A3B8"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
