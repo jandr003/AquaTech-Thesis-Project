@@ -139,7 +139,7 @@
                             android:id="@+id/ipTicketId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SR-2026-0001"
+                            android:text="SRO-00000000"
                             android:textColor="#1E293B"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -184,20 +184,28 @@
                             android:maxLines="1" />
 
                         <TextView
-                            android:id="@+id/ipSubmittedTime"
+                            android:id="@+id/ipSubDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sep 18, 2026 • 4:32 PM"
+                            android:text="Sep 18, 2026"
                             android:textColor="#1E293B"
                             android:textSize="12sp"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/ipSubTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4:32 PM"
+                            android:textColor="#64748B"
+                            android:textSize="11sp" />
 
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="48dp"
+                    android:layout_height="52dp"
                     android:layout_marginHorizontal="12dp"
                     android:background="#E2E8F0" />
 
@@ -223,27 +231,35 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ASSIGNED &amp; ACCEPTED"
+                            android:text="ACCEPTED ON"
                             android:textColor="#64748B"
                             android:textSize="9sp"
                             android:textStyle="bold"
                             android:maxLines="1" />
 
                         <TextView
-                            android:id="@+id/ipAcceptedTime"
+                            android:id="@+id/ipAccDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sep 19, 2026 • 9:15 AM"
+                            android:text="Sep 19, 2026"
                             android:textColor="#1E293B"
                             android:textSize="12sp"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/ipAccTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9:15 AM"
+                            android:textColor="#64748B"
+                            android:textSize="11sp" />
 
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="48dp"
+                    android:layout_height="52dp"
                     android:layout_marginHorizontal="12dp"
                     android:background="#E2E8F0" />
 
@@ -380,7 +396,7 @@
                             android:layout_below="@id/lblC2"
                             android:layout_marginTop="10dp"
                             android:layout_toEndOf="@id/lblC3"
-                            android:text="123 Santos St., Brgy. San Miguel,\nMakati City, Metro Manila"
+                            android:text="123 Santos St., Makati City"
                             android:textColor="#1E293B"
                             android:textSize="13sp"
                             android:textStyle="bold" />
@@ -391,7 +407,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/bg_pdf_card_light"
                     android:orientation="vertical"
                     android:padding="16dp">
@@ -484,7 +500,7 @@
                             android:text="SUBSCRIPTION"
                             android:textColor="#1E293B"
                             android:textSize="13sp"
-                            android:textStyle="bold"  />
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -492,7 +508,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/bg_pdf_card_light"
                     android:orientation="vertical"
                     android:padding="16dp">
@@ -523,7 +539,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp">
+                        android:layout_marginTop="12dp">
 
                         <TextView
                             android:id="@+id/lblS1"
@@ -648,7 +664,7 @@
                             android:layout_below="@id/ipItemQty"
                             android:layout_marginTop="10dp"
                             android:layout_toEndOf="@id/lblS6"
-                            android:text="Customer reported reduced water flow."
+                            android:text="Customer reported reduced flow."
                             android:textColor="#1E293B"
                             android:textSize="13sp"
                             android:textStyle="bold" />
@@ -723,7 +739,7 @@
 
                         <TextView
                             android:id="@+id/lblP1"
-                            android:layout_width="150dp"
+                            android:layout_width="140dp"
                             android:layout_height="wrap_content"
                             android:text="Payment Method"
                             android:textColor="#64748B"
@@ -741,10 +757,10 @@
 
                         <TextView
                             android:id="@+id/lblP2"
-                            android:layout_width="150dp"
+                            android:layout_width="140dp"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/lblP1"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="8dp"
                             android:text="Amount"
                             android:textColor="#64748B"
                             android:textSize="13sp" />
@@ -754,10 +770,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/lblP1"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="8dp"
                             android:layout_toEndOf="@id/lblP2"
                             android:text="₱ 2,500.00"
-                            android:textColor="#2196F3"
+                            android:textColor="#2563EB"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -789,6 +805,7 @@
                     </RelativeLayout>
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -807,7 +824,7 @@
                             android:layout_height="32dp"
                             android:background="@drawable/circle_blue"
                             android:padding="8dp"
-                            android:src="@drawable/ic_pdf_person" />
+                            android:src="@drawable/ic_pdf_assignment" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -820,122 +837,103 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
+                        android:layout_marginTop="16dp">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/lblA1"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.8"
-                            android:orientation="vertical">
+                            android:text="Technician"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Technician"
-                                android:textColor="#64748B"
-                                android:textSize="13sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:text="Contact Number"
-                                android:textColor="#64748B"
-                                android:textSize="13sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/ipAssignedTech"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.2"
-                            android:orientation="vertical">
+                            android:layout_toEndOf="@id/lblA1"
+                            android:text="Rafael Santos"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/ipAssignedTech"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Rafael Santos"
-                                android:textColor="#1C4E75"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/ipTechContact"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:text="0912 345 6789"
-                                android:textColor="#1C4E75"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/lblA2"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.8"
-                            android:orientation="vertical">
+                            android:layout_below="@id/ipAssignedTech"
+                            android:layout_marginTop="10dp"
+                            android:text="Contact Number"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Status"
-                                android:textColor="#64748B"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:text="Assigned On"
-                                android:textColor="#64748B"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/ipTechContact"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.2"
-                            android:orientation="vertical">
+                            android:layout_below="@id/ipAssignedTech"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblA2"
+                            android:text="0912 345 6789"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/ipTechStatus"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_pdf_status_blue_pill"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="4dp"
-                                android:text="ACCEPTED"
-                                android:textColor="#2563EB"
-                                android:textSize="11sp"
-                                android:textStyle="bold"
-                                android:gravity="center_vertical"
-                                app:drawableStartCompat="@drawable/ic_pdf_dot"
-                                android:drawablePadding="6dp"
-                                app:drawableTint="#2563EB" />
+                        <TextView
+                            android:id="@+id/lblA3"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ipTechContact"
+                            android:layout_marginTop="10dp"
+                            android:text="Status"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
 
-                            <TextView
-                                android:id="@+id/ipAssignedOn"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:text="Sep 19, 2026 • 8:45 AM"
-                                android:textColor="#1E293B"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/ipTechStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ipTechContact"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblA3"
+                            android:background="@drawable/bg_pdf_status_blue_pill"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:text="ACCEPTED"
+                            android:textColor="#2563EB"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:gravity="center_vertical"
+                            app:drawableStartCompat="@drawable/ic_pdf_dot"
+                            android:drawablePadding="6dp"
+                            app:drawableTint="#2563EB" />
 
-                        </LinearLayout>
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/lblA4"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ipTechStatus"
+                            android:layout_marginTop="10dp"
+                            android:text="Assigned On"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/ipAssignedOn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ipTechStatus"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblA4"
+                            android:text="Sep 19, 2026 • 8:45 AM"
+                            android:textColor="#1E293B"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -961,7 +959,6 @@
                             android:textStyle="bold" />
 
                     </LinearLayout>
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -976,7 +973,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -1017,88 +1015,87 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_phone"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="6dp"
                         android:text="Sales: +63 998 557 9144"
                         android:textColor="#64748B"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
                     <View
-                        android:layout_width="2dp"
-                        android:layout_height="16dp"
+                        android:layout_width="1.5dp"
+                        android:layout_height="14dp"
                         android:background="#CBD5E1"
-                        android:layout_marginHorizontal="18dp" />
+                        android:layout_marginHorizontal="16dp" />
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_phone"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="6dp"
                         android:text="Technical: +63 998 961 9695"
                         android:textColor="#64748B"
                         android:textSize="11sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_pdf_gmail"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="6dp"
                         android:text="ask@smartguard.ph"
                         android:textColor="#64748B"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
                     <View
-                        android:layout_width="2dp"
-                        android:layout_height="16dp"
+                        android:layout_width="1.5dp"
+                        android:layout_height="14dp"
                         android:background="#CBD5E1"
-                        android:layout_marginHorizontal="18dp" />
+                        android:layout_marginHorizontal="16dp" />
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:src="@drawable/ic_pinpoint"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="6dp"
                         android:text="GF, Makati City, 1209 Metro Manila"
                         android:textColor="#64748B"
                         android:textSize="11sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -248,16 +248,8 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         TextView pdfPaymentStatus = pdfView.findViewById(R.id.pdfPaymentStatus);
         View layoutPdfReference = pdfView.findViewById(R.id.layoutPdfReference);
         TextView pdfReferenceNo = pdfView.findViewById(R.id.pdfReferenceNo);
-        View layoutPdfVerifiedOn = pdfView.findViewById(R.id.layoutPdfVerifiedOn);
-        TextView lblPdfVerifiedOn = pdfView.findViewById(R.id.lblPdfVerifiedOn);
-        TextView pdfVerifiedPaidOn = pdfView.findViewById(R.id.pdfVerifiedPaidOn);
-        View layoutPdfCollectedBy = pdfView.findViewById(R.id.layoutPdfCollectedBy);
-        TextView pdfCollectedBy = pdfView.findViewById(R.id.pdfCollectedBy);
 
         String refNo = currentSnapshot.child("paymentReference").getValue(String.class);
-        String verifiedDate = currentSnapshot.child("paymentVerifiedAt").getValue(String.class);
-        String paidDate = currentSnapshot.child("paidAt").getValue(String.class);
-        String collectedBy = currentSnapshot.child("paymentCollectedBy").getValue(String.class);
         String statusStr = currentSnapshot.child("paymentStatus").getValue(String.class);
         boolean isPaid = "PAID".equalsIgnoreCase(statusStr);
 
@@ -267,12 +259,6 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                 pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
                 pdfPaymentStatus.setTextColor(Color.parseColor("#166534"));
                 TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#166534")));
-                
-                if (verifiedDate != null) {
-                    layoutPdfVerifiedOn.setVisibility(View.VISIBLE);
-                    lblPdfVerifiedOn.setText("Verified On");
-                    pdfVerifiedPaidOn.setText(verifiedDate);
-                }
             } else {
                 pdfPaymentStatus.setText("FOR VERIFICATION");
                 pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
@@ -290,22 +276,13 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                 pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
                 pdfPaymentStatus.setTextColor(Color.parseColor("#166534"));
                 TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#166534")));
-                
-                if (paidDate != null) {
-                    layoutPdfVerifiedOn.setVisibility(View.VISIBLE);
-                    lblPdfVerifiedOn.setText("Paid On");
-                    pdfVerifiedPaidOn.setText(paidDate);
-                }
-                if (collectedBy != null) {
-                    layoutPdfCollectedBy.setVisibility(View.VISIBLE);
-                    pdfCollectedBy.setText(collectedBy);
-                }
             } else {
                 pdfPaymentStatus.setText("PAYMENT DUE");
                 pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
                 pdfPaymentStatus.setTextColor(Color.parseColor("#D97706"));
                 TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#D97706")));
             }
+            layoutPdfReference.setVisibility(View.GONE);
         }
 
         ((TextView)pdfView.findViewById(R.id.pdfTechName)).setText(tvReceiptTechName.getText());

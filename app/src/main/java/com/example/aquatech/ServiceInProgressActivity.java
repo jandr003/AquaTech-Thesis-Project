@@ -4,10 +4,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +26,6 @@ import java.util.Locale;
 public class ServiceInProgressActivity extends AppCompatActivity {
 
     private String ticketId;
-    private DatabaseReference requestRef;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     @Override
@@ -57,7 +54,7 @@ public class ServiceInProgressActivity extends AppCompatActivity {
     }
 
     private void initializeDataSync() {
-        requestRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId);
+        DatabaseReference requestRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId);
         requestRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -76,17 +73,24 @@ public class ServiceInProgressActivity extends AppCompatActivity {
 
         Long subTs = snapshot.child("timestamp").getValue(Long.class);
         if (subTs != null) {
-            String dateStr = new SimpleDateFormat("MMM dd, yyyy • h:mm a", Locale.getDefault()).format(new Date(subTs));
-            ((TextView)findViewById(R.id.ipSubmittedTime)).setText(dateStr);
+            Date subDate = new Date(subTs);
+            String d = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(subDate);
+            String t = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(subDate);
+            ((TextView)findViewById(R.id.ipSubDate)).setText(d);
+            ((TextView)findViewById(R.id.ipSubTime)).setText(t);
         }
 
         Long accTs = snapshot.child("assignedTimestamp").getValue(Long.class);
         if (accTs != null) {
-            String accStr = new SimpleDateFormat("MMM dd, yyyy • h:mm a", Locale.getDefault()).format(new Date(accTs));
-            ((TextView)findViewById(R.id.ipAcceptedTime)).setText(accStr);
-            ((TextView)findViewById(R.id.ipAssignedOn)).setText(accStr);
+            Date accDate = new Date(accTs);
+            String d = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(accDate);
+            String t = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(accDate);
+            ((TextView)findViewById(R.id.ipAccDate)).setText(d);
+            ((TextView)findViewById(R.id.ipAccTime)).setText(t);
+            ((TextView)findViewById(R.id.ipAssignedOn)).setText(d + " • " + t);
         } else {
-            ((TextView)findViewById(R.id.ipAcceptedTime)).setText("Awaiting Tech...");
+            ((TextView)findViewById(R.id.ipAccDate)).setText("Awaiting Tech...");
+            ((TextView)findViewById(R.id.ipAccTime)).setText("");
             ((TextView)findViewById(R.id.ipAssignedOn)).setText("Pending");
         }
 
@@ -103,9 +107,9 @@ public class ServiceInProgressActivity extends AppCompatActivity {
         String unitModel = snapshot.child("unitName").getValue(String.class);
         if (unitModel == null) unitModel = snapshot.child("unitModel").getValue(String.class);
         
-        String unitNo = snapshot.child("unitNumber").getValue(String.class);
-        if (unitNo == null) unitNo = snapshot.child("itemUnitNumber").getValue(String.class);
-        if (unitNo == null) unitNo = "0000";
+        String unitNumber = snapshot.child("unitNumber").getValue(String.class);
+        if (unitNumber == null) unitNumber = snapshot.child("itemUnitNumber").getValue(String.class);
+        if (unitNumber == null) unitNumber = "0000";
 
         String product = "STANDING WATER PURIFIER";
         String template = "ST-FXCU1-M-HCA-WT-**-***";
@@ -118,7 +122,7 @@ public class ServiceInProgressActivity extends AppCompatActivity {
         }
 
         ((TextView)findViewById(R.id.ipUnitName)).setText(product);
-        ((TextView)findViewById(R.id.ipUnitCode)).setText(template.replace("**-***", unitNo));
+        ((TextView)findViewById(R.id.ipUnitCode)).setText(template.replace("**-***", unitNumber));
         
         String pType = snapshot.child("purchaseType").getValue(String.class);
         ((TextView)findViewById(R.id.ipLocation)).setText(pType != null ? pType.toUpperCase() : "SUBSCRIPTION");
@@ -126,70 +130,81 @@ public class ServiceInProgressActivity extends AppCompatActivity {
         String type = snapshot.child("serviceType").getValue(String.class);
         ((TextView)findViewById(R.id.ipServiceType)).setText(type != null ? type : "General Service");
         
-        String remarks = snapshot.child("remarks").getValue(String.class);
-        ((TextView)findViewById(R.id.ipRemarks)).setText(remarks != null ? remarks : "N/A");
-        ((TextView)findViewById(R.id.ipConcern)).setText(remarks != null ? remarks : "System Maintenance");
+        String rawRemarks = snapshot.child("remarks").getValue(String.class);
+        String p = (rawRemarks != null ? rawRemarks.toLowerCase() : "");
 
-        StringBuilder items = new StringBuilder();
+        String smartDesc = "Technical system inspection and evaluation.";
+        if (p.contains("leak") || p.contains("tulo")) smartDesc = "Onsite technical repair and parts verification.";
+        else if (p.contains("maintenance") || p.contains("filter")) smartDesc = "Scheduled preventive maintenance and health check.";
+        ((TextView)findViewById(R.id.ipDescription)).setText(smartDesc);
+
+        ((TextView)findViewById(R.id.ipConcern)).setText(rawRemarks != null ? rawRemarks : "N/A");
+        ((TextView)findViewById(R.id.ipRemarks)).setText(rawRemarks != null ? rawRemarks : "N/A");
+
+        StringBuilder itemsList = new StringBuilder();
         int totalQty = 0;
         for (DataSnapshot child : snapshot.getChildren()) {
-            if (child.getKey().startsWith("qty_")) {
+            String key = child.getKey();
+            if (key != null && key.startsWith("qty_")) {
                 int q = 0;
-                try { q = child.getValue(Integer.class); } catch (Exception e) {}
+                try { q = child.getValue(Integer.class); } catch (Exception ignored) {}
                 if (q > 0) {
-                    items.append(getItemName(child.getKey())).append(" x ").append(q).append("\n");
+                    itemsList.append(getItemName(key)).append(" x ").append(q).append("\n");
                     totalQty += q;
                 }
             }
         }
-        ((TextView)findViewById(R.id.ipItemName)).setText(items.length() > 0 ? items.toString().trim() : "Standard Parts");
+        ((TextView)findViewById(R.id.ipItemName)).setText(itemsList.length() > 0 ? itemsList.toString().trim() : "Standard Parts");
         ((TextView)findViewById(R.id.ipItemQty)).setText(String.valueOf(totalQty));
 
         String pm = snapshot.child("paymentMethod").getValue(String.class);
-        ((TextView)findViewById(R.id.ipPaymentMethod)).setText(pm);
-        Object totalAmount = snapshot.child("totalAmount").getValue();
-        if (totalAmount instanceof Number) {
-            ((TextView)findViewById(R.id.ipTotalAmount)).setText(String.format(Locale.getDefault(), "₱ %,.2f", ((Number)totalAmount).doubleValue()));
-        }
-
-        // Show Payment Reference & Verification for non-COD methods
-        View layoutIpReference = findViewById(R.id.layoutIpReference);
-        View layoutIpVerified = findViewById(R.id.layoutIpVerified);
+        String pStatus = snapshot.child("paymentStatus").getValue(String.class);
+        boolean isPaid = "PAID".equalsIgnoreCase(pStatus);
         
+        TextView payBadge = findViewById(R.id.ipPaymentStatus);
+        ((TextView)findViewById(R.id.ipPaymentMethod)).setText(pm != null ? pm : "COD");
+
+        if (isPaid) {
+            payBadge.setText("PAID");
+            payBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+            payBadge.setTextColor(Color.parseColor("#166534")); 
+            TextViewCompat.setCompoundDrawableTintList(payBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
+        } else if (pm != null && pm.equalsIgnoreCase("COD")) {
+            payBadge.setText("PAYMENT DUE");
+            payBadge.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
+            payBadge.setTextColor(Color.parseColor("#D97706"));
+            TextViewCompat.setCompoundDrawableTintList(payBadge, ColorStateList.valueOf(Color.parseColor("#D97706")));
+        } else {
+            payBadge.setText("FOR VERIFICATION");
+            payBadge.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
+            payBadge.setTextColor(Color.parseColor("#2563EB")); 
+            TextViewCompat.setCompoundDrawableTintList(payBadge, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+        }
+        
+        View layoutIpRef = findViewById(R.id.layoutIpReference);
         if (pm != null && !pm.equalsIgnoreCase("COD")) {
             String pRef = snapshot.child("paymentReference").getValue(String.class);
-            String vDate = snapshot.child("paymentVerifiedAt").getValue(String.class);
-            String pStatus = snapshot.child("paymentStatus").getValue(String.class);
-
             if (pRef != null && !pRef.isEmpty()) {
-                layoutIpReference.setVisibility(View.VISIBLE);
+                layoutIpRef.setVisibility(View.VISIBLE);
                 ((TextView)findViewById(R.id.ipPaymentRef)).setText(pRef);
             } else {
-                layoutIpReference.setVisibility(View.GONE);
-            }
-
-            if ("PAID".equalsIgnoreCase(pStatus) && vDate != null) {
-                layoutIpVerified.setVisibility(View.VISIBLE);
-                ((TextView)findViewById(R.id.ipVerifiedPaidOn)).setText(vDate);
-            } else {
-                layoutIpVerified.setVisibility(View.GONE);
+                layoutIpRef.setVisibility(View.GONE);
             }
         } else {
-            layoutIpReference.setVisibility(View.GONE);
-            layoutIpVerified.setVisibility(View.GONE);
+            layoutIpRef.setVisibility(View.GONE);
         }
 
         String techName = snapshot.child("assignedTechName").getValue(String.class);
         ((TextView)findViewById(R.id.ipAssignedTech)).setText(techName != null ? techName : "Assigning...");
         
-        String techContact = snapshot.child("techContact").getValue(String.class);
-        ((TextView)findViewById(R.id.ipTechContact)).setText(techContact != null ? techContact : "---");
+        String techPhone = snapshot.child("techContact").getValue(String.class);
+        ((TextView)findViewById(R.id.ipTechContact)).setText(techPhone != null ? techPhone : "---");
 
-        String date = snapshot.child("date").getValue(String.class);
-        String startTime = snapshot.child("startTime").getValue(String.class);
-        if (date != null && startTime != null) {
-            ((TextView)findViewById(R.id.ipScheduleSummary)).setText(date + " • " + startTime);
-        }
+        TextView techStatusBadge = findViewById(R.id.ipTechStatus);
+        techStatusBadge.setText("ACCEPTED");
+        techStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
+        techStatusBadge.setTextColor(Color.parseColor("#2563EB"));
+        TextViewCompat.setCompoundDrawableTintList(techStatusBadge, ColorStateList.valueOf(Color.parseColor("#2563EB")));
     }
 
     private String getItemName(String key) {
