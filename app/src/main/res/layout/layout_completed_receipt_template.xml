@@ -86,7 +86,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="SERVICE REQUEST"
+                        android:text="SERVICE RECEIPT"
                         android:textColor="#1C4E75"
                         android:textStyle="bold"
                         android:textSize="28sp"
@@ -97,12 +97,17 @@
                         android:maxLines="1"
                         android:gravity="start|center_vertical" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Service Request Summary"
+                        android:text="Service Completion Summary"
                         android:textColor="#64748B"
-                        android:textSize="15sp" />
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        app:autoSizeTextType="uniform"
+                        app:autoSizeMinTextSize="10sp"
+                        app:autoSizeMaxTextSize="15sp"
+                        app:autoSizeStepGranularity="1sp" />
 
                 </LinearLayout>
 
@@ -138,7 +143,7 @@
                             android:id="@+id/compTicketId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="SR-2026-0001"
+                            android:text="SRO-00000000"
                             android:textColor="#1E293B"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -319,8 +324,9 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/circle_blue"
-                            android:padding="8dp"
-                            android:src="@drawable/ic_pdf_person" />
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_person"
+                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -420,8 +426,9 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/circle_blue"
-                            android:padding="8dp"
-                            android:src="@drawable/ic_pdf_droplet" />
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_droplet"
+                            app:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -452,15 +459,55 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/lblU1"
-                            android:text="Aquatal"
+                            android:text="WL CUBE FIREWALL"
                             android:textColor="#1E293B"
                             android:textSize="13sp"
                             android:textStyle="bold" />
 
-                        <TextView android:id="@+id/lblU2" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/lblU1" android:layout_marginTop="10dp" android:text="Unit Code" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/compUnitCode" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/lblU1" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblU2" android:text="AT-001245" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
-                        <TextView android:id="@+id/lblU3" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_below="@id/lblU2" android:layout_marginTop="10dp" android:text="Installation Location" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/compLocation" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/lblU2" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblU3" android:text="Building A - 3rd Floor" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/lblU2"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblU1"
+                            android:layout_marginTop="10dp"
+                            android:text="Unit Code"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/compUnitCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblU1"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblU2"
+                            android:text="F-FXCU1-M-HCA-TT-0001"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblU3"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblU2"
+                            android:layout_marginTop="10dp"
+                            android:text="Type of Purchase"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/compLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblU2"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblU3"
+                            android:text="SUBSCRIPTION"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -471,23 +518,164 @@
                     android:background="@drawable/bg_pdf_card_light"
                     android:orientation="vertical"
                     android:padding="16dp">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
-                        <ImageView android:layout_width="30dp" android:layout_height="30dp" android:background="@drawable/circle_blue" android:padding="6dp" android:src="@drawable/ic_pdf_wrench" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:text="SERVICE DETAILS" android:textColor="#1C4E75" android:textSize="13sp" android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_wrench"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="SERVICE DETAILS"
+                            android:textColor="#1C4E75"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </LinearLayout>
-                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
-                        <TextView android:id="@+id/lblS1" android:layout_width="120dp" android:layout_height="wrap_content" android:text="Service Type" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/compServiceType" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_toEndOf="@id/lblS1" android:text="Maintenance" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
-                        <TextView android:id="@+id/lblS2" android:layout_width="120dp" android:layout_height="wrap_content" android:layout_below="@id/compServiceType" android:layout_marginTop="10dp" android:text="Description" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/compDescription" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/compServiceType" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblS2" android:text="Water Quality Check &amp; Maintenance" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
-                        <TextView android:id="@+id/lblS3" android:layout_width="120dp" android:layout_height="wrap_content" android:layout_below="@id/compDescription" android:layout_marginTop="10dp" android:text="Concern" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/compConcern" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/compDescription" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblS3" android:text="Filter replacement recommended." android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
-                        <TextView android:id="@+id/lblS4" android:layout_width="120dp" android:layout_height="wrap_content" android:layout_below="@id/compConcern" android:layout_marginTop="10dp" android:text="Requested Item" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/compItemName" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/compConcern" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblS4" android:text="Inline Filter x 1" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
-                        <TextView android:id="@+id/lblS5" android:layout_width="120dp" android:layout_height="wrap_content" android:layout_below="@id/compItemName" android:layout_marginTop="10dp" android:text="Quantity" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/compItemQty" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/compItemName" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblS5" android:text="1" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
-                        <TextView android:id="@+id/lblS6" android:layout_width="120dp" android:layout_height="wrap_content" android:layout_below="@id/compItemQty" android:layout_marginTop="10dp" android:text="Remarks" android:textColor="#64748B" android:textSize="13sp" />
-                        <TextView android:id="@+id/compRemarks" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/compItemQty" android:layout_marginTop="10dp" android:layout_toEndOf="@id/lblS6" android:text="Customer reported reduced water flow." android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            android:id="@+id/lblS1"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="Service Type"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/compServiceType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/lblS1"
+                            android:text="Maintenance"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblS2"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compServiceType"
+                            android:layout_marginTop="10dp"
+                            android:text="Description"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/compDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compServiceType"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblS2"
+                            android:text="Water Quality Check &amp; Maintenance"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblS3"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compDescription"
+                            android:layout_marginTop="10dp"
+                            android:text="Concern"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/compConcern"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compDescription"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblS3"
+                            android:text="Filter replacement recommended."
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblS4"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compConcern"
+                            android:layout_marginTop="10dp"
+                            android:text="Requested Item"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/compItemName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compConcern"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblS4"
+                            android:text="Inline Filter x 1"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblS5"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compItemName"
+                            android:layout_marginTop="10dp"
+                            android:text="Quantity"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/compItemQty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compItemName"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblS5"
+                            android:text="1"
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/lblS6"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compItemQty"
+                            android:layout_marginTop="10dp"
+                            android:text="Remarks"
+                            android:textColor="#64748B"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/compRemarks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/compItemQty"
+                            android:layout_marginTop="10dp"
+                            android:layout_toEndOf="@id/lblS6"
+                            android:text="Customer reported reduced water flow."
+                            android:textColor="#1E293B"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -498,9 +686,29 @@
                     android:background="@drawable/bg_pdf_card_light"
                     android:orientation="vertical"
                     android:padding="16dp">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
-                        <ImageView android:layout_width="30dp" android:layout_height="30dp" android:background="@drawable/circle_blue" android:padding="6dp" android:src="@drawable/ic_pdf_card" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:text="PAYMENT" android:textColor="#1C4E75" android:textSize="13sp" android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_card"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="PAYMENT"
+                            android:textColor="#1C4E75"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -510,32 +718,139 @@
                         android:orientation="horizontal"
                         android:baselineAligned="false">
 
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                                <TextView android:layout_width="110dp" android:layout_height="wrap_content" android:text="Payment Method" android:textColor="#64748B" android:textSize="13sp" />
-                                <TextView android:id="@+id/compPaymentMethod" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GCash" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Payment Method"
+                                    android:textColor="#64748B"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:id="@+id/compPaymentMethod"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="GCash"
+                                    android:textColor="#1E293B"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
+
                             </LinearLayout>
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
-                                <TextView android:layout_width="110dp" android:layout_height="wrap_content" android:text="Amount" android:textColor="#64748B" android:textSize="13sp" />
-                                <TextView android:id="@+id/compTotalAmount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₱ 2,500.00" android:textColor="#166534" android:textSize="14sp" android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Amount"
+                                    android:textColor="#64748B"
+                                    android:textSize="13sp" />
+
+                                <TextView
+                                    android:id="@+id/compTotalAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="₱ 2,500.00"
+                                    android:textColor="#166534"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
                             </LinearLayout>
                         </LinearLayout>
 
-                        <View android:layout_width="1dp" android:layout_height="70dp" android:layout_marginHorizontal="12dp" android:background="#E2E8F0" />
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="70dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:background="#E2E8F0" />
 
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.4" android:orientation="vertical">
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
-                                <TextView android:layout_width="95dp" android:layout_height="wrap_content" android:text="Payment Status" android:textColor="#64748B" android:textSize="12sp" />
-                                <TextView android:id="@+id/compPaymentBadge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_pdf_status_green_pill" android:paddingHorizontal="10dp" android:paddingVertical="4dp" android:text="PAID" android:textColor="#166534" android:textSize="11sp" android:textStyle="bold" android:gravity="center_vertical" app:drawableStartCompat="@drawable/ic_pdf_dot" android:drawablePadding="6dp" app:drawableTint="#166534" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="95dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Payment Status"
+                                    android:textColor="#64748B"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/compPaymentBadge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_pdf_status_green_pill"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="4dp"
+                                    android:text="PAID"
+                                    android:textColor="#166534"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center_vertical"
+                                    app:drawableStartCompat="@drawable/ic_pdf_dot"
+                                    android:drawablePadding="6dp"
+                                    app:drawableTint="#166534" />
+
                             </LinearLayout>
 
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
-                                <TextView android:layout_width="95dp" android:layout_height="wrap_content" android:text="Reference No." android:textColor="#64748B" android:textSize="12sp" />
-                                <TextView android:id="@+id/compPaymentRef" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GCash-7836-4521" android:textColor="#1E293B" android:textSize="12sp" android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="95dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reference No."
+                                    android:textColor="#64748B"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/compPaymentRef"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="GCash-7836-4521"
+                                    android:textColor="#1E293B"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
                             </LinearLayout>
 
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
-                                <TextView android:layout_width="95dp" android:layout_height="wrap_content" android:text="Verified On" android:textColor="#64748B" android:textSize="12sp" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="95dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Verified On"
+                                    android:textColor="#64748B"
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/compVerifiedOn"
@@ -559,8 +874,19 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
-                        <ImageView android:layout_width="30dp" android:layout_height="30dp" android:background="@drawable/circle_blue" android:padding="8dp" android:src="@drawable/ic_pdf_person" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_assignment"
+                            app:tint="#FFFFFF" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -579,31 +905,138 @@
                         android:orientation="horizontal"
                         android:baselineAligned="false">
 
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                                <TextView android:layout_width="110dp" android:layout_height="wrap_content" android:text="Technician" android:textColor="#64748B" android:textSize="13sp" />
-                                <TextView android:id="@+id/compAssignedTech" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rafael Santos" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
-                            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.2"
+                            android:orientation="vertical">
 
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
-                                <TextView android:layout_width="110dp" android:layout_height="wrap_content" android:text="Contact Number" android:textColor="#64748B" android:textSize="13sp" />
-                                <TextView android:id="@+id/compTechContact" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0912 345 6789" android:textColor="#1E293B" android:textSize="13sp" android:textStyle="bold" />
+                            <ImageView
+                                android:id="@+id/compTechSign"
+                                android:layout_width="160dp"
+                                android:layout_height="45dp"
+                                android:scaleType="fitStart" />
+
+                            <View
+                                android:layout_width="160dp"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="2dp"
+                                android:background="#93C5FD" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Technician Signature"
+                                android:textColor="#2196F3"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:id="@+id/compAssignedTech"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Rafael Santos"
+                                android:textColor="#1C4E75"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Technician"
+                                android:textColor="#64748B"
+                                android:textSize="11sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="85dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Contact No."
+                                    android:textColor="#64748B"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/compTechContact"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0912 345 6789"
+                                    android:textColor="#1E293B"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
                         </LinearLayout>
 
-                        <View android:layout_width="1dp" android:layout_height="50dp" android:layout_marginHorizontal="12dp" android:background="#E2E8F0" />
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="100dp"
+                            android:layout_marginHorizontal="12dp"
+                            android:background="#E2E8F0" />
 
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.4" android:orientation="vertical">
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
-                                <TextView android:layout_width="95dp" android:layout_height="wrap_content" android:text="Status" android:textColor="#64748B" android:textSize="12sp" />
-                                <TextView android:id="@+id/compTechStatusBadge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_pdf_status_green_pill" android:paddingHorizontal="10dp" android:paddingVertical="4dp" android:text="COMPLETED" android:textColor="#166534" android:textSize="11sp" android:textStyle="bold" android:gravity="center_vertical" app:drawableStartCompat="@drawable/ic_pdf_dot" android:drawablePadding="6dp" app:drawableTint="#166534" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.4"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="95dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Status"
+                                    android:textColor="#64748B"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/compTechStatusBadge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_pdf_status_green_pill"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="4dp"
+                                    android:text="COMPLETED"
+                                    android:textColor="#166534"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center_vertical"
+                                    app:drawableStartCompat="@drawable/ic_pdf_dot"
+                                    android:drawablePadding="6dp"
+                                    app:drawableTint="#166534" />
 
                             </LinearLayout>
 
-                            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:orientation="horizontal">
-                                <TextView android:layout_width="95dp" android:layout_height="wrap_content" android:text="Completed On" android:textColor="#64748B" android:textSize="12sp" />
-                                <TextView android:id="@+id/compCompletedOn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sep 19, 2026 • 3:45 PM" android:textColor="#1E293B" android:textSize="12sp" android:textStyle="bold" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="95dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="Completed On"
+                                    android:textColor="#64748B"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/compCompletedOn"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sep 19, 2026 • 3:45 PM"
+                                    android:textColor="#1E293B"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -618,15 +1051,37 @@
                         android:gravity="center_vertical">
 
                         <ImageView
-                            android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_check_on" app:tint="#2196F3" />
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_check_on"
+                            app:tint="#2196F3" />
 
-                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:orientation="vertical">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Service has been completed successfully." android:textColor="#2196F3" android:textSize="11sp" android:textStyle="bold" />
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Thank you for choosing AquaTech! We're committed to keeping your water safe and clean." android:textColor="#2196F3" android:textSize="10sp" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Service has been completed successfully."
+                                android:textColor="#2196F3"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Thank you for choosing AquaTech! We're committed to keeping your water safe and clean."
+                                android:textColor="#2196F3"
+                                android:textSize="10sp" />
 
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -636,54 +1091,262 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
-                        <ImageView android:layout_width="26dp" android:layout_height="26dp" android:background="@drawable/circle_blue" android:padding="6dp" android:src="@drawable/ic_pdf_clock" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10dp" android:text="SERVICE PROGRESS" android:textColor="#1C4E75" android:textSize="13sp" android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_clock"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="SERVICE PROGRESS"
+                            android:textColor="#1C4E75"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
-                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:paddingHorizontal="4dp">
-                        <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_centerVertical="true" android:background="#CBD5E1" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:paddingHorizontal="4dp">
 
-                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:weightSum="6">
-                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                                <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_check_on" app:tint="#2196F3" android:background="@drawable/circle_white" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Request Created" android:textColor="#64748B" android:textSize="8sp" android:gravity="center" />
-                                <TextView android:id="@+id/progTs1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sep 18, 4:32 PM" android:textColor="#94A3B8" android:textSize="7sp" android:gravity="center" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="10dp"
+                            android:background="#10B981" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="6">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_check_on"
+                                    app:tint="#2196F3"
+                                    android:background="@drawable/circle_white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Request Created"
+                                    android:textColor="#2196F3"
+                                    android:textSize="8sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
+
+                                <TextView
+                                    android:id="@+id/progTs1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sep 18, 4:32 PM"
+                                    android:textColor="#2196F3"
+                                    android:textSize="7sp"
+                                    android:gravity="center" />
 
                             </LinearLayout>
 
-                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                                <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_check_on" app:tint="#2196F3" android:background="@drawable/circle_white" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Assigned" android:textColor="#64748B" android:textSize="8sp" android:gravity="center" />
-                                <TextView android:id="@+id/progTs2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sep 19, 9:15 AM" android:textColor="#94A3B8" android:textSize="7sp" android:gravity="center" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_check_on"
+                                    app:tint="#2196F3"
+                                    android:background="@drawable/circle_white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Assigned"
+                                    android:textColor="#2196F3"
+                                    android:textSize="8sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
+
+                                <TextView
+                                    android:id="@+id/progTs2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sep 19, 9:15 AM"
+                                    android:textColor="#2196F3"
+                                    android:textSize="7sp"
+                                    android:gravity="center" />
+
                             </LinearLayout>
 
-                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                                <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_check_on" app:tint="#2196F3" android:background="@drawable/circle_white" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Accepted" android:textColor="#64748B" android:textSize="8sp" android:gravity="center" />
-                                <TextView android:id="@+id/progTs3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sep 19, 9:20 AM" android:textColor="#94A3B8" android:textSize="7sp" android:gravity="center" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_check_on"
+                                    app:tint="#2196F3"
+                                    android:background="@drawable/circle_white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Accepted"
+                                    android:textColor="#2196F3"
+                                    android:textSize="8sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
+
+                                <TextView
+                                    android:id="@+id/progTs3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sep 19, 9:20 AM"
+                                    android:textColor="#2196F3"
+                                    android:textSize="7sp"
+                                    android:gravity="center" />
 
                             </LinearLayout>
 
-                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                                <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_check_on" app:tint="#2196F3" android:background="@drawable/circle_white" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="In Progress" android:textColor="#64748B" android:textSize="8sp" android:gravity="center" />
-                                <TextView android:id="@+id/progTs4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sep 19, 10:05 AM" android:textColor="#94A3B8" android:textSize="7sp" android:gravity="center" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_check_on"
+                                    app:tint="#2196F3"
+                                    android:background="@drawable/circle_white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="In Progress"
+                                    android:textColor="#2196F3"
+                                    android:textSize="8sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
+
+                                <TextView
+                                    android:id="@+id/progTs4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sep 19, 10:05 AM"
+                                    android:textColor="#2196F3"
+                                    android:textSize="7sp"
+                                    android:gravity="center" />
 
                             </LinearLayout>
 
-                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                                <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_check_on" app:tint="#2196F3" android:background="@drawable/circle_white" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Submission" android:textColor="#64748B" android:textSize="8sp" android:gravity="center" />
-                                <TextView android:id="@+id/progTs5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sep 19, 2:30 PM" android:textColor="#94A3B8" android:textSize="7sp" android:gravity="center" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_check_on"
+                                    app:tint="#2196F3"
+                                    android:background="@drawable/circle_white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Submission"
+                                    android:textColor="#2196F3"
+                                    android:textSize="8sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
+
+                                <TextView
+                                    android:id="@+id/progTs5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sep 19, 2:30 PM"
+                                    android:textColor="#2196F3"
+                                    android:textSize="7sp"
+                                    android:gravity="center" />
 
                             </LinearLayout>
 
-                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_check_on" app:tint="#FFFFFF" android:background="@drawable/status_completed_green" android:padding="2dp" />
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Completed" android:textColor="#166534" android:textSize="8sp" android:textStyle="bold" android:gravity="center" />
-                                <TextView android:id="@+id/progTs6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sep 19, 3:45 PM" android:textColor="#166534" android:textSize="7sp" android:gravity="center" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="22dp"
+                                    android:layout_height="22dp"
+                                    android:background="@drawable/green_circle_border"
+                                    android:padding="2dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/ic_check_on"
+                                        app:tint="#10B981" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="Completed"
+                                    android:textColor="#10B981"
+                                    android:textSize="8sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
+
+                                <TextView
+                                    android:id="@+id/progTs6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sep 19, 3:45 PM"
+                                    android:textColor="#10B981"
+                                    android:textSize="7sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
 
                             </LinearLayout>
                         </LinearLayout>
@@ -692,45 +1355,139 @@
 
             </LinearLayout>
 
-            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="32dp">
-                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="cursive" android:text="Thank you!" android:textColor="#2196F3" android:textSize="42sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="For choosing AquaTech!" android:textColor="#1C4E75" android:textSize="18sp" android:textStyle="bold" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="We're committed to keeping your water safe and clean." android:textColor="#94A3B8" android:textSize="12sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="cursive"
+                        android:text="Service Complete!"
+                        android:textColor="#2196F3"
+                        android:textSize="38sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Official Completion Receipt"
+                        android:textColor="#1C4E75"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="This official receipt confirms that all requested services have been successfully completed."
+                        android:textColor="#94A3B8"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:gravity="center_vertical" android:layout_centerVertical="true">
-                    <ImageView android:layout_width="50dp" android:layout_height="50dp" android:src="@drawable/ic_pdf_droplet" app:tint="#2196F3" />
-                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CLEAN WATER" android:textColor="#1C4E75" android:textSize="14sp" android:textStyle="bold" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SAFE LIVING" android:textColor="#1C4E75" android:textSize="14sp" android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
+
 
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginBottom="24dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center">
 
-                <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_phone" app:tint="#2196F3" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:text="(02) 8868 1234" android:textColor="#64748B" android:textSize="11sp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-                <View android:layout_width="1dp" android:layout_height="12dp" android:background="#CBD5E1" android:layout_marginHorizontal="20dp" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_phone"
+                        app:tint="#2196F3" />
 
-                <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_pdf_gmail" app:tint="#2196F3" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:text="support@aquatech.ph" android:textColor="#64748B" android:textSize="11sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="Sales: +63 998 557 9144"
+                        android:textColor="#64748B"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
-                <View android:layout_width="1dp" android:layout_height="12dp" android:background="#CBD5E1" android:layout_marginHorizontal="20dp" />
+                    <View
+                        android:layout_width="1.5dp"
+                        android:layout_height="14dp"
+                        android:background="#CBD5E1"
+                        android:layout_marginHorizontal="16dp" />
 
-                <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@drawable/ic_pinpoint" app:tint="#2196F3" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="6dp" android:text="Makati City, Philippines" android:textColor="#64748B" android:textSize="11sp" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_phone"
+                        app:tint="#2196F3" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="Technical: +63 998 961 9695"
+                        android:textColor="#64748B"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_pdf_gmail"
+                        app:tint="#2196F3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="ask@smartguard.ph"
+                        android:textColor="#64748B"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="1.5dp"
+                        android:layout_height="14dp"
+                        android:background="#CBD5E1"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_pinpoint"
+                        app:tint="#2196F3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="GF, Makati City, 1209 Metro Manila"
+                        android:textColor="#64748B"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

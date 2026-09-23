@@ -74,7 +74,8 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
     private void updateUI(DataSnapshot snapshot) {
         String sro = snapshot.child("referenceNo").getValue(String.class);
         if (sro == null) sro = snapshot.child("sroNumber").getValue(String.class);
-        ((TextView)findViewById(R.id.compTicketId)).setText(sro != null ? sro : ticketId);
+        TextView tvTicketId = findViewById(R.id.compTicketId);
+        if (tvTicketId != null) tvTicketId.setText(sro != null ? sro : ticketId);
 
         Long completionTs = snapshot.child("completionTimestamp").getValue(Long.class);
         if (completionTs == null) completionTs = snapshot.child("submissionTimestamp").getValue(Long.class);
@@ -82,73 +83,116 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
         if (completionTs != null) {
             String dateStr = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date(completionTs));
             String timeStr = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date(completionTs));
-            ((TextView)findViewById(R.id.compServiceDate)).setText(dateStr);
-            ((TextView)findViewById(R.id.compServiceTime)).setText(timeStr);
+            TextView tvSubDate = findViewById(R.id.compSubDate);
+            if (tvSubDate != null) tvSubDate.setText(dateStr);
+            TextView tvSubTime = findViewById(R.id.compSubTime);
+            if (tvSubTime != null) tvSubTime.setText(timeStr);
         }
 
         TextView statusBadge = findViewById(R.id.compStatusBadge);
-        statusBadge.setText("COMPLETED");
-        statusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-        statusBadge.setTextColor(Color.parseColor("#166534"));
-        TextViewCompat.setCompoundDrawableTintList(statusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
-
-        ((TextView)findViewById(R.id.compCustomerName)).setText(snapshot.child("customerName").getValue(String.class));
-        ((TextView)findViewById(R.id.compContact)).setText(snapshot.child("contactNumber").getValue(String.class));
-        ((TextView)findViewById(R.id.compAddress)).setText(snapshot.child("address").getValue(String.class));
-
-        String serviceType = snapshot.child("serviceType").getValue(String.class);
-        ((TextView)findViewById(R.id.compServiceDesc)).setText(serviceType != null ? serviceType : "General Service");
-        
-        String techRemarks = snapshot.child("technicianRemarks").getValue(String.class);
-        ((TextView)findViewById(R.id.compTechRemarks)).setText(techRemarks != null ? techRemarks : "Service completed successfully.");
-
-        LinearLayout ordersContainer = findViewById(R.id.compOrdersContainer);
-        ordersContainer.removeAllViews();
-        addOrderRow(snapshot, ordersContainer, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
-        addOrderRow(snapshot, ordersContainer, "qty_cbc", "Filter 0064-CBC", 2000);
-        addOrderRow(snapshot, ordersContainer, "qty_sediment", "Filter 0055-SEDIMENT", 1000);
-        addOrderRow(snapshot, ordersContainer, "qty_aquatal", "Aquatal Replacement", 2000);
-        addOrderRow(snapshot, ordersContainer, "qty_inline", "Inline Filter", 3000);
-        addOrderRow(snapshot, ordersContainer, "qty_uvlamp", "UV Lamp", 1500);
-        addOrderRow(snapshot, ordersContainer, "qty_touchpanel", "Touch Panel", 750);
-        addOrderRow(snapshot, ordersContainer, "qty_pbcboard", "PBC Board", 3000);
-        addOrderRow(snapshot, ordersContainer, "qty_smsf1", "SMSF 1u CBC", 2000);
-        addOrderRow(snapshot, ordersContainer, "qty_smsf10", "SMSF 10u SED", 1000);
-
-        String pm = snapshot.child("paymentMethod").getValue(String.class);
-        ((TextView)findViewById(R.id.compPaymentMethod)).setText(pm != null ? pm : "COD");
-
-        Object total = snapshot.child("totalAmount").getValue();
-        if (total instanceof Number) {
-            ((TextView)findViewById(R.id.compTotalAmount)).setText(String.format(Locale.getDefault(), "₱ %,.2f", ((Number)total).doubleValue()));
+        if (statusBadge != null) {
+            statusBadge.setText("COMPLETED");
+            statusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+            statusBadge.setTextColor(Color.parseColor("#166534"));
+            TextViewCompat.setCompoundDrawableTintList(statusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
         }
 
-        String collector = snapshot.child("paymentCollectedBy").getValue(String.class);
-        if (collector == null) collector = snapshot.child("assignedTechName").getValue(String.class);
-        ((TextView)findViewById(R.id.compCollectedBy)).setText(collector != null ? collector : "AquaTech Personnel");
+        TextView tvCustName = findViewById(R.id.compCustomerName);
+        if (tvCustName != null) tvCustName.setText(snapshot.child("customerName").getValue(String.class));
+
+        TextView tvContact = findViewById(R.id.compContact);
+        if (tvContact != null) tvContact.setText(snapshot.child("contactNumber").getValue(String.class));
+
+        TextView tvAddress = findViewById(R.id.compAddress);
+        if (tvAddress != null) tvAddress.setText(snapshot.child("address").getValue(String.class));
+
+        String unitModel = snapshot.child("unitName").getValue(String.class);
+        if (unitModel == null) unitModel = snapshot.child("unitModel").getValue(String.class);
+        if (unitModel == null) unitModel = "";
+
+        String unitNumber = snapshot.child("unitNumber").getValue(String.class);
+        if (unitNumber == null) unitNumber = snapshot.child("itemUnitNumber").getValue(String.class);
+        if (unitNumber == null) unitNumber = "0000";
+
+        String friendlyProductName = "STANDING WATER PURIFIER";
+        String baseUnitTemplate = "ST-FXCU1-M-HCA-WT-**-***";
+
+        if (unitModel.toUpperCase().contains("CUBE")) {
+            friendlyProductName = "WL CUBE FIREWALL";
+            baseUnitTemplate = "F-FXCU1-M-HCA-TT-K1-**-***";
+        } else if (unitModel.toUpperCase().contains("SLIM")) {
+            friendlyProductName = "SMART SLIM";
+            baseUnitTemplate = "S-FXCU1-M-HCA-AA-B2-**-***";
+        } else if (unitModel.toUpperCase().contains("COUNTER")) {
+            friendlyProductName = "COUNTER TOP WATER PURIFIER";
+            baseUnitTemplate = "CT-FXCU1-M-HCA-WT-**-***";
+        } else if (unitModel.toUpperCase().contains("STANDING") || unitModel.toUpperCase().contains("ST")) {
+            friendlyProductName = "STANDING WATER PURIFIER";
+            baseUnitTemplate = "ST-FXCU1-M-HCA-WT-**-***";
+        }
+
+        String finalUnitCode = baseUnitTemplate.replace("**-***", unitNumber);
+
+        TextView tvUnitName = findViewById(R.id.compUnitName);
+        if (tvUnitName != null) tvUnitName.setText(friendlyProductName);
+
+        TextView tvUnitCode = findViewById(R.id.compUnitCode);
+        if (tvUnitCode != null) tvUnitCode.setText(finalUnitCode);
+
+        String purchaseType = snapshot.child("purchaseType").getValue(String.class);
+        if (purchaseType == null) purchaseType = snapshot.child("typeOfPurchase").getValue(String.class);
+        if (purchaseType == null) purchaseType = snapshot.child("installationLocation").getValue(String.class);
+
+        if (purchaseType != null) {
+            String upper = purchaseType.toUpperCase();
+            if (upper.contains("OCULAR") || upper.contains("OCUL")) {
+                purchaseType = "OCULAR";
+            } else if (upper.contains("OUTRIGHT") || upper.contains("BUY") || upper.contains("PURCHASE")) {
+                purchaseType = "OUTRIGHT";
+            } else if (upper.contains("SUB") || upper.contains("RENT")) {
+                purchaseType = "SUBSCRIPTION";
+            }
+        }
+
+        TextView tvLocation = findViewById(R.id.compLocation);
+        if (tvLocation != null) tvLocation.setText(purchaseType != null ? purchaseType : "SUBSCRIPTION");
+
+        String serviceType = snapshot.child("serviceType").getValue(String.class);
+        TextView tvServiceType = findViewById(R.id.compServiceType);
+        if (tvServiceType != null) tvServiceType.setText(serviceType != null ? serviceType : "General Service");
+        
+        String techRemarks = snapshot.child("technicianRemarks").getValue(String.class);
+        TextView tvRemarks = findViewById(R.id.compRemarks);
+        if (tvRemarks != null) tvRemarks.setText(techRemarks != null ? techRemarks : "Service completed successfully.");
+
+        String pm = snapshot.child("paymentMethod").getValue(String.class);
+        TextView tvPaymentMethod = findViewById(R.id.compPaymentMethod);
+        if (tvPaymentMethod != null) tvPaymentMethod.setText(pm != null ? pm : "COD");
+
+        Object total = snapshot.child("totalAmount").getValue();
+        TextView tvTotal = findViewById(R.id.compTotalAmount);
+        if (tvTotal != null && total instanceof Number) {
+            tvTotal.setText(String.format(Locale.getDefault(), "₱ %,.2f", ((Number)total).doubleValue()));
+        }
 
         TextView payBadge = findViewById(R.id.compPaymentBadge);
-        payBadge.setText("PAID");
-        payBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-        payBadge.setTextColor(Color.parseColor("#166534"));
-        TextViewCompat.setCompoundDrawableTintList(payBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
+        if (payBadge != null) {
+            payBadge.setText("PAID");
+            payBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+            payBadge.setTextColor(Color.parseColor("#166534"));
+            TextViewCompat.setCompoundDrawableTintList(payBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
+        }
 
         ImageView ivTechSign = findViewById(R.id.compTechSign);
-        ImageView ivCustSign = findViewById(R.id.compCustSign);
 
         String techSig = snapshot.child("technicianSignature").getValue(String.class);
-        if (techSig != null && !techSig.isEmpty()) {
+        if (ivTechSign != null && techSig != null && !techSig.isEmpty()) {
             int resId = getResources().getIdentifier(techSig, "drawable", getPackageName());
             if (resId != 0) {
                 ivTechSign.setImageResource(resId);
             } else {
                 ivTechSign.setImageResource(R.drawable.signature1_png);
             }
-        }
-
-        String custSigUrl = snapshot.child("proofImageUrl").getValue(String.class);
-        if (custSigUrl != null && !custSigUrl.isEmpty()) {
-            Glide.with(this).load(custSigUrl).into(ivCustSign);
         }
     }
 
