@@ -85,18 +85,14 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         tvReceiptSchedule = findViewById(R.id.tvReceiptSchedule);
         tvReceiptRequestDate = findViewById(R.id.tvReceiptRequestDate);
         tvReceiptUnitName = findViewById(R.id.tvReceiptUnitName);
-        tvReceiptTechName = findViewById(R.id.tvReceiptTechName);
-        tvReceiptTechRole = findViewById(R.id.tvReceiptTechRole);
         tvReceiptStatus = findViewById(R.id.tvReceiptStatus);
         tvReceiptTotalAmount = findViewById(R.id.tvReceiptTotalAmount);
         tvReceiptPaymentMethod = findViewById(R.id.tvReceiptPaymentMethod);
         tvReceiptBankRef = findViewById(R.id.tvReceiptBankRef);
         
-        ivReceiptTechSignature = findViewById(R.id.ivReceiptTechSignature);
         receiptCard = findViewById(R.id.receiptCard);
         receiptScrollView = findViewById(R.id.receiptScrollView);
         containerReceiptItems = findViewById(R.id.containerReceiptItems);
-        technicianInfoLayout = findViewById(R.id.technicianInfoLayout);
         layoutReceiptBankRef = findViewById(R.id.layoutReceiptBankRef);
     }
 
