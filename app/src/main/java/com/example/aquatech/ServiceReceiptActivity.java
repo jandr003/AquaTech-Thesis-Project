@@ -44,14 +44,12 @@ import java.util.Locale;
 
 public class ServiceReceiptActivity extends AppCompatActivity {
 
-    private ImageView btnBackReceipt, ivReceiptTechSignature, btnDownloadReceipt;
+    private ImageView btnBackReceipt;
     private TextView tvTicketId, tvReceiptCustomerName, tvReceiptAddress, 
                      tvReceiptServiceType, tvReceiptSchedule, tvReceiptRequestDate,
-                     tvReceiptUnitName, tvReceiptTechName, tvReceiptTechRole, 
-                     tvReceiptStatus, tvReceiptTotalAmount, tvReceiptPaymentMethod, tvReceiptBankRef;
-    private CardView receiptCard;
-    private NestedScrollView receiptScrollView;
-    private LinearLayout containerReceiptItems, technicianInfoLayout, layoutReceiptBankRef;
+                     tvReceiptUnitName, tvReceiptStatus, tvReceiptTotalAmount, 
+                     tvReceiptPaymentMethod, tvReceiptBankRef;
+    private LinearLayout containerReceiptItems, layoutReceiptBankRef;
     
     private DataSnapshot currentSnapshot;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -77,7 +75,6 @@ public class ServiceReceiptActivity extends AppCompatActivity {
 
     private void initializeViews() {
         btnBackReceipt = findViewById(R.id.btnBackReceipt);
-        btnDownloadReceipt = findViewById(R.id.btnDownloadReceipt);
         tvTicketId = findViewById(R.id.tvTicketId);
         tvReceiptCustomerName = findViewById(R.id.tvReceiptCustomerName);
         tvReceiptAddress = findViewById(R.id.tvReceiptAddress);
@@ -90,15 +87,14 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         tvReceiptPaymentMethod = findViewById(R.id.tvReceiptPaymentMethod);
         tvReceiptBankRef = findViewById(R.id.tvReceiptBankRef);
         
-        receiptCard = findViewById(R.id.receiptCard);
-        receiptScrollView = findViewById(R.id.receiptScrollView);
         containerReceiptItems = findViewById(R.id.containerReceiptItems);
         layoutReceiptBankRef = findViewById(R.id.layoutReceiptBankRef);
     }
 
     private void setupClickListeners() {
-        btnBackReceipt.setOnClickListener(v -> returnToDashboard());
-        btnDownloadReceipt.setOnClickListener(v -> saveReceiptAsPdf());
+        if (btnBackReceipt != null) {
+            btnBackReceipt.setOnClickListener(v -> returnToDashboard());
+        }
     }
 
     private void saveReceiptAsPdf() {
@@ -281,11 +277,10 @@ public class ServiceReceiptActivity extends AppCompatActivity {
             layoutPdfReference.setVisibility(View.GONE);
         }
 
-        ((TextView)pdfView.findViewById(R.id.pdfTechName)).setText(tvReceiptTechName.getText());
-        ImageView pdfTechSig = pdfView.findViewById(R.id.pdfTechSignature);
-        if (ivReceiptTechSignature.getDrawable() != null) {
-            pdfTechSig.setImageDrawable(ivReceiptTechSignature.getDrawable());
-        }
+        String techNameText = currentSnapshot.child("assignedTechName").getValue(String.class);
+        if (techNameText == null) techNameText = "Aqua Technician";
+        TextView pdfTechNameView = pdfView.findViewById(R.id.pdfTechName);
+        if (pdfTechNameView != null) pdfTechNameView.setText(techNameText);
 
         LinearLayout pdfOrdersContainer = pdfView.findViewById(R.id.pdfOrdersContainer);
         addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
@@ -392,7 +387,8 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                         tvReceiptSchedule.setText(startTime.toUpperCase() + " TO " + endTime.toUpperCase());
                     }
 
-                    String serviceType = snapshot.child("purchaseType").getValue(String.class);
+                    String serviceType = snapshot.child("serviceType").getValue(String.class);
+                    if (serviceType == null) serviceType = snapshot.child("purchaseType").getValue(String.class);
                     if (serviceType != null) {
                         tvReceiptServiceType.setText(serviceType);
                     }
@@ -413,28 +409,6 @@ public class ServiceReceiptActivity extends AppCompatActivity {
                     updateStatusUI(status);
                     String techId = snapshot.child("assignedTechId").getValue(String.class);
                     if (techId == null || techId.isEmpty()) techId = snapshot.child("technicianId").getValue(String.class);
-
-                    if (techId != null && !techId.isEmpty()) {
-                        if (technicianInfoLayout != null) technicianInfoLayout.setVisibility(View.VISIBLE);
-                        
-                        String techName = snapshot.child("assignedTechName").getValue(String.class);
-                        if (techName == null || techName.isEmpty()) techName = snapshot.child("technicianName").getValue(String.class);
-                        tvReceiptTechName.setText(techName != null ? techName : "Aqua Technician");
-                        
-                        String sigName = snapshot.child("technicianSignature").getValue(String.class);
-                        if (sigName != null && !sigName.isEmpty()) {
-                            int resId = getResources().getIdentifier(sigName, "drawable", getPackageName());
-                            if (resId != 0) {
-                                ivReceiptTechSignature.setImageResource(resId);
-                            } else {
-                                ivReceiptTechSignature.setImageResource(R.drawable.signature1_png);
-                            }
-                        } else {
-                            ivReceiptTechSignature.setImageResource(R.drawable.signature1_png);
-                        }
-                    } else {
-                        if (technicianInfoLayout != null) technicianInfoLayout.setVisibility(View.GONE);
-                    }
 
                     containerReceiptItems.removeAllViews();
                     addOrder(snapshot, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);

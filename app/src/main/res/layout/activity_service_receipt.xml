@@ -37,24 +37,9 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/receiptHeader"
-        app:layout_constraintEnd_toStartOf="@id/btnDownloadReceipt"
-        app:layout_constraintStart_toEndOf="@id/btnBackReceipt"
-        app:layout_constraintTop_toTopOf="@id/receiptHeader" />
-
-    <ImageView
-        android:id="@+id/btnDownloadReceipt"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="12dp"
-        android:src="@drawable/ic_download"
-        app:layout_constraintBottom_toBottomOf="@id/receiptHeader"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/receiptHeader"
-        app:tint="@color/white" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/receiptHeader" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/receiptScrollView"
@@ -184,96 +169,112 @@
 
                     </LinearLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="12dp"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/lblTicket"
-                            android:layout_width="120dp"
+                        <!-- Row 1: Ticket ID -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Ticket ID:"
-                            android:textColor="#64748B"
-                            android:textSize="12sp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tvTicketId"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/lblTicket"
-                            android:text="#ASC000"
-                            android:textColor="#2196F3"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="125dp"
+                                android:layout_height="wrap_content"
+                                android:text="Ticket ID:"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/lblType"
-                            android:layout_width="120dp"
+                            <TextView
+                                android:id="@+id/tvTicketId"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="#ASC000"
+                                android:textColor="#2196F3"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Row 2: Service Type -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/lblTicket"
                             android:layout_marginTop="8dp"
-                            android:text="Service Type:"
-                            android:textColor="#64748B"
-                            android:textSize="12sp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tvReceiptServiceType"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="125dp"
+                                android:layout_height="wrap_content"
+                                android:text="Service Type:"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvReceiptServiceType"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="System Maintenance"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Row 3: Preferred Schedule -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/lblTicket"
                             android:layout_marginTop="8dp"
-                            android:layout_toEndOf="@id/lblType"
-                            android:text="Service Type"
-                            android:textColor="#1E293B"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/lblSchedule"
-                            android:layout_width="120dp"
+                            <TextView
+                                android:layout_width="125dp"
+                                android:layout_height="wrap_content"
+                                android:text="Preferred Schedule:"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvReceiptSchedule"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Sep 19, 2026 • 9:15 AM (MORNING)"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Row 4: Request Date -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/lblType"
                             android:layout_marginTop="8dp"
-                            android:text="Preferred Schedule:"
-                            android:textColor="#64748B"
-                            android:textSize="12sp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tvReceiptSchedule"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/lblType"
-                            android:layout_marginTop="8dp"
-                            android:layout_toEndOf="@id/lblSchedule"
-                            android:text="Schedule"
-                            android:textColor="#1E293B"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="125dp"
+                                android:layout_height="wrap_content"
+                                android:text="Request Date:"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/lblReqDate"
-                            android:layout_width="120dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/lblSchedule"
-                            android:layout_marginTop="8dp"
-                            android:text="Request Date:"
-                            android:textColor="#64748B"
-                            android:textSize="12sp" />
+                            <TextView
+                                android:id="@+id/tvReceiptRequestDate"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Sep 18, 2026 • 4:32 PM"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tvReceiptRequestDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/lblSchedule"
-                            android:layout_marginTop="8dp"
-                            android:layout_toEndOf="@id/lblReqDate"
-                            android:text="Date"
-                            android:textColor="#1E293B"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -312,10 +313,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Unit Name"
+                        android:text="F-FXCU1-M-HCA-TT-T1-001"
                         android:textColor="#1E293B"
                         android:textSize="13sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -445,7 +447,6 @@
                 </LinearLayout>
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -476,6 +477,17 @@
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <!-- Copyright Footer -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center"
+                    android:text="© 2026 Aqua SmartGuard Corp. All Rights Reserved."
+                    android:textColor="#94A3B8"
+                    android:textSize="10sp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

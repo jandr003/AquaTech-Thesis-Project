@@ -113,7 +113,6 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         displayValidIDStatus = findViewById(R.id.displayValidIDStatus);
         displayRemarks = findViewById(R.id.displayRemarks);
         displayTotalAmount = findViewById(R.id.displayTotalAmount);
-        displayStatus = findViewById(R.id.displayStatus);
         displayPaymentMethod = findViewById(R.id.displayPaymentMethod);
 
         ivValidID = findViewById(R.id.ivValidID);
@@ -340,26 +339,39 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         try {
             View pdfView = LayoutInflater.from(this).inflate(R.layout.layout_receipt_pdf_template, null);
             
-            ((TextView)pdfView.findViewById(R.id.pdfCustomerName)).setText(displayCustomerName.getText());
-            ((TextView)pdfView.findViewById(R.id.pdfAddress)).setText(displayAddress.getText());
-            ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText(displayTicketID.getText());
-            ((TextView)pdfView.findViewById(R.id.pdfDate)).setText(timeDateReq.getText());
-            
+            TextView tvPdfCust = pdfView.findViewById(R.id.pdfCustomerName);
+            if (tvPdfCust != null) tvPdfCust.setText(displayCustomerName.getText());
+
+            TextView tvPdfAddr = pdfView.findViewById(R.id.pdfAddress);
+            if (tvPdfAddr != null) tvPdfAddr.setText(displayAddress.getText());
+
+            TextView tvPdfTicket = pdfView.findViewById(R.id.pdfTicketId);
+            if (tvPdfTicket != null) tvPdfTicket.setText(displayTicketID.getText());
+
+            TextView tvPdfDate = pdfView.findViewById(R.id.pdfSubmittedDate);
+            if (tvPdfDate != null) tvPdfDate.setText(timeDateReq.getText());
+
             String startTime = currentSnapshot.child("startTime").getValue(String.class);
             String endTime = currentSnapshot.child("endTime").getValue(String.class);
-            if (startTime != null && endTime != null) {
-                ((TextView)pdfView.findViewById(R.id.pdfTime)).setText(startTime + " - " + endTime);
-            }
-            
-            String pType = currentSnapshot.child("purchaseType").getValue(String.class);
-            if (pType != null) {
-                ((TextView)pdfView.findViewById(R.id.pdfPurchaseType)).setText(pType);
+            TextView tvPdfTime = pdfView.findViewById(R.id.pdfSubmittedTime);
+            if (tvPdfTime != null && startTime != null && endTime != null) {
+                tvPdfTime.setText(startTime + " - " + endTime);
             }
 
-            ((TextView)pdfView.findViewById(R.id.pdfUnit)).setText(displayUnit.getText());
-            ((TextView)pdfView.findViewById(R.id.pdfTotalAmount)).setText(displayTotalAmount.getText());
-            ((TextView)pdfView.findViewById(R.id.pdfSubtotal)).setText(displayTotalAmount.getText());
-            ((TextView)pdfView.findViewById(R.id.pdfStatus)).setText(displayStatus.getText());
+            String pType = currentSnapshot.child("purchaseType").getValue(String.class);
+            TextView tvPdfLoc = pdfView.findViewById(R.id.pdfLocation);
+            if (tvPdfLoc != null && pType != null) {
+                tvPdfLoc.setText(pType);
+            }
+
+            TextView tvPdfUnit = pdfView.findViewById(R.id.pdfUnit);
+            if (tvPdfUnit != null) tvPdfUnit.setText(displayUnit.getText());
+
+            TextView tvPdfTotal = pdfView.findViewById(R.id.pdfTotalAmount);
+            if (tvPdfTotal != null) tvPdfTotal.setText(displayTotalAmount.getText());
+
+            TextView tvPdfStatus = pdfView.findViewById(R.id.pdfStatusBadge);
+            if (tvPdfStatus != null) tvPdfStatus.setText(displayStatus.getText());
 
             LinearLayout pdfOrdersContainer = pdfView.findViewById(R.id.pdfOrdersContainer);
             pdfOrdersContainer.removeAllViews();
@@ -397,7 +409,13 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             cv.put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf");
             cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/AquaTech");
 
-            Uri uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, cv);
+            Uri downloadUri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                downloadUri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+            } else {
+                downloadUri = MediaStore.Files.getContentUri("external");
+            }
+            Uri uri = getContentResolver().insert(downloadUri, cv);
             if (uri != null) {
                 try (OutputStream os = getContentResolver().openOutputStream(uri)) {
                     document.writeTo(os);
@@ -475,7 +493,11 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         if (statusRef != null && statusListener != null) statusRef.removeEventListener(statusListener);
     }
 
-    @Override public void onBackPressed() { returnToDashboard(); }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        returnToDashboard();
+    }
 
     private void returnToDashboard() {
         Intent intent = new Intent(this, CustomerDashboardActivity.class);

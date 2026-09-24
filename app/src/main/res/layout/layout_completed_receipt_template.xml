@@ -66,6 +66,7 @@
                         android:layout_height="3dp"
                         android:layout_marginTop="4dp"
                         android:background="#2196F3" />
+
                 </LinearLayout>
             </RelativeLayout>
 
@@ -714,155 +715,134 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center_vertical">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:layout_width="110dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="Payment Method"
-                                    android:textColor="#64748B"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:id="@+id/compPaymentMethod"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="GCash"
-                                    android:textColor="#1E293B"
-                                    android:textSize="13sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="110dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="Amount"
+                                    android:text="TOTAL AMOUNT"
                                     android:textColor="#64748B"
-                                    android:textSize="13sp" />
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/compTotalAmount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
                                     android:text="₱ 2,500.00"
                                     android:textColor="#166534"
-                                    android:textSize="14sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold" />
-
                             </LinearLayout>
-                        </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/compPaymentBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/bg_pdf_status_green_pill"
+                                android:paddingHorizontal="12dp"
+                                android:paddingVertical="6dp"
+                                android:text="PAID"
+                                android:textColor="#166534"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                app:drawableStartCompat="@drawable/ic_pdf_dot"
+                                android:drawablePadding="6dp"
+                                app:drawableTint="#166534" />
+                        </RelativeLayout>
 
                         <View
-                            android:layout_width="1dp"
-                            android:layout_height="70dp"
-                            android:layout_marginHorizontal="12dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="12dp"
                             android:background="#E2E8F0" />
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.4"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:layout_width="120dp"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical">
+                                android:text="Payment Method:"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
 
-                                <TextView
-                                    android:layout_width="95dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="Payment Status"
-                                    android:textColor="#64748B"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    android:id="@+id/compPaymentBadge"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/bg_pdf_status_green_pill"
-                                    android:paddingHorizontal="10dp"
-                                    android:paddingVertical="4dp"
-                                    android:text="PAID"
-                                    android:textColor="#166534"
-                                    android:textSize="11sp"
-                                    android:textStyle="bold"
-                                    android:gravity="center_vertical"
-                                    app:drawableStartCompat="@drawable/ic_pdf_dot"
-                                    android:drawablePadding="6dp"
-                                    app:drawableTint="#166534" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:id="@+id/compPaymentMethod"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="95dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="Reference No."
-                                    android:textColor="#64748B"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    android:id="@+id/compPaymentRef"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="GCash-7836-4521"
-                                    android:textColor="#1E293B"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="95dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="Verified On"
-                                    android:textColor="#64748B"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    android:id="@+id/compVerifiedOn"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Sep 19, 2026 • 11:20 AM"
-                                    android:textColor="#1E293B"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
+                                android:layout_weight="1"
+                                android:text="GCash"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="Reference No.:"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/compPaymentRef"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="GCash-7836-4521"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="Verified On:"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/compVerifiedOn"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Sep 19, 2026 • 11:20 AM"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -901,145 +881,138 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal"
-                        android:baselineAligned="false">
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.2"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:id="@+id/compTechSign"
-                                android:layout_width="160dp"
-                                android:layout_height="45dp"
-                                android:scaleType="fitStart" />
-
-                            <View
-                                android:layout_width="160dp"
-                                android:layout_height="1dp"
-                                android:layout_marginTop="2dp"
-                                android:background="#93C5FD" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="Technician Signature"
-                                android:textColor="#2196F3"
-                                android:textSize="10sp" />
-
-                            <TextView
-                                android:id="@+id/compAssignedTech"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:text="Rafael Santos"
-                                android:textColor="#1C4E75"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Technician"
-                                android:textColor="#64748B"
-                                android:textSize="11sp" />
+                            android:orientation="horizontal"
+                            android:baselineAligned="false">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:orientation="horizontal">
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/compTechSign"
+                                    android:layout_width="150dp"
+                                    android:layout_height="40dp"
+                                    android:scaleType="fitStart" />
+
+                                <View
+                                    android:layout_width="150dp"
+                                    android:layout_height="1dp"
+                                    android:layout_marginTop="2dp"
+                                    android:background="#93C5FD" />
 
                                 <TextView
-                                    android:layout_width="85dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="Contact No."
-                                    android:textColor="#64748B"
-                                    android:textSize="11sp" />
-
-                                <TextView
-                                    android:id="@+id/compTechContact"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="0912 345 6789"
-                                    android:textColor="#1E293B"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="100dp"
-                            android:layout_marginHorizontal="12dp"
-                            android:background="#E2E8F0" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.4"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical">
+                                    android:layout_marginTop="2dp"
+                                    android:text="Technician Signature"
+                                    android:textColor="#2196F3"
+                                    android:textSize="10sp" />
 
                                 <TextView
-                                    android:layout_width="95dp"
+                                    android:id="@+id/compAssignedTech"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Status"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Rafael Santos"
+                                    android:textColor="#1C4E75"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Aqua Technician"
                                     android:textColor="#64748B"
-                                    android:textSize="12sp" />
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/compTechStatusBadge"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/bg_pdf_status_green_pill"
-                                    android:paddingHorizontal="10dp"
-                                    android:paddingVertical="4dp"
+                                    android:paddingHorizontal="12dp"
+                                    android:paddingVertical="6dp"
                                     android:text="COMPLETED"
                                     android:textColor="#166534"
                                     android:textSize="11sp"
                                     android:textStyle="bold"
-                                    android:gravity="center_vertical"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
                                     app:drawableStartCompat="@drawable/ic_pdf_dot"
                                     android:drawablePadding="6dp"
                                     app:drawableTint="#166534" />
 
                             </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="95dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="Completed On"
-                                    android:textColor="#64748B"
-                                    android:textSize="12sp" />
-
-                                <TextView
-                                    android:id="@+id/compCompletedOn"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Sep 19, 2026 • 3:45 PM"
-                                    android:textColor="#1E293B"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="12dp"
+                            android:background="#E2E8F0" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="110dp"
+                                android:layout_height="wrap_content"
+                                android:text="Contact No."
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/compTechContact"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="0912 345 6789"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="110dp"
+                                android:layout_height="wrap_content"
+                                android:text="Completed On:"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/compCompletedOn"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Sep 19, 2026 • 3:45 PM"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -1151,7 +1124,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text="Request Created"
+                                    android:text="Created"
                                     android:textColor="#2196F3"
                                     android:textSize="8sp"
                                     android:textStyle="bold"
@@ -1161,7 +1134,8 @@
                                     android:id="@+id/progTs1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sep 18, 4:32 PM"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Sep 18\n4:32 PM"
                                     android:textColor="#2196F3"
                                     android:textSize="7sp"
                                     android:gravity="center" />
@@ -1196,7 +1170,8 @@
                                     android:id="@+id/progTs2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sep 19, 9:15 AM"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Sep 19\n9:15 AM"
                                     android:textColor="#2196F3"
                                     android:textSize="7sp"
                                     android:gravity="center" />
@@ -1231,7 +1206,8 @@
                                     android:id="@+id/progTs3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sep 19, 9:20 AM"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Sep 19\n9:20 AM"
                                     android:textColor="#2196F3"
                                     android:textSize="7sp"
                                     android:gravity="center" />
@@ -1266,7 +1242,8 @@
                                     android:id="@+id/progTs4"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sep 19, 10:05 AM"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Sep 19\n10:05 AM"
                                     android:textColor="#2196F3"
                                     android:textSize="7sp"
                                     android:gravity="center" />
@@ -1291,7 +1268,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:text="Submission"
+                                    android:text="Submitted"
                                     android:textColor="#2196F3"
                                     android:textSize="8sp"
                                     android:textStyle="bold"
@@ -1301,7 +1278,8 @@
                                     android:id="@+id/progTs5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sep 19, 2:30 PM"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Sep 19\n2:30 PM"
                                     android:textColor="#2196F3"
                                     android:textSize="7sp"
                                     android:gravity="center" />
@@ -1315,18 +1293,12 @@
                                 android:gravity="center"
                                 android:orientation="vertical">
 
-                                <FrameLayout
+                                <ImageView
                                     android:layout_width="22dp"
                                     android:layout_height="22dp"
-                                    android:background="@drawable/green_circle_border"
-                                    android:padding="2dp">
-
-                                    <ImageView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:src="@drawable/ic_check_on"
-                                        app:tint="#10B981" />
-                                </FrameLayout>
+                                    android:src="@drawable/ic_check_on"
+                                    app:tint="#10B981"
+                                    android:background="@drawable/circle_white" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -1342,7 +1314,8 @@
                                     android:id="@+id/progTs6"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Sep 19, 3:45 PM"
+                                    android:layout_marginTop="2dp"
+                                    android:text="Sep 19\n3:45 PM"
                                     android:textColor="#10B981"
                                     android:textSize="7sp"
                                     android:textStyle="bold"
@@ -1443,6 +1416,7 @@
                         android:textColor="#64748B"
                         android:textSize="11sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -1487,7 +1461,18 @@
                         android:textColor="#64748B"
                         android:textSize="11sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center"
+                    android:text="© 2026 Aqua SmartGuard Corp. All Rights Reserved."
+                    android:textColor="#94A3B8"
+                    android:textSize="10sp" />
             </LinearLayout>
 
         </LinearLayout>
