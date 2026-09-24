@@ -102,7 +102,6 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         rootLayout = findViewById(R.id.rootConstraintLayout);
         serviceCard = findViewById(R.id.serviceCard);
         timeDateReq = findViewById(R.id.timeDateReq);
-        btnDownload = findViewById(R.id.btnDownload);
 
         displayTicketID = findViewById(R.id.displayTicketID);
         displayCustomerName = findViewById(R.id.displayCustomerName);

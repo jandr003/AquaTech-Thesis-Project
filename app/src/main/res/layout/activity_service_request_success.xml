@@ -10,18 +10,8 @@
     <View
         android:id="@+id/headerBg"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="72dp"
         android:background="#2196F3"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/customerProfile"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/man_user_circle_icon"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -30,41 +20,25 @@
         android:layout_height="wrap_content"
         android:text="SERVICE REQUEST FORM"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/customerProfile"
-        app:layout_constraintEnd_toStartOf="@id/btnDownload"
-        app:layout_constraintStart_toEndOf="@id/customerProfile"
-        app:layout_constraintTop_toTopOf="@id/customerProfile" />
-
-    <ImageView
-        android:id="@+id/btnDownload"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:contentDescription="Download Request"
-        android:focusable="true"
-        android:padding="8dp"
-        android:src="@drawable/ic_download"
-        app:layout_constraintBottom_toBottomOf="@id/customerProfile"
+        app:layout_constraintBottom_toBottomOf="@id/headerBg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/customerProfile"
-        app:tint="@color/white" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/headerBg" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/serviceCard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toTopOf="@id/ReturnDashBoard"
-        app:layout_constraintTop_toBottomOf="@id/customerProfile">
+        app:layout_constraintTop_toBottomOf="@id/headerBg">
 
         <LinearLayout
             android:layout_width="match_parent"
