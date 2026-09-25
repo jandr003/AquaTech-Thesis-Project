@@ -139,14 +139,12 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         String paymentMethod = intent.getStringExtra("PAYMENT_METHOD");
         if (displayPaymentMethod != null) displayPaymentMethod.setText(paymentMethod != null ? paymentMethod : "COD");
 
-        double total = intent.getDoubleExtra("TOTAL_AMOUNT", 0.0);
-        if (displayTotalAmount != null) displayTotalAmount.setText(String.format("₱%,.2f", total));
-
         String date = intent.getStringExtra("DATE");
         if (date != null && timeDateReq != null) timeDateReq.setText(date.toUpperCase());
 
         if (ordersListContainer != null) {
             ordersListContainer.removeAllViews();
+            runningIntentTotal = 0;
             addOrderFromIntent("qty_wayvalve", "Installation Kit (3-Way Valve)");
             addOrderFromIntent("qty_cbc", "Filter 0064-CBC");
             addOrderFromIntent("qty_sediment", "Filter 0055-SEDIMENT");
@@ -159,6 +157,10 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             addOrderFromIntent("qty_smsf10", "SMSF 10µ SED");
         }
 
+        double total = intent.getDoubleExtra("TOTAL_AMOUNT", 0.0);
+        if (total <= 0) total = runningIntentTotal;
+        if (displayTotalAmount != null) displayTotalAmount.setText(String.format("₱%,.2f", total));
+
         String fbUrl = intent.getStringExtra("VALID_ID_URL");
         String localUri = intent.getStringExtra("SELECTED_ID_URI");
 
@@ -170,14 +172,39 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         updateIdStatusUI(currentIdUrl);
     }
 
+    private int getItemUnitPrice(String key) {
+        if (key == null) return 0;
+        switch (key.toLowerCase()) {
+            case "qty_wayvalve": return 350;
+            case "qty_cbc": return 2000;
+            case "qty_sediment": return 1000;
+            case "qty_aquatal": return 2000;
+            case "qty_inline": return 3000;
+            case "qty_uvlamp": return 1500;
+            case "qty_touchpanel": return 1200;
+            case "qty_pbcboard": return 1500;
+            case "qty_smsf1": return 2000;
+            case "qty_smsf10": return 1000;
+            default: return 0;
+        }
+    }
+
+    private double runningIntentTotal = 0;
+
     private void addOrderFromIntent(String key, String label) {
         int qty = getIntent().getIntExtra(key, 0);
         if (qty > 0 && ordersListContainer != null) {
+            int unitPrice = getItemUnitPrice(key);
+            double subtotal = qty * unitPrice;
+            runningIntentTotal += subtotal;
+
             View itemView = LayoutInflater.from(this).inflate(R.layout.item_order_summary, ordersListContainer, false);
             TextView name = itemView.findViewById(R.id.orderItemName);
             TextView q = itemView.findViewById(R.id.orderItemQty);
+            TextView p = itemView.findViewById(R.id.orderItemPrice);
             if (name != null) name.setText(label);
             if (q != null) q.setText("x" + qty);
+            if (p != null) p.setText(String.format("₱%,d.00", (long) subtotal));
             ordersListContainer.addView(itemView);
         }
     }
@@ -199,6 +226,8 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         };
         statusRef.addValueEventListener(statusListener);
     }
+
+    private double runningRealtimeTotal = 0;
 
     private void updateUIWithLatestData(DataSnapshot snapshot) {
         if (displayCustomerName != null) displayCustomerName.setText(snapshot.child("customerName").getValue(String.class));
@@ -226,16 +255,9 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         String pm = snapshot.child("paymentMethod").getValue(String.class);
         if (displayPaymentMethod != null) displayPaymentMethod.setText(pm != null ? pm : "COD");
 
-        String status = snapshot.child("status").getValue(String.class);
-        if (status != null && displayStatus != null) displayStatus.setText(status.toUpperCase());
-
-        Object totalObj = snapshot.child("totalAmount").getValue();
-        if (totalObj instanceof Number && displayTotalAmount != null) {
-            displayTotalAmount.setText(String.format("₱%,.2f", ((Number) totalObj).doubleValue()));
-        }
-
         if (ordersListContainer != null) {
             ordersListContainer.removeAllViews();
+            runningRealtimeTotal = 0;
             addOrderItem(snapshot, "qty_wayvalve", "Installation Kit (3-Way Valve)");
             addOrderItem(snapshot, "qty_cbc", "Filter 0064-CBC");
             addOrderItem(snapshot, "qty_sediment", "Filter 0055-SEDIMENT");
@@ -244,12 +266,39 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             addOrderItem(snapshot, "qty_uvlamp", "UV Lamp");
             addOrderItem(snapshot, "qty_touchpanel", "Touch Panel");
             addOrderItem(snapshot, "qty_pbcboard", "PBC Board");
-            addOrderItem(snapshot, "qty_smsf1", "SMSF 1u CBC");
-            addOrderItem(snapshot, "qty_smsf10", "SMSF 1u SED");
+            addOrderItem(snapshot, "qty_smsf1", "SMSF 1µ CBC");
+            addOrderItem(snapshot, "qty_smsf10", "SMSF 10µ SED");
         }
+
+        Object totalObj = snapshot.child("totalAmount").getValue();
+        double totalVal = 0;
+        if (totalObj instanceof Number) totalVal = ((Number) totalObj).doubleValue();
+        if (totalVal <= 0) totalVal = runningRealtimeTotal;
+        if (displayTotalAmount != null) displayTotalAmount.setText(String.format("₱%,.2f", totalVal));
 
         String date = snapshot.child("date").getValue(String.class);
         if (date != null && timeDateReq != null) timeDateReq.setText(date.toUpperCase());
+    }
+
+    private void addOrderItem(DataSnapshot snapshot, String key, String label) {
+        Object qtyObj = snapshot.child(key).getValue();
+        if (qtyObj instanceof Number) {
+            long qty = ((Number) qtyObj).longValue();
+            if (qty > 0 && ordersListContainer != null) {
+                int unitPrice = getItemUnitPrice(key);
+                double subtotal = qty * unitPrice;
+                runningRealtimeTotal += subtotal;
+
+                View itemView = LayoutInflater.from(this).inflate(R.layout.item_order_summary, ordersListContainer, false);
+                TextView name = itemView.findViewById(R.id.orderItemName);
+                TextView q = itemView.findViewById(R.id.orderItemQty);
+                TextView p = itemView.findViewById(R.id.orderItemPrice);
+                if (name != null) name.setText(label);
+                if (q != null) q.setText("x" + qty);
+                if (p != null) p.setText(String.format("₱%,d.00", (long) subtotal));
+                ordersListContainer.addView(itemView);
+            }
+        }
     }
 
     private boolean isValidUrl(String url) {
@@ -262,7 +311,7 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         boolean valid = isValidUrl(url);
         if (displayValidIDStatus != null) {
             displayValidIDStatus.setText(valid ? "ATTACHED" : "NOT PROVIDED");
-            displayValidIDStatus.setTextColor(valid ? Color.parseColor("#3EB5E8") : Color.parseColor("#FF5252"));
+            displayValidIDStatus.setTextColor(valid ? Color.parseColor("#2196F3") : Color.parseColor("#EF4444"));
         }
 
         if (cardValidID != null) cardValidID.setVisibility(valid ? View.VISIBLE : View.GONE);
@@ -282,20 +331,7 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         }
     }
 
-    private void addOrderItem(DataSnapshot snapshot, String key, String label) {
-        Object qtyObj = snapshot.child(key).getValue();
-        if (qtyObj instanceof Number) {
-            long qty = ((Number) qtyObj).longValue();
-            if (qty > 0 && ordersListContainer != null) {
-                View itemView = LayoutInflater.from(this).inflate(R.layout.item_order_summary, ordersListContainer, false);
-                TextView name = itemView.findViewById(R.id.orderItemName);
-                TextView q = itemView.findViewById(R.id.orderItemQty);
-                if (name != null) name.setText(label);
-                if (q != null) q.setText("x" + qty);
-                ordersListContainer.addView(itemView);
-            }
-        }
-    }
+
 
     private void setupClickListeners() {
         if (btnDownload != null) {

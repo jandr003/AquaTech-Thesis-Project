@@ -6,163 +6,265 @@
     android:layout_height="match_parent"
     android:background="#F6FBFF">
 
-    <View
+    <RelativeLayout
         android:id="@+id/aboutHeader"
         android:layout_width="match_parent"
-        android:layout_height="118dp"
-        android:background="@drawable/header_gradient"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="64dp"
+        android:background="#2196F3"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/btnBackAbout"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="35dp"
-        android:padding="8dp"
-        android:src="@drawable/ic_arrow_back_gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/btnBackAbout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_gray"
+            app:tint="@color/white" />
 
-    <TextView
-        android:id="@+id/tvTitleAbout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text="About"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/btnBackAbout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnBackAbout" />
+        <TextView
+            android:id="@+id/tvTitleAbout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="About AquaTech"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         android:fillViewport="true"
+        android:paddingBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/aboutHeader">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideStart"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.05" />
+                android:layout_margin="4dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.95" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-            <ImageView
-                android:id="@+id/ivLogo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/logoo"
-                app:layout_constraintWidth_max="250dp"
-                app:layout_constraintWidth_percent="0.5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvVersion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/poppins"
-                android:text="Version 1.0.0"
-                android:textColor="#888888"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivLogo" />
+                        <ImageView
+                            android:id="@+id/ivLogo"
+                            android:layout_width="280dp"
+                            android:layout_height="78dp"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/asc_logo_all_about_water" />
 
-            <TextView
-                android:id="@+id/tvAppStory"
-                android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/tvVersion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_pdf_status_blue_pill"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="6dp"
+                            android:text="Version 1.1.0"
+                            android:textColor="#2196F3"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="#E2E8F0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_droplet"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="THE PHILIPPINE WATER REVOLUTION"
+                            android:textColor="#2196F3"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Water is the most important substance we consume. But rather than a source of health and hydration, water in the Philippines today is a source of inconvenience at best, and danger and pollution at worst."
+                        android:textColor="#475569"
+                        android:textSize="13.5sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="We are on a mission to make a water revolution in the Philippines—providing access for every individual, home, and business to an unlimited supply of the world’s safest clean water, guaranteed."
+                        android:textColor="#1E293B"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="#E2E8F0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_assignment"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="OUR MOTHER COMPANY"
+                            android:textColor="#2196F3"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Together with our mother company, Waterlogic, and their decades of experience delivering highly-certified, great-tasting water in a safe and environmentally-responsible way, we will transform drinking water into a trusted, clean and sustainably abundant resource for all Filipinos."
+                        android:textColor="#475569"
+                        android:textSize="13.5sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="#2196F3"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="3dp"
+                            android:text="Waterlogic provides the world’s purest and safest water to over 50 million households and offices in more than 70 countries."
+                            android:textColor="@color/white"
+                            android:textSize="13sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="10dp"
+                            android:background="#64B5F6" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="The Water Revolution has now arrived in the Philippines."
+                            android:textColor="@color/white"
+                            android:textSize="13.5sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/poppins"
+                android:layout_marginTop="24dp"
                 android:gravity="center"
-                android:lineSpacingExtra="2dp"
-                android:text="@string/about_app_story"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toStartOf="@id/guideEnd"
-                app:layout_constraintStart_toEndOf="@id/guideStart"
-                app:layout_constraintTop_toBottomOf="@id/tvVersion" />
+                android:orientation="vertical">
 
-            <View
-                android:id="@+id/separator"
-                android:layout_width="60dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="32dp"
-                android:background="@color/aqua_secondary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAppStory" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tvMission"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/about_mission_text"
-                android:textColor="#444444"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toStartOf="@id/guideEnd"
-                app:layout_constraintStart_toEndOf="@id/guideStart"
-                app:layout_constraintTop_toBottomOf="@id/separator" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_pinpoint"
+                        app:tint="#2196F3" />
 
-            <TextView
-                android:id="@+id/tvCredits"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="@string/about_footer_credits"
-                android:textColor="#999999"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvMission" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="GF, Makati City, 1209 Metro Manila"
+                        android:textColor="#64748B"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvAddress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins"
-                android:gravity="center"
-                android:text="GF, Makati City, 1209 Metro Manila"
-                android:textColor="#999999"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvCredits" />
+                </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="© 2026 Aqua SmartGuard Corp. All Rights Reserved."
+                    android:textColor="#94A3B8"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

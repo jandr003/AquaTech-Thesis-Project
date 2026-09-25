@@ -270,9 +270,9 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
                 int hour = now.get(Calendar.HOUR_OF_DAY);
 
                 if ((day == Calendar.SATURDAY && hour >= 17) || day == Calendar.SUNDAY) {
-                    waitMsg += "Our office is currently closed. We will confirm your schedule and send your receipt this coming Monday.";
+                    waitMsg += "Our office is currently closed. We will confirm your schedule and send your receipt this coming <b>Monday morning (8:00 AM)</b>.";
                 } else {
-                    waitMsg += "We will confirm your schedule and send your receipt on the next business day.";
+                    waitMsg += "Our office is currently closed for the day. We will confirm your schedule and send your receipt on the <b>next business day</b>.";
                 }
                 NotificationActivity.addNotification(mAuth.getUid(), waitMsg, "SYSTEM", ticketId);
             } else {

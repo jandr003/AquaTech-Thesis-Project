@@ -2,29 +2,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="0dp"
-    android:paddingEnd="0dp"
-    android:paddingTop="6dp"
-    android:paddingBottom="6dp">
+    android:paddingVertical="6dp">
 
     <TextView
         android:id="@+id/orderItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:fontFamily="@font/poppins_black_ttf"
+        android:layout_toStartOf="@id/orderItemQty"
+        android:layout_marginEnd="8dp"
         android:text="ITEM NAME"
-        android:textColor="#5B5B5B"
-        android:textSize="14sp"
+        android:textColor="#1E293B"
+        android:textSize="12.5sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/orderItemQty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/orderItemPrice"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/circle_blue"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+        android:text="x 1"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/orderItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:fontFamily="@font/poppins_black_ttf"
-        android:text="x0"
-        android:textColor="#7D7D7D"
-        android:textSize="14sp" />
+        android:text="₱ 0.00"
+        android:textColor="#166534"
+        android:textSize="12.5sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>

@@ -463,6 +463,7 @@ public class ServiceReceiptActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         returnToDashboard();
     }
 
