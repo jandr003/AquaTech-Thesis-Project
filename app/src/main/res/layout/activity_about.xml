@@ -78,8 +78,8 @@
 
                         <ImageView
                             android:id="@+id/ivLogo"
-                            android:layout_width="280dp"
-                            android:layout_height="78dp"
+                            android:layout_width="320dp"
+                            android:layout_height="90dp"
                             android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
                             android:src="@drawable/asc_logo_all_about_water" />
@@ -189,6 +189,85 @@
                         android:textColor="#475569"
                         android:textSize="13.5sp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="#E2E8F0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_shield"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="FIREWALL™ PURIFICATION TECHNOLOGY"
+                            android:textColor="#2196F3"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Our patented Firewall™ UV purification technology safely purifies drinking water up to 99.9999%, effectively eliminating viruses, bacteria, and cysts. Combined with BioCote® surface protection, every drop is guaranteed pure, safe, and fresh."
+                        android:textColor="#475569"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="#E2E8F0" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/circle_blue"
+                            android:padding="6dp"
+                            android:src="@drawable/ic_pdf_wrench"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="TOTAL CARE &amp; SUSTAINABILITY"
+                            android:textColor="#2196F3"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Through our Total Care subscription service, every installation includes routine filter and UVC lamp replacements, technical support, and repairs for a fixed fee. We promote sustainable water management—delivering clean, bottleless hydration while eliminating single-use plastics."
+                        android:textColor="#475569"
+                        android:textSize="13.5sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -235,6 +314,29 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_phone"
+                        app:tint="#2196F3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="Sales: +63 998 557 9144 • Tech: +63 998 961 9695"
+                        android:textColor="#64748B"
+                        android:textSize="11.5sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:gravity="center_vertical">
 
                     <ImageView

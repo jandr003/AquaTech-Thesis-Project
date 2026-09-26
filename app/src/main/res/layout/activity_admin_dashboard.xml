@@ -74,10 +74,11 @@
             app:layout_constraintBottom_toBottomOf="@+id/headerBg" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/dashboardScrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottomNavBarCard"
             app:layout_constraintTop_toBottomOf="@+id/headerBg">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -173,6 +174,7 @@
                                 android:textColor="#1E293B"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
+
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
@@ -212,6 +214,7 @@
                             app:cardBackgroundColor="#FF5152"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="4dp">
+
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -243,7 +246,9 @@
                                         android:textColor="#FF5152"
                                         android:textSize="10sp"
                                         android:textStyle="bold" />
+
                                 </androidx.cardview.widget.CardView>
+
                                 <TextView
                                     android:id="@+id/tvOverdueCount"
                                     android:layout_width="wrap_content"
@@ -257,16 +262,20 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/tvOpenLabel"
                                     tools:ignore="MissingConstraints" />
+
                                 <TextView
                                     android:id="@+id/tvOpenSub"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins"
-                                    android:text="For Assignment"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:text="Pending Assignment"
                                     android:textColor="#FFFFFF"
                                     android:textSize="14sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent" />
+
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -282,11 +291,13 @@
                             app:cardBackgroundColor="#4489FE"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="4dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:padding="16dp">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -295,6 +306,7 @@
                                     android:textSize="18sp"
                                     android:textStyle="bold"
                                     android:fontFamily="@font/poppins_black_ttf"/>
+
                                 <TextView
                                     android:id="@+id/tvInProgressCount"
                                     android:layout_width="wrap_content"
@@ -306,13 +318,17 @@
                                     android:textSize="32sp"
                                     android:textStyle="bold"
                                     android:fontFamily="@font/poppins_black_ttf"/>
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Assigned to Tech"
+                                    android:fontFamily="@font/poppins"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:text="Ongoing Services"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="14sp"
-                                    android:fontFamily="@font/poppins"/>
+                                    android:textSize="14sp" />
+
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -328,11 +344,13 @@
                             app:cardBackgroundColor="#FFB100"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="4dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:padding="16dp">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -341,6 +359,7 @@
                                     android:textSize="18sp"
                                     android:textStyle="bold"
                                     android:fontFamily="@font/poppins_black_ttf"/>
+
                                 <TextView
                                     android:id="@+id/tvSubmissionCount"
                                     android:layout_width="wrap_content"
@@ -352,17 +371,20 @@
                                     android:textSize="32sp"
                                     android:textStyle="bold"
                                     android:fontFamily="@font/poppins_black_ttf" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="For Admin Review"
+                                    android:fontFamily="@font/poppins"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:text="Awaiting Review"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="14sp"
-                                    android:fontFamily="@font/poppins"/>
+                                    android:textSize="14sp" />
+
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
-                        <!-- COMPLETED -->
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardCompleted"
                             android:layout_width="0dp"
@@ -375,11 +397,13 @@
                             app:cardBackgroundColor="#8AC348"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="4dp">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:padding="16dp">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -388,6 +412,7 @@
                                     android:textSize="18sp"
                                     android:textStyle="bold"
                                     android:fontFamily="@font/poppins_black_ttf"/>
+
                                 <TextView
                                     android:id="@+id/tvCompletedCount"
                                     android:layout_width="wrap_content"
@@ -399,13 +424,17 @@
                                     android:textSize="32sp"
                                     android:textStyle="bold"
                                     android:fontFamily="@font/poppins_black_ttf" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Finished Jobs"
+                                    android:fontFamily="@font/poppins"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:text="Fulfilled Jobs"
                                     android:textColor="#FFFFFF"
-                                    android:textSize="14sp"
-                                    android:fontFamily="@font/poppins"/>
+                                    android:textSize="14sp" />
+
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
                     </GridLayout>
@@ -448,22 +477,26 @@
                         app:cardBackgroundColor="#3DAADB"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="3dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:paddingHorizontal="20dp">
+
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:src="@drawable/maintenance"
                                 app:tint="#FFFFFF" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="12dp"
                                 android:orientation="vertical">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -472,6 +505,7 @@
                                     android:textColor="#FFFFFF"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -479,6 +513,7 @@
                                     android:text="Tracks ratings and service history"
                                     android:textColor="#FFFFFF"
                                     android:textSize="13sp" />
+
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -494,22 +529,26 @@
                         app:cardBackgroundColor="#4CB5E1"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="3dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:paddingHorizontal="20dp">
+
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:src="@drawable/ic_performance"
                                 app:tint="#FFFFFF" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="12dp"
                                 android:orientation="vertical">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -518,6 +557,7 @@
                                     android:textColor="#FFFFFF"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -525,6 +565,7 @@
                                     android:text="Real-time updates on system process"
                                     android:textColor="#FFFFFF"
                                     android:textSize="13sp" />
+
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -540,22 +581,26 @@
                         app:cardBackgroundColor="#4CB5E1"
                         app:cardCornerRadius="20dp"
                         app:cardElevation="3dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:paddingHorizontal="20dp">
+
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:src="@drawable/maintenance_icon"
                                 app:tint="#FFFFFF" />
+
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="12dp"
                                 android:orientation="vertical">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -564,6 +609,7 @@
                                     android:textColor="#FFFFFF"
                                     android:textSize="18sp"
                                     android:textStyle="bold" />
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -571,6 +617,7 @@
                                     android:text="Add, review, or disable accounts"
                                     android:textColor="#FFFFFF"
                                     android:textSize="13sp" />
+
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -579,6 +626,161 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bottomNavBarCard"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/navHome"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_pdf_house"
+                        app:tint="#2196F3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Dashboard"
+                        android:textColor="#2196F3"
+                        android:textSize="10.5sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/navRequests"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_pdf_document"
+                        app:tint="#64748B" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Requests"
+                        android:textColor="#64748B"
+                        android:textSize="10.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/navTechs"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_manage_techs"
+                        app:tint="#64748B" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Techs"
+                        android:textColor="#64748B"
+                        android:textSize="10.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/navLogs"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_logs"
+                        app:tint="#64748B" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Logs"
+                        android:textColor="#64748B"
+                        android:textSize="10.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/navProfile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_person_white"
+                        app:tint="#64748B" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Profile"
+                        android:textColor="#64748B"
+                        android:textSize="10.5sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

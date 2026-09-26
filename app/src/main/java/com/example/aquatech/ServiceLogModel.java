@@ -25,6 +25,7 @@ public class ServiceLogModel {
     private String preferredTime;
     private String serviceTypeLabel;
     private String completionTime;
+    private String purchaseType;
     public ServiceLogModel() {}
 
     public ServiceLogModel(String sroNumber, String techName, String techRole, String status, String customerPhone) {
@@ -110,6 +111,9 @@ public class ServiceLogModel {
 
     public String getPreferredTime() { return preferredTime; }
     public void setPreferredTime(String preferredTime) { this.preferredTime = preferredTime; }
+
+    public String getPurchaseType() { return purchaseType != null ? purchaseType : "SUBSCRIPTION"; }
+    public void setPurchaseType(String purchaseType) { this.purchaseType = purchaseType; }
 
     public String getCompletionTime() { return completionTime != null ? completionTime : dateTime; }
     public void setCompletionTime(String completionTime) { this.completionTime = completionTime; }

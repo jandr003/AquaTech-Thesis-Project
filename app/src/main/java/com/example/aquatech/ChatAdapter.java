@@ -23,8 +23,8 @@ import java.util.Locale;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int MODE_BOT = 1;
-    public static final int MODE_TECH_CHAT = 2; // User is Technician, partner is Customer
-    public static final int MODE_CUSTOMER_CHAT = 3; // User is Customer, partner is Technician
+    public static final int MODE_TECH_CHAT = 2;
+    public static final int MODE_CUSTOMER_CHAT = 3;
 
     private static final int VIEW_TYPE_MESSAGE = 100;
     private static final int VIEW_TYPE_SYSTEM = 101;

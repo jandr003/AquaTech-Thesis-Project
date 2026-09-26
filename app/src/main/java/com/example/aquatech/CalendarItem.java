@@ -5,7 +5,7 @@ import java.util.Date;
 public class CalendarItem {
     private Date date;
     private boolean isSelected;
-    private String status; // COMPLETED, IN_PROGRESS, OPEN, NONE
+    private String status;
 
     public CalendarItem(Date date, boolean isSelected, String status) {
         this.date = date;

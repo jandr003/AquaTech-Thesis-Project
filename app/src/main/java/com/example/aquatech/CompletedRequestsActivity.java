@@ -91,10 +91,23 @@ public class CompletedRequestsActivity extends AppCompatActivity {
                             completionTime = sdf.format(new Date(timestamp));
                         }
 
+                        String rawRemarks = ds.child("remarks").getValue(String.class);
+                        String[] classification = classifyServiceRequest(rawRemarks, ds);
+
                         ServiceLogModel model = new ServiceLogModel();
                         model.setSroNumber(ticketId);
-                        model.setCustomerName(customerName != null ? customerName : "Real Name Unknown");
-                        model.setTechRole(serviceType);
+                        model.setCustomerName(customerName != null ? customerName : "Guest Customer");
+                        model.setTechRole(classification[0]);
+                        
+                        String displayDetails = classification[1] + " — " + classification[2];
+                        if (rawRemarks != null && !rawRemarks.trim().isEmpty()) {
+                            displayDetails = rawRemarks + " (" + classification[1] + ")";
+                        }
+                        model.setRemarks(displayDetails);
+                        
+                        String purchaseType = ds.child("purchaseType").getValue(String.class);
+                        model.setPurchaseType(purchaseType != null ? purchaseType : "SUBSCRIPTION");
+
                         model.setDateTime(completionTime);
                         model.setAddress(address != null ? address : "No address provided");
                         model.setStatus("Completed");
@@ -109,6 +122,47 @@ public class CompletedRequestsActivity extends AppCompatActivity {
 
             @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
+    }
+
+    private boolean matchKeywords(String text, String... keywords) {
+        if (text == null || text.isEmpty()) return false;
+        String lower = text.toLowerCase(Locale.ROOT);
+        for (String kw : keywords) {
+            if (lower.contains(kw.toLowerCase(Locale.ROOT))) return true;
+        }
+        return false;
+    }
+
+    private String[] classifyServiceRequest(String remarks, DataSnapshot ds) {
+        String p = (remarks != null ? remarks : "") + " " + getServiceTypeLabel(ds);
+
+        String serviceCategory = "General Service";
+        String serviceDesc = "Technical system inspection and evaluation.";
+        String concernSummary = "General System Check";
+
+        if (matchKeywords(p, "leak", "tulo", "baha", "basâ", "dripping", "leakage", "broken", "damage")) {
+            serviceCategory = "Technical Repair";
+            serviceDesc = "Onsite technical repair and parts verification.";
+            concernSummary = "System Leakage & Repair";
+        } else if (matchKeywords(p, "power", "board", "bukas", "patay", "electricity", "fuse", "dead", "error", "faulty")) {
+            serviceCategory = "Technical Repair";
+            serviceDesc = "Electrical system troubleshooting and repair.";
+            concernSummary = "Electrical & Power Issue";
+        } else if (matchKeywords(p, "mahina", "slow", "barado", "low pressure", "clogged", "no water")) {
+            serviceCategory = "Technical Repair";
+            serviceDesc = "Flow optimization and system restoration.";
+            concernSummary = "Flow Optimization & Restoration";
+        } else if (matchKeywords(p, "amoy", "mabaho", "malabo", "lasa", "filter", "odor", "smell", "stink", "dirty", "taste", "maintenance", "cleaning", "check")) {
+            serviceCategory = "System Maintenance";
+            serviceDesc = "Scheduled preventive maintenance and health check.";
+            concernSummary = "Water Quality & Filter Care";
+        } else if (matchKeywords(p, "install", "lipat", "kabit", "setup", "move", "relocate")) {
+            serviceCategory = "Unit Installation";
+            serviceDesc = "Professional unit setup and system calibration.";
+            concernSummary = "Professional Unit Setup";
+        }
+
+        return new String[]{serviceCategory, concernSummary, serviceDesc};
     }
 
     private String getServiceTypeLabel(DataSnapshot ds) {

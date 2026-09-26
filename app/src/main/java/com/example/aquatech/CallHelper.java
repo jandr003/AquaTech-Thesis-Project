@@ -24,24 +24,21 @@ public class CallHelper {
         String chatId = techId + "_" + customerId;
         DatabaseReference callRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
         
-        // Reset call metadata to trigger "calling" state
         callRef.child("callStatus").setValue("calling");
         callRef.child("callStartTime").removeValue();
 
-        // Send Notification to Receiver
         String receiverId = isTech ? customerId : techId;
         String callerName = isTech ? "Technician" : otherName; 
         String notifMessage = "<b>Incoming Call</b><br>" + callerName + " is calling.";
         String notifType = "CALL";
         
-        // Target correctly: if Technician is calling, send to CustomerNotifications. If Customer is calling, send to Notifications (for Tech).
         String notifTarget = isTech ? "CustomerNotifications" : "Notifications";
         
         DatabaseReference notifPushRef = FirebaseDatabase.getInstance(DB_URL).getReference(notifTarget).child(receiverId).push();
         notifPushRef.setValue(new NotificationModel(notifPushRef.getKey(), notifMessage, System.currentTimeMillis(), notifType, isTech ? techId : customerId));
 
         // Start appropriate activity for the caller
-        // If isTech is true, start VoiceCallActivity (Technician's UI). 
+        // If isTech is true, start VoiceCallActivity (Technician's UI).
         // If isTech is false, start CustomerVoiceCallActivity (Customer's UI).
         Intent intent = new Intent(activity, isTech ? VoiceCallActivity.class : CustomerVoiceCallActivity.class);
         intent.putExtra("TECH_ID", techId);
@@ -51,7 +48,6 @@ public class CallHelper {
     }
 
     public static void startCall(Activity activity, String techName, String techId, String customerId) {
-        // This is called by Technician, so isTech = true
         initiateCall(activity, techId, customerId, techName, true);
     }
 }

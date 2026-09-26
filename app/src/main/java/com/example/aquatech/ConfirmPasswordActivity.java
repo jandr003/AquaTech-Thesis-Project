@@ -70,6 +70,11 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        View btnBack = findViewById(R.id.btnBackConfirmPass);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         yourNewPass = findViewById(R.id.yourNewPass);
         reNewPass   = findViewById(R.id.reNewPass);
         yourNewPassWarning = findViewById(R.id.yourNewPassWarning);

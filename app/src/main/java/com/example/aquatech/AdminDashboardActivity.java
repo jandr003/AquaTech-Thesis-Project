@@ -79,6 +79,31 @@ public class AdminDashboardActivity extends AppCompatActivity {
         findViewById(R.id.cardActionManageTechs).setOnClickListener(v ->
                 startActivity(new Intent(this, ManageTechniciansActivity.class))
         );
+
+        // Bottom Navigation Bar
+        View navHome = findViewById(R.id.navHome);
+        if (navHome != null) {
+            navHome.setOnClickListener(v -> {
+                View sv = findViewById(R.id.dashboardScrollView);
+                if (sv != null) sv.scrollTo(0, 0);
+            });
+        }
+        View navRequests = findViewById(R.id.navRequests);
+        if (navRequests != null) {
+            navRequests.setOnClickListener(v -> startActivity(new Intent(this, OpenRequestsActivity.class)));
+        }
+        View navTechs = findViewById(R.id.navTechs);
+        if (navTechs != null) {
+            navTechs.setOnClickListener(v -> startActivity(new Intent(this, ManageTechniciansActivity.class)));
+        }
+        View navLogs = findViewById(R.id.navLogs);
+        if (navLogs != null) {
+            navLogs.setOnClickListener(v -> startActivity(new Intent(this, AdminLogsActivity.class)));
+        }
+        View navProfile = findViewById(R.id.navProfile);
+        if (navProfile != null) {
+            navProfile.setOnClickListener(v -> startActivity(new Intent(this, AdminProfileActivity.class)));
+        }
     }
 
     private void setupFirebase() {

@@ -41,7 +41,7 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
         String lastSenderId = ds.child("lastSenderId").getValue(String.class);
 
         String displayName = "User";
-        int avatarRes = R.drawable.man_customer_icon; // Default avatar
+        int avatarRes = R.drawable.man_customer_icon;
         
         if (myId != null) {
             if (myId.equals(customerId)) {

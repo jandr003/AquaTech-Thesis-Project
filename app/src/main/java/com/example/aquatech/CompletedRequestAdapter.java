@@ -35,11 +35,26 @@ public class CompletedRequestAdapter extends RecyclerView.Adapter<CompletedReque
         ServiceLogModel model = completedList.get(position);
 
         holder.tvCustomerName.setText(model.getCustomerName() != null ? model.getCustomerName() : "Guest Customer");
-        
         holder.tvTicketID.setText(model.getSroNumber() != null ? model.getSroNumber() : "N/A");
-        holder.tvServiceType.setText(model.getTechRole() != null ? model.getTechRole() : "N/A");
-        holder.tvCompletionTime.setText("Completed on: " + (model.getDateTime() != null ? model.getDateTime() : "N/A"));
 
+        if (holder.tvPurchaseType != null) {
+            String pType = model.getPurchaseType();
+            holder.tvPurchaseType.setText(pType != null ? pType.toUpperCase() : "SUBSCRIPTION");
+        }
+
+        holder.tvServiceType.setText(model.getTechRole() != null ? model.getTechRole() : "General Maintenance");
+
+        if (holder.tvRemarks != null) {
+            String rem = model.getRemarks();
+            if (rem != null && !rem.trim().isEmpty()) {
+                holder.tvRemarks.setVisibility(View.VISIBLE);
+                holder.tvRemarks.setText("Remarks: " + rem);
+            } else {
+                holder.tvRemarks.setVisibility(View.GONE);
+            }
+        }
+
+        holder.tvCompletionTime.setText("Completed on: " + (model.getDateTime() != null ? model.getDateTime() : "N/A"));
         holder.tvLocation.setText(model.getAddress() != null ? model.getAddress() : "No address provided");
 
         holder.btnViewDetails.setOnClickListener(v -> {
@@ -56,14 +71,16 @@ public class CompletedRequestAdapter extends RecyclerView.Adapter<CompletedReque
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCustomerName, tvTicketID, tvServiceType, tvCompletionTime, tvLocation;
+        TextView tvCustomerName, tvTicketID, tvServiceType, tvPurchaseType, tvRemarks, tvCompletionTime, tvLocation;
         Button btnViewDetails;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCustomerName = itemView.findViewById(R.id.tvCustomerNameComp);
             tvTicketID = itemView.findViewById(R.id.tvTicketIDComp);
+            tvPurchaseType = itemView.findViewById(R.id.tvPurchaseTypeComp);
             tvServiceType = itemView.findViewById(R.id.tvServiceTypeComp);
+            tvRemarks = itemView.findViewById(R.id.tvRemarksComp);
             tvCompletionTime = itemView.findViewById(R.id.tvCompletionTime);
             tvLocation = itemView.findViewById(R.id.tvLocationComp);
             btnViewDetails = itemView.findViewById(R.id.btnViewDetails);

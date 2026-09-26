@@ -1,11 +1,14 @@
 package com.example.aquatech;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.OpenableColumns;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -262,6 +265,11 @@ public class AquaBuddyActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
         findViewById(R.id.lessThanIcon).setOnClickListener(v -> finish());
 
+        View btnAttach = findViewById(R.id.btnAttach);
+        if (btnAttach != null) {
+            btnAttach.setOnClickListener(v -> openFilePicker());
+        }
+
         btnSend.setOnClickListener(v -> {
             String text = etMessage.getText().toString().trim();
             if (!text.isEmpty()) {
@@ -271,6 +279,49 @@ public class AquaBuddyActivity extends AppCompatActivity {
                 resetInactivityTimer();
             }
         });
+    }
+
+    private static final int PICK_FILE_REQUEST = 101;
+
+    private void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        String[] mimetypes = {"image/*", "application/pdf"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+        startActivityForResult(Intent.createChooser(intent, "Select File or Image"), PICK_FILE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedUri = data.getData();
+            String fileName = "Attachment_" + System.currentTimeMillis();
+            try {
+                Cursor cursor = getContentResolver().query(selectedUri, null, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (nameIndex != -1) fileName = cursor.getString(nameIndex);
+                    cursor.close();
+                }
+            } catch (Exception ignored) {}
+
+            ChatMessage attachmentMsg = new ChatMessage(
+                "Attached file: " + fileName,
+                fileName,
+                "File Attachment",
+                selectedUri.toString()
+            );
+            attachmentMsg.setUser(true);
+            if (botChatRef != null) {
+                botChatRef.push().setValue(attachmentMsg);
+            } else {
+                messageList.add(attachmentMsg);
+                chatAdapter.notifyItemInserted(messageList.size() - 1);
+                chatRecyclerView.scrollToPosition(messageList.size() - 1);
+            }
+            sendBotMessage("Got your file, buddy! I've logged " + fileName + " in your request notes.");
+        }
     }
 
     private void handleInternalLogic(String text) {
@@ -360,7 +411,6 @@ public class AquaBuddyActivity extends AppCompatActivity {
                 DetectIntentResponse response = sessionsClient.detectIntent(request);
                 String botReply = response.getQueryResult().getFulfillmentText();
                 
-                // Personality Injection: ensure "buddy" is there if missing
                 if (botReply != null && !botReply.toLowerCase().contains("buddy")) {
                     botReply += ", buddy!";
                 }
