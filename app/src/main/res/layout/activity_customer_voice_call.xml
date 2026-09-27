@@ -6,68 +6,19 @@
     android:layout_height="match_parent"
     android:background="@drawable/call_background_gradient">
 
-
-
     <TextView
         android:id="@+id/inCall01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:fontFamily="@font/poppins_black_ttf"
-        android:text="IN CALL"
+        android:text="CALLING..."
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.073" />
-
-    <FrameLayout
-        android:id="@+id/avatarWrapper"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.220">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/green_circle_border" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="90dp"
-            app:cardElevation="0dp">
-
-            <ImageView
-                android:id="@+id/callAvatar"
-                android:layout_width="match_parent"
-                android:layout_height="187dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/man_user_circle_icon" />
-        </androidx.cardview.widget.CardView>
-    </FrameLayout>
-
-
-    <TextView
-        android:id="@+id/ConnectedCall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connected"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.485" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvCallTimer"
@@ -76,134 +27,166 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/poppins_black_ttf"
         android:text="00:00"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        android:textColor="#38BDF8"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ConnectedCall" />
+        app:layout_constraintTop_toBottomOf="@id/inCall01" />
+
+    <FrameLayout
+        android:id="@+id/avatarWrapper"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toTopOf="@id/callCustomerName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCallTimer"
+        app:layout_constraintVertical_bias="0.4">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/green_circle_border" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="72dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/callAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/man_user_circle_icon" />
+
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/callCustomerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_black_ttf"
-        android:text="Ethel Manansala"
+        android:text="Rafael Santos"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvAquaCustomer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvAquaCustomer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
         android:fontFamily="@font/poppins_black_ttf"
-        android:text="Customer"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Technician"
+        android:textColor="#90CAF9"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/callControlsLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ConnectedCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62"></TextView>
+        tools:ignore="MissingConstraints" />
 
-    <FrameLayout
-        android:id="@+id/btnSpeakerWrapper"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.346"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAquaCustomer"
-        app:layout_constraintVertical_bias="0.153">
+    <LinearLayout
+        android:id="@+id/callControlsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/volume_icon"
-            android:duplicateParentState="true"/>
+        <FrameLayout
+            android:id="@+id/btnSpeakerWrapper"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true">
 
-        <ImageView
-            android:id="@+id/btnSpeakerIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/speaker_icon_png"
-            app:tint="#4D4D4D" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/volume_icon"
+                android:duplicateParentState="true" />
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/btnSpeakerIcon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/speaker_icon_png"
+                app:tint="#4D4D4D" />
 
-    <FrameLayout
-        android:id="@+id/btnMicrophoneWrapper"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.653"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAquaCustomer"
-        app:layout_constraintVertical_bias="0.153">
+        </FrameLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/volume_icon"
-            android:duplicateParentState="true"/>
+        <FrameLayout
+            android:id="@+id/btnEndCallWrapper"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_end_call" />
 
-        <ImageView
-            android:id="@+id/mutedMicroPhone"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:scaleType="fitCenter"
-            android:layout_gravity="center"
-            android:src="@drawable/microphone_muted"
-            app:tint="#4D4D4D" />
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/ivEndCallIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:duplicateParentState="true"
+                android:rotation="45"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_menu_call"
+                app:tint="#FFFFFF" />
 
-    <FrameLayout
-        android:id="@+id/btnEndCallWrapper"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnSpeakerWrapper"
-        app:layout_constraintVertical_bias="0.4">
+        </FrameLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_end_call" />
+        <FrameLayout
+            android:id="@+id/btnMicrophoneWrapper"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true">
 
-        <ImageView
-            android:id="@+id/ivEndCallIcon"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:rotation="45"
-            android:scaleType="fitCenter"
-            android:src="@android:drawable/ic_menu_call"
-            app:tint="#FFFFFF"
-            android:duplicateParentState="true"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/volume_icon"
+                android:duplicateParentState="true" />
 
-    </FrameLayout>
+            <ImageView
+                android:id="@+id/mutedMicroPhone"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/microphone_muted"
+                app:tint="#4D4D4D" />
 
+        </FrameLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

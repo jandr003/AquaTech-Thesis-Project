@@ -2,10 +2,13 @@ package com.example.aquatech;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.text.Html;
 import android.view.View;
 import android.view.Window;
@@ -42,7 +45,8 @@ public class CustomerChatActivity extends AppCompatActivity {
     private RecyclerView chatRecyclerView;
     private EditText etMessage;
     private ImageButton btnSend;
-    private ImageView btnBack, btnCall, headerAvatar;
+    private ImageView btnBack, btnCall, headerAvatar, btnTechInfo;
+    private View btnAttach;
     private TextView tvOtherPartyName;
 
     private ChatAdapter chatAdapter;
@@ -225,6 +229,11 @@ public class CustomerChatActivity extends AppCompatActivity {
 
     private void updateChatFunctionality(boolean enabled) {
         isChatFunctionalityEnabled = enabled;
+        if (btnAttach == null) btnAttach = findViewById(R.id.btnAttach);
+        if (btnAttach != null) {
+            btnAttach.setEnabled(enabled);
+            btnAttach.setAlpha(enabled ? 1.0f : 0.5f);
+        }
         if (enabled) {
             etMessage.setEnabled(true);
             btnSend.setEnabled(true);
@@ -257,6 +266,7 @@ public class CustomerChatActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
         btnBack = findViewById(R.id.btnBack);
         btnCall = findViewById(R.id.btnCall);
+        btnTechInfo = findViewById(R.id.btnTechInfo);
         tvOtherPartyName = findViewById(R.id.tvCustomerName);
         headerAvatar = findViewById(R.id.customerAvatar);
 
@@ -398,6 +408,21 @@ public class CustomerChatActivity extends AppCompatActivity {
 
     private void setupClickListeners() {
         btnBack.setOnClickListener(v -> finish());
+
+        if (btnTechInfo != null) {
+            btnTechInfo.setOnClickListener(v -> {
+                Intent intent = new Intent(CustomerChatActivity.this, TechnicianDetailActivity.class);
+                intent.putExtra("TECH_ID", techId);
+                intent.putExtra("TECH_NAME", otherPartyName);
+                startActivity(intent);
+            });
+        }
+
+        btnAttach = findViewById(R.id.btnAttach);
+        if (btnAttach != null) {
+            btnAttach.setOnClickListener(v -> openFilePicker());
+        }
+
         btnSend.setOnClickListener(v -> {
             if (!isChatFunctionalityEnabled) {
                 String errorMsg = (myId != null && myId.equals(techId)) ? "Accept the ticket first." : "Waiting for technician to accept.";
@@ -436,6 +461,73 @@ public class CustomerChatActivity extends AppCompatActivity {
         });
     }
 
+    private static final int PICK_CHAT_FILE_REQUEST = 102;
+
+    private void openFilePicker() {
+        if (!isChatFunctionalityEnabled) {
+            String errorMsg = (myId != null && myId.equals(techId)) ? "Accept the ticket first." : "Waiting for technician to accept.";
+            Toast.makeText(CustomerChatActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        String[] mimetypes = {"image/*", "application/pdf"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+        startActivityForResult(Intent.createChooser(intent, "Select File or Image"), PICK_CHAT_FILE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_CHAT_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedUri = data.getData();
+            String fileName = "Attachment_" + System.currentTimeMillis();
+            try {
+                Cursor cursor = getContentResolver().query(selectedUri, null, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (nameIndex != -1) fileName = cursor.getString(nameIndex);
+                    cursor.close();
+                }
+            } catch (Exception ignored) {}
+
+            sendFileMessage(fileName, selectedUri.toString());
+        }
+    }
+
+    private void sendFileMessage(String fileName, String fileUri) {
+        if (customerId == null || techId == null) return;
+
+        String chatId = techId + "_" + customerId;
+        DatabaseReference rootChatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
+        DatabaseReference messageRef = rootChatRef.child("messages");
+
+        String msgId = messageRef.push().getKey();
+        if (msgId == null) return;
+
+        Map<String, Object> msgData = new HashMap<>();
+        msgData.put("text", "Attached file: " + fileName);
+        msgData.put("fileName", fileName);
+        msgData.put("fileSize", "Attachment");
+        msgData.put("fileUri", fileUri);
+        msgData.put("senderId", myId);
+        msgData.put("timestamp", System.currentTimeMillis());
+
+        Map<String, Object> chatMeta = new HashMap<>();
+        chatMeta.put("techId", techId);
+        chatMeta.put("customerId", customerId);
+        chatMeta.put("lastMessage", "Attached " + fileName);
+        chatMeta.put("timestamp", System.currentTimeMillis());
+        chatMeta.put("lastSenderId", myId);
+
+        messageRef.child(msgId).setValue(msgData);
+        rootChatRef.updateChildren(chatMeta);
+
+        String otherUserId = myId.equals(techId) ? customerId : techId;
+        String notifType = myId.equals(techId) ? "CHAT_FROM_TECH" : "CHAT_FROM_CUST";
+        NotificationActivity.addNotification(otherUserId, "Sent an attachment: " + fileName, notifType, customerId);
+    }
+
     private void initiateCall() {
         String callerId, receiverId, callerName;
 
@@ -462,8 +554,6 @@ public class CustomerChatActivity extends AppCompatActivity {
 
         // Use local variable for current user name if available, else generic
         String myName = "User";
-        // Attempt to find current user name from meta or static resolution (or fetch it)
-        // For simplicity, we'll use "Customer" or "Technician" or better yet, fetch it.
         
         NotificationModel notification = new NotificationModel(
                 notifPushRef.getKey(),

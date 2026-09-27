@@ -74,7 +74,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private boolean isActivityInForeground = false;
     private boolean hasRated = false;
 
-    // For chat threads list
     private RecyclerView rvChatThreads;
     private ChatThreadAdapter chatThreadAdapter;
     private List<DataSnapshot> chatThreadsList = new ArrayList<>();
@@ -196,6 +195,31 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         CardView messageCard = findViewById(R.id.messageRequestButton);
         if (messageCard != null) {
             messageCard.setCardBackgroundColor(Color.parseColor("#3EB5E8"));
+        }
+
+        // Bottom Navigation Bar
+        View navHome = findViewById(R.id.navCustHome);
+        if (navHome != null) {
+            navHome.setOnClickListener(v -> {
+                View sv = findViewById(R.id.customerScrollView);
+                if (sv != null) sv.scrollTo(0, 0);
+            });
+        }
+        View navRequest = findViewById(R.id.navCustRequest);
+        if (navRequest != null) {
+            navRequest.setOnClickListener(v -> startActivity(new Intent(this, ServiceRequestActivity.class)));
+        }
+        View navMessages = findViewById(R.id.navCustMessages);
+        if (navMessages != null) {
+            navMessages.setOnClickListener(v -> startActivity(new Intent(this, CustomerChatListActivity.class)));
+        }
+        View navHistory = findViewById(R.id.navCustHistory);
+        if (navHistory != null) {
+            navHistory.setOnClickListener(v -> startActivity(new Intent(this, ServiceHistoryActivity.class)));
+        }
+        View navProfile = findViewById(R.id.navCustProfile);
+        if (navProfile != null) {
+            navProfile.setOnClickListener(v -> startActivity(new Intent(this, CustomerSetupActivity.class)));
         }
     }
 

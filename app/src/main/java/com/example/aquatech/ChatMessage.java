@@ -12,6 +12,7 @@ public class ChatMessage {
     private String fileName;
     private String fileSize;
     private String fileUrl;
+    private String fileUri;
 
     // Receipt fields
     private boolean isReceipt;
@@ -80,8 +81,11 @@ public class ChatMessage {
     public String getFileSize() { return fileSize; }
     public void setFileSize(String fileSize) { this.fileSize = fileSize; }
 
-    public String getFileUrl() { return fileUrl; }
+    public String getFileUrl() { return fileUrl != null ? fileUrl : fileUri; }
     public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
+
+    public String getFileUri() { return fileUri != null ? fileUri : fileUrl; }
+    public void setFileUri(String fileUri) { this.fileUri = fileUri; }
 
     public boolean isReceipt() { return isReceipt; }
     public void setReceipt(boolean receipt) { isReceipt = receipt; }

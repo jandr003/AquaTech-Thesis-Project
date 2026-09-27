@@ -99,6 +99,13 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"/>
 
+        <activity
+            android:name=".TechnicianDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
         <activity android:name=".UnitDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"

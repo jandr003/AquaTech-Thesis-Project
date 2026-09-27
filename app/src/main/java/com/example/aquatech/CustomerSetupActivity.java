@@ -42,6 +42,11 @@ public class CustomerSetupActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        View btnBack = findViewById(R.id.btnBackSetup);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         setUpAccountTitle = findViewById(R.id.setUpAccount);
         card1 = findViewById(R.id.whiteCardItem1);
         card2 = findViewById(R.id.whiteCardItem2);
