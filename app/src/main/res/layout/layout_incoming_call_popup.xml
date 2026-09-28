@@ -1,83 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="8dp"
-    app:cardBackgroundColor="#FFFFFF">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="12dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="14dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivCallerAvatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:src="@drawable/man_user_circle_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:shapeAppearanceOverlay="@style/CircleImage" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginStart="12dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnDeclineCall"
-            app:layout_constraintStart_toEndOf="@+id/ivCallerAvatar"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_toStartOf="@id/btnDeclineCall"
+            android:layout_toEndOf="@id/ivCallerAvatar"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvIncomingCallLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Incoming Call..."
-                android:textColor="#3EB5E8"
-                android:textSize="12sp"
+                android:textColor="#2196F3"
+                android:textSize="11.5sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvCallerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Caller Name"
-                android:textColor="#333333"
-                android:textSize="16sp"
+                android:text="Rafael Santos"
+                android:textColor="#1E293B"
+                android:textSize="15sp"
                 android:textStyle="bold" />
+
         </LinearLayout>
 
         <ImageView
             android:id="@+id/btnDeclineCall"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/btnAnswerCall"
             android:background="@drawable/circle_red_bg"
-            android:padding="10dp"
+            android:clickable="true"
+            android:contentDescription="Decline Call"
+            android:focusable="true"
+            android:padding="11dp"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnAnswerCall"
-            app:layout_constraintTop_toTopOf="parent"
             app:tint="#FFFFFF" />
 
         <ImageView
             android:id="@+id/btnAnswerCall"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:background="@drawable/circle_green_bg"
+            android:clickable="true"
+            android:contentDescription="Answer Call"
+            android:focusable="true"
             android:padding="10dp"
             android:src="@drawable/ic_call"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:tint="#FFFFFF" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

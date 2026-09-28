@@ -5,21 +5,25 @@ import java.util.List;
 
 public class AvatarDataProvider {
 
-    public static List<AvatarModel> getTechnicianAvatars() {
+    public static List<AvatarModel> getCustomerAvatars() {
         List<AvatarModel> avatars = new ArrayList<>();
-        avatars.add(new AvatarModel(R.drawable.technician_man1));
-        avatars.add(new AvatarModel(R.drawable.technician_woman2));
+
+        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140048.png"));
+        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140047.png"));
+        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140051.png"));
+
+        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140040.png"));
+        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140037.png"));
+        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140039.png"));
+
         return avatars;
     }
 
-    public static List<AvatarModel> getCustomerAvatars() {
+    public static List<AvatarModel> getTechnicianAvatars() {
         List<AvatarModel> avatars = new ArrayList<>();
-        avatars.add(new AvatarModel(R.drawable.man_user_02b_bg));
-        avatars.add(new AvatarModel(R.drawable.man_user_05c_bg));
-        avatars.add(new AvatarModel(R.drawable.man_user_07a_bg));
-        avatars.add(new AvatarModel(R.drawable.woman_user_01a_bg));
-        avatars.add(new AvatarModel(R.drawable.woman_user_03c_bg));
-        avatars.add(new AvatarModel(R.drawable.woman_user_06b_bg));
+        avatars.add(new AvatarModel(R.drawable.technician_man1));
+        avatars.add(new AvatarModel(R.drawable.technician_woman1));
+        avatars.add(new AvatarModel(R.drawable.technician_woman2));
         return avatars;
     }
 }

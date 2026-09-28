@@ -610,46 +610,45 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private void showIncomingCallPopup(String message, String callerTechId) {
-        if (isFinishing() || isDestroyed() || notificationContainer == null) return;
+        if (isFinishing() || isDestroyed()) return;
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View layout = inflater.inflate(R.layout.layout_incoming_call_popup, notificationContainer, false);
+        String currentTechId = callerTechId != null ? callerTechId : assignedTechId;
+        String myUid = mAuth.getUid();
+        String techName = assignedTechName != null ? assignedTechName : "AquaTech Technician";
 
-        TextView tvName = layout.findViewById(R.id.tvCallerName);
-        ImageView btnAnswer = layout.findViewById(R.id.btnAnswerCall);
-        ImageView btnDecline = layout.findViewById(R.id.btnDeclineCall);
-        ImageView ivAvatar = layout.findViewById(R.id.ivCallerAvatar);
+        IncomingCallPopup popup = new IncomingCallPopup(
+            this,
+            techName,
+            "AquaTech Technician",
+            currentTechId,
+            myUid,
+            false,
+            new IncomingCallPopup.OnCallActionListener() {
+                @Override
+                public void onAnswer() {
+                    String chatId = currentTechId + "_" + myUid;
 
-        ivAvatar.setImageResource(R.drawable.new_technician);
-        tvName.setText(assignedTechName != null ? assignedTechName : "Technician");
+                    Map<String, Object> callUpdates = new HashMap<>();
+                    callUpdates.put("callStatus", "active");
+                    callUpdates.put("callStartTime", ServerValue.TIMESTAMP);
 
-        btnAnswer.setOnClickListener(v -> {
-            notificationContainer.removeAllViews();
-            String currentTechId = callerTechId != null ? callerTechId : assignedTechId;
-            String chatId = currentTechId + "_" + mAuth.getUid();
+                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).updateChildren(callUpdates);
 
-            Map<String, Object> callUpdates = new HashMap<>();
-            callUpdates.put("callStatus", "active");
-            callUpdates.put("callStartTime", ServerValue.TIMESTAMP);
+                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerVoiceCallActivity.class);
+                    intent.putExtra("NAME", techName);
+                    intent.putExtra("TECH_ID", currentTechId);
+                    intent.putExtra("CUSTOMER_ID", myUid);
+                    startActivity(intent);
+                }
 
-            FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).updateChildren(callUpdates);
-
-            Intent intent = new Intent(this, CustomerVoiceCallActivity.class);
-            intent.putExtra("NAME", assignedTechName);
-            intent.putExtra("TECH_ID", currentTechId);
-            intent.putExtra("CUSTOMER_ID", mAuth.getUid());
-            startActivity(intent);
-        });
-
-        btnDecline.setOnClickListener(v -> {
-            notificationContainer.removeAllViews();
-            String currentTechId = callerTechId != null ? callerTechId : assignedTechId;
-            String chatId = currentTechId + "_" + mAuth.getUid();
-            FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
-        });
-
-        notificationContainer.removeAllViews();
-        notificationContainer.addView(layout);
+                @Override
+                public void onDecline() {
+                    String chatId = currentTechId + "_" + myUid;
+                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                }
+            }
+        );
+        popup.show();
     }
 
     private String getTemplateForUnit(String name) {

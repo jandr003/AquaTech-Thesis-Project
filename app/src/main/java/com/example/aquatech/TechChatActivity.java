@@ -216,28 +216,37 @@ public class TechChatActivity extends AppCompatActivity {
     }
 
     private void showIncomingCallPopup(String message, String callerCustId, String callerName) {
-        IncomingCallPopup popup = new IncomingCallPopup(this, callerName, new IncomingCallPopup.OnCallActionListener() {
-            @Override
-            public void onAnswer() {
-                String chatId = techId + "_" + callerCustId;
-                DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
-                Map<String, Object> updates = new HashMap<>();
-                updates.put("callStatus", "active");
-                updates.put("callStartTime", ServerValue.TIMESTAMP);
-                chatRef.updateChildren(updates);
+        IncomingCallPopup popup = new IncomingCallPopup(
+            this,
+            callerName != null ? callerName : "Customer",
+            "Customer",
+            callerCustId != null ? callerCustId : customerId,
+            techId,
+            true,
+            new IncomingCallPopup.OnCallActionListener() {
+                @Override
+                public void onAnswer() {
+                    String chatId = techId + "_" + (callerCustId != null ? callerCustId : customerId);
+                    DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
+                    Map<String, Object> updates = new HashMap<>();
+                    updates.put("callStatus", "active");
+                    updates.put("callStartTime", ServerValue.TIMESTAMP);
+                    chatRef.updateChildren(updates);
 
-                Intent intent = new Intent(TechChatActivity.this, VoiceCallActivity.class);
-                intent.putExtra("TECH_ID", techId);
-                intent.putExtra("CUSTOMER_ID", callerCustId);
-                startActivity(intent);
-            }
+                    Intent intent = new Intent(TechChatActivity.this, VoiceCallActivity.class);
+                    intent.putExtra("TECH_ID", techId);
+                    intent.putExtra("CUSTOMER_ID", callerCustId != null ? callerCustId : customerId);
+                    intent.putExtra("NAME", callerName);
+                    startActivity(intent);
+                }
 
-            @Override
-            public void onDecline() {
-                String chatId = techId + "_" + callerCustId;
-                FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                @Override
+                public void onDecline() {
+                    String chatId = techId + "_" + (callerCustId != null ? callerCustId : customerId);
+                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                }
             }
-        });
+        );
         popup.show();
     }
 

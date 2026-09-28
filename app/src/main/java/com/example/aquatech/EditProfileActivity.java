@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +45,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private String currentUid;
     private boolean isTechnician = false;
     private int selectedAvatarResId = R.drawable.man_user_circle_icon;
+    private String selectedAvatarUrl = null;
     private String selectedColorHex = "#F0F7FF";
 
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -122,6 +124,9 @@ public class EditProfileActivity extends AppCompatActivity {
         updates.put("address", address);
         updates.put("profileBgColor", selectedColorHex);
         updates.put("avatarResId", selectedAvatarResId);
+        if (selectedAvatarUrl != null && !selectedAvatarUrl.isEmpty()) {
+            updates.put("profileImageUrl", selectedAvatarUrl);
+        }
 
         DatabaseReference db = FirebaseDatabase.getInstance(DB_URL).getReference();
 
@@ -188,8 +193,13 @@ public class EditProfileActivity extends AppCompatActivity {
         RecyclerView rvAvatars = dialog.findViewById(R.id.rvAvatars);
         List<AvatarModel> avatarList = isTechnician ? AvatarDataProvider.getTechnicianAvatars() : AvatarDataProvider.getCustomerAvatars();
         AvatarAdapter adapter = new AvatarAdapter(avatarList, avatar -> {
-            selectedAvatarResId = avatar.getImageResId();
-            ivProfilePic.setImageResource(selectedAvatarResId);
+            if (avatar.getImageUrl() != null && !avatar.getImageUrl().isEmpty()) {
+                selectedAvatarUrl = avatar.getImageUrl();
+                Glide.with(this).load(selectedAvatarUrl).circleCrop().into(ivProfilePic);
+            } else {
+                selectedAvatarResId = avatar.getImageResId();
+                ivProfilePic.setImageResource(selectedAvatarResId);
+            }
             dialog.dismiss();
         });
         rvAvatars.setLayoutManager(new GridLayoutManager(this, isTechnician ? 2 : 3));

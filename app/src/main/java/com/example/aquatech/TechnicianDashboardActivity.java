@@ -962,52 +962,54 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
     }
 
     private void showIncomingCallPopup(String message, String customerId) {
-        if (isFinishing() || isDestroyed() || notificationContainer == null) return;
+        if (isFinishing() || isDestroyed()) return;
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View layout = inflater.inflate(R.layout.layout_incoming_call_popup, notificationContainer, false);
-
-        TextView tvName = layout.findViewById(R.id.tvCallerName);
-        ImageView btnAnswer = layout.findViewById(R.id.btnAnswerCall);
-        ImageView btnDecline = layout.findViewById(R.id.btnDeclineCall);
-        ImageView ivAvatar = layout.findViewById(R.id.ivCallerAvatar);
-
-        ivAvatar.setImageResource(R.drawable.man_customer_icon);
-        tvName.setText("Customer Request");
-
-        FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(customerId.trim()).child("fullName")
+        FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(customerId.trim())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String name = snapshot.getValue(String.class);
-                        if (name != null && tvName != null) tvName.setText(name);
+                        String name = snapshot.child("fullName").getValue(String.class);
+                        if (name == null) name = snapshot.child("name").getValue(String.class);
+                        if (name == null) name = "Customer";
+
+                        String finalName = name;
+                        IncomingCallPopup popup = new IncomingCallPopup(
+                            TechnicianDashboardActivity.this,
+                            finalName,
+                            "Customer",
+                            customerId.trim(),
+                            currentTechUid,
+                            true,
+                            new IncomingCallPopup.OnCallActionListener() {
+                                @Override
+                                public void onAnswer() {
+                                    String chatId = currentTechUid + "_" + customerId.trim();
+                                    DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
+                                    Map<String, Object> updates = new HashMap<>();
+                                    updates.put("callStatus", "active");
+                                    updates.put("callStartTime", ServerValue.TIMESTAMP);
+                                    chatRef.updateChildren(updates);
+
+                                    Intent intent = new Intent(TechnicianDashboardActivity.this, VoiceCallActivity.class);
+                                    intent.putExtra("TECH_ID", currentTechUid);
+                                    intent.putExtra("CUSTOMER_ID", customerId.trim());
+                                    intent.putExtra("NAME", finalName);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onDecline() {
+                                    String chatId = currentTechUid + "_" + customerId.trim();
+                                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                                }
+                            }
+                        );
+                        popup.show();
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
+                    public void onCancelled(@NonNull DatabaseError error) {}
                 });
-
-        btnAnswer.setOnClickListener(v -> {
-            notificationContainer.removeAllViews();
-            String chatId = currentTechUid + "_" + customerId.trim();
-            FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("active");
-            FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStartTime").setValue(ServerValue.TIMESTAMP);
-
-            Intent intent = new Intent(this, VoiceCallActivity.class);
-            intent.putExtra("TECH_ID", currentTechUid);
-            intent.putExtra("CUSTOMER_ID", customerId.trim());
-            startActivity(intent);
-        });
-
-        btnDecline.setOnClickListener(v -> {
-            notificationContainer.removeAllViews();
-            String chatId = currentTechUid + "_" + customerId.trim();
-            FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
-        });
-
-        notificationContainer.removeAllViews();
-        notificationContainer.addView(layout);
     }
 
     private void showResubmitPopup(String message, String ticketId) {

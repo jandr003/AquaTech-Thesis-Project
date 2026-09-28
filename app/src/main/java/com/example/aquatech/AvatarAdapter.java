@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.AvatarViewHolder> {
@@ -34,7 +36,15 @@ public class AvatarAdapter extends RecyclerView.Adapter<AvatarAdapter.AvatarView
     @Override
     public void onBindViewHolder(@NonNull AvatarViewHolder holder, int position) {
         AvatarModel avatar = avatarList.get(position);
-        holder.ivAvatar.setImageResource(avatar.getImageResId());
+        if (avatar.getImageUrl() != null && !avatar.getImageUrl().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(avatar.getImageUrl())
+                    .placeholder(R.drawable.man_customer_icon)
+                    .circleCrop()
+                    .into(holder.ivAvatar);
+        } else {
+            holder.ivAvatar.setImageResource(avatar.getImageResId());
+        }
         holder.itemView.setOnClickListener(v -> listener.onAvatarClick(avatar));
     }
 

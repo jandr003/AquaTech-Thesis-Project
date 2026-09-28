@@ -106,6 +106,15 @@
             android:theme="@style/Theme.AquaTech"
             tools:ignore="LockedOrientationActivity"/>
 
+        <activity
+            android:name=".IncomingCallActivity"
+            android:exported="true"
+            android:showOnLockScreen="true"
+            android:turnScreenOn="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
         <activity android:name=".UnitDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait"

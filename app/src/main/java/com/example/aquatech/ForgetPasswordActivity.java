@@ -87,6 +87,11 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        View btnBack = findViewById(R.id.btnBackForgot);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         tvForgotHeader = findViewById(R.id.tvForgotHeader);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
         floatingCard = findViewById(R.id.floatingCard);
@@ -190,8 +195,10 @@ public class ForgetPasswordActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1001, builder.build());
+        try {
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(1001, builder.build());
+        } catch (SecurityException ignored) {}
     }
 
     private String generateOtp() {
