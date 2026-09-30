@@ -8,22 +8,30 @@ public class AvatarDataProvider {
     public static List<AvatarModel> getCustomerAvatars() {
         List<AvatarModel> avatars = new ArrayList<>();
 
-        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140048.png"));
-        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140037.png"));
-        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140061.png"));
-
-        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140047.png"));
-        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140051.png"));
-        avatars.add(new AvatarModel("https://cdn-icons-png.flaticon.com/512/4140/4140040.png"));
+        avatars.add(new AvatarModel(R.drawable.customer_avatar_1));
+        avatars.add(new AvatarModel(R.drawable.customer_avatar_2));
+        avatars.add(new AvatarModel(R.drawable.customer_avatar_3));
+        avatars.add(new AvatarModel(R.drawable.customer_avatar_4));
+        avatars.add(new AvatarModel(R.drawable.customer_avatar_5));
+        avatars.add(new AvatarModel(R.drawable.customer_avatar_6));
+        avatars.add(new AvatarModel(R.drawable.customer_avatar_7));
+        avatars.add(new AvatarModel(R.drawable.customer_avatar_8));
 
         return avatars;
     }
 
     public static List<AvatarModel> getTechnicianAvatars() {
         List<AvatarModel> avatars = new ArrayList<>();
-        avatars.add(new AvatarModel("https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&auto=format&fit=crop&q=80"));
-        avatars.add(new AvatarModel("https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&auto=format&fit=crop&q=80"));
-        avatars.add(new AvatarModel("https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&auto=format&fit=crop&q=80"));
+
+        avatars.add(new AvatarModel(R.drawable.tech_avatar_1));
+        avatars.add(new AvatarModel(R.drawable.tech_avatar_2));
+        avatars.add(new AvatarModel(R.drawable.tech_avatar_3));
+        avatars.add(new AvatarModel(R.drawable.tech_avatar_4));
+        avatars.add(new AvatarModel(R.drawable.tech_avatar_5));
+        avatars.add(new AvatarModel(R.drawable.tech_avatar_6));
+        avatars.add(new AvatarModel(R.drawable.tech_avatar_7));
+        avatars.add(new AvatarModel(R.drawable.tech_avatar_8));
+
         return avatars;
     }
 }
