@@ -39,7 +39,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private View btnChangePic;
     private EditText etUsername, etFullName, etNumber, etAddress;
     private MaterialButton btnUpdate;
-    private List<MaterialCardView> colorCards = new ArrayList<>();
 
     private FirebaseAuth mAuth;
     private String currentUid;
@@ -66,7 +65,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         setupStatusBar();
         initializeViews();
-        setupColorPicker();
         setupClickListeners();
     }
 
@@ -159,25 +157,6 @@ public class EditProfileActivity extends AppCompatActivity {
         etNumber = findViewById(R.id.etEditNumber);
         etAddress = findViewById(R.id.etEditAddress);
         btnUpdate = findViewById(R.id.btnUpdateProfile);
-    }
-
-    private void setupColorPicker() {
-        int[] ids = {R.id.colorGray, R.id.colorBlue, R.id.colorPurple, R.id.colorGreen, R.id.colorOrange, R.id.colorYellow, R.id.colorCoral, R.id.colorCyan, R.id.colorPink, R.id.colorBlack};
-        String[] colors = {"#CFD8DC", "#90CAF9", "#B39DDB", "#A5D6A7", "#FFCC80", "#FFF59D", "#FFAB91", "#80DEEA", "#F48FB1", "#546E7A"};
-        for (int i = 0; i < ids.length; i++) {
-            final MaterialCardView card = findViewById(ids[i]);
-            final String colorHex = colors[i];
-            if (card != null) {
-                colorCards.add(card);
-                card.setOnClickListener(v -> {
-                    for (MaterialCardView c : colorCards) c.setStrokeWidth(0);
-                    card.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#00E5FF")));
-                    card.setStrokeWidth(6);
-                    selectedColorHex = colorHex;
-                    cvProfileImage.setCardBackgroundColor(Color.parseColor(colorHex));
-                });
-            }
-        }
     }
 
     private void setupClickListeners() {

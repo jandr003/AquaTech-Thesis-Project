@@ -111,44 +111,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="start"
-                android:fontFamily="@font/poppins"
-                android:text="Choose background"
-                android:textColor="#888888"
-                android:textSize="13sp"
-                android:textStyle="bold" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:scrollbars="none"
-                android:overScrollMode="never">
-
-                <LinearLayout
-                    android:id="@+id/colorContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="4dp">
-
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorGray" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#CFD8DC" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorBlue" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#90CAF9" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorPurple" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#B39DDB" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorGreen" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#A5D6A7" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorOrange" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#FFCC80" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorYellow" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#FFF59D" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorCoral" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#FFAB91" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorCyan" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#80DEEA" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorPink" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#F48FB1" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-                    <com.google.android.material.card.MaterialCardView android:id="@+id/colorBlack" android:layout_width="45dp" android:layout_height="45dp" android:layout_margin="6dp" app:cardBackgroundColor="#546E7A" app:cardCornerRadius="22.5dp" app:cardElevation="4dp" app:strokeWidth="0dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

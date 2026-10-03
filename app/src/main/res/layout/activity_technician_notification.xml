@@ -88,8 +88,7 @@
                     android:paddingVertical="8dp"
                     android:text="All"
                     android:textColor="#0F172A"
-                    android:textSize="14sp"
-                    android:selected="true"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/chipReminders"
