@@ -36,8 +36,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ImageView btnBack, ivProfilePic;
     private MaterialCardView cvProfileImage;
-    private View btnChangePic;
-    private EditText etUsername, etFullName, etNumber, etAddress;
+    private View btnChangePic, btnChangePassword;
+    private EditText etUsername, etFullName, etEmail, etNumber, etAddress;
     private MaterialButton btnUpdate;
 
     private FirebaseAuth mAuth;
@@ -79,6 +79,10 @@ public class EditProfileActivity extends AppCompatActivity {
                     
                     String username = snapshot.child("username").getValue(String.class);
                     String fullName = snapshot.child("fullName").getValue(String.class);
+                    String email = snapshot.child("email").getValue(String.class);
+                    if (email == null && mAuth.getCurrentUser() != null) {
+                        email = mAuth.getCurrentUser().getEmail();
+                    }
                     String mobile = snapshot.child("mobile").getValue(String.class);
                     String address = snapshot.child("address").getValue(String.class);
                     String bgColor = snapshot.child("profileBgColor").getValue(String.class);
@@ -86,6 +90,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     if (username != null) etUsername.setText(username);
                     if (fullName != null) etFullName.setText(fullName);
+                    if (email != null) etEmail.setText(email);
                     if (mobile != null) etNumber.setText(mobile);
                     if (address != null) etAddress.setText(address);
                     
@@ -154,8 +159,10 @@ public class EditProfileActivity extends AppCompatActivity {
         btnChangePic = findViewById(R.id.btnChangePic);
         etUsername = findViewById(R.id.etEditUsername);
         etFullName = findViewById(R.id.etEditFullName);
+        etEmail = findViewById(R.id.etEditEmail);
         etNumber = findViewById(R.id.etEditNumber);
         etAddress = findViewById(R.id.etEditAddress);
+        btnChangePassword = findViewById(R.id.btnChangePassword);
         btnUpdate = findViewById(R.id.btnUpdateProfile);
     }
 
@@ -163,6 +170,24 @@ public class EditProfileActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
         btnChangePic.setOnClickListener(v -> showAvatarSelectionDialog());
         btnUpdate.setOnClickListener(v -> saveProfileToFirebase());
+        if (btnChangePassword != null) {
+            btnChangePassword.setOnClickListener(v -> sendPasswordReset());
+        }
+    }
+
+    private void sendPasswordReset() {
+        String email = etEmail.getText().toString().trim();
+        if (email.isEmpty() && mAuth.getCurrentUser() != null) {
+            email = mAuth.getCurrentUser().getEmail();
+        }
+        if (email != null && !email.isEmpty()) {
+            final String finalEmail = email;
+            mAuth.sendPasswordResetEmail(finalEmail)
+                    .addOnSuccessListener(aVoid -> Toast.makeText(this, "Password reset link sent to " + finalEmail, Toast.LENGTH_LONG).show())
+                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to send reset email: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        } else {
+            Toast.makeText(this, "No email found for this account", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showAvatarSelectionDialog() {

@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6FBFF">
+    android:background="#F8FAFC">
 
-    <View
+    <RelativeLayout
         android:id="@+id/helpHeader"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@drawable/header_gradient"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="64dp"
+        android:background="#2196F3"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/btnBackHelp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:padding="8dp"
-        android:src="@drawable/ic_arrow_back_gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/btnBackHelp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_gray"
+            app:tint="@color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text="Help Center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/btnBackHelp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnBackHelp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins"
+            android:text="Help Center"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/helpHeader">
 
@@ -51,12 +56,12 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="52dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="25dp"
-                app:cardElevation="6dp"
-                app:cardUseCompatPadding="false"
-                app:strokeWidth="0dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -69,7 +74,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@android:drawable/ic_menu_search"
-                        app:tint="#999999" />
+                        app:tint="#2196F3" />
 
                     <EditText
                         android:id="@+id/etSearchHelp"
@@ -78,8 +83,11 @@
                         android:layout_marginStart="12dp"
                         android:background="@null"
                         android:fontFamily="@font/poppins"
-                        android:hint="Search for help..."
+                        android:hint="Search for help topics..."
+                        android:textColor="@color/text_main"
+                        android:textColorHint="#94A3B8"
                         android:textSize="14sp" />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -88,10 +96,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:fontFamily="@font/poppins"
-                android:text="Popular Topics"
-                android:textColor="@color/aqua_primary"
-                android:textSize="16sp"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="POPULAR TOPICS"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
+                android:letterSpacing="0.05"
                 android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
@@ -100,16 +109,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="0dp">
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
                     <LinearLayout
                         android:id="@+id/layoutFaq1"
@@ -118,15 +127,55 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="vertical">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                            <TextView android:id="@+id/tvQuestion1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:layout_toStartOf="@id/ivArrow1" android:fontFamily="@font/poppins" android:text="How to request a service?" android:textColor="@color/black" android:textStyle="bold" />
-                            <ImageView android:id="@+id/ivArrow1" android:layout_width="20dp" android:layout_height="20dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@drawable/ic_chevron_down" app:tint="#999999" />
+                        android:orientation="vertical"
+                        android:paddingVertical="4dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tvQuestion1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_toStartOf="@id/ivArrow1"
+                                android:fontFamily="@font/poppins"
+                                android:text="How to request a service?"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivArrow1"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_chevron_down"
+                                app:tint="#2196F3" />
+
                         </RelativeLayout>
-                        <TextView android:id="@+id/tvAnswer1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="@font/poppins" android:text="Go to the dashboard and click the 'Request Service' button." android:textColor="#666666" android:textSize="12sp" android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvAnswer1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Go to the dashboard and click the 'Request Service' button."
+                            android:textColor="#64748B"
+                            android:textSize="12.5sp"
+                            android:visibility="gone" />
+
                     </LinearLayout>
 
-                    <View android:id="@+id/divider1" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#F0F0F0" />
+                    <View
+                        android:id="@+id/divider1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#E2E8F0" />
 
                     <LinearLayout
                         android:id="@+id/layoutFaq2"
@@ -135,15 +184,55 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="vertical">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                            <TextView android:id="@+id/tvQuestion2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:layout_toStartOf="@id/ivArrow2" android:fontFamily="@font/poppins" android:text="How to track my technician?" android:textColor="@color/black" android:textStyle="bold" />
-                            <ImageView android:id="@+id/ivArrow2" android:layout_width="20dp" android:layout_height="20dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@drawable/ic_chevron_down" app:tint="#999999" />
+                        android:orientation="vertical"
+                        android:paddingVertical="4dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tvQuestion2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_toStartOf="@id/ivArrow2"
+                                android:fontFamily="@font/poppins"
+                                android:text="How to track my technician?"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivArrow2"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_chevron_down"
+                                app:tint="#2196F3" />
+
                         </RelativeLayout>
-                        <TextView android:id="@+id/tvAnswer2" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="@font/poppins" android:text="Click on 'Track Request' to see real-time location." android:textColor="#666666" android:textSize="12sp" android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvAnswer2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Click on 'Track Request' on your dashboard to see real-time technician status."
+                            android:textColor="#64748B"
+                            android:textSize="12.5sp"
+                            android:visibility="gone" />
+
                     </LinearLayout>
 
-                    <View android:id="@+id/divider2" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#F0F0F0" />
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#E2E8F0" />
 
                     <LinearLayout
                         android:id="@+id/layoutFaq3"
@@ -152,15 +241,55 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="vertical">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                            <TextView android:id="@+id/tvQuestion3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:layout_toStartOf="@id/ivArrow3" android:fontFamily="@font/poppins" android:text="How to update or change my password?" android:textColor="@color/black" android:textStyle="bold" />
-                            <ImageView android:id="@+id/ivArrow3" android:layout_width="20dp" android:layout_height="20dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@drawable/ic_chevron_down" app:tint="#999999" />
+                        android:orientation="vertical"
+                        android:paddingVertical="4dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tvQuestion3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_toStartOf="@id/ivArrow3"
+                                android:fontFamily="@font/poppins"
+                                android:text="How to update or change my password?"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivArrow3"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_chevron_down"
+                                app:tint="#2196F3" />
+
                         </RelativeLayout>
-                        <TextView android:id="@+id/tvAnswer3" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="@font/poppins" android:text="Go to Settings > Privacy Settings > Account Password to reset your password." android:textColor="#666666" android:textSize="12sp" android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvAnswer3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Go to Edit Profile > Change Password to receive a reset link in your email."
+                            android:textColor="#64748B"
+                            android:textSize="12.5sp"
+                            android:visibility="gone" />
+
                     </LinearLayout>
 
-                    <View android:id="@+id/divider3" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#F0F0F0" />
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#E2E8F0" />
 
                     <LinearLayout
                         android:id="@+id/layoutFaq4"
@@ -169,15 +298,55 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="vertical">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                            <TextView android:id="@+id/tvQuestion4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:layout_toStartOf="@id/ivArrow4" android:fontFamily="@font/poppins" android:text="How to edit my profile?" android:textColor="@color/black" android:textStyle="bold" />
-                            <ImageView android:id="@+id/ivArrow4" android:layout_width="20dp" android:layout_height="20dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@drawable/ic_chevron_down" app:tint="#999999" />
+                        android:orientation="vertical"
+                        android:paddingVertical="4dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tvQuestion4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_toStartOf="@id/ivArrow4"
+                                android:fontFamily="@font/poppins"
+                                android:text="How to edit my profile and avatar?"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivArrow4"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_chevron_down"
+                                app:tint="#2196F3" />
+
                         </RelativeLayout>
-                        <TextView android:id="@+id/tvAnswer4" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="@font/poppins" android:text="Tap your profile icon and select 'Edit Profile'." android:textColor="#666666" android:textSize="12sp" android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvAnswer4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Tap your profile icon and select 'Edit Profile' to update details or pick a new avatar."
+                            android:textColor="#64748B"
+                            android:textSize="12.5sp"
+                            android:visibility="gone" />
+
                     </LinearLayout>
 
-                    <View android:id="@+id/divider4" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginVertical="12dp" android:background="#F0F0F0" />
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#E2E8F0" />
 
                     <LinearLayout
                         android:id="@+id/layoutFaq5"
@@ -186,65 +355,107 @@
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="vertical">
-                        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                            <TextView android:id="@+id/tvQuestion5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentStart="true" android:layout_toStartOf="@id/ivArrow5" android:fontFamily="@font/poppins" android:text="How to add a new unit?" android:textColor="@color/black" android:textStyle="bold" />
-                            <ImageView android:id="@+id/ivArrow5" android:layout_width="20dp" android:layout_height="20dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@drawable/ic_chevron_down" app:tint="#999999" />
-                        </RelativeLayout>
-                        <TextView android:id="@+id/tvAnswer5" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="@font/poppins" android:text="Click the edit icon next to your unit name on the dashboard." android:textColor="#666666" android:textSize="12sp" android:visibility="gone" />
-                    </LinearLayout>
+                        android:orientation="vertical"
+                        android:paddingVertical="4dp">
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tvQuestion5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_toStartOf="@id/ivArrow5"
+                                android:fontFamily="@font/poppins"
+                                android:text="How to add or change a water unit?"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:id="@+id/ivArrow5"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_chevron_down"
+                                app:tint="#2196F3" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tvAnswer5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Click the edit icon next to your unit name on the dashboard."
+                            android:textColor="#64748B"
+                            android:textSize="12.5sp"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/poppins"
-                android:text="Contact Support"
-                android:textColor="@color/aqua_primary"
-                android:textSize="16sp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:text="CONTACT SUPPORT"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
+                android:letterSpacing="0.05"
                 android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnChatSupport"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="56dp"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/poppins"
-                android:text="Chat with AquaBuddy"
+                android:text="Chat with AquaBuddy AI"
                 android:textAllCaps="false"
-                android:textColor="@color/aqua_primary"
-                app:cornerRadius="12dp"
+                android:textColor="#2196F3"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="16dp"
                 app:icon="@drawable/ic_message"
-                app:iconTint="@color/aqua_primary"
-                app:strokeColor="@color/aqua_primary" />
+                app:iconTint="#2196F3"
+                app:strokeColor="#2196F3"
+                app:strokeWidth="1.5dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCallSupport"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="56dp"
                 android:layout_marginTop="12dp"
+                android:backgroundTint="#2196F3"
                 android:fontFamily="@font/poppins"
                 android:text="Call Customer Support"
                 android:textAllCaps="false"
-                android:backgroundTint="@color/aqua_primary"
-                app:cornerRadius="12dp"
-                app:icon="@drawable/ic_call" />
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="16dp"
+                app:elevation="4dp"
+                app:icon="@drawable/ic_call"
+                app:iconTint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/poppins"
                 android:text="Available: Mon-Sat, 8:00 AM - 5:00 PM"
-                android:textColor="#999999"
-                android:textSize="11sp" />
+                android:textColor="#94A3B8"
+                android:textSize="11.5sp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
