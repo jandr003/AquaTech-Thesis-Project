@@ -38,23 +38,19 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <ImageView
             android:id="@+id/btnAddTech"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:layout_width="40dp"
+             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/poppins"
-            android:paddingHorizontal="8dp"
-            android:text="ADD"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            app:icon="@android:drawable/ic_input_add"
-            app:iconPadding="4dp"
-            app:iconSize="18dp"
-            app:iconTint="@color/white" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Add Technician"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_input_add"
+            app:tint="@color/white" />
 
     </RelativeLayout>
 
