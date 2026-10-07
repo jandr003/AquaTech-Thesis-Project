@@ -10,7 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -35,25 +39,49 @@ public class NotificationHistoryAdapter extends RecyclerView.Adapter<Notificatio
         NotificationModel model = list.get(position);
         holder.tvMessage.setText(Html.fromHtml(model.getMessage()));
         holder.tvTime.setText(model.getTimeAgo());
-        holder.ivIcon.setImageResource(model.getIconResId());
+        int resId = model.getIconResId();
+        holder.ivIcon.setImageResource(resId);
+        if (resId == R.drawable.ic_bell_notification) {
+            holder.ivIcon.setColorFilter(ContextCompat.getColor(context, R.color.aqua_primary));
+        } else {
+            holder.ivIcon.clearColorFilter();
+        }
 
         holder.itemView.setOnClickListener(v -> {
-            if (model.getTicketId() != null && !model.getTicketId().isEmpty()) {
-                if ("RESUBMIT".equalsIgnoreCase(model.getType())) {
-                    Intent intent = new Intent(context, TechnicianDashboardActivity.class);
-                    intent.putExtra("RESUBMIT_TICKET_ID", model.getTicketId());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    context.startActivity(intent);
-                } else if ("SCHEDULE".equalsIgnoreCase(model.getType()) || "AQUABUDDY".equalsIgnoreCase(model.getType())) {
-                    Intent intent = new Intent(context, AquaBuddyActivity.class);
-                    intent.putExtra("SHOW_SCHEDULE_MSG", true);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                } else {
-                    Intent intent = new Intent(context, ServiceReceiptActivity.class);
-                    intent.putExtra("TICKET_ID", model.getTicketId());
-                    context.startActivity(intent);
+            String type = model.getType() != null ? model.getType().toUpperCase() : "";
+
+            if ("CHAT".equalsIgnoreCase(type) || "MESSAGE".equalsIgnoreCase(type) || "CALL".equalsIgnoreCase(type) || "AQUABUDDY".equalsIgnoreCase(type) || "AI".equalsIgnoreCase(type)) {
+                if (model.getId() != null && FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    FirebaseDatabase.getInstance("https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                            .getReference("CustomerNotifications").child(uid).child(model.getId()).removeValue();
                 }
+            }
+
+            if ("CHAT".equalsIgnoreCase(type) || "MESSAGE".equalsIgnoreCase(type)) {
+                Intent intent = new Intent(context, CustomerChatActivity.class);
+                intent.putExtra("TICKET_ID", model.getTicketId());
+                context.startActivity(intent);
+            } else if ("AQUABUDDY".equalsIgnoreCase(type) || "AI".equalsIgnoreCase(type)) {
+                Intent intent = new Intent(context, AquaBuddyActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            } else if ("CALL".equalsIgnoreCase(type)) {
+                Intent intent = new Intent(context, CustomerVoiceCallActivity.class);
+                intent.putExtra("TICKET_ID", model.getTicketId());
+                context.startActivity(intent);
+            } else if ("COMPLETED".equalsIgnoreCase(type) || "PDF".equalsIgnoreCase(type)) {
+                Intent intent = new Intent(context, ServiceReceiptActivity.class);
+                intent.putExtra("TICKET_ID", model.getTicketId());
+                context.startActivity(intent);
+            } else if ("ASSIGNED".equalsIgnoreCase(type) || "IN_PROGRESS".equalsIgnoreCase(type) || "PENDING".equalsIgnoreCase(type) || "RESCHEDULED".equalsIgnoreCase(type) || "SCHEDULE".equalsIgnoreCase(type)) {
+                Intent intent = new Intent(context, TrackServiceActivity.class);
+                intent.putExtra("TICKET_ID", model.getTicketId());
+                context.startActivity(intent);
+            } else if (model.getTicketId() != null && !model.getTicketId().isEmpty()) {
+                Intent intent = new Intent(context, TrackServiceActivity.class);
+                intent.putExtra("TICKET_ID", model.getTicketId());
+                context.startActivity(intent);
             }
         });
     }

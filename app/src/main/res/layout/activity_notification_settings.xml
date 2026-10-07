@@ -1,73 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/aqua_background">
+    android:background="#F8FAFC">
 
-    <View
+    <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/header_gradient"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="64dp"
+        android:background="#2196F3"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:padding="8dp"
-        android:src="@drawable/ic_arrow_back_gray"
-        app:layout_constraintBottom_toBottomOf="@id/header"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/header"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_gray"
+            app:tint="@color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_black_ttf"
-        android:text="Notification Settings"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/btnBack"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnBack" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins"
+            android:text="Notification Settings"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppins_black_ttf"
-                android:text="Service Alerts"
-                android:textColor="@color/aqua_primary"
-                android:textSize="14sp"
+                android:letterSpacing="0.05"
+                android:text="SERVICE ALERTS"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
                 app:cardUseCompatPadding="true"
                 app:strokeWidth="0dp">
 
@@ -75,69 +86,125 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="10dp">
-                        <TextView
+                        android:paddingVertical="6dp">
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
-                            android:text="Service Request Status"
-                            android:textColor="@color/aqua_text_dark"
-                            android:textSize="15sp" />
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@id/switchServiceStatus"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Service Request Status"
+                                android:textColor="#1E293B"
+                                android:textSize="14.5sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Get real-time updates when your request is assigned or completed"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
+
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switchServiceStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:checked="true" />
+                            android:layout_centerVertical="true"
+                            android:checked="true"
+                            app:thumbTint="#2196F3"
+                            app:trackTint="#90CAF9" />
+
                     </RelativeLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F5F5F5" android:layout_marginVertical="8dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#E2E8F0" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="10dp">
-                        <TextView
+                        android:paddingVertical="6dp">
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
-                            android:text="Technician Arrivals"
-                            android:textColor="@color/aqua_text_dark"
-                            android:textSize="15sp" />
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@id/switchTechArrival"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Technician Arrivals"
+                                android:textColor="#1E293B"
+                                android:textSize="14.5sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Receive alerts when your technician arrives at your location"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
+
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switchTechArrival"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:checked="true" />
-                    </RelativeLayout>
+                            android:layout_centerVertical="true"
+                            android:checked="true"
+                            app:thumbTint="#2196F3"
+                            app:trackTint="#90CAF9" />
 
+                    </RelativeLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppins_black_ttf"
-                android:text="Preferences"
-                android:textColor="@color/aqua_primary"
-                android:textSize="14sp"
+                android:letterSpacing="0.05"
+                android:text="PREFERENCES"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
                 app:cardUseCompatPadding="true"
                 app:strokeWidth="0dp">
 
@@ -145,51 +212,103 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="10dp">
-                        <TextView
+                        android:paddingVertical="6dp">
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
-                            android:text="Notification Sound"
-                            android:textColor="@color/aqua_text_dark"
-                            android:textSize="15sp" />
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@id/switchNotifSound"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Notification Sound"
+                                android:textColor="#1E293B"
+                                android:textSize="14.5sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Play sound for incoming service alerts"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
+
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switchNotifSound"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:checked="true" />
+                            android:layout_centerVertical="true"
+                            android:checked="true"
+                            app:thumbTint="#2196F3"
+                            app:trackTint="#90CAF9" />
+
                     </RelativeLayout>
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F5F5F5" android:layout_marginVertical="8dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#E2E8F0" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="10dp">
-                        <TextView
+                        android:paddingVertical="6dp">
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
-                            android:text="Vibration"
-                            android:textColor="@color/aqua_text_dark"
-                            android:textSize="15sp" />
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@id/switchVibration"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Vibration"
+                                android:textColor="#1E293B"
+                                android:textSize="14.5sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Vibrate on new alert messages"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
+
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switchVibration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:checked="true" />
-                    </RelativeLayout>
+                            android:layout_centerVertical="true"
+                            android:checked="true"
+                            app:thumbTint="#2196F3"
+                            app:trackTint="#90CAF9" />
 
+                    </RelativeLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

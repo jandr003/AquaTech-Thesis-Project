@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.3"
+        android:layout_weight="1.2"
         android:orientation="vertical">
 
         <TextView
@@ -43,16 +43,17 @@
         android:id="@+id/auditCustomerID"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="1.2"
         android:fontFamily="@font/poppins"
         android:text="ASC-C001"
         android:textColor="#1E293B"
         android:textSize="12.5sp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:gravity="end|center_vertical"
         android:orientation="horizontal">
 
         <TextView
@@ -72,7 +73,8 @@
         <ImageView
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="6dp"
+            android:contentDescription="Next"
             android:src="@drawable/arrow_forward"
             app:tint="#94A3B8" />
 

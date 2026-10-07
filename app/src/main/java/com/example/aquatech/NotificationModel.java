@@ -7,6 +7,7 @@ public class NotificationModel {
     private String type;
     private String ticketId;
     private String senderName;
+    private boolean read = false;
     private int iconResId = -1;
 
     public NotificationModel() {
@@ -47,6 +48,9 @@ public class NotificationModel {
     public String getSenderName() { return senderName; }
     public void setSenderName(String senderName) { this.senderName = senderName; }
 
+    public boolean isRead() { return read; }
+    public void setRead(boolean read) { this.read = read; }
+
     public void setIconResId(int iconResId) { this.iconResId = iconResId; }
 
     public String getTimeAgo() {
@@ -63,13 +67,27 @@ public class NotificationModel {
 
         if (type == null) return R.drawable.ic_bell_notification;
         switch (type.toUpperCase()) {
-            case "PDF": return R.drawable.robot_icon_new;
-            case "MESSAGE": return R.drawable.message_notification_1;
-            case "CALL": return R.drawable.telephone_icon;
+            case "AQUABUDDY":
+            case "AI":
+            case "PDF":
+                return R.drawable.friendlybot_icon_new;
+            case "CHAT":
+            case "MESSAGE":
+                return R.drawable.message_notification_1;
+            case "CALL":
+                return R.drawable.telephone_icon;
+            case "PENDING":
+                return R.drawable.ic_pdf_clock;
             case "ASSIGNED":
+            case "IN_PROGRESS":
+                return R.drawable.ic_in_progress;
             case "COMPLETED":
-            case "RESUBMIT":
-            default: return R.drawable.ic_bell_notification;
+                return R.drawable.ic_completed;
+            case "RESCHEDULED":
+            case "SCHEDULE":
+                return R.drawable.ic_pdf_calendar;
+            default:
+                return R.drawable.ic_bell_notification;
         }
     }
 }
