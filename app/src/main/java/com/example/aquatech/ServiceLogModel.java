@@ -26,6 +26,9 @@ public class ServiceLogModel {
     private String serviceTypeLabel;
     private String completionTime;
     private String purchaseType;
+    private int avatarResId = -1;
+    private String profileImageUrl;
+    private String unitName;
     public ServiceLogModel() {}
 
     public ServiceLogModel(String sroNumber, String techName, String techRole, String status, String customerPhone) {
@@ -117,4 +120,13 @@ public class ServiceLogModel {
 
     public String getCompletionTime() { return completionTime != null ? completionTime : dateTime; }
     public void setCompletionTime(String completionTime) { this.completionTime = completionTime; }
+
+    public int getAvatarResId() { return avatarResId; }
+    public void setAvatarResId(int avatarResId) { this.avatarResId = avatarResId; }
+
+    public String getProfileImageUrl() { return profileImageUrl; }
+    public void setProfileImageUrl(String profileImageUrl) { this.profileImageUrl = profileImageUrl; }
+
+    public String getUnitName() { return unitName != null && !unitName.isEmpty() ? unitName : "WL CUBE FIREWALL"; }
+    public void setUnitName(String unitName) { this.unitName = unitName; }
 }

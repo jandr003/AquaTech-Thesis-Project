@@ -146,16 +146,53 @@ public class OpenRequestsActivity extends AppCompatActivity {
                             if (finalServiceType == null) finalServiceType = "General Service";
                         }
 
+                        String custUserId = ds.child("userId").getValue(String.class);
+                        if (custUserId == null) custUserId = ds.child("customerId").getValue(String.class);
+
+                        String uName = ds.child("unitName").getValue(String.class);
+                        if (uName == null || uName.isEmpty()) uName = ds.child("unitModel").getValue(String.class);
+
+                        Integer avatarResId = ds.child("avatarResId").getValue(Integer.class);
+                        String profileImageUrl = ds.child("profileImageUrl").getValue(String.class);
+
                         ServiceLogModel model = new ServiceLogModel();
                         model.setTicketId(id);
+                        model.setUserId(custUserId);
                         model.setSroNumber(sro != null ? sro : "N/A");
                         model.setTechName(customer != null ? customer : "Unknown");
                         model.setTechRole(finalServiceType);
+                        if (uName != null && !uName.isEmpty()) {
+                            model.setUnitName(getFriendlyProductName(uName));
+                        }
                         model.setDateTime(timeRange != null ? timeRange : "Not Set");
                         model.setAddress(address != null ? address : "N/A");
                         model.setCustomerPhone(mobile != null ? mobile : "N/A");
                         model.setLatitude(lat);
                         model.setLongitude(lng);
+                        if (avatarResId != null && avatarResId != 0) model.setAvatarResId(avatarResId);
+                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) model.setProfileImageUrl(profileImageUrl);
+
+                        // Query Users profile if avatar or registered unit is not attached to request snapshot
+                        if (custUserId != null && !custUserId.isEmpty()) {
+                            FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(custUserId)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot uSnap) {
+                                            if (uSnap.exists()) {
+                                                Integer uAvatar = uSnap.child("avatarResId").getValue(Integer.class);
+                                                String uImg = uSnap.child("profileImageUrl").getValue(String.class);
+                                                String uUnit = uSnap.child("unitName").getValue(String.class);
+                                                if (uUnit == null || uUnit.isEmpty()) uUnit = uSnap.child("selectedUnit").getValue(String.class);
+
+                                                if (uAvatar != null && uAvatar != 0) model.setAvatarResId(uAvatar);
+                                                if (uImg != null && !uImg.isEmpty()) model.setProfileImageUrl(uImg);
+                                                if (uUnit != null && !uUnit.isEmpty()) model.setUnitName(getFriendlyProductName(uUnit));
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                        @Override public void onCancelled(@NonNull DatabaseError error) {}
+                                    });
+                        }
 
                         openList.add(model);
 
@@ -181,6 +218,21 @@ public class OpenRequestsActivity extends AppCompatActivity {
             }
             @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
+    }
+
+    public static String getFriendlyProductName(String unitModel) {
+        if (unitModel == null || unitModel.trim().isEmpty()) return "WL CUBE FIREWALL";
+        String upper = unitModel.toUpperCase();
+        if (upper.contains("CUBE") || upper.contains("FXCU1")) {
+            return "WL CUBE FIREWALL";
+        } else if (upper.contains("SLIM")) {
+            return "SMART SLIM";
+        } else if (upper.contains("COUNTER") || upper.contains("CT-")) {
+            return "COUNTER TOP WATER PURIFIER";
+        } else if (upper.contains("STANDING") || upper.contains("ST-") || upper.contains("ST")) {
+            return "STANDING WATER PURIFIER";
+        }
+        return unitModel;
     }
 
     private boolean hasQty(DataSnapshot ds, String key) {

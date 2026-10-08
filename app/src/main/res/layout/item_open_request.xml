@@ -20,13 +20,12 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvAvatarWrapper"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            app:cardBackgroundColor="#F0F7FF"
-            app:cardCornerRadius="27dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="28dp"
             app:cardElevation="0dp"
-            app:strokeColor="#2196F3"
-            app:strokeWidth="2dp"
+            app:strokeWidth="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -34,42 +33,48 @@
                 android:id="@+id/ivCustomerAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="Customer Avatar"
                 android:scaleType="centerCrop"
-                android:src="@drawable/man_customer_icon" />
+                android:src="@drawable/customer_avatar1" />
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/tvCustomerName"
+        <LinearLayout
+            android:id="@+id/llNameContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="4dp"
             android:layout_marginEnd="8dp"
-            android:fontFamily="@font/poppins"
-            android:text="John Doe"
-            android:textColor="#1E293B"
-            android:textSize="15.5sp"
-            android:textStyle="bold"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/cvAvatarWrapper"
             app:layout_constraintEnd_toStartOf="@+id/tvTicketIDOpen"
             app:layout_constraintStart_toEndOf="@id/cvAvatarWrapper"
-            app:layout_constraintTop_toTopOf="@id/cvAvatarWrapper" />
+            app:layout_constraintTop_toTopOf="@id/cvAvatarWrapper">
 
-        <TextView
-            android:id="@+id/tvServiceTypeOpen"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/poppins"
-            android:maxLines="1"
-            android:text="Filter Preventive"
-            android:textColor="#1C4E75"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/tvSRONumberOpen"
-            app:layout_constraintStart_toStartOf="@id/tvCustomerName"
-            app:layout_constraintTop_toBottomOf="@id/tvCustomerName" />
+            <TextView
+                android:id="@+id/tvCustomerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="John Doe"
+                android:textColor="#1E293B"
+                android:textSize="15.5sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvServiceTypeOpen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins"
+                android:maxLines="1"
+                android:text="Filter Preventive"
+                android:textColor="#1C4E75"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvTicketIDOpen"
@@ -132,6 +137,7 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:contentDescription="Preferred Time"
                 android:src="@drawable/ic_pdf_clock"
                 app:tint="#2196F3" />
 
@@ -159,6 +165,7 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:contentDescription="Location"
                 android:src="@drawable/ic_pdf_house"
                 app:tint="#2196F3" />
 
@@ -177,7 +184,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/contactContainerOpen"
+            android:id="@+id/unitContainerOpen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -188,6 +195,36 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:contentDescription="Product Unit"
+                android:src="@drawable/ic_step_items"
+                app:tint="#2196F3" />
+
+            <TextView
+                android:id="@+id/tvUnitNameOpen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/poppins"
+                android:textColor="#1E293B"
+                android:textSize="12.5sp"
+                android:textStyle="bold"
+                tools:text="WL CUBE FIREWALL" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/contactContainerOpen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/unitContainerOpen">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:contentDescription="Contact Number"
                 android:src="@drawable/ic_phone"
                 app:tint="#2196F3" />
 
