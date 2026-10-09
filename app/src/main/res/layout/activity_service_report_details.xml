@@ -1,57 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="#F8FAFC">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
+        android:id="@+id/notifHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/header_gradient"
-        app:elevation="0dp">
+        android:layout_height="64dp"
+        android:background="#2196F3"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/btnBackDetails"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/arrow_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="18dp"
-            android:paddingTop="40dp"
-            android:paddingBottom="16dp">
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins"
+            android:text="Service Report Details"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/btnBackDetails"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:src="@drawable/arrow_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="#FFFFFF" />
-
-            <TextView
-                android:id="@+id/tvHeaderTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:text="SERVICE REPORT"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/btnBackDetails"
-                app:layout_constraintStart_toEndOf="@id/btnBackDetails"
-                app:layout_constraintTop_toTopOf="@id/btnBackDetails" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notifHeader">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,57 +60,65 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardProof"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="220dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="12dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="0dp">
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
-                <ImageView
-                    android:id="@+id/ivProofOfService"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_place_holder" />
-
-                <View
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="bottom"
-                    android:background="@drawable/gradient_overlay_dark" />
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|start"
-                    android:layout_margin="16dp"
-                    android:fontFamily="@font/poppins"
-                    android:text="VIEW PROOF OF SERVICE"
-                    android:textColor="#FFFFFF"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/ivProofOfService"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Proof Of Service"
+                        android:padding="52dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_place_holder"
+                        app:tint="#94A3B8" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/gradient_overlay_dark" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="14dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="PROOFS OF SERVICE"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11.5sp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
-
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="0dp">
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="18dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -122,114 +128,112 @@
                             android:id="@+id/tvTicketIDDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_black_ttf"
-                            android:text="ASC2026-0014"
-                            android:textColor="#1E3A8A"
-                            android:textSize="18sp" />
+                            android:fontFamily="@font/poppins"
+                            android:text="#ASC2026-0014"
+                            android:textColor="#2563EB"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/tvReportStatusPill"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bg_pdf_status_green_pill"
+                            android:fontFamily="@font/poppins"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:text="● COMPLETED"
+                            android:textColor="#059669"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
-                            <ImageView
-                                android:layout_width="14dp"
-                                android:layout_height="14dp"
-                                android:src="@drawable/ic_check_on"
-                                app:tint="#8BC34A" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:fontFamily="@font/poppins"
-                                android:text="COMPLETED"
-                                android:textColor="#8BC34A"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginVertical="16dp"
-                        android:background="#F0F0F0" />
+                        android:layout_marginVertical="14dp"
+                        android:background="#E2E8F0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Customer Details"
-                        android:textColor="#888888"
-                        android:textSize="11sp"
+                        android:fontFamily="@font/poppins_black_ttf"
+                        android:letterSpacing="0.05"
+                        android:text="CUSTOMER DETAILS"
+                        android:textColor="#1C4E75"
+                        android:textSize="11.5sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvCustomerNameDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins_black_ttf"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/poppins"
                         android:text="John Doe"
-                        android:textColor="#333333"
-                        android:textSize="15sp" />
+                        android:textColor="#1E293B"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvCustomerPhoneDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
                         android:text="+63 9XX XXX XXXX"
-                        android:textColor="#666666"
-                        android:textSize="13sp" />
+                        android:textColor="#64748B"
+                        android:textSize="12.5sp" />
 
                     <TextView
                         android:id="@+id/tvUnitSroDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
                         android:text="SRO-00012060"
-                        android:textColor="#666666"
-                        android:textSize="13sp" />
+                        android:textColor="#64748B"
+                        android:textSize="12.5sp" />
 
                     <TextView
                         android:id="@+id/tvAddressDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="UNIT 201 MCKINLEY HILL, BGC TAGUIG"
-                        android:textColor="#666666"
-                        android:textSize="13sp" />
+                        android:text="Unit 201 McKinley Hill, BGC Taguig"
+                        android:textColor="#64748B"
+                        android:textSize="12.5sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginVertical="16dp"
-                        android:background="#F0F0F0" />
+                        android:layout_marginVertical="14dp"
+                        android:background="#E2E8F0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Payment Method"
-                        android:textColor="#888888"
-                        android:textSize="11sp"
+                        android:fontFamily="@font/poppins_black_ttf"
+                        android:letterSpacing="0.05"
+                        android:text="PAYMENT METHOD"
+                        android:textColor="#1C4E75"
+                        android:textSize="11.5sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvPaymentMethodDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins_black_ttf"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/poppins"
                         android:text="COD"
-                        android:textColor="#333333"
-                        android:textSize="14sp" />
+                        android:textColor="#1E293B"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:id="@+id/layoutBankDetailsDetails"
@@ -242,12 +246,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="6dp"
                             android:fontFamily="@font/poppins"
                             android:text="Bank Name"
-                            android:textColor="#888888"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                            android:textColor="#64748B"
+                            android:textSize="11sp" />
 
                         <TextView
                             android:id="@+id/tvBankNameDetails"
@@ -255,18 +258,17 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="BPI"
-                            android:textColor="#666666"
+                            android:textColor="#1E293B"
                             android:textSize="13sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="6dp"
                             android:fontFamily="@font/poppins"
                             android:text="Reference No"
-                            android:textColor="#888888"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                            android:textColor="#64748B"
+                            android:textSize="11sp" />
 
                         <TextView
                             android:id="@+id/tvBankRefDetails"
@@ -274,34 +276,37 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="XXXXXXXX"
-                            android:textColor="#666666"
+                            android:textColor="#1E293B"
                             android:textSize="13sp" />
+
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginVertical="16dp"
-                        android:background="#F0F0F0" />
+                        android:layout_marginVertical="14dp"
+                        android:background="#E2E8F0" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Performed By"
-                        android:textColor="#888888"
-                        android:textSize="11sp"
+                        android:fontFamily="@font/poppins_black_ttf"
+                        android:letterSpacing="0.05"
+                        android:text="PERFORMED BY"
+                        android:textColor="#1C4E75"
+                        android:textSize="11.5sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvTechNameDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins_black_ttf"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/poppins"
                         android:text="Technician John"
-                        android:textColor="#333333"
-                        android:textSize="15sp" />
+                        android:textColor="#1E293B"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -309,64 +314,67 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="0dp">
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_black_ttf"
+                        android:letterSpacing="0.05"
                         android:text="GENERALIZATION REPORT"
-                        android:textColor="#1E3A8A"
-                        android:textSize="14sp" />
+                        android:textColor="#1C4E75"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/poppins"
                         android:text="Service Type"
-                        android:textColor="#888888"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:textColor="#64748B"
+                        android:textSize="11.5sp" />
 
                     <TextView
                         android:id="@+id/tvServiceTypeDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
                         android:text="Filter Preventive and Maintenance"
-                        android:textColor="#333333"
-                        android:textSize="14sp" />
+                        android:textColor="#1E293B"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:fontFamily="@font/poppins"
                         android:text="Technician Remarks"
-                        android:textColor="#888888"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:textColor="#64748B"
+                        android:textSize="11.5sp" />
 
                     <TextView
                         android:id="@+id/tvTechRemarks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
                         android:text="Unit is in good condition after filter replacement. Tested water quality, TDS levels are within safe range."
-                        android:textColor="#333333"
-                        android:textSize="14sp" />
+                        android:textColor="#1E293B"
+                        android:textSize="13sp" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -374,43 +382,43 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true"
-                app:strokeWidth="0dp">
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_black_ttf"
+                        android:letterSpacing="0.05"
                         android:text="CUSTOMER FEEDBACK"
-                        android:textColor="#1E3A8A"
-                        android:textSize="14sp" />
+                        android:textColor="#1C4E75"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
                     <RatingBar
                         android:id="@+id/rbCustomerRating"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:isIndicator="true"
                         android:numStars="5"
-                        android:progressTint="#FFB300"
+                        android:progressTint="#F59E0B"
                         android:rating="4.5" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

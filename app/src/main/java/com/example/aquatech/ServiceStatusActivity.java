@@ -71,6 +71,9 @@ public class ServiceStatusActivity extends AppCompatActivity {
 
         dotHelper = new DotAnimationHelper();
 
+        ImageView btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+
         if (tvTicketId != null) {
             tvTicketId.setText("Ticket #: " + ticketId);
         }

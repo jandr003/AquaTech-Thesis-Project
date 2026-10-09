@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -28,7 +27,7 @@ import java.util.List;
 public class ServiceReportDetailsActivity extends AppCompatActivity {
 
     private ImageView ivProof;
-    private TextView tvTicketID, tvCustomerName, tvCustomerPhone, tvUnitSro, tvAddress, tvTechName, tvServiceType, tvRemarks, tvStatus,
+    private TextView tvTicketID, tvCustomerName, tvCustomerPhone, tvUnitSro, tvAddress, tvTechName, tvServiceType, tvRemarks, tvStatusPill,
                      tvPaymentMethod, tvBankName, tvBankRef;
     private LinearLayout layoutBankDetails;
     private RatingBar rbRating;
@@ -66,7 +65,7 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
         tvServiceType = findViewById(R.id.tvServiceTypeDetails);
         tvRemarks = findViewById(R.id.tvTechRemarks);
         rbRating = findViewById(R.id.rbCustomerRating);
-        tvStatus = findViewById(R.id.tvHeaderTitle); 
+        tvStatusPill = findViewById(R.id.tvReportStatusPill); 
 
         tvPaymentMethod = findViewById(R.id.tvPaymentMethodDetails);
         tvBankName = findViewById(R.id.tvBankNameDetails);
@@ -96,8 +95,13 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
                     String imageUrl = snapshot.child("proofImageUrl").getValue(String.class);
 
                     String service = getServiceTypeLabel(snapshot);
+                    String status = snapshot.child("status").getValue(String.class);
 
                     Float rating = snapshot.child("rating").getValue(Float.class);
+
+                    if (tvStatusPill != null) {
+                        tvStatusPill.setText("● " + (status != null ? status.toUpperCase() : "COMPLETED"));
+                    }
 
                     tvCustomerName.setText(customer != null ? customer : "N/A");
                     tvCustomerPhone.setText(phone != null ? phone : "Not Provided");
@@ -122,9 +126,8 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
                     else rbRating.setRating(0f);
 
                     if (imageUrl != null && !imageUrl.isEmpty()) {
-                        ivProof.setLayoutParams(new FrameLayout.LayoutParams(
-                                FrameLayout.LayoutParams.MATCH_PARENT,
-                                FrameLayout.LayoutParams.MATCH_PARENT));
+                        ivProof.setPadding(0, 0, 0, 0);
+                        ivProof.clearColorFilter();
                         Glide.with(ServiceReportDetailsActivity.this)
                                 .load(imageUrl)
                                 .placeholder(R.drawable.img_place_holder)
