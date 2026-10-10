@@ -1,37 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="110dp"
     android:layout_height="110dp"
-    android:layout_marginEnd="10dp"
-    app:cardBackgroundColor="#F1F5F9"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp">
+    android:layout_marginEnd="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    app:strokeColor="#E2E8F0"
+    app:strokeWidth="1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Photo Thumbnail -->
         <ImageView
             android:id="@+id/ivSharedMediaThumb"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="Shared Media Thumbnail"
             android:scaleType="centerCrop"
             android:src="@drawable/maintenance_technician1" />
 
+        <!-- Document File Overlay -->
         <LinearLayout
             android:id="@+id/sharedMediaDocOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#E2E8F0"
+            android:background="#F0F7FF"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="6dp"
-            android:visibility="gone">
+            android:padding="8dp"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:contentDescription="Document Icon"
                 android:src="@drawable/ic_pdf_document"
                 app:tint="#2196F3" />
 
@@ -39,11 +51,12 @@
                 android:id="@+id/tvSharedMediaName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/poppins"
                 android:gravity="center"
                 android:maxLines="2"
-                android:text="Document.pdf"
+                android:text="Service_Receipt.pdf"
                 android:textColor="#1E293B"
                 android:textSize="10.5sp"
                 android:textStyle="bold" />
@@ -51,4 +64,4 @@
         </LinearLayout>
 
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

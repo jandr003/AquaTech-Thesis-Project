@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
@@ -30,8 +31,8 @@ import java.util.Random;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private TextInputLayout tilUsername, tilFullName, tilEmail, tilMobile, tilAddress, tilPassword;
-    private EditText etUsername, etFullName, etEmail, etMobile, etAddress, etPassword;
+    private TextInputLayout tilFirstName, tilLastName, tilEmail, tilMobile, tilAddress, tilPassword;
+    private EditText etFirstName, etLastName, etEmail, etMobile, etAddress, etPassword;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -50,18 +51,22 @@ public class SignupActivity extends AppCompatActivity {
         setupLoginPrompt();
 
         findViewById(R.id.btnSignUp).setOnClickListener(v -> performSignup());
+        View btnGoogle = findViewById(R.id.btnGoogleSignUp);
+        if (btnGoogle != null) btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Connecting to Google Sign-In...", Toast.LENGTH_SHORT).show());
+        View btnFacebook = findViewById(R.id.btnFacebookSignUp);
+        if (btnFacebook != null) btnFacebook.setOnClickListener(v -> Toast.makeText(this, "Connecting to Facebook Sign-In...", Toast.LENGTH_SHORT).show());
     }
 
     private void initializeViews() {
-        tilUsername = findViewById(R.id.tilUsername);
-        tilFullName = findViewById(R.id.tilFullName);
+        tilFirstName = findViewById(R.id.tilFirstName);
+        tilLastName = findViewById(R.id.tilLastName);
         tilEmail = findViewById(R.id.tilEmail);
         tilMobile = findViewById(R.id.tilMobile);
         tilAddress = findViewById(R.id.tilAddress);
         tilPassword = findViewById(R.id.tilPassword);
 
-        etUsername = findViewById(R.id.etUsername);
-        etFullName = findViewById(R.id.etFullName);
+        etFirstName = findViewById(R.id.etFirstName);
+        etLastName = findViewById(R.id.etLastName);
         etEmail = findViewById(R.id.etEmail);
         etMobile = findViewById(R.id.etMobile);
         etAddress = findViewById(R.id.etAddress);
@@ -69,17 +74,16 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void performSignup() {
-        String username = etUsername.getText().toString().trim();
-        String fullName = etFullName.getText().toString().trim();
+        String firstName = etFirstName.getText().toString().trim();
+        String lastName = etLastName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String mobile = etMobile.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        // ✅ Validate inputs
         boolean isValid = true;
-        if (username.isEmpty()) { tilUsername.setError("Required"); isValid = false; } else { tilUsername.setError(null); }
-        if (fullName.isEmpty()) { tilFullName.setError("Required"); isValid = false; } else { tilFullName.setError(null); }
+        if (firstName.isEmpty()) { tilFirstName.setError("Required"); isValid = false; } else { tilFirstName.setError(null); }
+        if (lastName.isEmpty()) { tilLastName.setError("Required"); isValid = false; } else { tilLastName.setError(null); }
         if (email.isEmpty()) { tilEmail.setError("Required"); isValid = false; } else { tilEmail.setError(null); }
         if (mobile.isEmpty()) { tilMobile.setError("Required"); isValid = false; } else { tilMobile.setError(null); }
         if (address.isEmpty()) { tilAddress.setError("Required"); isValid = false; } else { tilAddress.setError(null); }
@@ -95,21 +99,24 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         String userId = mAuth.getCurrentUser().getUid();
-                        saveUserData(userId, username, fullName, email, mobile, address);
+                        saveUserData(userId, firstName, lastName, email, mobile, address);
                     } else {
                         Toast.makeText(SignupActivity.this, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
-    private void saveUserData(String userId, String username, String fullName, String email, String mobile, String address) {
+    private void saveUserData(String userId, String firstName, String lastName, String email, String mobile, String address) {
         boolean isTechnician = email.toLowerCase().endsWith("@aquasmartguard.ph");
         String role = isTechnician ? "Technician" : "Customer";
+        String fullName = firstName + " " + lastName;
 
         Map<String, Object> userData = new HashMap<>();
         userData.put("userId", userId);
-        userData.put("username", username);
+        userData.put("firstName", firstName);
+        userData.put("lastName", lastName);
         userData.put("fullName", fullName);
+        userData.put("username", fullName);
         userData.put("email", email);
         userData.put("mobile", mobile);
         userData.put("address", address);
@@ -162,10 +169,12 @@ public class SignupActivity extends AppCompatActivity {
                 finish();
             }
             @Override
-            public void updateDrawState(@NonNull android.text.TextPaint ds) {
+            public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
-                ds.setColor(Color.parseColor("#4B91C6"));
+                ds.setFakeBoldText(true);
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+                ds.setColor(Color.parseColor("#1C6EA4"));
             }
         };
         ss.setSpan(new StyleSpan(Typeface.BOLD), 25, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
