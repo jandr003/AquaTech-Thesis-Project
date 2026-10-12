@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -85,10 +86,23 @@ public class SplashActivity extends AppCompatActivity {
         loginProgress = findViewById(R.id.loginProgress);
 
         setupStatusBar();
-        startLogoAnimations();
+        
+        // Hide splash animation
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null && currentUser.getEmail() != null) {
+            checkUserRoleAndRedirect(currentUser.getUid(), currentUser.getEmail());
+        } else {
+            showLoginUI();
+        }
 
         Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(v -> loginUser());
+
+        View btnGoogle = findViewById(R.id.btnGoogleLogin);
+        if (btnGoogle != null) btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Connecting to Google Sign-In...", Toast.LENGTH_SHORT).show());
+
+        View btnFacebook = findViewById(R.id.btnFacebookLogin);
+        if (btnFacebook != null) btnFacebook.setOnClickListener(v -> Toast.makeText(this, "Connecting to Facebook Sign-In...", Toast.LENGTH_SHORT).show());
 
         findViewById(R.id.tvForgotPassword).setOnClickListener(v -> {
             startActivity(new Intent(SplashActivity.this, ForgetPasswordActivity.class));
@@ -349,28 +363,31 @@ public class SplashActivity extends AppCompatActivity {
         ImageView ivLogo = findViewById(R.id.imageView2);
         View expandingCircle = findViewById(R.id.expandingCircle);
         LinearLayout finalScreen = findViewById(R.id.finalScreen);
-        LinearLayout loginContainer = findViewById(R.id.loginContainer);
+        View loginContainer = findViewById(R.id.loginContainer);
         LinearLayout topLogoContainer = findViewById(R.id.topLogoContainer);
         View waveBottom = findViewById(R.id.waveBottom);
 
-        ivLogo.setVisibility(View.GONE);
-        expandingCircle.setVisibility(View.GONE);
-        finalScreen.setVisibility(View.GONE);
+        if (ivLogo != null) ivLogo.setVisibility(View.GONE);
+        if (expandingCircle != null) expandingCircle.setVisibility(View.GONE);
+        if (finalScreen != null) finalScreen.setVisibility(View.GONE);
         findViewById(R.id.loginBg).setVisibility(View.VISIBLE);
 
-        topLogoContainer.setVisibility(View.VISIBLE);
-        topLogoContainer.setAlpha(0f);
-        topLogoContainer.setTranslationY(-100f);
-        topLogoContainer.animate().alpha(1f).translationY(0f).setDuration(900).start();
+        if (topLogoContainer != null) {
+            topLogoContainer.setVisibility(View.VISIBLE);
+            topLogoContainer.setAlpha(1f);
+            topLogoContainer.setTranslationY(0f);
+        }
 
-        waveBottom.setVisibility(View.VISIBLE);
-        waveBottom.setAlpha(0f);
-        waveBottom.animate().alpha(1f).setDuration(1000).start();
+        if (waveBottom != null) {
+            waveBottom.setVisibility(View.VISIBLE);
+            waveBottom.setAlpha(1f);
+        }
 
-        loginContainer.setVisibility(View.VISIBLE);
-        loginContainer.setAlpha(0f);
-        loginContainer.setTranslationY(80f);
-        loginContainer.animate().alpha(1f).translationY(0f).setDuration(800).setStartDelay(400).start();
+        if (loginContainer != null) {
+            loginContainer.setVisibility(View.VISIBLE);
+            loginContainer.setAlpha(1f);
+            loginContainer.setTranslationY(0f);
+        }
 
         setupSignupLink();
     }
@@ -378,17 +395,25 @@ public class SplashActivity extends AppCompatActivity {
     private void setupSignupLink() {
         TextView tvDontHaveAccount = findViewById(R.id.tvDontHaveAccount);
         if (tvDontHaveAccount == null) return;
-        SpannableString ss = new SpannableString("Don't have an account? Sign up.");
+        String text = "Don't have an account? SIGN UP here.";
+        SpannableString ss = new SpannableString(text);
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
                 startActivity(new Intent(SplashActivity.this, SignupActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+                ds.setFakeBoldText(true);
+                ds.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+                ds.setColor(Color.parseColor("#1C4E75"));
+            }
         };
-        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#4B91C6")), 23, 31, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(clickableSpan, 23, 31, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new StyleSpan(Typeface.BOLD), 23, 31, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new StyleSpan(Typeface.BOLD), 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(clickableSpan, 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvDontHaveAccount.setText(ss);
         tvDontHaveAccount.setMovementMethod(LinkMovementMethod.getInstance());
     }
