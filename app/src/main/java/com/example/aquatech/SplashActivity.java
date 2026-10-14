@@ -86,14 +86,7 @@ public class SplashActivity extends AppCompatActivity {
         loginProgress = findViewById(R.id.loginProgress);
 
         setupStatusBar();
-        
-        // Hide splash animation
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null && currentUser.getEmail() != null) {
-            checkUserRoleAndRedirect(currentUser.getUid(), currentUser.getEmail());
-        } else {
-            showLoginUI();
-        }
+        startLogoAnimations();
 
         Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(v -> loginUser());
