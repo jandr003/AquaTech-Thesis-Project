@@ -39,6 +39,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -192,8 +193,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
     }
 
     private void initializeViews() {
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
         tvInProgLabel = findViewById(R.id.tvProgressLabel);
         tvInProgCount = findViewById(R.id.tvProgressCount);
         underlineInProg = findViewById(R.id.underlineProgress);
@@ -317,6 +316,25 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         }
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
+        }
+
+        BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
+        if (techBottomNav != null) {
+            techBottomNav.setSelectedItemId(R.id.nav_tech_dashboard);
+            techBottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_tech_performance) {
+                    startActivity(new Intent(this, WorkPerformanceActivity.class));
+                    return true;
+                } else if (id == R.id.nav_tech_profile) {
+                    startActivity(new Intent(this, EditProfileActivity.class));
+                    return true;
+                } else if (id == R.id.nav_tech_settings) {
+                    startActivity(new Intent(this, TechnicianSettingsActivity.class));
+                    return true;
+                }
+                return true;
+            });
         }
     }
 
