@@ -3,28 +3,30 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_admin_panel"
-            android:icon="@android:drawable/ic_lock_lock"
+            android:icon="@drawable/ic_pdf_shield"
             android:title="Proceed as Admin"
             android:visible="false" />
 
         <item
             android:id="@+id/nav_tech_profile"
-            android:icon="@android:drawable/ic_menu_edit"
+            android:icon="@drawable/ic_pdf_person"
             android:title="Technician Profile" />
 
         <item
             android:id="@+id/nav_performance"
-            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:icon="@drawable/ic_performance"
             android:title="Work Performance" />
 
         <item
             android:id="@+id/nav_help"
-            android:icon="@android:drawable/ic_menu_help"
+            android:icon="@drawable/ic_info_circle"
             android:title="Help &amp; Support" />
+
     </group>
 
     <item
         android:id="@+id/nav_logout"
         android:icon="@drawable/exit"
         android:title="Logout" />
+
 </menu>

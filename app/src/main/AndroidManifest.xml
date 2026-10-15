@@ -159,6 +159,13 @@
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
+            android:name=".ResubmitReportActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
             android:name=".TechChatActivity"
             android:exported="false"
             android:screenOrientation="portrait"
