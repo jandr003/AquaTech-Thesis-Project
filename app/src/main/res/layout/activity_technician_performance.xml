@@ -1,72 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="#F8FAFC">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
+        android:id="@+id/headerPerformance"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/header_gradient"
-        app:elevation="0dp">
+        android:layout_height="64dp"
+        android:background="#2196F3"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/btnBackPerformance"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/arrow_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="18dp"
-            android:paddingTop="40dp"
-            android:paddingBottom="16dp">
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins"
+            android:text="Tech Performance"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/btnBackPerformance"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="8dp"
-                android:src="@drawable/arrow_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="#FFFFFF" />
+        <ImageView
+            android:id="@+id/btnExportPdf"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Export PDF Report"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_export_pdf_vector"
+            app:tint="@color/white" />
 
-            <TextView
-                android:id="@+id/tvHeaderTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:text="TECH PERFORMANCE"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/btnBackPerformance"
-                app:layout_constraintStart_toEndOf="@id/btnBackPerformance"
-                app:layout_constraintTop_toTopOf="@id/btnBackPerformance" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnExportPdf"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="EXPORT PDF"
-                android:textColor="#FFFFFF"
-                android:textSize="11sp"
-                app:icon="@drawable/ic_download"
-                app:iconTint="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
         android:paddingBottom="32dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerPerformance">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,31 +74,34 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true">
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="20dp">
+                    android:padding="18dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/ivTechAvatarPerformance"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:contentDescription="Technician Avatar"
                         android:padding="2dp"
                         android:src="@drawable/new_technician"
                         app:shapeAppearanceOverlay="@style/CircleImage"
-                        app:strokeColor="#F0F0F0"
+                        app:strokeColor="#E2E8F0"
                         app:strokeWidth="2dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="14dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -109,19 +109,21 @@
                             android:id="@+id/tvTechNamePerformance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_black_ttf"
+                            android:fontFamily="@font/poppins"
                             android:text="Jhonny Sinder"
-                            android:textColor="#333333"
-                            android:textSize="18sp" />
+                            android:textColor="#1E293B"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvTechID"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
                             android:fontFamily="@font/poppins"
                             android:text="ID: ASC-T001"
-                            android:textColor="#1E3A8A"
-                            android:textSize="12sp"
+                            android:textColor="#2563EB"
+                            android:textSize="12.5sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -134,7 +136,7 @@
                                 android:id="@+id/viewStatusIndicator"
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
-                                app:cardBackgroundColor="#8BC34A"
+                                app:cardBackgroundColor="#10B981"
                                 app:cardCornerRadius="4dp"
                                 app:cardElevation="0dp" />
 
@@ -145,8 +147,10 @@
                                 android:layout_marginStart="6dp"
                                 android:fontFamily="@font/poppins"
                                 android:text="Active Now"
-                                android:textColor="#8BC34A"
-                                android:textSize="11sp" />
+                                android:textColor="#10B981"
+                                android:textSize="11.5sp"
+                                android:textStyle="bold" />
+
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -155,134 +159,257 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
                     android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp" android:gravity="center">
-                        <TextView android:id="@+id/tvCompletedCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="45" android:textColor="#8BC34A" android:textSize="20sp" android:textStyle="bold" android:fontFamily="@font/poppins_black_ttf"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Completed" android:textColor="#888888" android:textSize="10sp"/>
+                    app:cardElevation="3dp"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:id="@+id/tvCompletedCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="45"
+                            android:textColor="#10B981"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Completed"
+                            android:textColor="#64748B"
+                            android:textSize="11.5sp" />
+
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="3dp"
                     android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp" android:gravity="center">
-                        <TextView android:id="@+id/tvActiveCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2" android:textColor="#448AFF" android:textSize="20sp" android:textStyle="bold" android:fontFamily="@font/poppins_black_ttf"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ongoing" android:textColor="#888888" android:textSize="10sp"/>
+                    app:cardElevation="3dp"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:id="@+id/tvActiveCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="2"
+                            android:textColor="#2563EB"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Ongoing"
+                            android:textColor="#64748B"
+                            android:textSize="11.5sp" />
+
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
                     android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp" android:gravity="center">
-                        <TextView android:id="@+id/tvRatingStat" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4.5" android:textColor="#FFB300" android:textSize="20sp" android:textStyle="bold" android:fontFamily="@font/poppins_black_ttf"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rating" android:textColor="#888888" android:textSize="10sp"/>
+                    app:cardElevation="3dp"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:id="@+id/tvRatingStat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="4.5 ★"
+                            android:textColor="#F59E0B"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Rating"
+                            android:textColor="#64748B"
+                            android:textSize="11.5sp" />
+
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <LinearLayout
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLiveTrack"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLiveTrack"
-                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="54dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#1E3A8A"
-                    android:text="LIVE TRACK"
-                    android:textColor="#FFFFFF"
-                    app:cornerRadius="12dp"
-                    app:icon="@drawable/maps_and_flags__2__1"
-                    app:iconTint="#FFFFFF" />
-            </LinearLayout>
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#2196F3"
+                android:fontFamily="@font/poppins"
+                android:text="LIVE TRACK GPS"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="14dp"
+                app:elevation="3dp"
+                app:icon="@drawable/maps_and_flags__2__1"
+                app:iconGravity="textStart"
+                app:iconPadding="10dp"
+                app:iconTint="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:layout_marginStart="4dp"
-                android:text="VERIFIED CREDENTIALS"
+                android:layout_marginTop="22dp"
                 android:fontFamily="@font/poppins_black_ttf"
-                android:textColor="#333333"
-                android:textSize="14sp"/>
+                android:letterSpacing="0.05"
+                android:text="VERIFIED CREDENTIALS"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_marginTop="12dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
-
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="4dp"
                     android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="3dp">
-                    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
                         <ImageView
                             android:id="@+id/ivTechIDPreview"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_centerInParent="true"
+                            android:contentDescription="Govt ID Preview"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/img_place_holder" />
-                        <View android:layout_width="match_parent" android:layout_height="40dp"
-                            android:layout_alignParentBottom="true" android:background="@drawable/gradient_overlay_dark" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="8dp" android:fontFamily="@font/poppins"
-                            android:text="GOV ID" android:textColor="#FFFFFF" android:textSize="10sp" android:textStyle="bold" />
+                            android:src="@drawable/img_place_holder"
+                            app:tint="#94A3B8" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="36dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/gradient_overlay_dark" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="GOVT ID"
+                            android:textColor="#FFFFFF"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
                     android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="3dp">
-                    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="3dp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
                         <ImageView
                             android:id="@+id/ivTechCertPreview"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_centerInParent="true"
+                            android:contentDescription="Certificate Preview"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/img_place_holder" />
-                        <View android:layout_width="match_parent" android:layout_height="40dp"
-                            android:layout_alignParentBottom="true" android:background="@drawable/gradient_overlay_dark" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="8dp" android:fontFamily="@font/poppins"
-                            android:text="CERTIFICATE" android:textColor="#FFFFFF" android:textSize="10sp" android:textStyle="bold" />
+                            android:src="@drawable/img_place_holder"
+                            app:tint="#94A3B8" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="36dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/gradient_overlay_dark" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="CERTIFICATE"
+                            android:textColor="#FFFFFF"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
@@ -290,21 +417,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:layout_marginStart="4dp"
-                android:text="RECENT SERVICE LOGS"
+                android:layout_marginTop="22dp"
                 android:fontFamily="@font/poppins_black_ttf"
-                android:textColor="#333333"
-                android:textSize="14sp"/>
+                android:letterSpacing="0.05"
+                android:text="RECENT SERVICE LOGS"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTechHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
                 android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/item_completed_request" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

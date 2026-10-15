@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.card.MaterialCardView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -32,18 +36,21 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TechnicianModel tech = techList.get(position);
         holder.tvTechName.setText(tech.fullName != null ? tech.fullName : "Unknown Tech");
-        holder.tvTechRating.setText(String.format(Locale.getDefault(), "%.1f", tech.rating));
+        holder.tvTechRating.setText(String.format(Locale.getDefault(), "%.1f ★", tech.rating));
 
-        int progressValue = (int)(tech.rating * 10);
+        int progressValue = (int) (tech.rating * 10);
         holder.pbTechRating.setProgress(progressValue);
 
-        // Status Indicator based on accountStatus
-        if ("active".equalsIgnoreCase(tech.accountStatus)) {
-            holder.statusIndicator.setCardBackgroundColor(0xFF8BC34A);
-        } else if ("pending".equalsIgnoreCase(tech.accountStatus)) {
-            holder.statusIndicator.setCardBackgroundColor(0xFFFFA000);
-        } else {
-            holder.statusIndicator.setCardBackgroundColor(0xFFAAAAAA);
+        if (holder.ivAvatar != null) {
+            if (tech.profileImageUrl != null && !tech.profileImageUrl.isEmpty()) {
+                Glide.with(holder.itemView.getContext())
+                        .load(tech.profileImageUrl)
+                        .placeholder(R.drawable.new_technician)
+                        .circleCrop()
+                        .into(holder.ivAvatar);
+            } else {
+                holder.ivAvatar.setImageResource(R.drawable.new_technician);
+            }
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -57,7 +64,7 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
 
     @Override
     public int getItemCount() {
-        return techList.size();
+        return techList != null ? techList.size() : 0;
     }
 
     public void updateList(List<TechnicianModel> newList) {
@@ -67,14 +74,14 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTechName, tvTechRating;
-        MaterialCardView statusIndicator;
+        ImageView ivAvatar;
         ProgressBar pbTechRating;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTechName = itemView.findViewById(R.id.tvTechName);
             tvTechRating = itemView.findViewById(R.id.tvTechRating);
-            statusIndicator = itemView.findViewById(R.id.techStatusIndicator);
+            ivAvatar = itemView.findViewById(R.id.ivTechAvatar);
             pbTechRating = itemView.findViewById(R.id.pbTechRating);
         }
     }

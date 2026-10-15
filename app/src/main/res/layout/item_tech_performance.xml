@@ -1,57 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginVertical="6dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="?attr/selectableItemBackground"
-    android:padding="12dp">
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    app:strokeColor="#E2E8F0"
+    app:strokeWidth="1dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/techStatusIndicator"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_marginTop="6dp"
-        app:cardBackgroundColor="#AAAAAA"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="0dp" />
-
-    <TextView
-        android:id="@+id/tvTechName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/techStatusIndicator"
-        android:layout_marginStart="12dp"
-        android:text="Technician Name"
-        android:fontFamily="@font/poppins_black_ttf"
-        android:textColor="#333333"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/tvTechRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:text="0.0 / 5.0"
-        android:fontFamily="@font/poppins_black_ttf"
-        android:textColor="#FFB300"
-        android:textSize="14sp" />
-
-    <ProgressBar
-        android:id="@+id/pbTechRating"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:layout_below="@id/tvTechName"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@id/techStatusIndicator"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="80dp"
-        android:progress="0"
-        android:max="50"
-        android:progressTint="#FFB300"
-        android:progressBackgroundTint="#F0F0F0"/>
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-</RelativeLayout>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivTechAvatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Technician Avatar"
+            android:scaleType="centerCrop"
+            android:src="@drawable/new_technician"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeColor="#E2E8F0"
+            app:strokeWidth="1.5dp" />
+
+        <TextView
+            android:id="@+id/tvTechName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins"
+            android:maxLines="1"
+            android:text="Technician Name"
+            android:textColor="#1E293B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tvTechRating"
+            app:layout_constraintStart_toEndOf="@id/ivTechAvatar"
+            app:layout_constraintTop_toTopOf="@id/ivTechAvatar" />
+
+        <TextView
+            android:id="@+id/tvTechRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="4.5 ★"
+            android:textColor="#F59E0B"
+            android:textSize="14.5sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivTechAvatar" />
+
+        <ProgressBar
+            android:id="@+id/pbTechRating"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="8dp"
+            android:max="50"
+            android:progress="45"
+            android:progressBackgroundTint="#E2E8F0"
+            android:progressTint="#F59E0B"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvTechName"
+            app:layout_constraintTop_toBottomOf="@id/tvTechName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -326,11 +326,11 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                 if (id == R.id.nav_tech_performance) {
                     startActivity(new Intent(this, WorkPerformanceActivity.class));
                     return true;
+                } else if (id == R.id.nav_tech_history) {
+                    startActivity(new Intent(this, ServiceLogActivity.class));
+                    return true;
                 } else if (id == R.id.nav_tech_profile) {
                     startActivity(new Intent(this, EditProfileActivity.class));
-                    return true;
-                } else if (id == R.id.nav_tech_settings) {
-                    startActivity(new Intent(this, TechnicianSettingsActivity.class));
                     return true;
                 }
                 return true;
