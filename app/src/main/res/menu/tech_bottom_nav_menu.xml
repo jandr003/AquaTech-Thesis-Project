@@ -2,21 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_tech_dashboard"
-        android:icon="@drawable/recent_activity_icon"
+        android:icon="@drawable/sel_nav_tasks"
         android:title="Tasks" />
 
     <item
         android:id="@+id/nav_tech_performance"
-        android:icon="@drawable/ic_performance"
+        android:icon="@drawable/sel_nav_performance"
         android:title="Performance" />
 
     <item
-        android:id="@+id/nav_tech_history"
-        android:icon="@drawable/ic_notes_document"
-        android:title="Service Logs" />
+        android:id="@+id/nav_tech_messages"
+        android:icon="@drawable/sel_nav_messages"
+        android:title="Messages" />
 
     <item
         android:id="@+id/nav_tech_profile"
-        android:icon="@drawable/ic_pdf_person"
+        android:icon="@drawable/sel_nav_profile"
         android:title="Profile" />
+
 </menu>

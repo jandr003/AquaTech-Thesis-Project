@@ -12,7 +12,12 @@
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorSurface">@color/aqua_background</item>
         <item name="colorOnSurface">@color/aqua_text_dark</item>
+    </style>
 
+    <style name="BottomNavActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#E0F2FE</item>
+        <item name="android:height">36dp</item>
+        <item name="android:width">64dp</item>
     </style>
 
     <style name="TopRoundedCorners">
@@ -21,17 +26,14 @@
         <item name="cornerSizeTopRight">32dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
-
     </style>
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
-
     </style>
 
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
-
     </style>
 
 </resources>

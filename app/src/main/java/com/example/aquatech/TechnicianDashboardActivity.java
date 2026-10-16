@@ -39,6 +39,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -213,7 +215,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         notifIcon = findViewById(R.id.notifIcon);
         settingIcon = findViewById(R.id.settingIcon);
         rvUpcoming = findViewById(R.id.rvUpcomingTasks);
-        rvMessageThreads = findViewById(R.id.rvMessageThreads);
         notificationContainer = findViewById(R.id.notificationContainer);
         hideDashboardElements();
     }
@@ -320,21 +321,51 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
 
         BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
         if (techBottomNav != null) {
-            techBottomNav.setSelectedItemId(R.id.nav_tech_dashboard);
-            techBottomNav.setOnItemSelectedListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.nav_tech_performance) {
-                    startActivity(new Intent(this, WorkPerformanceActivity.class));
-                    return true;
-                } else if (id == R.id.nav_tech_history) {
-                    startActivity(new Intent(this, ServiceLogActivity.class));
-                    return true;
-                } else if (id == R.id.nav_tech_profile) {
-                    startActivity(new Intent(this, EditProfileActivity.class));
-                    return true;
-                }
+            setupBottomNavIconScaling(techBottomNav);
+        }
+    }
+
+    private void setupBottomNavIconScaling(BottomNavigationView bottomNav) {
+        if (bottomNav == null) return;
+        bottomNav.post(() -> updateBottomNavIconScales(bottomNav, bottomNav.getSelectedItemId()));
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            updateBottomNavIconScales(bottomNav, id);
+
+            if (id == R.id.nav_tech_performance) {
+                startActivity(new Intent(this, WorkPerformanceActivity.class));
                 return true;
-            });
+            } else if (id == R.id.nav_tech_messages) {
+                startActivity(new Intent(this, CustomerChatListActivity.class));
+                return true;
+            } else if (id == R.id.nav_tech_profile) {
+                startActivity(new Intent(this, EditProfileActivity.class));
+                return true;
+            }
+            return true;
+        });
+    }
+
+    private void updateBottomNavIconScales(BottomNavigationView bottomNav, int selectedId) {
+        try {
+            BottomNavigationMenuView menuView =
+                    (BottomNavigationMenuView) bottomNav.getChildAt(0);
+            if (menuView == null) return;
+
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+                BottomNavigationItemView itemView =
+                        (BottomNavigationItemView) menuView.getChildAt(i);
+                View iconView = itemView.findViewById(com.google.android.material.R.id.navigation_bar_item_icon_view);
+                if (iconView != null) {
+                    if (itemView.getItemData().getItemId() == selectedId) {
+                        iconView.animate().scaleX(1.25f).scaleY(1.25f).setDuration(150).start();
+                    } else {
+                        iconView.animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).start();
+                    }
+                }
+            }
+        } catch (Exception ignored) {
         }
     }
 
@@ -432,12 +463,14 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                         chatThreadsList.add(ds);
                     }
                 }
-                if (threadAdapter == null) {
-                    threadAdapter = new ChatThreadAdapter(chatThreadsList, techIdentifier);
-                    rvMessageThreads.setLayoutManager(new LinearLayoutManager(TechnicianDashboardActivity.this));
-                    rvMessageThreads.setAdapter(threadAdapter);
-                } else {
-                    threadAdapter.notifyDataSetChanged();
+                if (rvMessageThreads != null) {
+                    if (threadAdapter == null) {
+                        threadAdapter = new ChatThreadAdapter(chatThreadsList, techIdentifier);
+                        rvMessageThreads.setLayoutManager(new LinearLayoutManager(TechnicianDashboardActivity.this));
+                        rvMessageThreads.setAdapter(threadAdapter);
+                    } else {
+                        threadAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
@@ -475,8 +508,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
 
     private void updateUI() {
         if (isFinishing() || isDestroyed()) return;
-        SimpleDateFormat df = new SimpleDateFormat("dd", Locale.getDefault());
-        SimpleDateFormat mf = new SimpleDateFormat("MMM", Locale.getDefault());
 
         boolean hasActive = (activeTaskSnapshot != null && activeTaskSnapshot.exists());
 
@@ -523,9 +554,9 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                 Object tsObj = activeTaskSnapshot.child("assignedTimestamp").getValue();
                 if (tsObj instanceof Number && statusInProgDate != null) {
                     Date d = new Date(((Number) tsObj).longValue());
-                    statusInProgDate.setText(String.format("%s\n%s", df.format(d), mf.format(d).toUpperCase(Locale.ROOT)));
+                    statusInProgDate.setText(toVerticalDateString(d));
                 } else if (statusInProgDate != null) {
-                    statusInProgDate.setText("NOW\n---");
+                    statusInProgDate.setText("N\nO\nW");
                 }
             } catch (Exception e) {
                 Log.e("UI_UPDATE", "Error updating UI: " + e.getMessage());
@@ -550,6 +581,22 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         boolean isEmpty = (!hasActive && uC == 0);
         if (noTicketsLayout != null) noTicketsLayout.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         if (dashboardScroll != null) dashboardScroll.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+    }
+
+    private String toVerticalDateString(Date d) {
+        if (d == null) return "12\nD\nE\nC\nE\nM\nB\nE\nR";
+        SimpleDateFormat df = new SimpleDateFormat("dd", Locale.getDefault());
+        SimpleDateFormat mf = new SimpleDateFormat("MMMM", Locale.getDefault());
+        String day = df.format(d);
+        String month = mf.format(d).toUpperCase(Locale.ROOT);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(day);
+        for (int i = 0; i < month.length(); i++) {
+            sb.append("\n");
+            sb.append(month.charAt(i));
+        }
+        return sb.toString();
     }
 
     private String getServiceTypeLabel(DataSnapshot ds) {

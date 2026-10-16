@@ -232,18 +232,19 @@
 
                     <TextView
                         android:id="@+id/statusOpenBlue"
-                        android:layout_width="32dp"
+                        android:layout_width="28dp"
                         android:layout_height="120dp"
                         android:layout_marginStart="14dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/status_in_progress_blue"
-                        android:fontFamily="@font/poppins"
+                        android:fontFamily="@font/poppins_black_ttf"
                         android:gravity="top|center_horizontal"
-                        android:paddingTop="8dp"
-                        android:text="12\nDEC"
+                        android:lineSpacingExtra="0dp"
+                        android:paddingTop="6dp"
+                        android:text="12\nD\nE\nC\nE\nM\nB\nE\nR"
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
-                        android:textSize="10.5sp"
+                        android:textSize="9.5sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvProgressLabel" />
@@ -417,57 +418,22 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/MessagesContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:letterSpacing="0.03"
-                android:text="Messages"
-                android:textColor="#1E293B"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/gStart"
-                app:layout_constraintTop_toBottomOf="@+id/TechnicianCard" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/MessagesContainerCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:minHeight="200dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="3dp"
-                app:strokeColor="#E2E8F0"
-                app:strokeWidth="1dp"
-                app:layout_constraintEnd_toEndOf="@id/gEnd"
-                app:layout_constraintStart_toStartOf="@id/gStart"
-                app:layout_constraintTop_toBottomOf="@id/MessagesContent"
-                app:layout_constraintWidth_max="700dp">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvMessageThreads"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:nestedScrollingEnabled="false"
-                    android:padding="8dp"
-                    tools:listitem="@layout/item_chat_thread" />
-
-            </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/techBottomNav"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="62dp"
         android:background="@color/white"
         app:elevation="12dp"
-        app:itemIconTint="@color/aqua_primary"
-        app:itemTextColor="@color/aqua_primary"
+        app:itemActiveIndicatorStyle="@style/BottomNavActiveIndicator"
+        app:itemIconSize="22dp"
+        app:itemIconTint="@color/bottom_nav_item_color"
+        app:itemPaddingBottom="1dp"
+        app:itemPaddingTop="8dp"
+        app:itemRippleColor="#E0F2FE"
+        app:itemTextColor="@color/bottom_nav_item_color"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/tech_bottom_nav_menu"
         app:layout_constraintBottom_toBottomOf="parent" />
