@@ -1,14 +1,21 @@
 package com.example.aquatech;
 
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.database.DataSnapshot;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,7 +47,6 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DataSnapshot ds = taskList.get(position);
-        
 
         String name = ds.child("customerName").getValue(String.class);
         holder.tvName.setText(name != null ? name : "Unknown");
@@ -66,7 +72,6 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
             holder.tvSro.setText("No SRO Attached");
         }
 
-
         List<String> categories = new ArrayList<>();
         if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
             categories.add("Filter Preventive");
@@ -84,18 +89,16 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
             if (i < categories.size() - 2) categoryStr.append(", ");
             else if (i == categories.size() - 2) categoryStr.append(" and ");
         }
-        
+
         if (categoryStr.length() > 0) holder.tvServiceType.setText(categoryStr.toString());
         else holder.tvServiceType.setText("General Service");
 
         Long timestamp = ds.child("assignedTimestamp").getValue(Long.class);
         if (timestamp != null) {
             Date date = new Date(timestamp);
-            SimpleDateFormat dayF = new SimpleDateFormat("dd", Locale.getDefault());
-            SimpleDateFormat monF = new SimpleDateFormat("MMM", Locale.getDefault());
-            holder.tvDateStatus.setText(dayF.format(date) + "\n" + monF.format(date).toUpperCase());
+            holder.tvDateStatus.setText(toVerticalDateString(date));
         } else {
-            holder.tvDateStatus.setText("NOW\n---");
+            holder.tvDateStatus.setText("N\nO\nW");
         }
 
         holder.btnAccept.setOnClickListener(v -> {
@@ -107,6 +110,37 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
         });
     }
 
+    private CharSequence toVerticalDateString(Date d) {
+        String day = "26";
+        String month = "FEB";
+        if (d != null) {
+            SimpleDateFormat df = new SimpleDateFormat("dd", Locale.getDefault());
+            SimpleDateFormat mf = new SimpleDateFormat("MMM", Locale.getDefault());
+            day = df.format(d);
+            month = mf.format(d).toUpperCase(Locale.ROOT);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(day);
+        for (int i = 0; i < month.length(); i++) {
+            sb.append("\n");
+            sb.append(month.charAt(i));
+        }
+
+        String fullText = sb.toString();
+        SpannableString spannable = new SpannableString(fullText);
+
+        spannable.setSpan(new AbsoluteSizeSpan(20, true), 0, day.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new StyleSpan(Typeface.BOLD), 0, day.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        if (fullText.length() > day.length()) {
+            spannable.setSpan(new AbsoluteSizeSpan(12, true), day.length() + 1, fullText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new StyleSpan(Typeface.BOLD), day.length() + 1, fullText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        return spannable;
+    }
+
     private boolean hasQty(DataSnapshot ds, String key) {
         Object val = ds.child(key).getValue();
         return val instanceof Number && ((Number) val).intValue() > 0;
@@ -114,12 +148,12 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
 
     @Override
     public int getItemCount() {
-        return taskList.size();
+        return taskList != null ? taskList.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvTicketId, tvServiceType, tvTime, tvAddress, tvSro, tvDateStatus;
-        Button btnAccept;
+        View btnAccept;
         ImageView btnMessage;
 
         public ViewHolder(@NonNull View itemView) {

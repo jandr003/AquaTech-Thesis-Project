@@ -232,28 +232,29 @@
 
                     <TextView
                         android:id="@+id/statusOpenBlue"
-                        android:layout_width="28dp"
-                        android:layout_height="120dp"
+                        android:layout_width="32dp"
+                        android:layout_height="0dp"
                         android:layout_marginStart="14dp"
-                        android:layout_marginTop="10dp"
                         android:background="@drawable/status_in_progress_blue"
                         android:fontFamily="@font/poppins_black_ttf"
                         android:gravity="top|center_horizontal"
                         android:lineSpacingExtra="0dp"
                         android:paddingTop="6dp"
-                        android:text="12\nD\nE\nC\nE\nM\nB\nE\nR"
+                        android:text="12\nD\nE\nC"
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
-                        android:textSize="9.5sp"
+                        android:textSize="12sp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/TechnicianReportOne"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvProgressLabel" />
+                        app:layout_constraintTop_toTopOf="@id/TechnicianReportOne" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/TechnicianReportOne"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="52dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="16dp"
                         app:cardBackgroundColor="#F8FAFC"
                         app:cardCornerRadius="14dp"
@@ -262,7 +263,7 @@
                         app:strokeWidth="1dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/statusOpenBlue">
+                        app:layout_constraintTop_toBottomOf="@id/tvProgressLabel">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -424,14 +425,14 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/techBottomNav"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="64dp"
         android:background="@color/white"
         app:elevation="12dp"
         app:itemActiveIndicatorStyle="@style/BottomNavActiveIndicator"
-        app:itemIconSize="22dp"
+        app:itemIconSize="30dp"
         app:itemIconTint="@color/bottom_nav_item_color"
-        app:itemPaddingBottom="1dp"
-        app:itemPaddingTop="8dp"
+        app:itemPaddingBottom="2dp"
+        app:itemPaddingTop="4dp"
         app:itemRippleColor="#E0F2FE"
         app:itemTextColor="@color/bottom_nav_item_color"
         app:labelVisibilityMode="labeled"

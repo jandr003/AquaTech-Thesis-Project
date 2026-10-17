@@ -1,9 +1,11 @@
 package com.example.aquatech;
 
 import android.content.Intent;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -85,6 +87,35 @@ public class TechnicianIdentityHelper {
                 }
             });
         }
+    }
+
+    public static void attachLiveAvatarListener(String dbUrl, String uid, ImageView imageView) {
+        if (uid == null || uid.isEmpty() || imageView == null) return;
+        DatabaseReference userRef = FirebaseDatabase.getInstance(dbUrl).getReference("Users").child(uid);
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String imgUrl = snapshot.child("profileImageUrl").getValue(String.class);
+                    Integer resId = snapshot.child("avatarResId").getValue(Integer.class);
+
+                    if (imgUrl != null && !imgUrl.isEmpty()) {
+                        Glide.with(imageView.getContext())
+                                .load(imgUrl)
+                                .placeholder(R.drawable.new_technician)
+                                .circleCrop()
+                                .into(imageView);
+                    } else if (resId != null && resId > 0) {
+                        imageView.setImageResource(resId);
+                    } else {
+                        imageView.setImageResource(R.drawable.new_technician);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
 
     public static String resolveTechNameFromEmail(String email) {

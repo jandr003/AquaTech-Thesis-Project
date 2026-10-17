@@ -1,69 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="4dp"
-    app:cardUseCompatPadding="true">
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
 
-    <RelativeLayout
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/msgAvatar"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="User Avatar"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/customer_avatar1"
+        app:shapeAppearanceOverlay="@style/CircleImage" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="14dp">
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:layout_toStartOf="@id/msgMetaLayout"
+        android:layout_toEndOf="@id/msgAvatar"
+        android:orientation="vertical">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/msgAvatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/man_user_circle_icon"
-            app:shapeAppearanceOverlay="@style/CircleImage" />
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/msgName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="12dp"
-            android:layout_toStartOf="@id/arrowForward"
-            android:layout_toEndOf="@id/msgAvatar"
-            android:orientation="vertical">
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins"
+            android:maxLines="1"
+            android:text="Customer Name"
+            android:textColor="#1E293B"
+            android:textSize="15.5sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/msgName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Technician Name"
-                android:textColor="#1E293B"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/msgText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins"
+            android:maxLines="1"
+            android:text="Last Message..."
+            android:textColor="#64748B"
+            android:textSize="13sp" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/msgText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Last Message..."
-                android:textColor="#64748B"
-                android:textSize="12.5sp" />
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/msgMetaLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:gravity="end"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/arrowForward"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/arrow_forward"
-            app:tint="#94A3B8" />
+        <TextView
+            android:id="@+id/msgTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="10:13"
+            android:textColor="#94A3B8"
+            android:textSize="11.5sp" />
 
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/msgUnreadBadge"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/circle_blue"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="72dp"
+        android:background="#F1F5F9" />
+
+</RelativeLayout>

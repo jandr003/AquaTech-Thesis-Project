@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,9 +14,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,7 +27,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -34,15 +36,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -60,6 +57,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+// Import External Modular Helper Classes
 import com.example.aquatech.TechnicianIdentityHelper;
 import com.example.aquatech.TechnicianChatAutomation;
 import com.example.aquatech.TechnicianReportDialogHelper;
@@ -69,8 +67,9 @@ import com.example.aquatech.TechnicianNotificationPopupHelper;
 
 /**
  * TechnicianDashboardActivity
- * Modular, Clean, High-Performance Field Technician Dashboard Activity.
- * Line count reduced to ~600 lines & refactored via Modular Helpers:
+ * Clean, Lean, High-Performance Field Technician Dashboard Activity.
+ * Strict 600-700 lines target maintained (~630 lines).
+ * Delegated to external helpers:
  * - TechnicianIdentityHelper
  * - TechnicianChatAutomation
  * - TechnicianReportDialogHelper
@@ -78,12 +77,9 @@ import com.example.aquatech.TechnicianNotificationPopupHelper;
  * - TechnicianJobAcceptor
  * - TechnicianNotificationPopupHelper
  */
+public class TechnicianDashboardActivity extends AppCompatActivity {
 
-public class TechnicianDashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
+    // region Fields & Views
     private CardView cardInProg;
     private Button btnActionInProg;
     private TextView tvInProgLabel, tvInProgCount, tvUpcomingLabel, tvUpcomingCount, tvInProgName;
@@ -95,10 +91,8 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
     private ImageView notifIcon, settingIcon;
     private FrameLayout notificationContainer;
 
-    private RecyclerView rvUpcoming, rvMessageThreads;
+    private RecyclerView rvUpcoming;
     private UpcomingTaskAdapter upcomingAdapter;
-    private ChatThreadAdapter threadAdapter;
-    private final List<DataSnapshot> chatThreadsList = new ArrayList<>();
 
     private DataSnapshot activeTaskSnapshot;
     private final List<DataSnapshot> upcomingSnapshotsList = new ArrayList<>();
@@ -117,7 +111,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
 
     private ChildEventListener notifListener;
     private ValueEventListener tasksListener;
-    private ValueEventListener messagesListener;
 
     private final ActivityResultLauncher<String> galleryLauncher = registerForActivityResult(
             new ActivityResultContracts.GetContent(), uri -> {
@@ -145,7 +138,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         mAuth = FirebaseAuth.getInstance();
         initializeViews();
         setupUpcomingRecyclerView();
-        updateMenuVisibility();
 
         FirebaseUser user = mAuth.getCurrentUser();
         String currentEmail = TechnicianIdentityHelper.getStoredEmail(getIntent(), mAuth);
@@ -157,7 +149,7 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                 (resolvedUid, resolvedName) -> {
                     currentTechUid = resolvedUid;
                     currentTechName = resolvedName;
-                    setupNavHeader();
+                    TechnicianIdentityHelper.attachLiveAvatarListener(DB_URL, resolvedUid, findViewById(R.id.techProfileAvatar));
                     initializeFirebaseListeners(resolvedUid);
                 }
         );
@@ -190,7 +182,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
     protected void onDestroy() {
         super.onDestroy();
         if (requestsRef != null && tasksListener != null) requestsRef.removeEventListener(tasksListener);
-        if (userChatsRef != null && messagesListener != null) userChatsRef.removeEventListener(messagesListener);
         if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
     }
 
@@ -233,62 +224,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         if (noTicketsLayout != null) noTicketsLayout.setVisibility(View.VISIBLE);
     }
 
-    private void setupNavHeader() {
-        if (navigationView == null) return;
-        View headerView = navigationView.getHeaderView(0);
-        if (headerView == null) return;
-        TextView tvTechMode = headerView.findViewById(R.id.tvTechMode);
-        TextView tvTechEmail = headerView.findViewById(R.id.tvTechEmail);
-        String email = TechnicianIdentityHelper.getStoredEmail(getIntent(), mAuth);
-        if (!email.isEmpty()) {
-            if (tvTechEmail != null) tvTechEmail.setText(email);
-            boolean isAdmin = email.equals("admin@aquasmartguard.ph") || email.equals("management@aquasmartguard.ph");
-
-            if (currentTechName == null || currentTechName.isEmpty()) {
-                currentTechName = TechnicianIdentityHelper.resolveTechNameFromEmail(email);
-            }
-
-            if (tvTechMode != null) {
-                tvTechMode.setText(isAdmin ? String.format("%s (Admin)", currentTechName) : currentTechName);
-            }
-        }
-    }
-
-    private void updateMenuVisibility() {
-        String email = TechnicianIdentityHelper.getStoredEmail(getIntent(), mAuth);
-        if (!email.isEmpty() && navigationView != null) {
-            boolean isAdmin = email.equals("admin@aquasmartguard.ph") || email.equals("management@aquasmartguard.ph");
-            Menu menu = navigationView.getMenu();
-            MenuItem adminItem = menu.findItem(R.id.nav_admin_panel);
-            if (adminItem != null) adminItem.setVisible(isAdmin);
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_logout) {
-            mAuth.signOut();
-            startActivity(new Intent(this, SplashActivity.class));
-            finishAffinity();
-        } else if (id == R.id.nav_performance) {
-            startActivity(new Intent(this, WorkPerformanceActivity.class));
-        } else if (id == R.id.nav_tech_profile) {
-            startActivity(new Intent(this, EditProfileActivity.class));
-        } else if (id == R.id.nav_admin_panel) {
-            String email = TechnicianIdentityHelper.getStoredEmail(getIntent(), mAuth);
-            if (email.equals("admin@aquasmartguard.ph") || email.equals("management@aquasmartguard.ph")) {
-                Intent intent = new Intent(this, AdminDashboardActivity.class);
-                intent.putExtra("USER_EMAIL", email);
-                startActivity(intent);
-            }
-        } else if (id == R.id.nav_help) {
-            startActivity(new Intent(this, HelpCenterActivity.class));
-        }
-        if (drawerLayout != null) drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     private void setupClickListeners() {
         if (btnActionInProg != null) {
             btnActionInProg.setOnClickListener(v -> {
@@ -312,60 +247,30 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
             settingIcon.setOnClickListener(v -> startActivity(new Intent(this, TechnicianSettingsActivity.class)));
         }
         View avatarView = findViewById(R.id.techProfileAvatar);
-        if (avatarView != null && drawerLayout != null) {
-            avatarView.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-        }
-        if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(this);
+        if (avatarView != null) {
+            avatarView.setOnClickListener(v -> startActivity(new Intent(this, EditProfileActivity.class)));
         }
 
         BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
         if (techBottomNav != null) {
-            setupBottomNavIconScaling(techBottomNav);
-        }
-    }
-
-    private void setupBottomNavIconScaling(BottomNavigationView bottomNav) {
-        if (bottomNav == null) return;
-        bottomNav.post(() -> updateBottomNavIconScales(bottomNav, bottomNav.getSelectedItemId()));
-
-        bottomNav.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            updateBottomNavIconScales(bottomNav, id);
-
-            if (id == R.id.nav_tech_performance) {
-                startActivity(new Intent(this, WorkPerformanceActivity.class));
-                return true;
-            } else if (id == R.id.nav_tech_messages) {
-                startActivity(new Intent(this, CustomerChatListActivity.class));
-                return true;
-            } else if (id == R.id.nav_tech_profile) {
-                startActivity(new Intent(this, EditProfileActivity.class));
-                return true;
-            }
-            return true;
-        });
-    }
-
-    private void updateBottomNavIconScales(BottomNavigationView bottomNav, int selectedId) {
-        try {
-            BottomNavigationMenuView menuView =
-                    (BottomNavigationMenuView) bottomNav.getChildAt(0);
-            if (menuView == null) return;
-
-            for (int i = 0; i < menuView.getChildCount(); i++) {
-                BottomNavigationItemView itemView =
-                        (BottomNavigationItemView) menuView.getChildAt(i);
-                View iconView = itemView.findViewById(com.google.android.material.R.id.navigation_bar_item_icon_view);
-                if (iconView != null) {
-                    if (itemView.getItemData().getItemId() == selectedId) {
-                        iconView.animate().scaleX(1.25f).scaleY(1.25f).setDuration(150).start();
-                    } else {
-                        iconView.animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).start();
-                    }
+            techBottomNav.setSelectedItemId(R.id.nav_tech_dashboard);
+            techBottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_tech_performance) {
+                    Intent intent = new Intent(this, TechnicianPerformanceActivity.class);
+                    intent.putExtra("TECH_ID", currentTechUid);
+                    intent.putExtra("TECH_NAME", currentTechName);
+                    startActivity(intent);
+                    return true;
+                } else if (id == R.id.nav_tech_messages) {
+                    startActivity(new Intent(this, CustomerChatListActivity.class));
+                    return true;
+                } else if (id == R.id.nav_tech_profile) {
+                    startActivity(new Intent(this, EditProfileActivity.class));
+                    return true;
                 }
-            }
-        } catch (Exception ignored) {
+                return true;
+            });
         }
     }
 
@@ -373,7 +278,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         if (techIdentifier == null || techIdentifier.isEmpty()) return;
 
         if (requestsRef != null && tasksListener != null) requestsRef.removeEventListener(tasksListener);
-        if (userChatsRef != null && messagesListener != null) userChatsRef.removeEventListener(messagesListener);
         if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
 
         notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("Notifications").child(techIdentifier);
@@ -381,7 +285,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         userChatsRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats");
 
         setupFirebaseTasksListener(techIdentifier);
-        setupFirebaseMessagesListener(techIdentifier);
         setupDashboardNotificationPopup();
     }
 
@@ -442,43 +345,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
                 currentTechName,
                 this::updateUI
         );
-    }
-
-    private void setupFirebaseMessagesListener(String techIdentifier) {
-        if (userChatsRef == null) return;
-        messagesListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                chatThreadsList.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    String dbTechId = ds.child("techId").getValue(String.class);
-                    String dbTechName = ds.child("techName").getValue(String.class);
-                    String chatId = ds.getKey();
-
-                    boolean isMine = (dbTechId != null && (dbTechId.equalsIgnoreCase(techIdentifier) || dbTechId.equalsIgnoreCase(currentTechUid))) ||
-                            (dbTechName != null && dbTechName.equalsIgnoreCase(currentTechName)) ||
-                            (chatId != null && (chatId.contains(techIdentifier) || chatId.contains(currentTechUid)));
-
-                    if (isMine) {
-                        chatThreadsList.add(ds);
-                    }
-                }
-                if (rvMessageThreads != null) {
-                    if (threadAdapter == null) {
-                        threadAdapter = new ChatThreadAdapter(chatThreadsList, techIdentifier);
-                        rvMessageThreads.setLayoutManager(new LinearLayoutManager(TechnicianDashboardActivity.this));
-                        rvMessageThreads.setAdapter(threadAdapter);
-                    } else {
-                        threadAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        };
-        userChatsRef.addValueEventListener(messagesListener);
     }
 
     private void setupUpcomingRecyclerView() {
@@ -583,20 +449,36 @@ public class TechnicianDashboardActivity extends AppCompatActivity implements Na
         if (dashboardScroll != null) dashboardScroll.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
     }
 
-    private String toVerticalDateString(Date d) {
-        if (d == null) return "12\nD\nE\nC\nE\nM\nB\nE\nR";
-        SimpleDateFormat df = new SimpleDateFormat("dd", Locale.getDefault());
-        SimpleDateFormat mf = new SimpleDateFormat("MMMM", Locale.getDefault());
-        String day = df.format(d);
-        String month = mf.format(d).toUpperCase(Locale.ROOT);
+    private CharSequence toVerticalDateString(Date d) {
+        String day = "12";
+        String month = "DECEMBER";
+        if (d != null) {
+            SimpleDateFormat df = new SimpleDateFormat("dd", Locale.getDefault());
+            SimpleDateFormat mf = new SimpleDateFormat("MMMM", Locale.getDefault());
+            day = df.format(d);
+            month = mf.format(d).toUpperCase(Locale.ROOT);
+        }
 
         StringBuilder sb = new StringBuilder();
         sb.append(day);
+        sb.append("\n");
         for (int i = 0; i < month.length(); i++) {
             sb.append("\n");
             sb.append(month.charAt(i));
         }
-        return sb.toString();
+
+        String fullText = sb.toString();
+        SpannableString spannable = new SpannableString(fullText);
+
+        spannable.setSpan(new AbsoluteSizeSpan(20, true), 0, day.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new StyleSpan(Typeface.BOLD), 0, day.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        if (fullText.length() > day.length()) {
+            spannable.setSpan(new AbsoluteSizeSpan(11, true), day.length() + 1, fullText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new StyleSpan(Typeface.BOLD), day.length() + 1, fullText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        return spannable;
     }
 
     private String getServiceTypeLabel(DataSnapshot ds) {
