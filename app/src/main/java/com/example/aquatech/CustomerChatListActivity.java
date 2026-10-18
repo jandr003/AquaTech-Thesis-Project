@@ -47,6 +47,14 @@ public class CustomerChatListActivity extends AppCompatActivity {
         tvEmpty = findViewById(R.id.tvEmptyChats);
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
+        View cardGroup = findViewById(R.id.cardTechGroupChat);
+        if (cardGroup != null) {
+            cardGroup.setOnClickListener(v -> {
+                Intent intent = new Intent(this, TechnicianGroupChatActivity.class);
+                startActivity(intent);
+            });
+        }
+
         rvChatThreads.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ChatThreadAdapter(chatThreadsList, myUid);
         rvChatThreads.setAdapter(adapter);
@@ -56,23 +64,26 @@ public class CustomerChatListActivity extends AppCompatActivity {
     }
 
     private void loadChatThreads() {
-        userChatsRef.orderByChild("customerId").equalTo(myUid)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        chatThreadsList.clear();
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            chatThreadsList.add(ds);
-                        }
-                        adapter.notifyDataSetChanged();
-                        tvEmpty.setVisibility(chatThreadsList.isEmpty() ? View.VISIBLE : View.GONE);
+        userChatsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chatThreadsList.clear();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String cId = ds.child("customerId").getValue(String.class);
+                    String tId = ds.child("techId").getValue(String.class);
+                    if (myUid.equals(cId) || myUid.equals(tId)) {
+                        chatThreadsList.add(ds);
                     }
+                }
+                adapter.notifyDataSetChanged();
+                tvEmpty.setVisibility(chatThreadsList.isEmpty() ? View.VISIBLE : View.GONE);
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        tvEmpty.setText("Error loading chats");
-                        tvEmpty.setVisibility(View.VISIBLE);
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                tvEmpty.setText("Error loading chats");
+                tvEmpty.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

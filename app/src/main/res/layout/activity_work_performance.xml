@@ -36,7 +36,7 @@
             android:fontFamily="@font/poppins"
             android:text="Your Performance"
             android:textColor="@color/white"
-            android:textSize="17sp"
+            android:textSize="17.5sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -63,6 +63,7 @@
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
                 app:strokeColor="#E2E8F0"
                 app:strokeWidth="1dp">
 
@@ -77,30 +78,66 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Total Tasks Completed"
+                        android:text="This Month's Completed Tasks"
                         android:textColor="#64748B"
-                        android:textSize="14sp" />
+                        android:textSize="13.5sp" />
 
-                    <TextView
-                        android:id="@+id/tvTotalTasks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/poppins_black_ttf"
-                        android:text="0"
-                        android:textColor="#2563EB"
-                        android:textSize="48sp"
-                        android:textStyle="bold" />
+                    <!-- Circular Progress Ring Chart -->
+                    <FrameLayout
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:layout_marginTop="16dp">
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/pbTotalChart"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:layout_gravity="center"
+                            android:max="30"
+                            android:progress="1"
+                            app:indicatorColor="#2196F3"
+                            app:indicatorSize="140dp"
+                            app:trackColor="#E0F2FE"
+                            app:trackCornerRadius="6dp"
+                            app:trackThickness="12dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvTotalTasks"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_black_ttf"
+                                android:text="0"
+                                android:textColor="#2563EB"
+                                android:textSize="36sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-4dp"
+                                android:fontFamily="@font/poppins"
+                                android:text="Tasks Done"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+                        </LinearLayout>
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/tvPerfMessage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="14dp"
                         android:fontFamily="@font/poppins"
                         android:gravity="center"
                         android:text="Let's get started today!"
-                        android:textColor="#10B981"
+                        android:textColor="#2196F3"
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
@@ -111,11 +148,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/poppins_black_ttf"
                 android:letterSpacing="0.05"
-                android:text="MONTHLY STATS"
+                android:text="MONTHLY PERFORMANCE"
                 android:textColor="#1C4E75"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -123,10 +160,11 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="4dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
                 app:strokeColor="#E2E8F0"
                 app:strokeWidth="1dp">
 
@@ -146,9 +184,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="MONTH"
+                            android:text="DECEMBER 2026"
                             android:textColor="#1E293B"
-                            android:textSize="14sp"
+                            android:textSize="14.5sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -159,7 +197,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="0 tasks"
                             android:textColor="#2563EB"
-                            android:textSize="13.5sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                     </RelativeLayout>
@@ -169,8 +207,8 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="12dp"
-                        android:layout_marginTop="10dp"
-                        android:max="100"
+                        android:layout_marginTop="8dp"
+                        android:max="30"
                         android:progress="0"
                         android:progressBackgroundTint="#E0F2FE"
                         android:progressTint="#2196F3" />
@@ -181,10 +219,11 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="4dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
                 app:strokeColor="#E2E8F0"
                 app:strokeWidth="1dp">
 
@@ -204,9 +243,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="MONTH"
+                            android:text="NOVEMBER 2026"
                             android:textColor="#1E293B"
-                            android:textSize="14sp"
+                            android:textSize="14.5sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -217,7 +256,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="0 tasks"
                             android:textColor="#2563EB"
-                            android:textSize="13.5sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                     </RelativeLayout>
@@ -227,8 +266,8 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="12dp"
-                        android:layout_marginTop="10dp"
-                        android:max="100"
+                        android:layout_marginTop="8dp"
+                        android:max="30"
                         android:progress="0"
                         android:progressBackgroundTint="#E0F2FE"
                         android:progressTint="#2196F3" />
@@ -239,10 +278,11 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="4dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="true"
                 app:strokeColor="#E2E8F0"
                 app:strokeWidth="1dp">
 
@@ -262,9 +302,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="MONTH"
+                            android:text="OCTOBER 2026"
                             android:textColor="#1E293B"
-                            android:textSize="14sp"
+                            android:textSize="14.5sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -275,7 +315,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="0 tasks"
                             android:textColor="#2563EB"
-                            android:textSize="13.5sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                     </RelativeLayout>
@@ -285,8 +325,8 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="12dp"
-                        android:layout_marginTop="10dp"
-                        android:max="100"
+                        android:layout_marginTop="8dp"
+                        android:max="30"
                         android:progress="0"
                         android:progressBackgroundTint="#E0F2FE"
                         android:progressTint="#2196F3" />
@@ -296,4 +336,5 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

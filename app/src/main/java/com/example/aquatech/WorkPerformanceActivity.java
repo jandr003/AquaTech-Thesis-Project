@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +29,7 @@ public class WorkPerformanceActivity extends AppCompatActivity {
     private TextView tvTotalTasks, tvPerfMessage;
     private TextView tvMonth1Name, tvMonth1Tasks, tvMonth2Name, tvMonth2Tasks, tvMonth3Name, tvMonth3Tasks;
     private ProgressBar pbMonth1, pbMonth2, pbMonth3;
+    private CircularProgressIndicator pbTotalChart;
 
     private DatabaseReference requestsRef;
     private FirebaseAuth mAuth;
@@ -57,6 +59,7 @@ public class WorkPerformanceActivity extends AppCompatActivity {
     private void initializeViews() {
         tvTotalTasks = findViewById(R.id.tvTotalTasks);
         tvPerfMessage = findViewById(R.id.tvPerfMessage);
+        pbTotalChart = findViewById(R.id.pbTotalChart);
 
         tvMonth1Name = findViewById(R.id.tvMonth1Name);
         tvMonth1Tasks = findViewById(R.id.tvMonth1Tasks);
@@ -72,15 +75,14 @@ public class WorkPerformanceActivity extends AppCompatActivity {
 
         findViewById(R.id.btnBackPerf).setOnClickListener(v -> finish());
 
-        // Dynamic months (uppercase)
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
         Calendar cal = Calendar.getInstance();
 
-        tvMonth1Name.setText(monthFormat.format(cal.getTime()).toUpperCase()); // Current month
+        tvMonth1Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
         cal.add(Calendar.MONTH, -1);
-        tvMonth2Name.setText(monthFormat.format(cal.getTime()).toUpperCase()); // Last month
+        tvMonth2Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
         cal.add(Calendar.MONTH, -1);
-        tvMonth3Name.setText(monthFormat.format(cal.getTime()).toUpperCase()); // Two months ago
+        tvMonth3Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
     }
 
     private void fetchPerformanceData() {
@@ -106,7 +108,6 @@ public class WorkPerformanceActivity extends AppCompatActivity {
                     String assignedTechId = ds.child("assignedTechId").getValue(String.class);
                     String status = ds.child("status").getValue(String.class);
 
-                    // Only count tasks assigned to current tech AND completed (approved)
                     if (assignedTechId != null && assignedTechId.equals(currentTechUid) &&
                             "Completed".equalsIgnoreCase(status)) {
 
@@ -148,26 +149,31 @@ public class WorkPerformanceActivity extends AppCompatActivity {
     }
 
     private void updateUI(int total, int m1, int m2, int m3) {
-        tvTotalTasks.setText(String.valueOf(total));
-        tvMonth1Tasks.setText(m1 + " / 7 tasks");
-        tvMonth2Tasks.setText(m2 + " / 7 tasks");
-        tvMonth3Tasks.setText(m3 + " / 7 tasks");
+        tvTotalTasks.setText(String.valueOf(m1));
+        if (pbTotalChart != null) {
+            pbTotalChart.setMax(30);
+            pbTotalChart.setProgress(Math.min(m1, 30));
+        }
 
-        int maxTasks = 7;
-        pbMonth1.setMax(maxTasks);
-        pbMonth1.setProgress(Math.min(m1, maxTasks));
-        
-        pbMonth2.setMax(maxTasks);
-        pbMonth2.setProgress(Math.min(m2, maxTasks));
-        
-        pbMonth3.setMax(maxTasks);
-        pbMonth3.setProgress(Math.min(m3, maxTasks));
+        tvMonth1Tasks.setText(m1 + " tasks");
+        tvMonth2Tasks.setText(m2 + " tasks");
+        tvMonth3Tasks.setText(m3 + " tasks");
 
-        if (total == 0) {
-            tvPerfMessage.setText("LET'S GET STARTED TODAY!");
-        } else if (total <= 5) {
+        int targetTasksPerMonth = 30;
+        pbMonth1.setMax(targetTasksPerMonth);
+        pbMonth1.setProgress(Math.min(m1, targetTasksPerMonth));
+
+        pbMonth2.setMax(targetTasksPerMonth);
+        pbMonth2.setProgress(Math.min(m2, targetTasksPerMonth));
+
+        pbMonth3.setMax(targetTasksPerMonth);
+        pbMonth3.setProgress(Math.min(m3, targetTasksPerMonth));
+
+        if (m1 == 0) {
+            tvPerfMessage.setText("LET'S GET STARTED THIS MONTH!");
+        } else if (m1 <= 5) {
             tvPerfMessage.setText("GOOD START! KEEP PUSHING!");
-        } else if (total <= 15) {
+        } else if (m1 <= 15) {
             tvPerfMessage.setText("EXCELLENT WORK! YOU'RE ON FIRE!");
         } else {
             tvPerfMessage.setText("LEGENDARY PERFORMANCE! GREAT JOB!");

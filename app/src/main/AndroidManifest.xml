@@ -166,6 +166,14 @@
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
+            android:name=".TechnicianGroupChatActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
             android:name=".TechChatActivity"
             android:exported="false"
             android:screenOrientation="portrait"
