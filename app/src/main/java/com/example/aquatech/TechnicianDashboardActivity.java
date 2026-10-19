@@ -257,9 +257,7 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
             techBottomNav.setOnItemSelectedListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.nav_tech_performance) {
-                    Intent intent = new Intent(this, TechnicianPerformanceActivity.class);
-                    intent.putExtra("TECH_ID", currentTechUid);
-                    intent.putExtra("TECH_NAME", currentTechName);
+                    Intent intent = new Intent(this, WorkPerformanceActivity.class);
                     startActivity(intent);
                     return true;
                 } else if (id == R.id.nav_tech_messages) {

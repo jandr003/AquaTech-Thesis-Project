@@ -3,6 +3,7 @@ package com.example.aquatech;
 public class ChatMessage {
     private String text;
     private String senderId;
+    private String senderName;
     private long timestamp;
     private boolean isSystem;
 
@@ -62,6 +63,9 @@ public class ChatMessage {
 
     public String getSenderId() { return senderId; }
     public void setSenderId(String senderId) { this.senderId = senderId; }
+
+    public String getSenderName() { return senderName; }
+    public void setSenderName(String senderName) { this.senderName = senderName; }
 
     public long getTimestamp() { return timestamp; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }

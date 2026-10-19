@@ -72,7 +72,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ChatMessage message = messageList.get(position);
 
         if (holder instanceof SystemViewHolder) {
-            ((SystemViewHolder) holder).tvSystemMessage.setText(Html.fromHtml(message.getText()));
+            ((SystemViewHolder) holder).tvSystemMessage.setText(Html.fromHtml(message.getText(), Html.FROM_HTML_MODE_LEGACY));
         } else {
             ChatViewHolder chatHolder = (ChatViewHolder) holder;
 
@@ -83,7 +83,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
 
             if (message.getText() != null) {
-                chatHolder.tvMessage.setText(Html.fromHtml(message.getText()));
+                chatHolder.tvMessage.setText(Html.fromHtml(message.getText(), Html.FROM_HTML_MODE_LEGACY));
             }
             chatHolder.tvMessage.setVisibility(View.VISIBLE);
 
@@ -120,15 +120,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             int avatarRes;
             String labelText;
-            if (currentMode == MODE_BOT) {
-                avatarRes = R.drawable.aquatech_iconbot;
-                labelText = "AI Model";
+            if (message.getSenderName() != null && !message.getSenderName().isEmpty()) {
+                labelText = message.getSenderName();
+            } else if (currentMode == MODE_BOT) {
+                labelText = "AquaBuddy AI";
             } else if (currentMode == MODE_TECH_CHAT) {
-                avatarRes = R.drawable.man_customer_icon;
                 labelText = (otherPartyName != null && !otherPartyName.isEmpty()) ? otherPartyName : "Customer";
             } else {
-                avatarRes = R.drawable.new_technician;
                 labelText = (otherPartyName != null && !otherPartyName.isEmpty()) ? otherPartyName : "Technician";
+            }
+
+            if (currentMode == MODE_BOT) {
+                avatarRes = R.drawable.aquatech_iconbot;
+            } else if (currentMode == MODE_TECH_CHAT) {
+                avatarRes = R.drawable.man_customer_icon;
+            } else {
+                avatarRes = R.drawable.new_technician;
             }
 
             if (!isFromMe && !isSameAsPrevious) {

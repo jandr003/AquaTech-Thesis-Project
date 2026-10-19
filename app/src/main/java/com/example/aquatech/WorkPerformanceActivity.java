@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -56,6 +58,15 @@ public class WorkPerformanceActivity extends AppCompatActivity {
         fetchPerformanceData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
+        if (techBottomNav != null) {
+            techBottomNav.setSelectedItemId(R.id.nav_tech_performance);
+        }
+    }
+
     private void initializeViews() {
         tvTotalTasks = findViewById(R.id.tvTotalTasks);
         tvPerfMessage = findViewById(R.id.tvPerfMessage);
@@ -73,7 +84,7 @@ public class WorkPerformanceActivity extends AppCompatActivity {
         tvMonth3Tasks = findViewById(R.id.tvMonth3Tasks);
         pbMonth3 = findViewById(R.id.pbMonth3);
 
-        findViewById(R.id.btnBackPerf).setOnClickListener(v -> finish());
+        setupBottomNav();
 
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
         Calendar cal = Calendar.getInstance();
@@ -177,6 +188,32 @@ public class WorkPerformanceActivity extends AppCompatActivity {
             tvPerfMessage.setText("EXCELLENT WORK! YOU'RE ON FIRE!");
         } else {
             tvPerfMessage.setText("LEGENDARY PERFORMANCE! GREAT JOB!");
+        }
+    }
+
+    private void setupBottomNav() {
+        BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
+        if (techBottomNav != null) {
+            techBottomNav.setSelectedItemId(R.id.nav_tech_performance);
+            techBottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_tech_dashboard) {
+                    Intent intent = new Intent(this, TechnicianDashboardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_tech_messages) {
+                    startActivity(new Intent(this, CustomerChatListActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_tech_profile) {
+                    startActivity(new Intent(this, EditProfileActivity.class));
+                    finish();
+                    return true;
+                }
+                return true;
+            });
         }
     }
 

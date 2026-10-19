@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -60,7 +61,34 @@ public class CustomerChatListActivity extends AppCompatActivity {
         rvChatThreads.setAdapter(adapter);
 
         userChatsRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats");
+        setupBottomNav();
         loadChatThreads();
+    }
+
+    private void setupBottomNav() {
+        BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
+        if (techBottomNav != null) {
+            techBottomNav.setSelectedItemId(R.id.nav_tech_messages);
+            techBottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_tech_dashboard) {
+                    Intent intent = new Intent(this, TechnicianDashboardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_tech_performance) {
+                    startActivity(new Intent(this, WorkPerformanceActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_tech_profile) {
+                    startActivity(new Intent(this, EditProfileActivity.class));
+                    finish();
+                    return true;
+                }
+                return true;
+            });
+        }
     }
 
     private void loadChatThreads() {

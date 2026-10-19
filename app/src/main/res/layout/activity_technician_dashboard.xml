@@ -51,46 +51,17 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.95" />
 
-            <FrameLayout
-                android:id="@+id/techAvatarFrame"
-                android:layout_width="48dp"
+            <ImageView
+                android:id="@+id/appLogoHeader"
+                android:layout_width="165dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="36dp"
-                android:background="@drawable/circle_white"
-                android:padding="2dp"
+                android:layout_marginTop="32dp"
+                android:contentDescription="AquaTech Logo"
+                android:scaleType="fitStart"
+                android:src="@drawable/logoo"
                 app:layout_constraintStart_toStartOf="@id/gStart"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/techProfileAvatar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:contentDescription="Technician Profile Avatar"
-                    android:focusable="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/new_technician" />
-
-            </FrameLayout>
-
-
-            <TextView
-                android:id="@+id/TechnicianDash"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/poppins"
-                android:maxLines="1"
-                android:text="Good Day, Technician!"
-                android:textColor="@color/white"
-                android:textSize="18.5sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/techAvatarFrame"
-                app:layout_constraintEnd_toStartOf="@+id/topIconsLayout"
-                app:layout_constraintStart_toEndOf="@id/techAvatarFrame"
-                app:layout_constraintTop_toTopOf="@id/techAvatarFrame" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
 
             <LinearLayout
                 android:id="@+id/topIconsLayout"
@@ -98,9 +69,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@id/techAvatarFrame"
+                app:layout_constraintBottom_toBottomOf="@id/appLogoHeader"
                 app:layout_constraintEnd_toEndOf="@id/gEnd"
-                app:layout_constraintTop_toTopOf="@id/techAvatarFrame">
+                app:layout_constraintTop_toTopOf="@id/appLogoHeader">
 
                 <ImageView
                     android:id="@+id/notifIcon"
@@ -111,9 +82,8 @@
                     android:clickable="true"
                     android:contentDescription="Notifications"
                     android:focusable="true"
-                    android:padding="8dp"
-                    android:src="@drawable/notification_icon"
-                    app:tint="@color/white" />
+                    android:padding="7dp"
+                    android:src="@drawable/ic_notif_bell_white" />
 
                 <ImageView
                     android:id="@+id/settingIcon"
@@ -123,9 +93,8 @@
                     android:clickable="true"
                     android:contentDescription="Settings"
                     android:focusable="true"
-                    android:padding="8dp"
-                    android:src="@drawable/settingicon"
-                    app:tint="@color/white" />
+                    android:padding="7dp"
+                    android:src="@drawable/ic_settings_white" />
 
             </LinearLayout>
 
@@ -141,7 +110,7 @@
                 android:textSize="17sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@id/gStart"
-                app:layout_constraintTop_toBottomOf="@id/techAvatarFrame" />
+                app:layout_constraintTop_toBottomOf="@id/appLogoHeader" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/TechnicianCard"

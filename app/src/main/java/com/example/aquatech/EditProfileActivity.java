@@ -1,6 +1,7 @@
 package com.example.aquatech;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -103,10 +105,41 @@ public class EditProfileActivity extends AppCompatActivity {
                         selectedAvatarResId = avatarId;
                         ivProfilePic.setImageResource(selectedAvatarResId);
                     }
+
+                    setupBottomNav();
                 }
             }
             @Override public void onCancelled(@NonNull DatabaseError error) {}
         });
+    }
+
+    private void setupBottomNav() {
+        BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
+        if (techBottomNav != null && isTechnician) {
+            techBottomNav.setVisibility(View.VISIBLE);
+            techBottomNav.setSelectedItemId(R.id.nav_tech_profile);
+            techBottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_tech_dashboard) {
+                    Intent intent = new Intent(this, TechnicianDashboardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_tech_performance) {
+                    startActivity(new Intent(this, WorkPerformanceActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_tech_messages) {
+                    startActivity(new Intent(this, CustomerChatListActivity.class));
+                    finish();
+                    return true;
+                }
+                return true;
+            });
+        } else if (techBottomNav != null) {
+            techBottomNav.setVisibility(View.GONE);
+        }
     }
 
     private void saveProfileToFirebase() {

@@ -190,7 +190,7 @@
         android:clipToPadding="false"
         android:paddingBottom="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/techBottomNav"
         app:layout_constraintTop_toBottomOf="@id/cardTechGroupChat"
         tools:listitem="@layout/item_chat_thread" />
 
@@ -201,7 +201,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/techBottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardTechGroupChat">
@@ -225,4 +225,22 @@
             android:textSize="14.5sp" />
 
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/techBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/white"
+        app:elevation="12dp"
+        app:itemActiveIndicatorStyle="@style/BottomNavActiveIndicator"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/bottom_nav_item_color"
+        app:itemPaddingBottom="2dp"
+        app:itemPaddingTop="4dp"
+        app:itemRippleColor="#E0F2FE"
+        app:itemTextColor="@color/bottom_nav_item_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/tech_bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
