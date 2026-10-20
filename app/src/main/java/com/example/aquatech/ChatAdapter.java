@@ -28,6 +28,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_MESSAGE = 100;
     private static final int VIEW_TYPE_SYSTEM = 101;
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     private List<ChatMessage> messageList;
     private int currentMode;
@@ -138,7 +139,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 avatarRes = R.drawable.new_technician;
             }
 
-            if (!isFromMe && !isSameAsPrevious) {
+            if (!isFromMe && currentMode == MODE_TECH_CHAT && !isSameAsPrevious) {
                 chatHolder.tvSenderLabel.setVisibility(View.VISIBLE);
                 chatHolder.tvSenderLabel.setText(labelText);
             } else {
@@ -197,11 +198,20 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 params.addRule(RelativeLayout.END_OF, R.id.techAvatarIcon);
                 params.setMargins(8, isSameAsPrevious ? 1 : 8, 120, isSameAsNext ? 1 : 8);
 
-                if (!isSameAsNext) {
+                if (!isSameAsNext && currentMode == MODE_TECH_CHAT) {
                     chatHolder.techAvatarIcon.setVisibility(View.VISIBLE);
-                    Glide.with(chatHolder.itemView.getContext()).load(avatarRes).circleCrop().into(chatHolder.techAvatarIcon);
-                } else {
+                    if (message.getSenderId() != null && !message.getSenderId().isEmpty()) {
+                        TechnicianIdentityHelper.attachLiveAvatarListener(DB_URL, message.getSenderId(), chatHolder.techAvatarIcon);
+                    } else {
+                        Glide.with(chatHolder.itemView.getContext())
+                                .load(avatarRes)
+                                .circleCrop()
+                                .into(chatHolder.techAvatarIcon);
+                    }
+                } else if (currentMode == MODE_TECH_CHAT) {
                     chatHolder.techAvatarIcon.setVisibility(View.INVISIBLE);
+                } else {
+                    chatHolder.techAvatarIcon.setVisibility(View.GONE);
                 }
 
                 if (!isSameAsNext) {

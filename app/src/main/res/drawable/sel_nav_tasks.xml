@@ -3,12 +3,12 @@
 
     <item
         android:state_checked="true"
-        android:drawable="@drawable/ic_nav_tasks_selected"
+        android:drawable="@drawable/ic_nav_tasks_timer_selected"
         />
 
     <item
         android:state_checked="false"
-        android:drawable="@drawable/ic_nav_tasks"
+        android:drawable="@drawable/ic_nav_tasks_timer"
         />
 
 </selector>

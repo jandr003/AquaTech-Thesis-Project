@@ -102,13 +102,20 @@ public class TechnicianIdentityHelper {
                     if (imgUrl != null && !imgUrl.isEmpty()) {
                         Glide.with(imageView.getContext())
                                 .load(imgUrl)
-                                .placeholder(R.drawable.new_technician)
+                                .placeholder(R.drawable.technician_avatar1)
                                 .circleCrop()
                                 .into(imageView);
                     } else if (resId != null && resId > 0) {
-                        imageView.setImageResource(resId);
+                        Glide.with(imageView.getContext())
+                                .load(resId)
+                                .placeholder(R.drawable.technician_avatar1)
+                                .circleCrop()
+                                .into(imageView);
                     } else {
-                        imageView.setImageResource(R.drawable.new_technician);
+                        Glide.with(imageView.getContext())
+                                .load(R.drawable.technician_avatar1)
+                                .circleCrop()
+                                .into(imageView);
                     }
                 }
             }

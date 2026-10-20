@@ -79,7 +79,6 @@ import com.example.aquatech.TechnicianNotificationPopupHelper;
  */
 public class TechnicianDashboardActivity extends AppCompatActivity {
 
-    // region Fields & Views
     private CardView cardInProg;
     private Button btnActionInProg;
     private TextView tvInProgLabel, tvInProgCount, tvUpcomingLabel, tvUpcomingCount, tvInProgName;

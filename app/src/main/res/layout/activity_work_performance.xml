@@ -61,14 +61,27 @@
                     android:padding="24dp">
 
                     <TextView
+                        android:id="@+id/tvTechName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="This Month's Completed Tasks"
-                        android:textColor="#64748B"
-                        android:textSize="13.5sp" />
+                        android:gravity="center"
+                        android:text="Technician Name"
+                        android:textColor="#1E293B"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
 
-                    <!-- Circular Progress Ring Chart -->
+                    <TextView
+                        android:id="@+id/tvCompletedTasksLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="center"
+                        android:text="Here are your completed tasks for this month:"
+                        android:textColor="#64748B"
+                        android:textSize="13sp" />
+
                     <FrameLayout
                         android:layout_width="140dp"
                         android:layout_height="140dp"
@@ -112,6 +125,7 @@
                                 android:text="Tasks Done"
                                 android:textColor="#64748B"
                                 android:textSize="11.5sp" />
+
                         </LinearLayout>
                     </FrameLayout>
 
@@ -329,8 +343,8 @@
         app:itemActiveIndicatorStyle="@style/BottomNavActiveIndicator"
         app:itemIconSize="30dp"
         app:itemIconTint="@color/bottom_nav_item_color"
-        app:itemPaddingBottom="2dp"
-        app:itemPaddingTop="4dp"
+        app:itemPaddingBottom="1dp"
+        app:itemPaddingTop="8dp"
         app:itemRippleColor="#E0F2FE"
         app:itemTextColor="@color/bottom_nav_item_color"
         app:labelVisibilityMode="labeled"

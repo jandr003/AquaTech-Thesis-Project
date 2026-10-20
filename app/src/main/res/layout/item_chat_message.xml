@@ -1,57 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:padding="6dp">
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="0dp">
 
     <TextView
         android:id="@+id/tvDateHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="12dp"
-        android:fontFamily="@font/poppins_black_ttf"
-        android:text="Today 12:00 PM"
-        android:textColor="#8E8E8E"
-        android:textSize="11sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/poppins"
+        android:text="Today 13:50"
+        android:textColor="#8E8E93"
+        android:textSize="11.5sp"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/techAvatarIcon"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_below="@id/tvDateHeader"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/technician_avatar1"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvSenderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDateHeader"
+        android:layout_toEndOf="@id/techAvatarIcon"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="@font/poppins"
+        android:text="Sender Name"
+        android:textColor="#8E8E93"
+        android:textSize="11.5sp"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/messageContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvDateHeader"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="4dp"
+        android:layout_below="@id/tvSenderLabel"
+        android:layout_toEndOf="@id/techAvatarIcon"
         android:background="@drawable/bubble_ai"
         android:maxWidth="280dp"
+        android:minWidth="50dp"
         android:orientation="vertical"
         android:paddingHorizontal="14dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="6dp">
+        android:paddingVertical="8dp">
 
         <TextView
             android:id="@+id/tvMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_black_ttf"
-            android:text="Sample Message"
-            android:textColor="#333333"
+            android:fontFamily="@font/poppins"
+            android:lineSpacingExtra="2dp"
+            android:text="Message text..."
+            android:textColor="#000000"
             android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/fileAttachmentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="2dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="Attachment"
+                android:src="@drawable/upload_file_png" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvFileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="middle"
+                    android:fontFamily="@font/poppins"
+                    android:singleLine="true"
+                    android:text="Attachment.pdf"
+                    android:textColor="#1E293B"
+                    android:textSize="13.5sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvFileSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="2 MB"
+                    android:textColor="#64748B"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnDownloadAction"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="Download"
+                android:focusable="true"
+                android:padding="2dp"
+                android:src="@drawable/ic_download"
+                app:tint="#64748B" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvTime"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:gravity="end"
+            android:layout_gravity="end"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/poppins"
             android:text="12:00 PM"
-            android:textColor="#888888"
-            android:textSize="10sp"
-            android:visibility="visible" />
+            android:textColor="#8E8E93"
+            android:textSize="9.5sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

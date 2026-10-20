@@ -28,7 +28,7 @@ import java.util.Locale;
 
 public class WorkPerformanceActivity extends AppCompatActivity {
 
-    private TextView tvTotalTasks, tvPerfMessage;
+    private TextView tvTechName, tvTotalTasks, tvPerfMessage;
     private TextView tvMonth1Name, tvMonth1Tasks, tvMonth2Name, tvMonth2Tasks, tvMonth3Name, tvMonth3Tasks;
     private ProgressBar pbMonth1, pbMonth2, pbMonth3;
     private CircularProgressIndicator pbTotalChart;
@@ -56,6 +56,7 @@ public class WorkPerformanceActivity extends AppCompatActivity {
         setupStatusBar();
         initializeViews();
         fetchPerformanceData();
+        fetchTechIdentity();
     }
 
     @Override
@@ -68,6 +69,7 @@ public class WorkPerformanceActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        tvTechName = findViewById(R.id.tvTechName);
         tvTotalTasks = findViewById(R.id.tvTotalTasks);
         tvPerfMessage = findViewById(R.id.tvPerfMessage);
         pbTotalChart = findViewById(R.id.pbTotalChart);
@@ -94,6 +96,16 @@ public class WorkPerformanceActivity extends AppCompatActivity {
         tvMonth2Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
         cal.add(Calendar.MONTH, -1);
         tvMonth3Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
+    }
+
+    private void fetchTechIdentity() {
+        if (mAuth.getCurrentUser() == null) return;
+        String userEmail = mAuth.getCurrentUser().getEmail();
+        TechnicianIdentityHelper.fetchTechnicianIdentity(DB_URL, currentTechUid, userEmail, (uid, resolvedName) -> {
+            if (tvTechName != null && resolvedName != null && !resolvedName.trim().isEmpty()) {
+                tvTechName.setText(resolvedName);
+            }
+        });
     }
 
     private void fetchPerformanceData() {
