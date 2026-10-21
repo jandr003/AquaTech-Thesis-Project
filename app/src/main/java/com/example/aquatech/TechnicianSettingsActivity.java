@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
@@ -132,14 +133,14 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
         if (swAvailability != null) {
             swAvailability.setChecked(true);
             swAvailability.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (!isChecked) {
-                    swAvailability.setChecked(true);
-                    Toast.makeText(this, "Status is active while logged in.", Toast.LENGTH_SHORT).show();
+                if (userRef != null) {
+                    userRef.child("isAvailable").setValue(isChecked);
+                    userRef.child("dutyStatus").setValue(isChecked ? "Online / Available" : "Off-Duty");
                 }
+                Toast.makeText(this, isChecked ? "Status: Online & Available" : "Status: Off-Duty / On Break", Toast.LENGTH_SHORT).show();
             });
         }
 
-        // Navigation Links
         findViewById(R.id.btnTechAccount).setOnClickListener(v -> showTechAccountSecurityDialog());
         findViewById(R.id.btnTechDisplay).setOnClickListener(v -> showTechDisplayDialog());
         findViewById(R.id.btnTechPrivacy).setOnClickListener(v -> showTechPrivacyDialog());
@@ -152,6 +153,32 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
 
         findViewById(R.id.btnTechHelp).setOnClickListener(v -> startActivity(new Intent(this, HelpCenterActivity.class)));
         findViewById(R.id.btnTechAbout).setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
+
+        View btnLogout = findViewById(R.id.btnTechLogout);
+        if (btnLogout != null) {
+            btnLogout.setOnClickListener(v -> showLogoutConfirmationDialog());
+        }
+    }
+
+    private void showLogoutConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Log Out")
+                .setMessage("Are you sure you want to log out of your AquaTech Technician account?")
+                .setPositiveButton("Log Out", (dialog, which) -> {
+                    if (mAuth != null) {
+                        mAuth.signOut();
+                    }
+                    if (prefs != null) {
+                        prefs.edit().clear().apply();
+                    }
+                    Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, SplashActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     private void showTechDisplayDialog() {

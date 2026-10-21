@@ -63,7 +63,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_system, parent, false);
             return new SystemViewHolder(view);
         } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_techchat_message, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat_message, parent, false);
             return new ChatViewHolder(view);
         }
     }
@@ -196,7 +196,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 chatHolder.tvMessage.setTextColor(Color.BLACK);
                 chatHolder.tvTime.setTextColor(Color.BLACK);
                 params.addRule(RelativeLayout.END_OF, R.id.techAvatarIcon);
-                params.setMargins(8, isSameAsPrevious ? 1 : 8, 120, isSameAsNext ? 1 : 8);
+                params.setMargins(2, isSameAsPrevious ? 1 : 6, 80, isSameAsNext ? 1 : 6);
 
                 if (!isSameAsNext && currentMode == MODE_TECH_CHAT) {
                     chatHolder.techAvatarIcon.setVisibility(View.VISIBLE);

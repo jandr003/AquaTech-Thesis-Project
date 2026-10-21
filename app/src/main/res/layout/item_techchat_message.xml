@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:paddingHorizontal="10dp"
+    android:paddingHorizontal="2dp"
     android:paddingVertical="0dp">
 
     <TextView
@@ -24,11 +24,11 @@
 
     <ImageView
         android:id="@+id/techAvatarIcon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
         android:layout_below="@id/tvDateHeader"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="2dp"
         android:src="@drawable/technician_avatar1"
         android:visibility="gone" />
