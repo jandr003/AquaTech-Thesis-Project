@@ -152,7 +152,7 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnTechHelp).setOnClickListener(v -> startActivity(new Intent(this, HelpCenterActivity.class)));
-        findViewById(R.id.btnTechAbout).setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
+        findViewById(R.id.btnTechAbout).setOnClickListener(v -> startActivity(new Intent(this, TechnicianAboutActivity.class)));
 
         View btnLogout = findViewById(R.id.btnTechLogout);
         if (btnLogout != null) {

@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6FBFF">
+    android:background="#F8FAFC">
 
-    <View
+    <RelativeLayout
         android:id="@+id/termsHeader"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/header_gradient"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="64dp"
+        android:background="#2196F3"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/btnBackTerms"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="35dp"
-        android:padding="8dp"
-        android:src="@drawable/ic_arrow_back_gray"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/btnBackTerms"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_gray"
+            app:tint="@color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins"
-        android:text="Terms of Use"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/btnBackTerms"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btnBackTerms" />
+        <TextView
+            android:id="@+id/tvTitleTerms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins"
+            android:text="Terms of Use"
+            android:textColor="@color/white"
+            android:textSize="17.5sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="20dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="24dp"
         app:layout_constraintBottom_toTopOf="@id/layoutAgreement"
         app:layout_constraintTop_toBottomOf="@id/termsHeader">
 
@@ -49,144 +54,441 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingVertical="16dp">
+            android:padding="16dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="AquaTech Mobile Application"
+                        android:textColor="#2196F3"
+                        android:textSize="13.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Aqua Smartguard Corp."
+                        android:textColor="#1E293B"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="GF, Makati City, 1209 Metro Manila"
+                        android:textColor="#64748B"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="14dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="These Terms of Use set out the conditions governing the use of the AquaTech mobile application (“AquaTech” or the “App”), operated by Aqua Smartguard Corp. (“the Company”). By accessing or using the App, users agree to comply with these terms and applicable Company policies."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="1. Purpose of the Application"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="AquaTech supports the management of water system service operations by providing a platform for customer service requests, technician assignments, service report submission, ticket monitoring, and service-related communication.\n\nAccess to specific features depends on the user's assigned role and authorization."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="2. Account Use and Security"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Users must provide accurate information and maintain the confidentiality of their login credentials. Accounts may only be used by their authorized owners. Any suspected unauthorized access or account misuse must be reported to the Company through its designated support channel.\n\nUsers must not access another person's account or use the App beyond the permissions granted to them."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="3. Customer Responsibilities"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Customers are responsible for the accuracy of the information they submit through AquaTech, including their contact details and service request descriptions.\n\nCustomers must use the App for legitimate service-related purposes and provide relevant information needed to assess and fulfill their requests. Service updates and ticket statuses are provided to communicate progress but do not guarantee a particular completion date or service outcome."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="4. Technician Responsibilities"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Technicians must use AquaTech to manage their assigned service tickets and complete required service documentation in accordance with Company procedures.\n\nService reports, remarks, and supporting photographs must accurately reflect the work performed. Technicians must handle customer information and service records confidentially and use them only for authorized business purposes.\n\nAny discrepancy in an assignment or service record must be reported to the appropriate management personnel."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="5. Management Access and Responsibilities"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Authorized management personnel may use AquaTech to assign or reassign service tickets, monitor service progress, and review submitted reports.\n\nAccess to customer information and operational records must remain within the user's authorized responsibilities. Such information must not be disclosed or used for unrelated purposes."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="6. Service Requests and Ticket Management"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="AquaTech provides tools for submitting service requests and monitoring ticket updates. Submission of a request does not constitute confirmation of an appointment or guarantee immediate service.\n\nThe Company may update ticket assignments or service schedules when operational requirements make changes necessary. Users should refer to the latest information available in the App and follow the applicable service procedures."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="7. Device Permissions and Location Services"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Certain features may require access to device functions, including the camera, photos, or location services. These permissions are used only where necessary for the applicable feature and disclosed purpose.\n\nWhere technician location tracking is available, location information may be used to support service coordination and arrival estimates. Actual location accuracy and availability may vary depending on device capabilities, connectivity, and environmental conditions.\n\nFeatures that depend on a denied permission may be unavailable."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="8. Privacy and Personal Information"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="The collection, use, storage, and disclosure of personal information through AquaTech are governed by the Company's applicable Privacy Policy or Privacy Notice and relevant data protection requirements.\n\nUsers should consult that notice for details regarding the personal information processed, the purposes of processing, applicable disclosures, retention practices, and available data subject rights."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="9. Acceptable Use"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Users must not use AquaTech to submit false service information, falsify reports, misuse customer records, interfere with the App's operation, or gain unauthorized access to accounts, data, or system functions.\n\nUsers must also refrain from using the App for unlawful activities or in violation of applicable Company policies.\n\nViolations may result in an investigation and appropriate action under Company procedures."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="10. Application Availability"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Access to AquaTech may be affected by scheduled maintenance, software updates, network interruptions, device limitations, or technical issues.\n\nThe Company may modify or update App features to address operational needs, improve functionality, or maintain security. The Company will make reasonable efforts to minimize service disruptions where practicable."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="11. Limitation of Liability"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Information displayed in AquaTech may depend on the accuracy of submitted records, device data, network availability, and other technical factors. Users should report material errors affecting service requests or reports through the appropriate Company channel.\n\nNothing in these Terms excludes or limits any liability or right that cannot lawfully be excluded or limited under applicable law."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="12. Suspension or Termination of Access"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="The Company may suspend or restrict access where necessary to address unauthorized use, security risks, or violations of these Terms, in accordance with applicable procedures and law.\n\nThe handling of accounts and associated records following suspension or termination remains subject to applicable Company policies and legal requirements."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="13. Changes to These Terms"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="The Company may revise these Terms to reflect changes in AquaTech, its service operations, or applicable requirements. The current version and its effective date will be made available through the App or another appropriate channel.\n\nWhere required, users will be notified of material changes and asked to acknowledge the revised Terms."
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="14. Contact Information"
+                        android:textColor="#1C4E75"
+                        android:textSize="14.5sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:lineSpacingExtra="4dp"
+                        android:text="Questions or concerns regarding these Terms may be directed to Aqua Smartguard Corp. through its designated company contact or support channel.\n\nAqua Smartguard Corp.\nGF, Makati City, 1209 Metro Manila"
+                        android:textColor="#334155"
+                        android:textSize="13.5sp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                android:text="Aqua Smartguard Corp."
-                android:textColor="@color/aqua_primary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins"
-                android:text="GF, Makati City, 1209 Metro Manila"
-                android:textColor="#888888"
+                android:gravity="center"
+                android:text="End of Terms of Use · Aqua Smartguard Corp."
+                android:textColor="#94A3B8"
                 android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/poppins"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/terms_intro"
-                android:textColor="#444444"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins"
-                android:text="@string/terms_s1_title"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/terms_s1_body"
-                android:textColor="#444444"
-                android:textSize="14sp" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins"
-                android:text="@string/terms_s2_title"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/terms_s2_body"
-                android:textColor="#444444"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins"
-                android:text="@string/terms_s3_title"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/terms_s3_body"
-                android:textColor="#444444"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins"
-                android:text="@string/terms_s4_title"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/terms_s4_body"
-                android:textColor="#444444"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins"
-                android:text="@string/terms_s5_title"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/terms_s5_body"
-                android:textColor="#444444"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins"
-                android:text="@string/terms_s6_title"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="@font/poppins"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/terms_s6_body"
-                android:textColor="#444444"
-                android:textSize="14sp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -195,33 +497,37 @@
         android:id="@+id/layoutAgreement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp"
         android:background="@color/white"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <CheckBox
             android:id="@+id/cbAgreeTerms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:buttonTint="#2196F3"
             android:fontFamily="@font/poppins"
             android:text="I agree to the Terms of Use"
-            android:textColor="#444444"
-            android:textSize="14sp"
-            android:buttonTint="@color/aqua_primary"
-            android:layout_marginBottom="12dp" />
+            android:textColor="#334155"
+            android:textSize="13.5sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAcceptTerms"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:fontFamily="@font/poppins"
-            android:text="I UNDERSTAND"
-            android:textAllCaps="false"
-            android:backgroundTint="@color/aqua_primary"
+            android:layout_height="52dp"
             android:alpha="0.5"
+            android:backgroundTint="#2196F3"
             android:enabled="false"
+            android:fontFamily="@font/poppins"
+            android:text="I UNDERSTAND &amp; AGREE"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14.5sp"
+            android:textStyle="bold"
             app:cornerRadius="12dp" />
-    </LinearLayout>
 
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

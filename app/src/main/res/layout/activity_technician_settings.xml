@@ -87,8 +87,8 @@
 
                     <ImageView
                         android:id="@+id/iconWorkStatus"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_online_availability"
@@ -171,8 +171,8 @@
 
                     <ImageView
                         android:id="@+id/iconTechAccount"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_nav_profile"
@@ -323,11 +323,11 @@
 
                         <ImageView
                             android:id="@+id/iconTechPrivacy"
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_settings_white"
+                            android:src="@drawable/ic_privacy_lock"
                             app:tint="#2196F3" />
 
                         <LinearLayout
@@ -387,11 +387,11 @@
 
                         <ImageView
                             android:id="@+id/iconTechNotification"
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_notif_bell_white"
+                            android:src="@drawable/ic_notification_alerts"
                             app:tint="#2196F3" />
 
                         <LinearLayout
@@ -476,11 +476,11 @@
 
                         <ImageView
                             android:id="@+id/iconTechHelp"
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/send_1"
+                            android:src="@drawable/ic_help_center"
                             app:tint="#2196F3" />
 
                         <LinearLayout
@@ -540,11 +540,11 @@
 
                         <ImageView
                             android:id="@+id/iconTechAbout"
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/logoo"
+                            android:src="@drawable/ic_about_aquatech"
                             app:tint="#2196F3" />
 
                         <LinearLayout

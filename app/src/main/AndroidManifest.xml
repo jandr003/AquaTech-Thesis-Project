@@ -54,6 +54,13 @@
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
+            android:name=".TechnicianAboutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
             android:name=".SignupActivity"
             android:exported="false"
             android:screenOrientation="portrait"
