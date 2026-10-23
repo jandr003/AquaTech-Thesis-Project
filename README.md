@@ -89,9 +89,9 @@ AquaTech provides a centralized enterprise platform for **Aqua Smartguard Corp**
 > [!NOTE]
 > **Post-Thesis Independent Development**
 >
-> After completing my thesis, I continued working on AquaTech independently to further improve the application. My current work focuses on refining the Service Request, Service Receipt, and Service Request Success modules, as well as updating the PDF layouts for a cleaner and more consistent output.
+> After graduating, I continued working on AquaTech independently to improve its features and overall functionality. My ongoing work includes refining the Service Request, Service Receipt, and Service Request Success modules, along with updating the PDF layouts for a cleaner and more consistent output.
 >
-> I am also improving the Technician Dashboard and its workflow, including Pending Requests, In Progress, Submission, and Completion. I am currently refining the Chat Messaging, Voice Calling, and AI Chatbot features as well, with a focus on making the application more consistent and practical across Android phones and tablets.
+> I am also improving the Technician Dashboard, particularly the workflow for managing pending requests, in-progress services, report submission, and service completion. In addition, I am working on the Chat Messaging, Voice Calling, and AI Chatbot features, while making sure the application works consistently across Android phones and tablets.
 
 AquaTech is a completed, enterprise-ready mobile solution focused on water purification management, featuring real-time GPS tracking, AI chatbot support, PDF report generation, and responsive layouts across Android devices.
 
