@@ -61,6 +61,48 @@
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
+            android:name=".TechnicianHelpCenterActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".TechnicianTicketsGuideActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".TechnicianReportsGuideActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".TechnicianProceduresGuideActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".TechnicianTroubleshootingGuideActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".TechnicianAccountGuideActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
             android:name=".SignupActivity"
             android:exported="false"
             android:screenOrientation="portrait"
