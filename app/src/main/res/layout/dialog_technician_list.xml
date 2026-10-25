@@ -1,58 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="320dp"
+    android:layout_width="340dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    app:cardCornerRadius="28dp"
-    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="12dp"
     app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_black_ttf"
+            android:fontFamily="@font/poppins"
             android:text="Select Technician"
             android:textAlignment="center"
-            android:textColor="#1E3A8A"
-            android:textSize="18sp"
+            android:textColor="#2196F3"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins"
-            android:text="Choose a specialist to assign this task"
+            android:text="Choose a specialist to assign this service task"
             android:textAlignment="center"
-            android:textColor="#888888"
-            android:textSize="12sp" />
+            android:textColor="#64748B"
+            android:textSize="12.5sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#F0F0F0" />
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:background="#E2E8F0" />
 
         <ProgressBar
             android:id="@+id/pbLoadingTechs"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginVertical="24dp"
+            android:indeterminateTint="#2196F3"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDialogTechs"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="300dp"
             android:overScrollMode="never"
             android:scrollbars="vertical" />
 
@@ -62,10 +64,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/poppins_black_ttf"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/poppins"
             android:text="CANCEL"
-            android:textColor="#888888"
+            android:textColor="#64748B"
+            android:textSize="13.5sp"
+            android:textStyle="bold"
             app:cornerRadius="12dp" />
 
     </LinearLayout>

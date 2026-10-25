@@ -141,7 +141,7 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
             });
         }
 
-        findViewById(R.id.btnTechAccount).setOnClickListener(v -> showTechAccountSecurityDialog());
+        findViewById(R.id.btnTechAccount).setOnClickListener(v -> startActivity(new Intent(this, TechnicianAccountSecurityActivity.class)));
         findViewById(R.id.btnTechDisplay).setOnClickListener(v -> startActivity(new Intent(this, TechnicianDisplayActivity.class)));
         findViewById(R.id.btnTechPrivacy).setOnClickListener(v -> startActivity(new Intent(this, TechnicianPrivacyActivity.class)));
         
@@ -179,98 +179,5 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
-    }
-
-    private void showTechAccountSecurityDialog() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_tech_account_security);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-
-        TextView tvTechId = dialog.findViewById(R.id.tvTechUID);
-        TextView tvStatus = dialog.findViewById(R.id.tvTechStatus);
-        TextView tvPhone = dialog.findViewById(R.id.tvTechPhone);
-        TextView tvSince = dialog.findViewById(R.id.tvTechSince);
-        
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            if (tvTechId != null) {
-                String email = user.getEmail() != null ? user.getEmail().toLowerCase() : "";
-                tvTechId.setText(getTechIdFromEmail(email));
-            }
-
-            if (tvSince != null) {
-                FirebaseUserMetadata metadata = user.getMetadata();
-                if (metadata != null) {
-                    long creationTimestamp = metadata.getCreationTimestamp();
-                    SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
-                    tvSince.setText(sdf.format(new Date(creationTimestamp)));
-                }
-            }
-
-            if (userRef != null) {
-                userRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String status = snapshot.child("verificationStatus").getValue(String.class);
-                        if (tvStatus != null) {
-                            if ("Verified".equalsIgnoreCase(status)) {
-                                tvStatus.setText("Identity Verified");
-                                tvStatus.setTextColor(Color.parseColor("#4CAF50"));
-                            } else if ("Reviewing".equalsIgnoreCase(status)) {
-                                tvStatus.setText("Pending Review");
-                                tvStatus.setTextColor(Color.parseColor("#FFA000"));
-                            } else {
-                                tvStatus.setText("Unverified (Upload ID)");
-                                tvStatus.setTextColor(Color.parseColor("#FF4B4B"));
-                            }
-                        }
-
-                        String mobile = snapshot.child("mobileNumber").getValue(String.class);
-                        if (tvPhone != null && mobile != null && !mobile.isEmpty()) {
-                            tvPhone.setText(mobile);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
-                });
-            }
-        }
-
-        View identityLayout = dialog.findViewById(R.id.layoutTechIdentity);
-        if (identityLayout != null) {
-            identityLayout.setOnClickListener(v -> {
-                dialog.dismiss();
-                startActivity(new Intent(this, TechnicianVerificationActivity.class));
-            });
-        }
-
-        View changePassLayout = dialog.findViewById(R.id.layoutTechChangePassword);
-        if (changePassLayout != null) {
-            changePassLayout.setOnClickListener(v -> {
-                dialog.dismiss();
-                startActivity(new Intent(this, ConfirmPasswordActivity.class));
-            });
-        }
-
-        View btnDone = dialog.findViewById(R.id.btnDoneTechSecurity);
-        if (btnDone != null) btnDone.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
-    }
-
-    private String getTechIdFromEmail(String email) {
-        if (email.contains("john@")) return "ASC-T001";
-        if (email.contains("jhonny@")) return "ASC-T002";
-        if (email.contains("ricky@")) return "ASC-T003";
-        if (email.contains("ruel@")) return "ASC-T004";
-        if (email.contains("glenda@")) return "ASC-T005";
-        if (email.contains("jerry@")) return "ASC-T006";
-        if (email.contains("jonnifer@")) return "ASC-T007";
-        if (email.contains("marlon@")) return "ASC-T008";
-        if (email.contains("selvino@")) return "ASC-T009";
-        return "ASC-T100";
     }
 }

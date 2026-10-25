@@ -3,24 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="#FFFFFF"
-    android:layout_marginHorizontal="8dp"
+    android:layout_marginHorizontal="12dp"
     android:layout_marginTop="12dp"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="20dp"
-    app:cardElevation="12dp"
-    app:strokeWidth="0dp">
+    app:cardElevation="0dp"
+    app:strokeColor="#E2E8F0"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <ImageView
             android:id="@+id/ivAcceptedLogo"
             android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_height="45dp" android:scaleType="centerInside"
             android:src="@drawable/asc_logooo"
-            android:scaleType="centerInside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,8 +28,8 @@
             android:id="@+id/infoContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="12dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@id/btnCloseAccepted"
             app:layout_constraintStart_toEndOf="@id/ivAcceptedLogo"
@@ -39,50 +39,54 @@
                 android:id="@+id/tvAcceptedTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_black_ttf"
+                android:fontFamily="@font/poppins"
                 android:text="Request Accepted!"
-                android:textColor="#3EB5E8"
-                android:textSize="14sp"
+                android:textColor="#2196F3"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvAcceptedTechName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/poppins"
-                android:text="Technician is on the way"
-                android:textColor="#333333"
-                android:textSize="12sp"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:text="Technician is on the way"
+                android:textColor="#334155"
+                android:textSize="12.5sp" />
+
         </LinearLayout>
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAcceptedView"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins"
             android:text="VIEW"
-            android:textColor="#3EB5E8"
-            android:textSize="14sp"
+            android:textColor="#2196F3"
+            android:textSize="13.5sp"
             android:textStyle="bold"
+            app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/infoContainer" />
 
         <ImageView
             android:id="@+id/btnCloseAccepted"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Close"
+            android:focusable="true"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="#CCCCCC" />
+            app:tint="#94A3B8" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
