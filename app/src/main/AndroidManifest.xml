@@ -96,6 +96,20 @@
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
+            android:name=".TechnicianPrivacyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".TechnicianDisplayActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
             android:name=".TechnicianAccountGuideActivity"
             android:exported="false"
             android:screenOrientation="portrait"

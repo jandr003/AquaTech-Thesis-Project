@@ -77,7 +77,10 @@ public class TechnicianHelpCenterActivity extends AppCompatActivity {
         if (catTrouble != null) {
             catTrouble.setOnClickListener(v -> startActivity(new Intent(this, TechnicianTroubleshootingGuideActivity.class)));
         }
-        setupCategoryClick(R.id.catAccountProfile, layoutFaq6, R.id.tvTechA6, R.id.ivTechArrow6);
+        View catAccount = findViewById(R.id.catAccountProfile);
+        if (catAccount != null) {
+            catAccount.setOnClickListener(v -> startActivity(new Intent(this, TechnicianAccountGuideActivity.class)));
+        }
     }
 
     private void setupCategoryClick(int catId, View faqLayout, int answerId, int arrowId) {

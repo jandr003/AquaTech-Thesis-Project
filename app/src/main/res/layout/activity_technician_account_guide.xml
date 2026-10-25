@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8FAFC">
 
-    <!-- Top Blue Header Bar (64dp, #2196F3) -->
     <RelativeLayout
         android:id="@+id/accountGuideHeader"
         android:layout_width="match_parent"
@@ -57,7 +56,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Category Header Card (Text Only) -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,10 +91,8 @@
                         android:textSize="12.5sp" />
 
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Guide Topics Card Section -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,7 +108,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <!-- Topic 1: Unable to Log In -->
                     <RelativeLayout
                         android:id="@+id/btnGuideUnableToLogin"
                         android:layout_width="match_parent"
@@ -166,7 +161,6 @@
                         android:layout_marginStart="16dp"
                         android:background="#F1F5F9" />
 
-                    <!-- Topic 2: Forgot Password -->
                     <RelativeLayout
                         android:id="@+id/btnGuideForgotPassword"
                         android:layout_width="match_parent"
@@ -220,7 +214,6 @@
                         android:layout_marginStart="16dp"
                         android:background="#F1F5F9" />
 
-                    <!-- Topic 3: Updating Profile Information -->
                     <RelativeLayout
                         android:id="@+id/btnGuideUpdatingProfile"
                         android:layout_width="match_parent"
@@ -274,7 +267,6 @@
                         android:layout_marginStart="16dp"
                         android:background="#F1F5F9" />
 
-                    <!-- Topic 4: Account Access Issues -->
                     <RelativeLayout
                         android:id="@+id/btnGuideAccessIssues"
                         android:layout_width="match_parent"
@@ -321,13 +313,8 @@
                             app:tint="#94A3B8" />
 
                     </RelativeLayout>
-
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

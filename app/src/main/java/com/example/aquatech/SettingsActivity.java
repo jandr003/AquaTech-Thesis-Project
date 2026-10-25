@@ -117,25 +117,28 @@ public class SettingsActivity extends AppCompatActivity {
 
         Slider sliderFont = dialog.findViewById(R.id.sliderFontSize);
         SwitchMaterial swSerial = dialog.findViewById(R.id.switchShowSerial);
-        SwitchMaterial swService = dialog.findViewById(R.id.switchServiceDate);
+        SwitchMaterial swTicket = dialog.findViewById(R.id.switchTicketID);
         SwitchMaterial swDistance = dialog.findViewById(R.id.switchTechDistance);
 
-        sliderFont.setValue(prefs.getFloat("display_font_size", 1.0f));
-        swSerial.setChecked(prefs.getBoolean("display_show_serial", true));
-        swService.setChecked(prefs.getBoolean("display_show_service_date", true));
-        swDistance.setChecked(prefs.getBoolean("display_show_distance", true));
+        if (sliderFont != null) sliderFont.setValue(prefs.getFloat("display_font_size", 1.0f));
+        if (swSerial != null) swSerial.setChecked(prefs.getBoolean("display_show_serial", true));
+        if (swTicket != null) swTicket.setChecked(prefs.getBoolean("display_show_ticket", true));
+        if (swDistance != null) swDistance.setChecked(prefs.getBoolean("display_show_distance", true));
 
-        dialog.findViewById(R.id.btnDoneDisplay).setOnClickListener(v -> {
-            prefs.edit()
-                .putFloat("display_font_size", sliderFont.getValue())
-                .putBoolean("display_show_serial", swSerial.isChecked())
-                .putBoolean("display_show_service_date", swService.isChecked())
-                .putBoolean("display_show_distance", swDistance.isChecked())
-                .apply();
+        View btnDone = dialog.findViewById(R.id.btnDoneDisplay);
+        if (btnDone != null) {
+            btnDone.setOnClickListener(v -> {
+                prefs.edit()
+                    .putFloat("display_font_size", sliderFont != null ? sliderFont.getValue() : 1.0f)
+                    .putBoolean("display_show_serial", swSerial != null && swSerial.isChecked())
+                    .putBoolean("display_show_ticket", swTicket != null && swTicket.isChecked())
+                    .putBoolean("display_show_distance", swDistance != null && swDistance.isChecked())
+                    .apply();
 
-            Toast.makeText(this, "Display settings saved!", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
+                Toast.makeText(this, "Display settings saved!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            });
+        }
 
         dialog.show();
     }

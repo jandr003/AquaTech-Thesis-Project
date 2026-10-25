@@ -142,8 +142,8 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnTechAccount).setOnClickListener(v -> showTechAccountSecurityDialog());
-        findViewById(R.id.btnTechDisplay).setOnClickListener(v -> showTechDisplayDialog());
-        findViewById(R.id.btnTechPrivacy).setOnClickListener(v -> showTechPrivacyDialog());
+        findViewById(R.id.btnTechDisplay).setOnClickListener(v -> startActivity(new Intent(this, TechnicianDisplayActivity.class)));
+        findViewById(R.id.btnTechPrivacy).setOnClickListener(v -> startActivity(new Intent(this, TechnicianPrivacyActivity.class)));
         
         findViewById(R.id.btnTechNotification).setOnClickListener(v -> {
             Intent intent = new Intent(this, NotificationSettingsActivity.class);
@@ -179,26 +179,6 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
-    }
-
-    private void showTechDisplayDialog() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_tech_display);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        View btnDone = dialog.findViewById(R.id.btnSaveTechDisplay);
-        if (btnDone != null) btnDone.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
-    }
-
-    private void showTechPrivacyDialog() {
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_tech_privacy);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        View btnDone = dialog.findViewById(R.id.btnSaveTechPrivacy);
-        if (btnDone != null) btnDone.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
     }
 
     private void showTechAccountSecurityDialog() {
