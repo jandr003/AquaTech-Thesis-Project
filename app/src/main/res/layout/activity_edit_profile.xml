@@ -32,7 +32,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@id/techBottomNav"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
         <LinearLayout
@@ -58,18 +58,19 @@
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_gravity="center"
-                    app:cardBackgroundColor="#F0F7FF"
+                    app:cardBackgroundColor="@android:color/transparent"
                     app:cardCornerRadius="60dp"
-                    app:cardElevation="4dp"
-                    app:strokeColor="#2196F3"
-                    app:strokeWidth="3dp">
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/ivEditProfilePic"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/technician_avatar1" />
+                        android:src="@drawable/customer_avatar1"
+                        app:shapeAppearanceOverlay="@style/CircleImage"
+                        app:strokeWidth="0dp" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -355,23 +356,4 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <!-- Technician Bottom Navigation Bar -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/techBottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/white"
-        app:elevation="12dp"
-        app:itemActiveIndicatorStyle="@style/BottomNavActiveIndicator"
-        app:itemIconSize="30dp"
-        app:itemIconTint="@color/bottom_nav_item_color"
-        app:itemPaddingBottom="1dp"
-        app:itemPaddingTop="8dp"
-        app:itemRippleColor="#E0F2FE"
-        app:itemTextColor="@color/bottom_nav_item_color"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/tech_bottom_nav_menu"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

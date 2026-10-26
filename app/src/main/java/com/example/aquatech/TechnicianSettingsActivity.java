@@ -141,7 +141,6 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
             });
         }
 
-        findViewById(R.id.btnTechAccount).setOnClickListener(v -> startActivity(new Intent(this, TechnicianAccountSecurityActivity.class)));
         findViewById(R.id.btnTechDisplay).setOnClickListener(v -> startActivity(new Intent(this, TechnicianDisplayActivity.class)));
         findViewById(R.id.btnTechPrivacy).setOnClickListener(v -> startActivity(new Intent(this, TechnicianPrivacyActivity.class)));
         
@@ -153,31 +152,5 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
 
         findViewById(R.id.btnTechHelp).setOnClickListener(v -> startActivity(new Intent(this, TechnicianHelpCenterActivity.class)));
         findViewById(R.id.btnTechAbout).setOnClickListener(v -> startActivity(new Intent(this, TechnicianAboutActivity.class)));
-
-        View btnLogout = findViewById(R.id.btnTechLogout);
-        if (btnLogout != null) {
-            btnLogout.setOnClickListener(v -> showLogoutConfirmationDialog());
-        }
-    }
-
-    private void showLogoutConfirmationDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Log Out")
-                .setMessage("Are you sure you want to log out of your AquaTech Technician account?")
-                .setPositiveButton("Log Out", (dialog, which) -> {
-                    if (mAuth != null) {
-                        mAuth.signOut();
-                    }
-                    if (prefs != null) {
-                        prefs.edit().clear().apply();
-                    }
-                    Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, SplashActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
-                .show();
     }
 }

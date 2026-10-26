@@ -247,7 +247,7 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
         }
         View avatarView = findViewById(R.id.techProfileAvatar);
         if (avatarView != null) {
-            avatarView.setOnClickListener(v -> startActivity(new Intent(this, EditProfileActivity.class)));
+            avatarView.setOnClickListener(v -> startActivity(new Intent(this, TechnicianProfileActivity.class)));
         }
 
         BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
@@ -263,7 +263,7 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                     startActivity(new Intent(this, CustomerChatListActivity.class));
                     return true;
                 } else if (id == R.id.nav_tech_profile) {
-                    startActivity(new Intent(this, EditProfileActivity.class));
+                    startActivity(new Intent(this, TechnicianProfileActivity.class));
                     return true;
                 }
                 return true;
