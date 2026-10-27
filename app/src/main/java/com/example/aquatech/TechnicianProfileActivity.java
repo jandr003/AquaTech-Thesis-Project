@@ -33,7 +33,7 @@ public class TechnicianProfileActivity extends AppCompatActivity {
     private DatabaseReference userRef;
 
     private ImageView ivProfilePic;
-    private TextView tvTechName, tvTechRole, tvTechVerifiedBadge, tvTechUID, tvTechEmail, tvTechPhone, tvTechPosition, tvTechBranch;
+    private TextView tvTechName, tvTechRole, tvTechVerifiedBadge, tvTechUID, tvTechEmail, tvTechPhone, tvTechPosition, tvTechBranch, tvTechFullName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +73,41 @@ public class TechnicianProfileActivity extends AppCompatActivity {
         tvTechPosition = findViewById(R.id.tvTechPosition);
         tvTechBranch = findViewById(R.id.tvTechBranch);
 
+        tvTechFullName = findViewById(R.id.tvTechFullName);
+
         View btnChangePic = findViewById(R.id.btnChangeTechPic);
         if (btnChangePic != null) {
             btnChangePic.setOnClickListener(v -> showAvatarSelectionDialog());
         }
 
+        if (tvTechVerifiedBadge != null) {
+            tvTechVerifiedBadge.setOnClickListener(v -> startActivity(new Intent(this, TechnicianVerificationActivity.class)));
+        }
+
+        View btnUploadGovId = findViewById(R.id.btnUploadGovId);
+        if (btnUploadGovId != null) {
+            btnUploadGovId.setOnClickListener(v -> startActivity(new Intent(this, TechnicianVerificationActivity.class)));
+        }
+
         View btnEditPersonal = findViewById(R.id.btnEditPersonalProfile);
         if (btnEditPersonal != null) {
-            btnEditPersonal.setOnClickListener(v -> showAvatarSelectionDialog());
+            btnEditPersonal.setOnClickListener(v -> showEditPersonalProfileDialog());
+        }
+
+        View btnBranchDropdown = findViewById(R.id.btnTechBranchDropdown);
+        View panelBranchDetails = findViewById(R.id.panelBranchDetails);
+        ImageView ivBranchArrow = findViewById(R.id.ivBranchDropdownArrow);
+
+        if (btnBranchDropdown != null && panelBranchDetails != null && ivBranchArrow != null) {
+            btnBranchDropdown.setOnClickListener(v -> {
+                if (panelBranchDetails.getVisibility() == View.GONE) {
+                    panelBranchDetails.setVisibility(View.VISIBLE);
+                    ivBranchArrow.setRotation(270f);
+                } else {
+                    panelBranchDetails.setVisibility(View.GONE);
+                    ivBranchArrow.setRotation(90f);
+                }
+            });
         }
 
         View btnAccountSec = findViewById(R.id.btnProfileAccountSecurity);
@@ -101,8 +128,12 @@ public class TechnicianProfileActivity extends AppCompatActivity {
         BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
         if (techBottomNav != null) {
             techBottomNav.setSelectedItemId(R.id.nav_tech_profile);
+            CurvedBottomNavHelper.setupAnimatedNav(techBottomNav);
+
             techBottomNav.setOnItemSelectedListener(item -> {
                 int id = item.getItemId();
+                CurvedBottomNavHelper.animateItemClick(techBottomNav, id);
+
                 if (id == R.id.nav_tech_dashboard) {
                     Intent intent = new Intent(this, TechnicianDashboardActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -172,6 +203,9 @@ public class TechnicianProfileActivity extends AppCompatActivity {
                         if (tvTechName != null && name != null && !name.isEmpty()) {
                             tvTechName.setText(name);
                         }
+                        if (tvTechFullName != null && name != null && !name.isEmpty()) {
+                            tvTechFullName.setText(name);
+                        }
 
                         String mobile = snapshot.child("mobileNumber").getValue(String.class);
                         if (mobile == null || mobile.isEmpty()) mobile = snapshot.child("phone").getValue(String.class);
@@ -206,6 +240,10 @@ public class TechnicianProfileActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    private void showEditPersonalProfileDialog() {
+        startActivity(new Intent(this, TechnicianEditProfileActivity.class));
     }
 
     private void showAvatarSelectionDialog() {

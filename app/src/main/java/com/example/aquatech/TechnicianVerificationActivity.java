@@ -140,7 +140,7 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
             tvVerificationStatus.setText("VERIFIED");
             tvVerificationStatus.setTextColor(Color.parseColor("#4CAF50"));
             tvStatusDescription.setText("Identity confirmed. You can now accept all job requests.");
-            ivStatusIcon.setImageResource(android.R.drawable.checkbox_on_background);
+            ivStatusIcon.setImageResource(R.drawable.ic_completed);
             ivStatusIcon.setColorFilter(Color.parseColor("#4CAF50"));
             btnSubmit.setVisibility(View.GONE);
             uploadSection.setVisibility(View.GONE);
@@ -149,14 +149,19 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
             tvVerificationStatus.setText("PENDING REVIEW");
             tvVerificationStatus.setTextColor(Color.parseColor("#FFA000"));
             tvStatusDescription.setText("We are checking your documents. Verification in progress...");
+            ivStatusIcon.setImageResource(R.drawable.ic_pdf_clock);
+            ivStatusIcon.setColorFilter(Color.parseColor("#FFA000"));
+            btnSubmit.setVisibility(View.VISIBLE);
             btnSubmit.setEnabled(false);
             btnSubmit.setText("UNDER REVIEW");
-            uploadSection.setVisibility(View.GONE);
+            uploadSection.setVisibility(View.VISIBLE);
             showUploadedImages(idUrl, certUrl);
         } else if ("Rejected".equalsIgnoreCase(status)) {
             tvVerificationStatus.setText("REJECTED");
-            tvVerificationStatus.setTextColor(Color.parseColor("#FF4B4B"));
+            tvVerificationStatus.setTextColor(Color.parseColor("#EF4444"));
             tvStatusDescription.setText("Your documents were rejected. Please upload valid requirements.");
+            ivStatusIcon.setImageResource(R.drawable.ic_rejected_x);
+            ivStatusIcon.setColorFilter(Color.parseColor("#EF4444"));
             btnSubmit.setVisibility(View.VISIBLE);
             btnSubmit.setEnabled(true);
             btnSubmit.setText("RESUBMIT FOR REVIEW");
@@ -164,8 +169,10 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
             showUploadedImages(idUrl, certUrl);
         } else {
             tvVerificationStatus.setText("NOT VERIFIED");
-            tvVerificationStatus.setTextColor(Color.parseColor("#FF4B4B"));
+            tvVerificationStatus.setTextColor(Color.parseColor("#2196F3"));
             tvStatusDescription.setText("Upload requirements to start accepting jobs.");
+            ivStatusIcon.setImageResource(R.drawable.ic_unverified_shield);
+            ivStatusIcon.setColorFilter(Color.parseColor("#2196F3"));
             btnSubmit.setVisibility(View.VISIBLE);
             btnSubmit.setEnabled(true);
             btnSubmit.setText("SUBMIT FOR REVIEW");

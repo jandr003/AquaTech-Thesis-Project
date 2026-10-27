@@ -253,8 +253,12 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
         BottomNavigationView techBottomNav = findViewById(R.id.techBottomNav);
         if (techBottomNav != null) {
             techBottomNav.setSelectedItemId(R.id.nav_tech_dashboard);
+            CurvedBottomNavHelper.setupAnimatedNav(techBottomNav);
+
             techBottomNav.setOnItemSelectedListener(item -> {
                 int id = item.getItemId();
+                CurvedBottomNavHelper.animateItemClick(techBottomNav, id);
+
                 if (id == R.id.nav_tech_performance) {
                     Intent intent = new Intent(this, WorkPerformanceActivity.class);
                     startActivity(intent);
