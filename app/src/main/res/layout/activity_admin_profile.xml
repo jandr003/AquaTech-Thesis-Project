@@ -6,334 +6,571 @@
     android:layout_height="match_parent"
     android:background="#F8FAFC">
 
-    <View
-        android:id="@+id/headerBg"
+    <RelativeLayout
+        android:id="@+id/adminProfileHeader"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@drawable/bg_header_gradient_premium"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="64dp"
+        android:background="#2196F3"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/btnBackProfile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="10dp"
-        android:src="@drawable/arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/btnBackProfile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back_gray"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvTitleAdminProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins"
+            android:text="Admin Profile"
+            android:textColor="@color/white"
+            android:textSize="17.5sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBackProfile">
+        app:layout_constraintTop_toBottomOf="@id/adminProfileHeader">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/profileAvatar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="-10dp"
-                android:src="@drawable/ic_person_outline_white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/profileName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:text="Administrator"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileAvatar" />
-
-            <TextView
-                android:id="@+id/profileEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="admin@aquasmartguard.ph"
-                android:textColor="#DFF1FF"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileName" />
-
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="95dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="28dp"
-                app:cardElevation="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/profileEmail">
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
                     android:padding="20dp">
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/profileAvatar"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/admin_avatar1"
+                        app:shapeAppearanceOverlay="@style/CircleImage"
+                        app:strokeWidth="0dp" />
+
                     <TextView
+                        android:id="@+id/profileName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
                         android:fontFamily="@font/poppins"
-                        android:text="General"
-                        android:textColor="#94A3B8"
-                        android:textSize="13sp"
+                        android:text="Administrator"
+                        android:textColor="#1E293B"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAdminRole"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_version_chip"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="3dp"
+                        android:text="System Administrator"
+                        android:textColor="#2196F3"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/profileEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="admin@aquasmartguard.ph"
+                        android:textColor="#64748B"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:letterSpacing="0.05"
+                android:text="GENERAL"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:id="@+id/btnProfileAnalytics"
                         android:layout_width="match_parent"
-                        android:layout_height="65dp"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?attr/selectableItemBackground">
+                        android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconGen1"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:contentDescription="Analytics"
                             android:src="@drawable/ic_analytics_chart"
-                            app:tint="#3DAADB" />
-                        <TextView
+                            app:tint="#2196F3" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/arrowGen1"
                             android:layout_toEndOf="@id/iconGen1"
-                            android:fontFamily="@font/poppins"
-                            android:text="Monthly Analytics"
-                            android:textColor="#334155"
-                            android:textSize="16sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Monthly Analytics"
+                                android:textColor="#1E293B"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Performance charts and reports"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
                         <ImageView
+                            android:id="@+id/arrowGen1"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="#CBD5E1" />
-                    </RelativeLayout>
+                            android:contentDescription="Next"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Account Settings"
-                        android:textColor="#94A3B8"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:letterSpacing="0.05"
+                android:text="ACCOUNT SETTINGS"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:id="@+id/rowChangePass"
                         android:layout_width="match_parent"
-                        android:layout_height="65dp"
+                        android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:focusable="true">
+                        android:focusable="true"
+                        android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconAcc1"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:src="@android:drawable/ic_lock_idle_lock"
-                            app:tint="#3DAADB" />
-                        <TextView
+                            android:contentDescription="Password"
+                            android:src="@drawable/ic_change_password_lock"
+                            app:tint="#2196F3" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/arrowAcc1"
                             android:layout_toEndOf="@id/iconAcc1"
-                            android:fontFamily="@font/poppins"
-                            android:text="Change Password"
-                            android:textColor="#334155"
-                            android:textSize="16sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Change Password"
+                                android:textColor="#1E293B"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Send password reset link"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
                         <ImageView
+                            android:id="@+id/arrowAcc1"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="#CBD5E1" />
-                    </RelativeLayout>
+                            android:contentDescription="Next"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
 
-                    <RelativeLayout
-                        android:id="@+id/btnProfileLogout"
-                        android:layout_width="match_parent"
-                        android:layout_height="65dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true">
-                        <ImageView
-                            android:id="@+id/iconAcc3"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/exit"
-                            app:tint="#FF5152" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="16dp"
-                            android:layout_toEndOf="@id/iconAcc3"
-                            android:fontFamily="@font/poppins"
-                            android:text="Logout"
-                            android:textColor="#FF5152"
-                            android:textSize="16sp" />
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="#CBD5E1" />
                     </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="App Settings"
-                        android:textColor="#94A3B8"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:letterSpacing="0.05"
+                android:text="APP SETTINGS"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:id="@+id/rowLanguage"
                         android:layout_width="match_parent"
-                        android:layout_height="65dp"
+                        android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:focusable="true">
+                        android:focusable="true"
+                        android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconApp1"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:src="@android:drawable/ic_menu_mapmode"
-                            app:tint="#3DAADB" />
-                        <TextView
+                            android:contentDescription="Language"
+                            android:src="@drawable/ic_language_globe"
+                            app:tint="#2196F3" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/arrowApp1"
                             android:layout_toEndOf="@id/iconApp1"
-                            android:fontFamily="@font/poppins"
-                            android:text="Language"
-                            android:textColor="#334155"
-                            android:textSize="16sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Language"
+                                android:textColor="#1E293B"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="English (United States)"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
                         <ImageView
+                            android:id="@+id/arrowApp1"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="#CBD5E1" />
+                            android:contentDescription="Next"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
+
                     </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="58dp"
+                        android:background="#F1F5F9" />
 
                     <RelativeLayout
                         android:id="@+id/btnProfileSettings"
                         android:layout_width="match_parent"
-                        android:layout_height="65dp"
+                        android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:focusable="true">
+                        android:focusable="true"
+                        android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconApp2"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
+                            android:contentDescription="Settings"
                             android:src="@drawable/settingicon"
-                            app:tint="#3DAADB" />
-                        <TextView
+                            app:tint="#2196F3" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/arrowApp2"
                             android:layout_toEndOf="@id/iconApp2"
-                            android:fontFamily="@font/poppins"
-                            android:text="System Settings"
-                            android:textColor="#334155"
-                            android:textSize="16sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="System Settings"
+                                android:textColor="#1E293B"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Configure system preferences"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
                         <ImageView
+                            android:id="@+id/arrowApp2"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="#CBD5E1" />
-                    </RelativeLayout>
+                            android:contentDescription="Next"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Support"
-                        android:textColor="#94A3B8"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/poppins_black_ttf"
+                android:letterSpacing="0.05"
+                android:text="SUPPORT"
+                android:textColor="#1C4E75"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:id="@+id/rowHelpCenter"
                         android:layout_width="match_parent"
-                        android:layout_height="65dp"
+                        android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:focusable="true">
+                        android:focusable="true"
+                        android:padding="16dp">
+
                         <ImageView
                             android:id="@+id/iconSup1"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/chat_1"
-                            app:tint="#3DAADB" />
-                        <TextView
+                            android:contentDescription="Help"
+                            android:src="@drawable/ic_help_center"
+                            app:tint="#2196F3" />
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/arrowSup1"
                             android:layout_toEndOf="@id/iconSup1"
-                            android:fontFamily="@font/poppins"
-                            android:text="Help Center"
-                            android:textColor="#334155"
-                            android:textSize="16sp" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Help Center"
+                                android:textColor="#1E293B"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="System assistance and support"
+                                android:textColor="#64748B"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
                         <ImageView
+                            android:id="@+id/arrowSup1"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="#CBD5E1" />
+                            android:contentDescription="Next"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
+
                     </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnProfileLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#EF4444"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Log Out Administrator"
+                        android:textColor="@color/white"
+                        android:textSize="15.5sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

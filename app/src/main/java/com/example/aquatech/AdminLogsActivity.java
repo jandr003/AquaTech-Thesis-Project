@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,6 +54,7 @@ public class AdminLogsActivity extends AppCompatActivity {
     }
 
     private void setupFirebase() {
+        TextView tvLogCountBadge = findViewById(R.id.tvLogCountBadge);
         logsRef = FirebaseDatabase.getInstance(DB_URL).getReference("AdminLogs");
         logsRef.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
@@ -63,6 +65,9 @@ public class AdminLogsActivity extends AppCompatActivity {
                     if (log != null) logList.add(log);
                 }
                 Collections.reverse(logList);
+                if (tvLogCountBadge != null) {
+                    tvLogCountBadge.setText(logList.size() + " Logs");
+                }
                 logAdapter.notifyDataSetChanged();
             }
 

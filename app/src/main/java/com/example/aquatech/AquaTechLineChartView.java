@@ -8,9 +8,11 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AquaTechLineChartView extends View {
@@ -77,62 +79,50 @@ public class AquaTechLineChartView extends View {
         monthLabels.clear();
         dataValues.clear();
 
-        monthLabels.add("JAN");
-        monthLabels.add("FEB");
-        monthLabels.add("MAR");
-        monthLabels.add("APR");
-        monthLabels.add("MAY");
-        monthLabels.add("JUN");
-        monthLabels.add("JUL");
-        monthLabels.add("AUG");
-        monthLabels.add("SEP");
-        monthLabels.add("OCT");
-        monthLabels.add("NOV");
-        monthLabels.add("DEC");
+        Calendar cal = Calendar.getInstance();
+        int currentMonthIndex = cal.get(Calendar.MONTH);
 
-        dataValues.add(32f);
-        dataValues.add(44f);
-        dataValues.add(18f);
-        dataValues.add(28f);
-        dataValues.add(53f);
-        dataValues.add(78f);
-        dataValues.add(65f);
-        dataValues.add(82f);
-        dataValues.add(59f);
-        dataValues.add(71f);
-        dataValues.add(45f);
-        dataValues.add(90f);
+        String[] allMonths = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+        float[] sampleValues = {32f, 44f, 18f, 28f, 53f, 78f, 65f, 82f, 59f, 71f, 45f, 90f};
+
+        for (int i = 11; i >= 0; i--) {
+            int mIndex = (currentMonthIndex - i + 12) % 12;
+            monthLabels.add(allMonths[mIndex]);
+            dataValues.add(sampleValues[11 - i]);
+        }
     }
 
     public void setChartData(List<String> labels, List<Float> values) {
         if (labels != null && values != null && labels.size() == values.size() && !labels.isEmpty()) {
             this.monthLabels = new ArrayList<>(labels);
             this.dataValues = new ArrayList<>(values);
+            requestLayout();
             invalidate();
         }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int desiredHeight = 360; // Default px height for Layout Editor
-        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int desiredHeight = 360;
+        int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-        int height;
-        if (heightMode == MeasureSpec.EXACTLY) {
-            height = heightSize;
-        } else if (heightMode == MeasureSpec.AT_MOST) {
-            height = Math.min(desiredHeight, heightSize);
+        int height = (heightMode == MeasureSpec.EXACTLY) ? heightSize : desiredHeight;
+
+        int numMonths = (dataValues != null && !dataValues.isEmpty()) ? dataValues.size() : 5;
+        int calculatedWidth;
+        if (numMonths > 5 && parentWidth > 0) {
+            calculatedWidth = Math.round((parentWidth / 5.0f) * numMonths);
         } else {
-            height = desiredHeight;
+            calculatedWidth = Math.max(parentWidth, 600);
         }
 
-        setMeasuredDimension(width, height);
+        setMeasuredDimension(calculatedWidth, height);
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         int width = getWidth();
@@ -144,10 +134,10 @@ public class AquaTechLineChartView extends View {
             loadSampleData();
         }
 
-        float paddingLeft = 60f;
+        float paddingLeft = 70f;
         float paddingRight = 40f;
         float paddingTop = 30f;
-        float paddingBottom = 50f;
+        float paddingBottom = 75f;
 
         float chartWidth = width - paddingLeft - paddingRight;
         float chartHeight = height - paddingTop - paddingBottom;
@@ -166,7 +156,7 @@ public class AquaTechLineChartView extends View {
             canvas.drawLine(paddingLeft, y, width - paddingRight, y, gridPaint);
 
             int labelVal = Math.round(maxVal - (maxVal / numGridLines) * i);
-            canvas.drawText(String.valueOf(labelVal), paddingLeft - 24f, y + 8f, textPaint);
+            canvas.drawText(String.valueOf(labelVal), paddingLeft - 28f, y + 4f, textPaint);
         }
 
         int size = dataValues.size();
@@ -202,7 +192,7 @@ public class AquaTechLineChartView extends View {
         for (int i = 0; i < size; i++) {
             canvas.drawCircle(pointX[i], pointY[i], 12f, outerDotPaint);
             canvas.drawCircle(pointX[i], pointY[i], 6f, innerDotPaint);
-            canvas.drawText(monthLabels.get(i), pointX[i], height - 12f, textPaint);
+            canvas.drawText(monthLabels.get(i), pointX[i], height - 16f, textPaint);
         }
     }
 }
