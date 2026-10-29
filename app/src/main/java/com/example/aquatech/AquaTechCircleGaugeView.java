@@ -39,17 +39,17 @@ public class AquaTechCircleGaugeView extends View {
         trackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         trackPaint.setColor(Color.parseColor("#E2E8F0"));
         trackPaint.setStyle(Paint.Style.STROKE);
-        trackPaint.setStrokeWidth(16f);
+        trackPaint.setStrokeWidth(26f);
 
         progressPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        progressPaint.setColor(Color.parseColor("#10B981"));
+        progressPaint.setColor(Color.parseColor("#2196F3"));
         progressPaint.setStyle(Paint.Style.STROKE);
-        progressPaint.setStrokeWidth(16f);
+        progressPaint.setStrokeWidth(26f);
         progressPaint.setStrokeCap(Paint.Cap.ROUND);
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(Color.parseColor("#0F172A"));
-        textPaint.setTextSize(44f);
+        textPaint.setTextSize(42f);
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setFakeBoldText(true);
 
@@ -74,8 +74,8 @@ public class AquaTechCircleGaugeView extends View {
 
         if (width <= 0 || height <= 0) return;
 
-        float strokeWidth = 16f;
-        float padding = strokeWidth / 2f + 8f;
+        float strokeWidth = 26f;
+        float padding = strokeWidth / 2f + 6f;
 
         arcBounds.set(padding, padding, width - padding, height - padding);
 
