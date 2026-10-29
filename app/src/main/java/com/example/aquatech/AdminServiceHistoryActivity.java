@@ -71,7 +71,6 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
         tvHeaderTotalCount = findViewById(R.id.tvTotalHistoryCount);
         tvStatTotal = findViewById(R.id.tvStatTotal);
         tvStatCompleted = findViewById(R.id.tvStatCompleted);
-        tvStatPending = findViewById(R.id.tvStatPending);
 
         searchView = findViewById(R.id.searchAdminHistory);
         if (searchView != null) {
@@ -97,8 +96,6 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
             chipGroupStatus.setOnCheckedChangeListener((group, checkedId) -> {
                 if (checkedId == R.id.chipCompleted) {
                     currentStatusFilter = "COMPLETED";
-                } else if (checkedId == R.id.chipInProgress) {
-                    currentStatusFilter = "IN_PROGRESS";
                 } else if (checkedId == R.id.chipCancelled) {
                     currentStatusFilter = "CANCELLED";
                 } else {
@@ -212,21 +209,33 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_audit_log, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_service_history_card, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             ServiceLogModel item = list.get(position);
-            holder.tvTicket.setText(item.getTicketId() != null ? "#" + item.getTicketId() : "#LOG");
-            holder.tvTech.setText(item.getDateTime() != null ? item.getDateTime() : "");
-            holder.tvCustomer.setText(item.getCustomerName() != null ? item.getCustomerName() : "Customer");
-            holder.tvStatus.setText(item.getStatus() != null ? item.getStatus() : "Open");
+            holder.tvTicket.setText(item.getTicketId() != null ? "SR-" + item.getTicketId() : "SR-2026-001");
+            holder.tvCustomer.setText(item.getCustomerName() != null ? item.getCustomerName() : "Customer Name");
+            
+            String serviceType = item.getUnitName();
+            if (serviceType == null || serviceType.isEmpty()) serviceType = "Water dispenser service";
+            holder.tvServiceType.setText(serviceType);
+
+            String techName = item.getTechName();
+            if (techName == null || techName.isEmpty()) techName = "Assigned technician";
+            holder.tvTech.setText("Technician: " + techName);
+
+            String dateStr = item.getDateTime();
+            holder.tvDate.setText("Service Date: " + (dateStr != null && !dateStr.isEmpty() ? dateStr : "—"));
 
             String status = item.getStatus();
+            if (status == null || status.isEmpty()) status = "Completed";
+            holder.tvStatus.setText(status);
+
             if ("Completed".equalsIgnoreCase(status)) {
-                holder.tvStatus.setTextColor(Color.parseColor("#166534"));
+                holder.tvStatus.setTextColor(Color.parseColor("#059669"));
             } else if ("Cancelled".equalsIgnoreCase(status)) {
                 holder.tvStatus.setTextColor(Color.parseColor("#EF4444"));
             } else {
@@ -240,13 +249,15 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
         }
 
         static class ViewHolder extends RecyclerView.ViewHolder {
-            TextView tvTicket, tvTech, tvCustomer, tvStatus;
+            TextView tvTicket, tvCustomer, tvServiceType, tvTech, tvDate, tvStatus;
 
             ViewHolder(View v) {
                 super(v);
                 tvTicket = v.findViewById(R.id.auditTicketID);
-                tvTech = v.findViewById(R.id.auditUnitSRO);
                 tvCustomer = v.findViewById(R.id.auditCustomerID);
+                tvServiceType = v.findViewById(R.id.auditServiceType);
+                tvTech = v.findViewById(R.id.auditTechName);
+                tvDate = v.findViewById(R.id.auditUnitSRO);
                 tvStatus = v.findViewById(R.id.auditStatus);
             }
         }

@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/poppins"
-            android:text="SERVICE MASTER LOG"
+            android:text="SERVICE HISTORY"
             android:textColor="@color/white"
             android:textSize="17.5sp"
             android:textStyle="bold" />
@@ -71,19 +71,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:letterSpacing="0.05"
-                android:text="SERVICE MASTER SUMMARY"
-                android:textColor="#1C4E75"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
+            <!-- Title & Search Section Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,170 +86,222 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="16dp">
 
-                    <GridLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Service History"
+                        android:textColor="#1E293B"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="View and manage historical service records."
+                        android:textColor="#64748B"
+                        android:textSize="13sp" />
+
+                    <!-- Search Input View -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#F8FAFC"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#E2E8F0"
+                        app:strokeWidth="1dp">
+
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/searchAdminHistory"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins"
+                            app:iconifiedByDefault="false"
+                            app:queryBackground="@android:color/transparent"
+                            app:queryHint="Search records..."
+                            app:searchIcon="@android:drawable/ic_menu_search" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Filter Status Chips -->
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:columnCount="3">
+                        android:layout_marginTop="12dp"
+                        app:singleSelection="true">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipAll"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:checked="true"
+                            android:fontFamily="@font/poppins"
+                            android:text="All Records"
+                            android:textColor="#2196F3"
+                            app:chipBackgroundColor="#E0F2FE" />
 
-                            <TextView
-                                android:id="@+id/tvStatTotal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="0"
-                                android:textColor="#2196F3"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="@font/poppins"
-                                android:text="TOTAL"
-                                android:textColor="#64748B"
-                                android:textSize="10.5sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipCompleted"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:fontFamily="@font/poppins"
+                            android:text="Completed"
+                            android:textColor="#64748B" />
 
-                            <TextView
-                                android:id="@+id/tvStatCompleted"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="0"
-                                android:textColor="#4CAF50"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="@font/poppins"
-                                android:text="FINISHED"
-                                android:textColor="#64748B"
-                                android:textSize="10.5sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipCancelled"
+                            style="@style/Widget.Material3.Chip.Filter"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:fontFamily="@font/poppins"
+                            android:text="Cancelled"
+                            android:textColor="#64748B" />
 
-                            <TextView
-                                android:id="@+id/tvStatPending"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="0"
-                                android:textColor="#FF9800"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="@font/poppins"
-                                android:text="PENDING"
-                                android:textColor="#64748B"
-                                android:textSize="10.5sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-                    </GridLayout>
+                    </com.google.android.material.chip.ChipGroup>
 
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#E2E8F0"
-                app:strokeWidth="1dp">
-
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/searchAdminHistory"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:fontFamily="@font/poppins"
-                    app:iconifiedByDefault="false"
-                    app:queryBackground="@android:color/transparent"
-                    app:queryHint="Search Ticket ID, Customer, or Tech..."
-                    app:searchIcon="@android:drawable/ic_menu_search" />
 
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroupStatus"
+            <!-- 2 Metric Cards Row (Total & Completed) -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:singleSelection="true">
+                android:orientation="horizontal">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipAll"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
+                <!-- Total Service Records Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:fontFamily="@font/poppins"
-                    android:text="All Logs" />
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipCompleted"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="Total"
+                            android:src="@drawable/ic_total_requests"
+                            app:tint="#2196F3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Total Service Records"
+                            android:textColor="#64748B"
+                            android:textSize="11.5sp" />
+
+                        <TextView
+                            android:id="@+id/tvStatTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0"
+                            android:textColor="#1E293B"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="From actual records"
+                            android:textColor="#94A3B8"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Completed Services Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Completed" />
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#E2E8F0"
+                    app:strokeWidth="1dp">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipInProgress"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="In Progress" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipCancelled"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Cancelled" />
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="Completed"
+                            android:src="@drawable/ic_resolution_time"
+                            app:tint="#10B981" />
 
-            </com.google.android.material.chip.ChipGroup>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Completed Services"
+                            android:textColor="#64748B"
+                            android:textSize="11.5sp" />
 
+                        <TextView
+                            android:id="@+id/tvStatCompleted"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="0"
+                            android:textColor="#166534"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="From actual records"
+                            android:textColor="#94A3B8"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Service Records Master Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
@@ -273,47 +313,29 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#F8FAFC"
-                        android:orientation="horizontal"
                         android:paddingHorizontal="16dp"
-                        android:paddingVertical="12dp">
+                        android:paddingTop="16dp"
+                        android:paddingBottom="12dp">
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1.4"
+                            android:layout_alignParentStart="true"
                             android:fontFamily="@font/poppins"
-                            android:text="TICKET / TECH"
+                            android:text="Service Records"
                             android:textColor="#1C4E75"
-                            android:textSize="11sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.0"
-                            android:fontFamily="@font/poppins"
-                            android:text="CUSTOMER"
-                            android:textColor="#1C4E75"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
+                    </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.2"
-                            android:fontFamily="@font/poppins"
-                            android:gravity="end"
-                            android:paddingEnd="22dp"
-                            android:text="STATUS"
-                            android:textColor="#1C4E75"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F1F5F9" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvAdminServiceHistory"
@@ -321,10 +343,14 @@
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
                         android:paddingBottom="12dp"
-                        tools:listitem="@layout/item_audit_log" />
+                        tools:listitem="@layout/item_service_history_card" />
 
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
