@@ -122,7 +122,7 @@
                             android:fontFamily="@font/poppins"
                             app:iconifiedByDefault="false"
                             app:queryBackground="@android:color/transparent"
-                            app:queryHint="Search records..."
+                            app:queryHint="Search SRO, Customer, Tech Name or ID..."
                             app:searchIcon="@android:drawable/ic_menu_search" />
 
                     </com.google.android.material.card.MaterialCardView>

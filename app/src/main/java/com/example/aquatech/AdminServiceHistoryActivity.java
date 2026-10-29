@@ -136,14 +136,25 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
                     }
 
                     String ticketId = ds.getKey();
+                    String sroNumber = ds.child("referenceNo").getValue(String.class);
+                    if (sroNumber == null) sroNumber = ds.child("sroNumber").getValue(String.class);
+                    if (sroNumber == null) sroNumber = ticketId;
+
                     String custName = ds.child("customerName").getValue(String.class);
+                    String custPhone = ds.child("customerPhone").getValue(String.class);
                     String techName = ds.child("assignedTechName").getValue(String.class);
+                    String techId = ds.child("assignedTechId").getValue(String.class);
+                    String unitName = ds.child("unitName").getValue(String.class);
                     String dateStr = ds.child("date").getValue(String.class);
 
                     ServiceLogModel item = new ServiceLogModel();
                     item.setTicketId(ticketId != null ? ticketId : "");
-                    item.setCustomerName(custName != null ? custName : "Customer");
-                    item.setTechName(techName != null ? techName : "Unassigned");
+                    item.setSroNumber(sroNumber != null ? sroNumber : "");
+                    item.setCustomerName(custName != null ? custName : "Customer Name");
+                    item.setCustomerPhone(custPhone != null ? custPhone : "");
+                    item.setTechName(techName != null ? techName : "Assigned technician");
+                    item.setTechId(techId != null ? techId : "");
+                    item.setUnitName(unitName != null ? unitName : "");
                     item.setStatus(status != null ? status : "Open");
                     item.setDateTime(dateStr != null ? dateStr : "");
                     fullHistoryList.add(item);
@@ -184,10 +195,19 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
 
             boolean matchesSearch = true;
             if (!currentSearchQuery.isEmpty()) {
-                String key = item.getTicketId() != null ? item.getTicketId().toLowerCase() : "";
+                String ticket = item.getTicketId() != null ? item.getTicketId().toLowerCase() : "";
+                String sro = item.getSroNumber() != null ? item.getSroNumber().toLowerCase() : "";
                 String cust = item.getCustomerName() != null ? item.getCustomerName().toLowerCase() : "";
+                String custPhone = item.getCustomerPhone() != null ? item.getCustomerPhone().toLowerCase() : "";
                 String tech = item.getTechName() != null ? item.getTechName().toLowerCase() : "";
-                matchesSearch = key.contains(currentSearchQuery) || cust.contains(currentSearchQuery) || tech.contains(currentSearchQuery);
+                String techId = item.getTechId() != null ? item.getTechId().toLowerCase() : "";
+
+                matchesSearch = ticket.contains(currentSearchQuery)
+                        || sro.contains(currentSearchQuery)
+                        || cust.contains(currentSearchQuery)
+                        || custPhone.contains(currentSearchQuery)
+                        || tech.contains(currentSearchQuery)
+                        || techId.contains(currentSearchQuery);
             }
 
             if (matchesStatus && matchesSearch) {
