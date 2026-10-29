@@ -278,11 +278,11 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
                 holder.tvStatus.setTextColor(Color.WHITE);
             } else if ("Cancelled".equalsIgnoreCase(status)) {
-                holder.tvStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-                holder.tvStatus.setTextColor(Color.parseColor("#EF4444"));
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
+                holder.tvStatus.setTextColor(Color.WHITE);
             } else {
-                holder.tvStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-                holder.tvStatus.setTextColor(Color.parseColor("#D97706"));
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_amber_pill);
+                holder.tvStatus.setTextColor(Color.WHITE);
             }
         }
 
