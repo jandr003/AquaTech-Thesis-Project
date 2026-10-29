@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +50,8 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
     private TextView tvTotalJobs, tvAvgResponse, tvResolutionTime, tvCsatScore, tvRateTrend;
     private AquaTechCircleGaugeView gaugeCompletionRate;
-    private View barW1, barW2, barW3, barW4;
+    private AquaTechLineChartView analyticsLineChartView;
+    private HorizontalScrollView scrollAnalyticsChart;
     private RecyclerView rvMonthlyLog;
     private SearchView searchAuditLog;
     private DatabaseReference dbRef;
@@ -87,10 +89,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         tvRateTrend = findViewById(R.id.tvRateTrend);
         searchAuditLog = findViewById(R.id.searchAuditLog);
 
-        barW1 = findViewById(R.id.barW1);
-        barW2 = findViewById(R.id.barW2);
-        barW3 = findViewById(R.id.barW3);
-        barW4 = findViewById(R.id.barW4);
+        analyticsLineChartView = findViewById(R.id.analyticsLineChartView);
+        scrollAnalyticsChart = findViewById(R.id.scrollAnalyticsChart);
+        if (scrollAnalyticsChart != null) {
+            scrollAnalyticsChart.post(() -> scrollAnalyticsChart.fullScroll(HorizontalScrollView.FOCUS_RIGHT));
+        }
 
         rvMonthlyLog = findViewById(R.id.rvMonthlyDetailedLog);
         rvMonthlyLog.setLayoutManager(new LinearLayoutManager(this));
@@ -296,19 +299,21 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void updateBars() {
-        int max = 1;
-        for (int c : weeklyCounts) if (c > max) max = c;
-        setBarHeight(barW1, weeklyCounts[0], max);
-        setBarHeight(barW2, weeklyCounts[1], max);
-        setBarHeight(barW3, weeklyCounts[2], max);
-        setBarHeight(barW4, weeklyCounts[3], max);
-    }
+        if (analyticsLineChartView != null) {
+            List<String> labels = new ArrayList<>();
+            labels.add("W1");
+            labels.add("W2");
+            labels.add("W3");
+            labels.add("W4");
 
-    private void setBarHeight(View bar, int count, int max) {
-        if (bar == null) return;
-        ViewGroup.LayoutParams params = bar.getLayoutParams();
-        params.height = Math.max(20, (count * 300) / (max == 0 ? 1 : max));
-        bar.setLayoutParams(params);
+            List<Float> values = new ArrayList<>();
+            values.add((float) weeklyCounts[0]);
+            values.add((float) weeklyCounts[1]);
+            values.add((float) weeklyCounts[2]);
+            values.add((float) weeklyCounts[3]);
+
+            analyticsLineChartView.setChartData(labels, values);
+        }
     }
 
     private int getWeekOfMonth(long timestamp) {
