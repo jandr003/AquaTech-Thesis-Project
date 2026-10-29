@@ -180,7 +180,7 @@
                                 app:cardCornerRadius="42dp"
                                 app:cardElevation="0dp"
                                 app:strokeColor="#10B981"
-                                app:strokeWidth="8dp" />
+                                app:strokeWidth="10dp" />
 
                             <TextView
                                 android:id="@+id/tvCompletionRate"
