@@ -143,6 +143,7 @@
                             android:fontFamily="@font/poppins"
                             android:text="All Records"
                             android:textColor="#2196F3"
+                            app:checkedIconVisible="false"
                             app:chipBackgroundColor="#E0F2FE" />
 
                         <com.google.android.material.chip.Chip
@@ -152,7 +153,8 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Completed"
-                            android:textColor="#64748B" />
+                            android:textColor="#64748B"
+                            app:checkedIconVisible="false" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chipCancelled"
@@ -161,7 +163,8 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Cancelled"
-                            android:textColor="#64748B" />
+                            android:textColor="#64748B"
+                            app:checkedIconVisible="false" />
 
                     </com.google.android.material.chip.ChipGroup>
 
