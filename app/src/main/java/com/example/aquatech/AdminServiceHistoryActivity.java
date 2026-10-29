@@ -280,6 +280,9 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
             } else if ("Cancelled".equalsIgnoreCase(status)) {
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
                 holder.tvStatus.setTextColor(Color.WHITE);
+            } else if ("In Progress".equalsIgnoreCase(status) || "Assigned".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_blue_pill);
+                holder.tvStatus.setTextColor(Color.WHITE);
             } else {
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_amber_pill);
                 holder.tvStatus.setTextColor(Color.WHITE);
