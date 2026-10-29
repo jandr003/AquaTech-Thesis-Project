@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class AdminServiceHistoryActivity extends AppCompatActivity {
@@ -216,7 +217,26 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             ServiceLogModel item = list.get(position);
-            holder.tvTicket.setText(item.getTicketId() != null ? "SR-" + item.getTicketId() : "SR-2026-001");
+
+            String ticketId = item.getTicketId();
+            if (ticketId != null && !ticketId.isEmpty()) {
+                String upper = ticketId.toUpperCase().trim();
+                if (upper.startsWith("SRO-")) {
+                    holder.tvTicket.setText(upper);
+                } else if (upper.startsWith("SRO")) {
+                    holder.tvTicket.setText("SRO-" + upper.substring(3));
+                } else {
+                    try {
+                        long num = Long.parseLong(upper.replaceAll("[^0-9]", ""));
+                        holder.tvTicket.setText(String.format(Locale.US, "SRO-%08d", num));
+                    } catch (Exception e) {
+                        holder.tvTicket.setText("SRO-" + upper);
+                    }
+                }
+            } else {
+                holder.tvTicket.setText("SRO-00002346");
+            }
+
             holder.tvCustomer.setText(item.getCustomerName() != null ? item.getCustomerName() : "Customer Name");
             
             String serviceType = item.getUnitName();

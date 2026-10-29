@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:fontFamily="@font/poppins"
-            android:text="SR-2026-001"
+            android:text="SRO-00002346"
             android:textColor="#2196F3"
             android:textSize="13.5sp"
             android:textStyle="bold" />
