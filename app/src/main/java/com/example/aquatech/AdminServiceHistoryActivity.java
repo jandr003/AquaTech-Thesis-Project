@@ -36,7 +36,6 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
     private DatabaseReference requestsRef;
 
     private TextView tvHeaderTotalCount, tvStatTotal, tvStatCompleted, tvStatPending;
-    private AquaTechLineChartView lineChartView;
     private SearchView searchView;
     private ChipGroup chipGroupStatus;
     private RecyclerView rvHistory;
@@ -73,16 +72,6 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
         tvStatTotal = findViewById(R.id.tvStatTotal);
         tvStatCompleted = findViewById(R.id.tvStatCompleted);
         tvStatPending = findViewById(R.id.tvStatPending);
-
-        lineChartView = findViewById(R.id.lineChartView);
-        if (lineChartView != null) {
-            lineChartView.setVisibility(View.VISIBLE);
-        }
-
-        HorizontalScrollView scrollChartContainer = findViewById(R.id.scrollChartContainer);
-        if (scrollChartContainer != null) {
-            scrollChartContainer.post(() -> scrollChartContainer.fullScroll(HorizontalScrollView.FOCUS_RIGHT));
-        }
 
         searchView = findViewById(R.id.searchAdminHistory);
         if (searchView != null) {
@@ -173,16 +162,6 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
                 if (tvStatTotal != null) tvStatTotal.setText(String.valueOf(totalCount));
                 if (tvStatCompleted != null) tvStatCompleted.setText(String.valueOf(completedCount));
                 if (tvStatPending != null) tvStatPending.setText(String.valueOf(pendingCount));
-
-                if (lineChartView != null && !monthCounts.isEmpty()) {
-                    List<String> labels = new ArrayList<>(monthCounts.keySet());
-                    List<Float> values = new ArrayList<>();
-                    for (String m : labels) {
-                        Integer cnt = monthCounts.get(m);
-                        values.add(cnt != null ? (float) cnt : 0f);
-                    }
-                    lineChartView.setChartData(labels, values);
-                }
 
                 applyFilters();
             }
