@@ -29,13 +29,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/bg_pdf_status_green_pill"
+            android:background="@drawable/bg_solid_green_pill"
             android:fontFamily="@font/poppins"
             android:gravity="center"
             android:paddingHorizontal="10dp"
             android:paddingVertical="3dp"
             android:text="Completed"
-            android:textColor="#059669"
+            android:textColor="@color/white"
             android:textSize="11sp"
             android:textStyle="bold" />
 
@@ -114,7 +114,6 @@
                 app:tint="#2196F3" />
 
         </LinearLayout>
-
     </RelativeLayout>
 
     <View

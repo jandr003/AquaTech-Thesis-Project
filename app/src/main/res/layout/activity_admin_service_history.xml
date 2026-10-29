@@ -167,9 +167,7 @@
                             app:checkedIconVisible="false" />
 
                     </com.google.android.material.chip.ChipGroup>
-
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
@@ -232,7 +230,6 @@
                             android:textSize="11sp" />
 
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -289,9 +286,7 @@
                             android:textSize="11sp" />
 
                     </LinearLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
+                </com.google.android.material.card.MaterialCardView>W
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
