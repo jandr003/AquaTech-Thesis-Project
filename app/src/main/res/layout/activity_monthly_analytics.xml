@@ -169,30 +169,10 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <FrameLayout
-                            android:layout_width="84dp"
-                            android:layout_height="84dp">
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:layout_width="84dp"
-                                android:layout_height="84dp"
-                                app:cardBackgroundColor="#F0FDF4"
-                                app:cardCornerRadius="42dp"
-                                app:cardElevation="0dp"
-                                app:strokeColor="#10B981"
-                                app:strokeWidth="10dp" />
-
-                            <TextView
-                                android:id="@+id/tvCompletionRate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/poppins_black_ttf"
-                                android:text="0%"
-                                android:textColor="#0F172A"
-                                android:textSize="22sp" />
-
-                        </FrameLayout>
+                        <com.example.aquatech.AquaTechCircleGaugeView
+                            android:id="@+id/gaugeCompletionRate"
+                            android:layout_width="88dp"
+                            android:layout_height="88dp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"

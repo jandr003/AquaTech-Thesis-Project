@@ -47,7 +47,8 @@ import java.util.Locale;
 
 public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
-    private TextView tvTotalJobs, tvCompletionRate, tvAvgResponse, tvResolutionTime, tvCsatScore, tvRateTrend;
+    private TextView tvTotalJobs, tvAvgResponse, tvResolutionTime, tvCsatScore, tvRateTrend;
+    private AquaTechCircleGaugeView gaugeCompletionRate;
     private View barW1, barW2, barW3, barW4;
     private RecyclerView rvMonthlyLog;
     private SearchView searchAuditLog;
@@ -79,7 +80,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
     private void initializeViews() {
         tvTotalJobs = findViewById(R.id.tvTotalMonthlyJobsSnapshot);
-        tvCompletionRate = findViewById(R.id.tvCompletionRate);
+        gaugeCompletionRate = findViewById(R.id.gaugeCompletionRate);
         tvAvgResponse = findViewById(R.id.tvAvgResponse);
         tvResolutionTime = findViewById(R.id.tvResolutionTime);
         tvCsatScore = findViewById(R.id.tvCsatScore);
@@ -271,10 +272,14 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         tvTotalJobs.setText(String.valueOf(totalCount));
         if (totalCount > 0) {
             int rate = (completedCount * 100) / totalCount;
-            tvCompletionRate.setText(rate + "%");
+            if (gaugeCompletionRate != null) {
+                gaugeCompletionRate.setPercentage(rate);
+            }
             tvRateTrend.setText(rate >= 80 ? "↑ High" : (rate >= 50 ? "→ Stable" : "↓ Low"));
         } else {
-            tvCompletionRate.setText("0%");
+            if (gaugeCompletionRate != null) {
+                gaugeCompletionRate.setPercentage(0f);
+            }
             tvRateTrend.setText("No Data");
         }
 
@@ -351,7 +356,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         canvas.drawText("Completed: " + completedCount, margin + 25, y + 75, paint);
         canvas.drawText("In Progress: " + inProgressCount, margin + 200, y + 50, paint);
         canvas.drawText("Pending: " + pendingCount, margin + 200, y + 75, paint);
-        canvas.drawText("Success Rate: " + tvCompletionRate.getText(), margin + 350, y + 50, paint);
+        canvas.drawText("Success Rate: " + Math.round(gaugeCompletionRate != null ? gaugeCompletionRate.getPercentage() : 0f) + "%", margin + 350, y + 50, paint);
         canvas.drawText("Avg Rating: " + tvCsatScore.getText(), margin + 350, y + 75, paint);
         y += 140;
 
