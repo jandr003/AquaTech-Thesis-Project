@@ -1,6 +1,5 @@
 package com.example.aquatech;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Locale;
-
 public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -35,10 +31,9 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
     private TextView tvCustomerName, tvServiceAddress, tvContactNumber;
     private TextView tvOriginalReqDate, tvRequestedTime;
     private LinearLayout layoutRequestedTime, layoutRescheduleInfo;
-    private TextView tvOriginalReschedText, tvNewReschedText, tvReschedReasonText, tvScheduleStatusPill;
+    private TextView tvOriginalReschedText, tvNewReschedText, tvReschedReasonText;
     private TextView tvGovIdStatusPill;
     private ImageView ivGovIdAttachment;
-    private TextView tvResolutionAction, tvResolutionRemarks, tvResolvedBy, tvDateResolved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,18 +84,12 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
         layoutRequestedTime = findViewById(R.id.layoutRequestedTime);
 
         layoutRescheduleInfo = findViewById(R.id.layoutRescheduleInfo);
-        tvScheduleStatusPill = findViewById(R.id.tvScheduleStatusPill);
         tvOriginalReschedText = findViewById(R.id.tvOriginalReschedText);
         tvNewReschedText = findViewById(R.id.tvNewReschedText);
         tvReschedReasonText = findViewById(R.id.tvReschedReasonText);
 
         tvGovIdStatusPill = findViewById(R.id.tvGovIdStatusPill);
         ivGovIdAttachment = findViewById(R.id.ivGovIdAttachment);
-
-        tvResolutionAction = findViewById(R.id.tvResolutionAction);
-        tvResolutionRemarks = findViewById(R.id.tvResolutionRemarks);
-        tvResolvedBy = findViewById(R.id.tvResolvedBy);
-        tvDateResolved = findViewById(R.id.tvDateResolved);
     }
 
     private void setupFirebase() {
@@ -125,7 +114,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                     tvSubmittedDate.setText(dateStr != null && !dateStr.isEmpty() ? dateStr : "Sep 30, 2025");
 
                     String status = snapshot.child("status").getValue(String.class);
-                    if (status == null || status.isEmpty()) status = "Resolved";
+                    if (status == null || status.isEmpty()) status = "Submitted";
                     tvConcernStatusPill.setText(status);
 
                     if ("Completed".equalsIgnoreCase(status) || "Resolved".equalsIgnoreCase(status)) {
@@ -163,6 +152,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                     if (phone == null) phone = snapshot.child("userPhone").getValue(String.class);
                     tvContactNumber.setText(phone != null && !phone.isEmpty() ? phone : "Registered mobile number");
 
+                    // SCHEDULE vs RESCHEDULE VISIBILITY LOGIC
                     Boolean isRescheduled = snapshot.child("isRescheduled").getValue(Boolean.class);
                     String scheduleStatus = snapshot.child("scheduleStatus").getValue(String.class);
 
@@ -226,32 +216,6 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                         tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
                         tvGovIdStatusPill.setTextColor(Color.WHITE);
                     }
-
-                    String techName = snapshot.child("assignedTechName").getValue(String.class);
-
-                    String action = snapshot.child("resolutionAction").getValue(String.class);
-                    tvResolutionAction.setText(action != null && !action.isEmpty() ? action : "Unit Inspection and Corrective Service");
-
-                    String remarks = snapshot.child("technicianRemarks").getValue(String.class);
-                    tvResolutionRemarks.setText(remarks != null && !remarks.isEmpty() ? remarks : "Recorded explanation of the corrective action and outcome of the service.");
-
-                    tvResolvedBy.setText(techName != null && !techName.isEmpty() ? techName : "Assigned Technician / Authorized Staff");
-
-                    String compDate = snapshot.child("completionTime").getValue(String.class);
-                    tvDateResolved.setText(compDate != null && !compDate.isEmpty() ? compDate : (dateStr != null ? dateStr : "Actual resolution date and time"));
-
-                    ImageView ivProofInline = findViewById(R.id.ivProofOfServiceInline);
-                    String proofUrl = snapshot.child("proofImageUrl").getValue(String.class);
-                    if (proofUrl == null) proofUrl = snapshot.child("proofUrl").getValue(String.class);
-                    if (ivProofInline != null && proofUrl != null && !proofUrl.isEmpty()) {
-                        ivProofInline.setPadding(0, 0, 0, 0);
-                        ivProofInline.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        Glide.with(CustomerConcernDetailsActivity.this)
-                                .load(proofUrl)
-                                .placeholder(R.drawable.img_place_holder)
-                                .into(ivProofInline);
-                    }
-
                 }
             }
 

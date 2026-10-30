@@ -129,11 +129,11 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/bg_solid_green_pill"
+                            android:background="@drawable/bg_solid_amber_pill"
                             android:fontFamily="@font/poppins"
                             android:paddingHorizontal="14dp"
                             android:paddingVertical="4dp"
-                            android:text="Resolved"
+                            android:text="Submitted"
                             android:textColor="@color/white"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -597,7 +597,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
@@ -664,173 +664,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:letterSpacing="0.05"
-                android:text="RESOLUTION &amp; ACTION TAKEN"
-                android:textColor="#1C4E75"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#E2E8F0"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="RESOLUTION ACTION"
-                        android:textColor="#94A3B8"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvResolutionAction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="#1E293B"
-                        android:textSize="13.5sp"
-                        android:textStyle="bold"
-                        tools:text="Unit Inspection and Corrective Service" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="12dp"
-                        android:background="#F1F5F9" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="RESOLUTION REMARKS"
-                        android:textColor="#94A3B8"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvResolutionRemarks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="#1E293B"
-                        android:textSize="13.5sp"
-                        tools:text="Recorded explanation of the corrective action and outcome of the service." />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="12dp"
-                        android:background="#F1F5F9" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="RESOLVED BY"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvResolvedBy"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="@font/poppins"
-                                android:textColor="#1E293B"
-                                android:textSize="13.5sp"
-                                tools:text="Assigned Technician" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="DATE RESOLVED"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvDateResolved"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="@font/poppins"
-                                android:textColor="#1E293B"
-                                android:textSize="13.5sp"
-                                tools:text="Actual resolution date and time" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="12dp"
-                        android:background="#F1F5F9" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="PROOF OF SERVICE PHOTO"
-                        android:textColor="#94A3B8"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/ivProofOfServiceInline"
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_marginTop="8dp"
-                        android:background="#F8FAFC"
-                        android:contentDescription="Proof of Service Photo"
-                        android:padding="28dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/img_place_holder" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
