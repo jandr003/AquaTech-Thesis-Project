@@ -1,17 +1,19 @@
 package com.example.aquatech;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -78,12 +80,6 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
         tvWorkPerformed = findViewById(R.id.tvWorkPerformedDetails);
         tvInspectionFindings = findViewById(R.id.tvInspectionFindingsDetails);
         tvTechRemarks = findViewById(R.id.tvTechRemarksDetails);
-
-        findViewById(R.id.btnViewSubmittedReport).setOnClickListener(v -> {
-            Intent intent = new Intent(this, ServiceReportDetailsActivity.class);
-            intent.putExtra("TICKET_ID", ticketId);
-            startActivity(intent);
-        });
     }
 
     private void setupFirebase() {
@@ -177,6 +173,24 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
 
                     String remarks = snapshot.child("technicianRemarks").getValue(String.class);
                     tvTechRemarks.setText(remarks != null && !remarks.isEmpty() ? remarks : "Recorded service remarks and outcome");
+
+                    ImageView ivProofInline = findViewById(R.id.ivProofOfServiceInline2);
+                    String proofUrl = snapshot.child("proofImageUrl").getValue(String.class);
+                    if (proofUrl == null) proofUrl = snapshot.child("proofUrl").getValue(String.class);
+                    if (ivProofInline != null && proofUrl != null && !proofUrl.isEmpty()) {
+                        Glide.with(AdminServiceHistoryDetailsActivity.this)
+                                .load(proofUrl)
+                                .placeholder(R.drawable.img_place_holder)
+                                .into(ivProofInline);
+                    }
+
+                    RatingBar rbRating = findViewById(R.id.rbCustomerRatingInline2);
+                    TextView tvScore = findViewById(R.id.tvRatingScoreTextInline2);
+                    Float rating = snapshot.child("rating").getValue(Float.class);
+                    if (rbRating != null && rating != null) {
+                        rbRating.setRating(rating);
+                        if (tvScore != null) tvScore.setText(String.format(Locale.US, "%.1f / 5.0", rating));
+                    }
                 }
             }
 

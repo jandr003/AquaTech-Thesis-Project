@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Locale;
 
 public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
@@ -106,12 +109,6 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
         tvCompletionTimeDetails = findViewById(R.id.tvCompletionTimeDetails);
         tvSubmissionTimeDetails = findViewById(R.id.tvSubmissionTimeDetails);
-
-        findViewById(R.id.btnOpenSubmittedReportConcern).setOnClickListener(v -> {
-            Intent intent = new Intent(this, ServiceReportDetailsActivity.class);
-            intent.putExtra("TICKET_ID", ticketId);
-            startActivity(intent);
-        });
     }
 
     private void setupFirebase() {
@@ -253,6 +250,24 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
                     String compDate = snapshot.child("completionTime").getValue(String.class);
                     tvDateResolved.setText(compDate != null && !compDate.isEmpty() ? compDate : (dateStr != null ? dateStr : "Actual resolution date and time"));
+
+                    ImageView ivProofInline = findViewById(R.id.ivProofOfServiceInline);
+                    String proofUrl = snapshot.child("proofImageUrl").getValue(String.class);
+                    if (proofUrl == null) proofUrl = snapshot.child("proofUrl").getValue(String.class);
+                    if (ivProofInline != null && proofUrl != null && !proofUrl.isEmpty()) {
+                        Glide.with(CustomerConcernDetailsActivity.this)
+                                .load(proofUrl)
+                                .placeholder(R.drawable.img_place_holder)
+                                .into(ivProofInline);
+                    }
+
+                    RatingBar rbRating = findViewById(R.id.rbCustomerRatingInline);
+                    TextView tvScore = findViewById(R.id.tvRatingScoreTextInline);
+                    Float rating = snapshot.child("rating").getValue(Float.class);
+                    if (rbRating != null && rating != null) {
+                        rbRating.setRating(rating);
+                        if (tvScore != null) tvScore.setText(String.format(Locale.US, "%.1f / 5.0", rating));
+                    }
 
                     String compTimeStr = snapshot.child("maintenanceEndTimeStr").getValue(String.class);
                     if (compTimeStr == null) compTimeStr = snapshot.child("completedTime").getValue(String.class);
