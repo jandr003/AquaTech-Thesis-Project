@@ -137,8 +137,12 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                     tvItemName.setText(unitName);
 
                     String unitCode = snapshot.child("unitCode").getValue(String.class);
-                    if (unitCode == null || unitCode.isEmpty()) unitCode = "F-FXCU1-M-HCA-TT-XX-XXX";
-                    tvItemCode.setText(unitCode);
+                    if (unitCode == null) unitCode = snapshot.child("unitModelCode").getValue(String.class);
+                    if (unitCode == null) unitCode = snapshot.child("serialNumber").getValue(String.class);
+                    if (unitCode == null) unitCode = snapshot.child("itemCode").getValue(String.class);
+                    if (unitCode == null) unitCode = snapshot.child("skuCode").getValue(String.class);
+
+                    tvItemCode.setText((unitCode != null && !unitCode.isEmpty()) ? unitCode : "F-FXCU1-M-HCA-TT-XX-XXX");
 
                     String customer = snapshot.child("customerName").getValue(String.class);
                     tvCustomerName.setText(customer != null && !customer.isEmpty() ? customer : "Registered Customer Name");

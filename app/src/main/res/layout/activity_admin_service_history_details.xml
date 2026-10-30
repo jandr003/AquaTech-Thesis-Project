@@ -327,10 +327,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="F-FXCU1-M-HCA-TT-XX-XXX"
                         android:textColor="#2563EB"
                         android:textSize="13.5sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="F-FXCU1-M-HCA-TT-XX-XXX" />
 
                     <TextView
                         android:layout_width="wrap_content"
