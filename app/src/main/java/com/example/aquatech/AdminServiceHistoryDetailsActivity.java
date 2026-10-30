@@ -96,15 +96,23 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                     if (sroNumber == null) sroNumber = snapshot.child("sroNumber").getValue(String.class);
                     if (sroNumber == null) sroNumber = ticketId;
 
-                    if (sroNumber != null && !sroNumber.startsWith("SRO-")) {
-                        try {
-                            long num = Long.parseLong(sroNumber.replaceAll("[^0-9]", ""));
-                            sroNumber = String.format(Locale.US, "SRO-%08d", num);
-                        } catch (Exception e) {
-                            sroNumber = "SRO-" + sroNumber.toUpperCase();
+                    if (sroNumber != null && !sroNumber.isEmpty()) {
+                        String upper = sroNumber.toUpperCase().trim();
+                        if (upper.startsWith("SRO-")) {
+                            tvTicketID.setText(upper);
+                        } else if (upper.startsWith("SRO")) {
+                            tvTicketID.setText("SRO-" + upper.substring(3));
+                        } else {
+                            try {
+                                long num = Long.parseLong(upper.replaceAll("[^0-9]", ""));
+                                tvTicketID.setText(String.format(Locale.US, "SRO-%08d", num));
+                            } catch (Exception e) {
+                                tvTicketID.setText("SRO-" + upper);
+                            }
                         }
+                    } else {
+                        tvTicketID.setText("SRO-00000001");
                     }
-                    tvTicketID.setText(sroNumber);
 
                     String status = snapshot.child("status").getValue(String.class);
                     if (status == null || status.isEmpty()) status = "Completed";
