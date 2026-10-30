@@ -38,9 +38,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
     private TextView tvOriginalReschedText, tvNewReschedText, tvReschedReasonText, tvScheduleStatusPill;
     private TextView tvGovIdStatusPill;
     private ImageView ivGovIdAttachment;
-    private TextView tvTechName, tvTechId;
     private TextView tvResolutionAction, tvResolutionRemarks, tvResolvedBy, tvDateResolved;
-    private TextView tvCompletionTimeDetails, tvSubmissionTimeDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
