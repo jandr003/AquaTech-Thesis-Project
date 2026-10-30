@@ -116,10 +116,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="ASC2026-0031"
                                 android:textColor="#2196F3"
                                 android:textSize="16sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="ASC2026-0031" />
 
                         </LinearLayout>
 
@@ -172,10 +172,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="ASC-C001"
                                 android:textColor="#1E293B"
                                 android:textSize="13.5sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="ASC-C001" />
 
                         </LinearLayout>
 
@@ -200,98 +200,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="Sep 30, 2025"
                                 android:textColor="#1E293B"
-                                android:textSize="13.5sp" />
+                                android:textSize="13.5sp"
+                                tools:text="Sep 30, 2025" />
 
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:letterSpacing="0.05"
-                android:text="SERVICE ITEM INFORMATION"
-                android:textColor="#1C4E75"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#E2E8F0"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="UNIT / ITEM NAME"
-                        android:textColor="#94A3B8"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvUnitItemNameConcern"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Registered Water Dispenser"
-                        android:textColor="#1E293B"
-                        android:textSize="14.5sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="12dp"
-                        android:background="#F1F5F9" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="CUSTOMER ITEM CODE"
-                        android:textColor="#94A3B8"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCustomerItemCodeConcern"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="F-FXCU1-M-HCA-TT-XX-XXX"
-                        android:textColor="#2563EB"
-                        android:textSize="13.5sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Complete code retrieved from the customer's saved item record."
-                        android:textColor="#94A3B8"
-                        android:textSize="11.5sp" />
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -338,10 +252,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Equipment Issue"
                         android:textColor="#1E293B"
                         android:textSize="14.5sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Equipment Issue" />
 
                     <View
                         android:layout_width="match_parent"
@@ -364,9 +278,46 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Water dispenser is not dispensing cold water."
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Water dispenser is not dispensing cold water." />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#F1F5F9" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="AFFECTED ITEM &amp; CODE"
+                        android:textColor="#94A3B8"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvUnitItemNameConcern"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="#1E293B"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        tools:text="Registered Water Dispenser" />
+
+                    <TextView
+                        android:id="@+id/tvCustomerItemCodeConcern"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="#2563EB"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        tools:text="F-FXCU1-M-HCA-TT-XX-XXX" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -414,10 +365,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Registered Customer Name"
                         android:textColor="#1E293B"
                         android:textSize="14.5sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Registered Customer Name" />
 
                     <View
                         android:layout_width="match_parent"
@@ -440,9 +391,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Complete registered service address"
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Complete registered service address" />
 
                     <View
                         android:layout_width="match_parent"
@@ -465,9 +416,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Registered mobile number"
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Registered mobile number" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -526,10 +477,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="October 2, 2025"
                                 android:textColor="#1E293B"
                                 android:textSize="13.5sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="October 2, 2025" />
 
                         </LinearLayout>
 
@@ -556,9 +507,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="9:00 AM – 11:00 AM"
                                 android:textColor="#1E293B"
-                                android:textSize="13.5sp" />
+                                android:textSize="13.5sp"
+                                tools:text="9:00 AM – 11:00 AM" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -602,9 +553,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:fontFamily="@font/poppins"
-                            android:text="Original: October 2, 2025 · 9:00–11:00 AM"
                             android:textColor="#7F1D1D"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="Original: October 2, 2025 · 9:00–11:00 AM" />
 
                         <TextView
                             android:id="@+id/tvNewReschedText"
@@ -612,10 +563,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:fontFamily="@font/poppins"
-                            android:text="New Schedule: October 3, 2025 · 1:00–3:00 PM"
                             android:textColor="#15803D"
                             android:textSize="12.5sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:text="New Schedule: October 3, 2025 · 1:00–3:00 PM" />
 
                         <TextView
                             android:id="@+id/tvReschedReasonText"
@@ -623,9 +574,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:fontFamily="@font/poppins"
-                            android:text="Reason: Previous schedule was not fulfilled."
                             android:textColor="#7F1D1D"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="Reason: Previous schedule was not fulfilled." />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -710,6 +661,7 @@
                         android:src="@drawable/img_place_holder" />
 
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -719,58 +671,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins_black_ttf"
                 android:letterSpacing="0.05"
-                android:text="ASSIGNED TECHNICIAN"
-                android:textColor="#1C4E75"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#E2E8F0"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:id="@+id/tvTechNameConcern"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Technician Name"
-                        android:textColor="#1E293B"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvTechIdConcern"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Technician ID: Actual assigned ID"
-                        android:textColor="#64748B"
-                        android:textSize="12.5sp" />
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:letterSpacing="0.05"
-                android:text="RESOLUTION DETAILS"
+                android:text="RESOLUTION &amp; ACTION TAKEN"
                 android:textColor="#1C4E75"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -806,10 +707,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Unit Inspection and Corrective Service"
                         android:textColor="#1E293B"
                         android:textSize="13.5sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Unit Inspection and Corrective Service" />
 
                     <View
                         android:layout_width="match_parent"
@@ -832,9 +733,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Recorded explanation of the corrective action and outcome of the service."
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Recorded explanation of the corrective action and outcome of the service." />
 
                     <View
                         android:layout_width="match_parent"
@@ -868,9 +769,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="Assigned Technician"
                                 android:textColor="#1E293B"
-                                android:textSize="13.5sp" />
+                                android:textSize="13.5sp"
+                                tools:text="Assigned Technician" />
 
                         </LinearLayout>
 
@@ -895,79 +796,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="Actual resolution date and time"
                                 android:textColor="#1E293B"
-                                android:textSize="13.5sp" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="12dp"
-                        android:background="#F1F5F9" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="COMPLETION TIME"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvCompletionTimeDetails"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="@font/poppins"
-                                android:text="Actual finish time"
-                                android:textColor="#15803D"
                                 android:textSize="13.5sp"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins"
-                                android:text="SUBMISSION TIME"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvSubmissionTimeDetails"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="@font/poppins"
-                                android:text="Actual report submission timestamp"
-                                android:textColor="#1E293B"
-                                android:textSize="13.5sp" />
+                                tools:text="Actual resolution date and time" />
 
                         </LinearLayout>
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -1033,12 +868,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/poppins"
-                            android:text="5.0 / 5.0"
                             android:textColor="#1E293B"
                             android:textSize="13sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:text="5.0 / 5.0" />
 
                     </LinearLayout>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

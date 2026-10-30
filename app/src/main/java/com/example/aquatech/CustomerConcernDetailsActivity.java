@@ -99,16 +99,10 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
         tvGovIdStatusPill = findViewById(R.id.tvGovIdStatusPill);
         ivGovIdAttachment = findViewById(R.id.ivGovIdAttachment);
 
-        tvTechName = findViewById(R.id.tvTechNameConcern);
-        tvTechId = findViewById(R.id.tvTechIdConcern);
-
         tvResolutionAction = findViewById(R.id.tvResolutionAction);
         tvResolutionRemarks = findViewById(R.id.tvResolutionRemarks);
         tvResolvedBy = findViewById(R.id.tvResolvedBy);
         tvDateResolved = findViewById(R.id.tvDateResolved);
-
-        tvCompletionTimeDetails = findViewById(R.id.tvCompletionTimeDetails);
-        tvSubmissionTimeDetails = findViewById(R.id.tvSubmissionTimeDetails);
     }
 
     private void setupFirebase() {
@@ -237,10 +231,6 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                     }
 
                     String techName = snapshot.child("assignedTechName").getValue(String.class);
-                    tvTechName.setText(techName != null && !techName.isEmpty() ? techName : "Assigned Technician Name");
-
-                    String techId = snapshot.child("assignedTechId").getValue(String.class);
-                    tvTechId.setText("Technician ID: " + (techId != null && !techId.isEmpty() ? techId : "TECH-001"));
 
                     String action = snapshot.child("resolutionAction").getValue(String.class);
                     tvResolutionAction.setText(action != null && !action.isEmpty() ? action : "Unit Inspection and Corrective Service");
@@ -278,20 +268,6 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                         if (rbRating != null) rbRating.setVisibility(View.GONE);
                         if (tvScore != null) tvScore.setText("Not Rated Yet");
                     }
-
-                    String compTimeStr = snapshot.child("maintenanceEndTimeStr").getValue(String.class);
-                    if (compTimeStr == null) compTimeStr = snapshot.child("completedTime").getValue(String.class);
-                    if (compTimeStr == null && compDate != null && compDate.contains(" ")) {
-                        compTimeStr = compDate;
-                    }
-                    tvCompletionTimeDetails.setText(compTimeStr != null && !compTimeStr.isEmpty() ? compTimeStr : "10:42 AM");
-
-                    String subTimeStr = snapshot.child("submittedAtStr").getValue(String.class);
-                    if (subTimeStr == null) subTimeStr = snapshot.child("submissionTimestamp").getValue(String.class);
-                    if (subTimeStr == null && compDate != null) {
-                        subTimeStr = compDate;
-                    }
-                    tvSubmissionTimeDetails.setText(subTimeStr != null && !subTimeStr.isEmpty() ? subTimeStr : "10:45 AM");
                 }
             }
 
