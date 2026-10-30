@@ -478,10 +478,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Technician Name"
                         android:textColor="#1E293B"
                         android:textSize="15sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Technician Name" />
 
                     <TextView
                         android:id="@+id/tvTechIdDetails"
@@ -489,9 +489,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Technician ID: Actual assigned ID"
                         android:textColor="#64748B"
-                        android:textSize="12.5sp" />
+                        android:textSize="12.5sp"
+                        tools:text="Technician ID: Actual assigned ID" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -539,9 +539,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Recorded maintenance or repair activities"
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Recorded maintenance or repair activities" />
 
                     <View
                         android:layout_width="match_parent"
@@ -564,9 +564,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Recorded inspection results"
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Recorded inspection results" />
 
                     <View
                         android:layout_width="match_parent"
@@ -589,9 +589,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Recorded service remarks and outcome"
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Recorded service remarks and outcome" />
 
                     <View
                         android:layout_width="match_parent"
