@@ -185,10 +185,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Water System Service"
                         android:textColor="#1E293B"
                         android:textSize="14.5sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Water System Service" />
 
                     <View
                         android:layout_width="match_parent"
@@ -222,9 +222,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="Recorded date"
                                 android:textColor="#1E293B"
-                                android:textSize="13.5sp" />
+                                android:textSize="13.5sp"
+                                tools:text="Recorded date" />
 
                         </LinearLayout>
 
@@ -249,9 +249,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="Recorded date"
                                 android:textColor="#1E293B"
-                                android:textSize="13.5sp" />
+                                android:textSize="13.5sp"
+                                tools:text="Recorded date" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -301,10 +301,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="WL CUBE FIREWALL"
                         android:textColor="#1E293B"
                         android:textSize="14.5sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="WL CUBE FIREWALL" />
 
                     <View
                         android:layout_width="match_parent"
@@ -387,10 +387,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Registered Customer Name"
                         android:textColor="#1E293B"
                         android:textSize="14.5sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Registered Customer Name" />
 
                     <View
                         android:layout_width="match_parent"
@@ -413,9 +413,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Complete saved service address"
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Complete saved service address" />
 
                     <View
                         android:layout_width="match_parent"
@@ -438,9 +438,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Registered contact number"
                         android:textColor="#1E293B"
-                        android:textSize="13.5sp" />
+                        android:textSize="13.5sp"
+                        tools:text="Registered contact number" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
