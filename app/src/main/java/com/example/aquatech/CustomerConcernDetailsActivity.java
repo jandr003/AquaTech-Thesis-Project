@@ -26,7 +26,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
     private String ticketId;
 
     private TextView tvConcernID, tvConcernStatusPill, tvCustomerID, tvSubmittedDate;
-    private TextView tvUnitItemName, tvCustomerItemCode;
+    private TextView tvUnitItemName, tvCustomerItemCode, tvRequestedItemsList;
     private TextView tvConcernCategory, tvCustomerConcernText;
     private TextView tvCustomerName, tvServiceAddress, tvContactNumber;
     private TextView tvOriginalReqDate, tvRequestedTime;
@@ -71,6 +71,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
         tvUnitItemName = findViewById(R.id.tvUnitItemNameConcern);
         tvCustomerItemCode = findViewById(R.id.tvCustomerItemCodeConcern);
+        tvRequestedItemsList = findViewById(R.id.tvRequestedItemsListConcern);
 
         tvConcernCategory = findViewById(R.id.tvConcernCategory);
         tvCustomerConcernText = findViewById(R.id.tvCustomerConcernText);
@@ -216,6 +217,10 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                         tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
                         tvGovIdStatusPill.setTextColor(Color.WHITE);
                     }
+
+                    if (tvRequestedItemsList != null) {
+                        tvRequestedItemsList.setText(buildRequestedItemsList(snapshot));
+                    }
                 }
             }
 
@@ -223,5 +228,41 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private String buildRequestedItemsList(DataSnapshot ds) {
+        StringBuilder sb = new StringBuilder();
+        checkAndAppendQty(ds, sb, "qty_cbc", "CBC Filter");
+        checkAndAppendQty(ds, sb, "qty_sediment", "Sediment Filter");
+        checkAndAppendQty(ds, sb, "qty_smsf1", "SMSF-1 Filter");
+        checkAndAppendQty(ds, sb, "qty_smsf10", "SMSF-10 Filter");
+        checkAndAppendQty(ds, sb, "qty_wayvalve", "3-Way Installation Valve");
+        checkAndAppendQty(ds, sb, "qty_aquatal", "Aquatal Dispenser Part");
+        checkAndAppendQty(ds, sb, "qty_inline", "Inline Filter");
+        checkAndAppendQty(ds, sb, "qty_uvlamp", "UV Lamp");
+        checkAndAppendQty(ds, sb, "qty_touchpanel", "Touch Panel Board");
+        checkAndAppendQty(ds, sb, "qty_pbcboard", "PCB Main Board");
+
+        String itemsText = ds.child("requestedItemsText").getValue(String.class);
+        if (itemsText != null && !itemsText.isEmpty()) {
+            if (sb.length() > 0) sb.append("\n");
+            sb.append("• ").append(itemsText);
+        }
+
+        if (sb.length() == 0) {
+            return "No additional items/parts selected in this request.";
+        }
+        return sb.toString();
+    }
+
+    private void checkAndAppendQty(DataSnapshot ds, StringBuilder sb, String key, String label) {
+        Object val = ds.child(key).getValue();
+        if (val instanceof Number) {
+            int qty = ((Number) val).intValue();
+            if (qty > 0) {
+                if (sb.length() > 0) sb.append("\n");
+                sb.append("• ").append(label).append(" (Qty: ").append(qty).append(")");
+            }
+        }
     }
 }
