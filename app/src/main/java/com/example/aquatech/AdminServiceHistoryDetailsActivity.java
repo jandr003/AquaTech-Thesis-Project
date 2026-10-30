@@ -186,6 +186,20 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                                 .into(ivProofInline);
                     }
 
+                    RatingBar rbRating = findViewById(R.id.rbCustomerRatingInline2);
+                    TextView tvScore = findViewById(R.id.tvRatingScoreTextInline2);
+                    Float rating = snapshot.child("rating").getValue(Float.class);
+                    if (rating != null && rating > 0) {
+                        if (rbRating != null) {
+                            rbRating.setVisibility(View.VISIBLE);
+                            rbRating.setRating(rating);
+                        }
+                        if (tvScore != null) tvScore.setText(String.format(Locale.US, "%.1f Stars", rating));
+                    } else {
+                        if (rbRating != null) rbRating.setVisibility(View.GONE);
+                        if (tvScore != null) tvScore.setText("Not Rated Yet");
+                    }
+
                 }
             }
 
