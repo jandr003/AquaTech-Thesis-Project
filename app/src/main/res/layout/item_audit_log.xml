@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
@@ -22,10 +23,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:text="ASC2026-0031"
             android:textColor="#2563EB"
             android:textSize="13sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="SRO-00002346" />
 
         <TextView
             android:id="@+id/auditUnitSRO"
@@ -33,9 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins"
-            android:text="Sep 30, 2025"
             android:textColor="#64748B"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            tools:text="Sep 30, 2025" />
 
     </LinearLayout>
 
@@ -45,9 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.0"
         android:fontFamily="@font/poppins"
-        android:text="ASC-C001"
         android:textColor="#1E293B"
-        android:textSize="12.5sp" />
+        android:textSize="12.5sp"
+        tools:text="ASC-C001" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -60,15 +61,15 @@
             android:id="@+id/auditStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_pdf_status_green_pill"
+            android:background="@drawable/bg_solid_green_pill"
             android:fontFamily="@font/poppins"
             android:gravity="center"
             android:paddingHorizontal="10dp"
             android:paddingVertical="4dp"
-            android:text="RESOLVED"
-            android:textColor="#059669"
+            android:textColor="@color/white"
             android:textSize="10.5sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="RESOLVED" />
 
         <ImageView
             android:layout_width="16dp"
