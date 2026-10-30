@@ -330,6 +330,13 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
+            android:name=".CustomerConcernDetailsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
             android:name=".AdminLogsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
