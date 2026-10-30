@@ -37,6 +37,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
     private ImageView ivGovIdAttachment;
     private TextView tvTechName, tvTechId;
     private TextView tvResolutionAction, tvResolutionRemarks, tvResolvedBy, tvDateResolved;
+    private TextView tvCompletionTimeDetails, tvSubmissionTimeDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,9 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
         tvResolutionRemarks = findViewById(R.id.tvResolutionRemarks);
         tvResolvedBy = findViewById(R.id.tvResolvedBy);
         tvDateResolved = findViewById(R.id.tvDateResolved);
+
+        tvCompletionTimeDetails = findViewById(R.id.tvCompletionTimeDetails);
+        tvSubmissionTimeDetails = findViewById(R.id.tvSubmissionTimeDetails);
 
         findViewById(R.id.btnOpenSubmittedReportConcern).setOnClickListener(v -> {
             Intent intent = new Intent(this, ServiceReportDetailsActivity.class);
@@ -230,6 +234,20 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
                     String compDate = snapshot.child("completionTime").getValue(String.class);
                     tvDateResolved.setText(compDate != null && !compDate.isEmpty() ? compDate : (dateStr != null ? dateStr : "Actual resolution date and time"));
+
+                    String compTimeStr = snapshot.child("maintenanceEndTimeStr").getValue(String.class);
+                    if (compTimeStr == null) compTimeStr = snapshot.child("completedTime").getValue(String.class);
+                    if (compTimeStr == null && compDate != null && compDate.contains(" ")) {
+                        compTimeStr = compDate;
+                    }
+                    tvCompletionTimeDetails.setText(compTimeStr != null && !compTimeStr.isEmpty() ? compTimeStr : "10:42 AM");
+
+                    String subTimeStr = snapshot.child("submittedAtStr").getValue(String.class);
+                    if (subTimeStr == null) subTimeStr = snapshot.child("submissionTimestamp").getValue(String.class);
+                    if (subTimeStr == null && compDate != null) {
+                        subTimeStr = compDate;
+                    }
+                    tvSubmissionTimeDetails.setText(subTimeStr != null && !subTimeStr.isEmpty() ? subTimeStr : "10:45 AM");
                 }
             }
 
