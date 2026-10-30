@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -287,6 +288,12 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
                 holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_amber_pill);
                 holder.tvStatus.setTextColor(Color.WHITE);
             }
+
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), AdminServiceHistoryDetailsActivity.class);
+                intent.putExtra("TICKET_ID", item.getTicketId());
+                v.getContext().startActivity(intent);
+            });
         }
 
         @Override
