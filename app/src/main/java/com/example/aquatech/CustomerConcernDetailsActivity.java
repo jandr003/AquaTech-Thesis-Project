@@ -213,6 +213,8 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
                     if (govIdUrl != null && !govIdUrl.isEmpty()) {
                         ivGovIdAttachment.setVisibility(View.VISIBLE);
+                        ivGovIdAttachment.setPadding(0, 0, 0, 0);
+                        ivGovIdAttachment.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         Glide.with(CustomerConcernDetailsActivity.this)
                                 .load(govIdUrl)
                                 .placeholder(R.drawable.img_place_holder)
@@ -255,6 +257,8 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                     String proofUrl = snapshot.child("proofImageUrl").getValue(String.class);
                     if (proofUrl == null) proofUrl = snapshot.child("proofUrl").getValue(String.class);
                     if (ivProofInline != null && proofUrl != null && !proofUrl.isEmpty()) {
+                        ivProofInline.setPadding(0, 0, 0, 0);
+                        ivProofInline.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         Glide.with(CustomerConcernDetailsActivity.this)
                                 .load(proofUrl)
                                 .placeholder(R.drawable.img_place_holder)

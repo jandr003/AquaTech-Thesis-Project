@@ -178,6 +178,8 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                     String proofUrl = snapshot.child("proofImageUrl").getValue(String.class);
                     if (proofUrl == null) proofUrl = snapshot.child("proofUrl").getValue(String.class);
                     if (ivProofInline != null && proofUrl != null && !proofUrl.isEmpty()) {
+                        ivProofInline.setPadding(0, 0, 0, 0);
+                        ivProofInline.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         Glide.with(AdminServiceHistoryDetailsActivity.this)
                                 .load(proofUrl)
                                 .placeholder(R.drawable.img_place_holder)
