@@ -1,12 +1,14 @@
 package com.example.aquatech;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +28,8 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
     private String ticketId;
 
     private TextView tvConcernID, tvConcernStatusPill, tvCustomerID, tvSubmittedDate;
-    private TextView tvUnitItemName, tvCustomerItemCode, tvRequestedItemsList;
+    private TextView tvUnitItemName, tvCustomerItemCode;
+    private LinearLayout layoutRequestedItemsContainer;
     private TextView tvConcernCategory, tvCustomerConcernText;
     private TextView tvCustomerName, tvServiceAddress, tvContactNumber;
     private TextView tvOriginalReqDate, tvRequestedTime;
@@ -71,7 +74,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
         tvUnitItemName = findViewById(R.id.tvUnitItemNameConcern);
         tvCustomerItemCode = findViewById(R.id.tvCustomerItemCodeConcern);
-        tvRequestedItemsList = findViewById(R.id.tvRequestedItemsListConcern);
+        layoutRequestedItemsContainer = findViewById(R.id.layoutRequestedItemsContainerConcern);
 
         tvConcernCategory = findViewById(R.id.tvConcernCategory);
         tvCustomerConcernText = findViewById(R.id.tvCustomerConcernText);
@@ -218,9 +221,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                         tvGovIdStatusPill.setTextColor(Color.WHITE);
                     }
 
-                    if (tvRequestedItemsList != null) {
-                        tvRequestedItemsList.setText(buildRequestedItemsList(snapshot));
-                    }
+                    populateProfessionalItemsList(layoutRequestedItemsContainer, snapshot);
                 }
             }
 
@@ -230,39 +231,98 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private String buildRequestedItemsList(DataSnapshot ds) {
-        StringBuilder sb = new StringBuilder();
-        checkAndAppendQty(ds, sb, "qty_cbc", "CBC Filter");
-        checkAndAppendQty(ds, sb, "qty_sediment", "Sediment Filter");
-        checkAndAppendQty(ds, sb, "qty_smsf1", "SMSF-1 Filter");
-        checkAndAppendQty(ds, sb, "qty_smsf10", "SMSF-10 Filter");
-        checkAndAppendQty(ds, sb, "qty_wayvalve", "3-Way Installation Valve");
-        checkAndAppendQty(ds, sb, "qty_aquatal", "Aquatal Dispenser Part");
-        checkAndAppendQty(ds, sb, "qty_inline", "Inline Filter");
-        checkAndAppendQty(ds, sb, "qty_uvlamp", "UV Lamp");
-        checkAndAppendQty(ds, sb, "qty_touchpanel", "Touch Panel Board");
-        checkAndAppendQty(ds, sb, "qty_pbcboard", "PCB Main Board");
+    private void populateProfessionalItemsList(LinearLayout container, DataSnapshot ds) {
+        if (container == null) return;
+        container.removeAllViews();
+
+        boolean hasItems = false;
+        hasItems |= checkAndAddRow(container, ds, "qty_cbc", "CBC Filter");
+        hasItems |= checkAndAddRow(container, ds, "qty_sediment", "Sediment Filter");
+        hasItems |= checkAndAddRow(container, ds, "qty_smsf1", "SMSF-1 Filter");
+        hasItems |= checkAndAddRow(container, ds, "qty_smsf10", "SMSF-10 Filter");
+        hasItems |= checkAndAddRow(container, ds, "qty_wayvalve", "3-Way Installation Valve");
+        hasItems |= checkAndAddRow(container, ds, "qty_aquatal", "Aquatal Dispenser Part");
+        hasItems |= checkAndAddRow(container, ds, "qty_inline", "Inline Filter");
+        hasItems |= checkAndAddRow(container, ds, "qty_uvlamp", "UV Lamp");
+        hasItems |= checkAndAddRow(container, ds, "qty_touchpanel", "Touch Panel Board");
+        hasItems |= checkAndAddRow(container, ds, "qty_pbcboard", "PCB Main Board");
 
         String itemsText = ds.child("requestedItemsText").getValue(String.class);
         if (itemsText != null && !itemsText.isEmpty()) {
-            if (sb.length() > 0) sb.append("\n");
-            sb.append("• ").append(itemsText);
+            addSingleRow(container, itemsText, 1);
+            hasItems = true;
         }
 
-        if (sb.length() == 0) {
-            return "No additional items/parts selected in this request.";
+        if (!hasItems) {
+            TextView emptyTv = new TextView(this);
+            emptyTv.setText("No additional items/parts selected in this request.");
+            emptyTv.setTextColor(Color.parseColor("#64748B"));
+            emptyTv.setTextSize(13f);
+            emptyTv.setPadding(0, 4, 0, 4);
+            container.addView(emptyTv);
         }
-        return sb.toString();
     }
 
-    private void checkAndAppendQty(DataSnapshot ds, StringBuilder sb, String key, String label) {
+    private boolean checkAndAddRow(LinearLayout container, DataSnapshot ds, String key, String label) {
         Object val = ds.child(key).getValue();
         if (val instanceof Number) {
             int qty = ((Number) val).intValue();
             if (qty > 0) {
-                if (sb.length() > 0) sb.append("\n");
-                sb.append("• ").append(label).append(" (Qty: ").append(qty).append(")");
+                addSingleRow(container, label, qty);
+                return true;
             }
         }
+        return false;
+    }
+
+    private void addSingleRow(LinearLayout container, String label, int qty) {
+        if (container.getChildCount() > 0) {
+            View divider = new View(this);
+            LinearLayout.LayoutParams divParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            divParams.setMargins(0, 10, 0, 10);
+            divider.setLayoutParams(divParams);
+            divider.setBackgroundColor(Color.parseColor("#F1F5F9"));
+            container.addView(divider);
+        }
+
+        RelativeLayout row = new RelativeLayout(this);
+        row.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        row.setPadding(0, 6, 0, 6);
+
+        TextView tvName = new TextView(this);
+        tvName.setText(label);
+        tvName.setTextColor(Color.parseColor("#1E293B"));
+        tvName.setTextSize(13.5f);
+        tvName.setTypeface(null, Typeface.BOLD);
+
+        RelativeLayout.LayoutParams nameParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        nameParams.addRule(RelativeLayout.ALIGN_PARENT_START);
+        nameParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        tvName.setLayoutParams(nameParams);
+
+        TextView tvQty = new TextView(this);
+        tvQty.setText("Qty: " + qty);
+        tvQty.setTextColor(Color.parseColor("#0284C7"));
+        tvQty.setTextSize(11.5f);
+        tvQty.setTypeface(null, Typeface.BOLD);
+        tvQty.setPadding(20, 6, 20, 6);
+        tvQty.setBackgroundResource(R.drawable.bg_version_chip);
+
+        RelativeLayout.LayoutParams qtyParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        qtyParams.addRule(RelativeLayout.ALIGN_PARENT_END);
+        qtyParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        tvQty.setLayoutParams(qtyParams);
+
+        row.addView(tvName);
+        row.addView(tvQty);
+
+        container.addView(row);
     }
 }

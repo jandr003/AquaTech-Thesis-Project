@@ -359,15 +359,12 @@
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvRequestedItemsListConcern"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/layoutRequestedItemsContainerConcern"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="#1E293B"
-                        android:textSize="13.5sp"
-                        tools:text="• CBC Filter (Qty: 1)\n• Sediment Filter (Qty: 1)\n• 3-Way Installation Valve (Qty: 1)" />
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
