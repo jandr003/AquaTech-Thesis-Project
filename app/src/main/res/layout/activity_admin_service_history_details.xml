@@ -593,90 +593,58 @@
                         android:textColor="#1E293B"
                         android:textSize="13.5sp" />
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="#F1F5F9" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/poppins_black_ttf"
-                android:letterSpacing="0.05"
-                android:text="SUBMITTED SERVICE REPORT"
-                android:textColor="#1C4E75"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btnViewSubmittedReport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#E2E8F0"
-                app:strokeWidth="1dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:id="@+id/iconReportDoc2"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:contentDescription="Report"
-                        android:src="@drawable/ic_notes_document"
-                        app:tint="#2196F3" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <!-- Integrated Action Link Inside Service Report -->
+                    <RelativeLayout
+                        android:id="@+id/btnViewSubmittedReport"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="14dp"
-                        android:layout_toStartOf="@id/arrowReport2"
-                        android:layout_toEndOf="@id/iconReportDoc2"
-                        android:orientation="vertical">
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:paddingTop="2dp">
+
+                        <ImageView
+                            android:id="@+id/iconReportDoc2"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="Report"
+                            android:src="@drawable/ic_notes_document"
+                            app:tint="#2196F3" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toStartOf="@id/arrowReport2"
+                            android:layout_toEndOf="@id/iconReportDoc2"
                             android:fontFamily="@font/poppins"
-                            android:text="Submitted Service Report"
-                            android:textColor="#1E293B"
-                            android:textSize="15sp"
+                            android:text="View Submitted Service Report &amp; Photo Proof"
+                            android:textColor="#2196F3"
+                            android:textSize="13.5sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
-                            android:text="Open the actual submitted report, if available."
-                            android:textColor="#64748B"
-                            android:textSize="12sp" />
+                        <ImageView
+                            android:id="@+id/arrowReport2"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="Next"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#2196F3" />
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/arrowReport2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:contentDescription="Next"
-                        android:src="@drawable/arrow_forward"
-                        app:tint="#2196F3" />
-
-                </RelativeLayout>
-
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
