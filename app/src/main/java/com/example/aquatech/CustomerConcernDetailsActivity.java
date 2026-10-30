@@ -163,7 +163,6 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                     if (phone == null) phone = snapshot.child("userPhone").getValue(String.class);
                     tvContactNumber.setText(phone != null && !phone.isEmpty() ? phone : "Registered mobile number");
 
-                    // SCHEDULE vs RESCHEDULE VISIBILITY LOGIC
                     Boolean isRescheduled = snapshot.child("isRescheduled").getValue(Boolean.class);
                     String scheduleStatus = snapshot.child("scheduleStatus").getValue(String.class);
 
