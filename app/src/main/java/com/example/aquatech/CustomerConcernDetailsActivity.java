@@ -208,14 +208,33 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                     }
 
                     String govIdUrl = snapshot.child("govIdUrl").getValue(String.class);
+                    if (govIdUrl == null) govIdUrl = snapshot.child("idAttachmentUrl").getValue(String.class);
+                    if (govIdUrl == null) govIdUrl = snapshot.child("governmentIdUrl").getValue(String.class);
+
                     Boolean govVerified = snapshot.child("govIdVerified").getValue(Boolean.class);
-                    tvGovIdStatusPill.setText(govVerified != null && govVerified ? "Verified" : "Verified");
+                    if (govVerified == null) govVerified = snapshot.child("isVerified").getValue(Boolean.class);
 
                     if (govIdUrl != null && !govIdUrl.isEmpty()) {
+                        ivGovIdAttachment.setVisibility(View.VISIBLE);
                         Glide.with(CustomerConcernDetailsActivity.this)
                                 .load(govIdUrl)
                                 .placeholder(R.drawable.img_place_holder)
                                 .into(ivGovIdAttachment);
+
+                        if (govVerified != null && govVerified) {
+                            tvGovIdStatusPill.setText("Verified");
+                            tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_green_pill);
+                            tvGovIdStatusPill.setTextColor(Color.WHITE);
+                        } else {
+                            tvGovIdStatusPill.setText("Pending Verification");
+                            tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
+                            tvGovIdStatusPill.setTextColor(Color.WHITE);
+                        }
+                    } else {
+                        ivGovIdAttachment.setVisibility(View.GONE);
+                        tvGovIdStatusPill.setText("Not Submitted");
+                        tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
+                        tvGovIdStatusPill.setTextColor(Color.WHITE);
                     }
 
                     String techName = snapshot.child("assignedTechName").getValue(String.class);
