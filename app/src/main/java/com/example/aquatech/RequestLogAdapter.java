@@ -54,8 +54,8 @@ public class RequestLogAdapter extends RecyclerView.Adapter<RequestLogAdapter.Vi
         holder.tvCustomerID.setText(item.getCustomerId() != null && !item.getCustomerId().isEmpty() ? item.getCustomerId() : "ASC-C001");
         holder.tvSRO.setText(item.getTechName() != null && !item.getTechName().isEmpty() ? item.getTechName() : "Sep 30, 2025");
 
-        String status = item.getStatus();
-        if (status == null || status.isEmpty()) status = "Completed";
+        String rawStatus = item.getStatus();
+        final String status = (rawStatus != null && !rawStatus.isEmpty()) ? rawStatus : "Completed";
         holder.tvStatus.setText(status.toUpperCase());
 
         if ("Completed".equalsIgnoreCase(status) || "Resolved".equalsIgnoreCase(status)) {
@@ -73,7 +73,12 @@ public class RequestLogAdapter extends RecyclerView.Adapter<RequestLogAdapter.Vi
         }
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), CustomerConcernDetailsActivity.class);
+            Intent intent;
+            if ("Completed".equalsIgnoreCase(status) || "Resolved".equalsIgnoreCase(status)) {
+                intent = new Intent(v.getContext(), AdminServiceHistoryDetailsActivity.class);
+            } else {
+                intent = new Intent(v.getContext(), CustomerConcernDetailsActivity.class);
+            }
             intent.putExtra("TICKET_ID", item.getTicketId());
             v.getContext().startActivity(intent);
         });
