@@ -8,13 +8,19 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class AdminProfileActivity extends AppCompatActivity {
 
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private FirebaseAuth mAuth;
     private TextView profileName, profileEmail;
 
@@ -64,7 +70,27 @@ public class AdminProfileActivity extends AppCompatActivity {
         if (user != null) {
             String email = user.getEmail() != null ? user.getEmail().toLowerCase().trim() : "";
             profileEmail.setText(email);
-            profileName.setText(getDisplayNameByEmail(email));
+
+            String uid = user.getUid();
+            FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                String fullName = snapshot.child("fullName").getValue(String.class);
+                                if (fullName != null && !fullName.isEmpty()) {
+                                    profileName.setText(fullName);
+                                    return;
+                                }
+                            }
+                            profileName.setText(getDisplayNameByEmail(email));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            profileName.setText(getDisplayNameByEmail(email));
+                        }
+                    });
         }
     }
 
