@@ -58,18 +58,12 @@ public class RequestLogAdapter extends RecyclerView.Adapter<RequestLogAdapter.Vi
         final String status = (rawStatus != null && !rawStatus.isEmpty()) ? rawStatus : "Completed";
         holder.tvStatus.setText(status.toUpperCase());
 
-        if ("Completed".equalsIgnoreCase(status) || "Resolved".equalsIgnoreCase(status)) {
-            holder.tvStatus.setTextColor(Color.WHITE);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
-        } else if ("Cancelled".equalsIgnoreCase(status)) {
+        if ("Cancelled".equalsIgnoreCase(status)) {
             holder.tvStatus.setTextColor(Color.WHITE);
             holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
-        } else if ("In Progress".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status) || "Assigned".equalsIgnoreCase(status)) {
-            holder.tvStatus.setTextColor(Color.WHITE);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_blue_pill);
         } else {
             holder.tvStatus.setTextColor(Color.WHITE);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_amber_pill);
+            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
         }
 
         holder.itemView.setOnClickListener(v -> {
