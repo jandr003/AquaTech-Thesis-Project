@@ -41,7 +41,7 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
     private ManageTechniciansAdapter adapter;
     private List<TechnicianModel> allTechs = new ArrayList<>();
     private List<TechnicianModel> filteredList = new ArrayList<>();
-    private Map<String, String> techToUidMap = new HashMap<>(); // 📍 Map to store Tech Object -> Database Key (UID)
+    private Map<String, String> techToUidMap = new HashMap<>();
     private DatabaseReference techsRef, usersRef;
     private TabLayout tabLayout;
     private String currentFilter = "Active";
