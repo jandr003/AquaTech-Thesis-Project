@@ -307,11 +307,9 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
         TextView tvQty = new TextView(this);
         tvQty.setText("Qty: " + qty);
-        tvQty.setTextColor(Color.parseColor("#0284C7"));
-        tvQty.setTextSize(11.5f);
+        tvQty.setTextColor(Color.parseColor("#2196F3"));
+        tvQty.setTextSize(13.5f);
         tvQty.setTypeface(null, Typeface.BOLD);
-        tvQty.setPadding(20, 6, 20, 6);
-        tvQty.setBackgroundResource(R.drawable.bg_version_chip);
 
         RelativeLayout.LayoutParams qtyParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
