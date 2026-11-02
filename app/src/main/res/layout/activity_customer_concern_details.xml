@@ -388,7 +388,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:fontFamily="@font/poppins"
-                                android:text="Qty: 1"
+                                android:text="x1"
                                 android:textColor="#2196F3"
                                 android:textSize="13.5sp"
                                 android:textStyle="bold" />
@@ -423,7 +423,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:fontFamily="@font/poppins"
-                                android:text="Qty: 1"
+                                android:text="x1"
                                 android:textColor="#2196F3"
                                 android:textSize="13.5sp"
                                 android:textStyle="bold" />
@@ -458,7 +458,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:fontFamily="@font/poppins"
-                                android:text="Qty: 1"
+                                android:text="x1"
                                 android:textColor="#2196F3"
                                 android:textSize="13.5sp"
                                 android:textStyle="bold" />

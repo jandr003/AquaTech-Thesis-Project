@@ -306,7 +306,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
         tvName.setLayoutParams(nameParams);
 
         TextView tvQty = new TextView(this);
-        tvQty.setText("Qty: " + qty);
+        tvQty.setText("x" + qty);
         tvQty.setTextColor(Color.parseColor("#2196F3"));
         tvQty.setTextSize(13.5f);
         tvQty.setTypeface(null, Typeface.BOLD);
