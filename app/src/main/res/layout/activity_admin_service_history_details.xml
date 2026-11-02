@@ -664,7 +664,6 @@
                             tools:text="5.0 / 5.0" />
 
                     </LinearLayout>
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
