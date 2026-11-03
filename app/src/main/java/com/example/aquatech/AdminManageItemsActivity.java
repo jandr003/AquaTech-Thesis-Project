@@ -43,6 +43,13 @@ public class AdminManageItemsActivity extends AppCompatActivity {
         bindDeleteButton(R.id.btnDeleteItem1, "Filter 0064-CBC");
         bindDeleteButton(R.id.btnDeleteItem2, "Filter 0055-SEDIMENT");
         bindDeleteButton(R.id.btnDeleteItem3, "SMSF 1µ CBC Filter");
+        bindDeleteButton(R.id.btnDeleteItem4, "SMSF 10µ SED Filter");
+        bindDeleteButton(R.id.btnDeleteItem5, "Inline Filter Assembly");
+        bindDeleteButton(R.id.btnDeleteItem6, "Installation Kit (3-Way Valve)");
+        bindDeleteButton(R.id.btnDeleteItem7, "Aquatal Dispenser Parts");
+        bindDeleteButton(R.id.btnDeleteItem8, "UV Lamp Assembly");
+        bindDeleteButton(R.id.btnDeleteItem9, "Touch Panel Board");
+        bindDeleteButton(R.id.btnDeleteItem10, "PBC / PCB Main Control Board");
     }
 
     private void bindDeleteButton(int resId, String name) {
