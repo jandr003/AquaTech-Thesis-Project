@@ -1,12 +1,15 @@
 package com.example.aquatech;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,13 +63,25 @@ public class AdminManageItemsActivity extends AppCompatActivity {
     }
 
     public void showRemoveConfirmationDialog(String itemName) {
-        new AlertDialog.Builder(this)
-                .setTitle("Remove Service Item")
-                .setMessage("Are you sure you want to disable or remove " + itemName + " from Step 3 requests?")
-                .setPositiveButton("Remove", (dialog, which) -> {
-                    Toast.makeText(this, itemName + " removed from Step 3", Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_confirm_delete_item);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        TextView tvMsg = dialog.findViewById(R.id.tvDeleteDialogMessage);
+        if (tvMsg != null) {
+            tvMsg.setText("Are you sure you want to remove " + itemName + " from Step 3 requests?");
+        }
+
+        dialog.findViewById(R.id.btnCancelDeleteItem).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.findViewById(R.id.btnConfirmDeleteItem).setOnClickListener(v -> {
+            Toast.makeText(this, itemName + " removed successfully", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 }
