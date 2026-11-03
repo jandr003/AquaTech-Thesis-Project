@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,13 +34,9 @@ public class AdminManageItemsActivity extends AppCompatActivity {
 
         View btnAddHeader = findViewById(R.id.btnAddItemHeader);
         if (btnAddHeader != null) {
-            btnAddHeader.setOnClickListener(v -> handleAddItem());
+            btnAddHeader.setOnClickListener(v -> startActivity(new Intent(this, AdminAddServiceItemActivity.class)));
         }
 
-        findViewById(R.id.btnAddServiceItem).setOnClickListener(v -> handleAddItem());
-    }
-
-    private void handleAddItem() {
-        Toast.makeText(this, "Service items updated successfully", Toast.LENGTH_SHORT).show();
+        findViewById(R.id.btnAddServiceItem).setOnClickListener(v -> startActivity(new Intent(this, AdminAddServiceItemActivity.class)));
     }
 }
