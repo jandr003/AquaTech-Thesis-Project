@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -38,5 +39,27 @@ public class AdminManageItemsActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnAddServiceItem).setOnClickListener(v -> startActivity(new Intent(this, AdminAddServiceItemActivity.class)));
+
+        bindDeleteButton(R.id.btnDeleteItem1, "Filter 0064-CBC");
+        bindDeleteButton(R.id.btnDeleteItem2, "Filter 0055-SEDIMENT");
+        bindDeleteButton(R.id.btnDeleteItem3, "SMSF 1µ CBC Filter");
+    }
+
+    private void bindDeleteButton(int resId, String name) {
+        View btn = findViewById(resId);
+        if (btn != null) {
+            btn.setOnClickListener(v -> showRemoveConfirmationDialog(name));
+        }
+    }
+
+    public void showRemoveConfirmationDialog(String itemName) {
+        new AlertDialog.Builder(this)
+                .setTitle("Remove Service Item")
+                .setMessage("Are you sure you want to disable or remove " + itemName + " from Step 3 requests?")
+                .setPositiveButton("Remove", (dialog, which) -> {
+                    Toast.makeText(this, itemName + " removed from Step 3", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }
