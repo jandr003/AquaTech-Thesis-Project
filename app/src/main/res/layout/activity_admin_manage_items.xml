@@ -198,7 +198,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -273,7 +273,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -348,7 +348,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -423,7 +423,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -498,7 +498,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -597,7 +597,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -672,7 +672,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -747,7 +747,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -822,7 +822,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
@@ -897,7 +897,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins"
-                            android:text="● Active"
+                            android:text="Active"
                             android:textColor="#059669"
                             android:textSize="12.5sp"
                             android:textStyle="bold" />
