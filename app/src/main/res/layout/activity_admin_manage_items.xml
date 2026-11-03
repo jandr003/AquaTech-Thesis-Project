@@ -58,7 +58,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Title & Subtitle Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,7 +96,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- SECTION 1: REPLACEMENT FILTERS -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,7 +124,6 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Filter 1 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -162,7 +159,6 @@
                         android:layout_marginVertical="8dp"
                         android:background="#F1F5F9" />
 
-                    <!-- Filter 2 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -198,7 +194,6 @@
                         android:layout_marginVertical="8dp"
                         android:background="#F1F5F9" />
 
-                    <!-- Filter 3 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -234,7 +229,6 @@
                         android:layout_marginVertical="8dp"
                         android:background="#F1F5F9" />
 
-                    <!-- Filter 4 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -525,7 +519,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="+ Add New Service Item"
+                        android:text="Save Changes"
                         android:textColor="@color/white"
                         android:textSize="15.5sp"
                         android:textStyle="bold" />
