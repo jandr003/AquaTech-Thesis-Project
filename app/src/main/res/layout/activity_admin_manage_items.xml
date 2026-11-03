@@ -39,6 +39,20 @@
             android:textSize="17.5sp"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/btnAddItemHeader"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Add New Item"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_input_add"
+            app:tint="@color/white" />
+
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView

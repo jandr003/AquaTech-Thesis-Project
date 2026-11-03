@@ -31,8 +31,15 @@ public class AdminManageItemsActivity extends AppCompatActivity {
     private void initializeViews() {
         findViewById(R.id.btnBackManageItems).setOnClickListener(v -> finish());
 
-        findViewById(R.id.btnAddServiceItem).setOnClickListener(v -> {
-            Toast.makeText(this, "Step 3 Service Item Manager configured for Firebase sync!", Toast.LENGTH_SHORT).show();
-        });
+        View btnAddHeader = findViewById(R.id.btnAddItemHeader);
+        if (btnAddHeader != null) {
+            btnAddHeader.setOnClickListener(v -> handleAddItem());
+        }
+
+        findViewById(R.id.btnAddServiceItem).setOnClickListener(v -> handleAddItem());
+    }
+
+    private void handleAddItem() {
+        Toast.makeText(this, "Step 3 Service Item Manager configured for Firebase sync!", Toast.LENGTH_SHORT).show();
     }
 }
