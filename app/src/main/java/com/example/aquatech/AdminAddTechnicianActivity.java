@@ -22,7 +22,7 @@ public class AdminAddTechnicianActivity extends AppCompatActivity {
 
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-    private EditText etFullName, etEmail, etPhone, etPassword;
+    private EditText etFullName, etEmail, etPhone, etPassword, etConfirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class AdminAddTechnicianActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etTechEmail);
         etPhone = findViewById(R.id.etTechPhone);
         etPassword = findViewById(R.id.etTechPassword);
+        etConfirmPassword = findViewById(R.id.etTechConfirmPassword);
 
         findViewById(R.id.btnSubmitCreateTech).setOnClickListener(v -> handleCreateTechnician());
     }
@@ -57,9 +58,15 @@ public class AdminAddTechnicianActivity extends AppCompatActivity {
         String email = etEmail.getText() != null ? etEmail.getText().toString().trim() : "";
         String phone = etPhone.getText() != null ? etPhone.getText().toString().trim() : "";
         String pass = etPassword.getText() != null ? etPassword.getText().toString().trim() : "";
+        String confirmPass = etConfirmPassword.getText() != null ? etConfirmPassword.getText().toString().trim() : "";
 
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(confirmPass)) {
             Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!pass.equals(confirmPass)) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
 
