@@ -1,6 +1,7 @@
 package com.example.aquatech;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -89,15 +90,13 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
             public boolean onQueryTextChange(String newText) {
                 searchQuery = newText.toLowerCase();
                 applyFilters();
-                return true;
+                    return true;
             }
         });
 
         View btnAddTech = findViewById(R.id.btnAddTech);
         if (btnAddTech != null) {
-            btnAddTech.setOnClickListener(v -> {
-                Toast.makeText(this, "Technician registration is managed via Admin Portal", Toast.LENGTH_SHORT).show();
-            });
+            btnAddTech.setOnClickListener(v -> startActivity(new Intent(this, AdminAddTechnicianActivity.class)));
         }
     }
 
