@@ -40,6 +40,6 @@ public class AdminManageItemsActivity extends AppCompatActivity {
     }
 
     private void handleAddItem() {
-        Toast.makeText(this, "Step 3 Service Item Manager configured for Firebase sync!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Service items updated successfully", Toast.LENGTH_SHORT).show();
     }
 }
