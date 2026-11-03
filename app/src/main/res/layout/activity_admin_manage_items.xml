@@ -760,7 +760,6 @@
                         android:layout_marginVertical="8dp"
                         android:background="#F1F5F9" />
 
-                    <!-- Part 4 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -836,7 +835,6 @@
                         android:layout_marginVertical="8dp"
                         android:background="#F1F5F9" />
 
-                    <!-- Part 5 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -910,7 +908,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Save Changes Action Button -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btnAddServiceItem"
                 android:layout_width="match_parent"
@@ -940,11 +937,7 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
