@@ -93,47 +93,12 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
             }
         });
 
-        findViewById(R.id.btnAddTech).setOnClickListener(v -> showAddTechDialog());
-    }
-
-    private void showAddTechDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_admin_add_tech);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        EditText etName = dialog.findViewById(R.id.etAddTechName);
-        EditText etEmail = dialog.findViewById(R.id.etAddTechEmail);
-        EditText etPass = dialog.findViewById(R.id.etAddTechPass);
-
-        dialog.findViewById(R.id.btnConfirmAddTech).setOnClickListener(v -> {
-            String name = etName.getText().toString().trim();
-            String email = etEmail.getText().toString().trim();
-            String pass = etPass.getText().toString().trim();
-
-            if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (!email.toLowerCase().endsWith("@aquasmartguard.ph")) {
-                Toast.makeText(this, "Must use @aquasmartguard.ph email", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful() && task.getResult().getUser() != null) {
-                            String uid = task.getResult().getUser().getUid();
-                            saveNewTechToDb(uid, name, email);
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-        });
-
-        dialog.findViewById(R.id.btnCancelAddTech).setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
+        View btnAddTech = findViewById(R.id.btnAddTech);
+        if (btnAddTech != null) {
+            btnAddTech.setOnClickListener(v -> {
+                Toast.makeText(this, "Technician registration is managed via Admin Portal", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     private void saveNewTechToDb(String uid, String name, String email) {
