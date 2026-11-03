@@ -62,9 +62,7 @@
         android:overScrollMode="never"
         android:paddingBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/manageItemsHeader"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="118dp">
+        app:layout_constraintTop_toBottomOf="@id/manageItemsHeader">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -141,20 +139,60 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg1"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="Filter 0064-CBC"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Filter 0064-CBC"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/cbc0064_carbon_black_filter" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus1"
+                            android:layout_toEndOf="@id/cardImg1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Filter 0064-CBC"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Carbon Block Filter"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -176,20 +214,60 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg2"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="Filter 0055-SEDIMENT"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Filter 0055-SEDIMENT"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/sediment0055_sediment_filter" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus2"
+                            android:layout_toEndOf="@id/cardImg2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Filter 0055-SEDIMENT"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Sediment Filter"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -211,20 +289,60 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg3"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="SMSF 1µ CBC Filter"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="SMSF 1µ CBC Filter"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/cbc0064_carbon_black_filter" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus3"
+                            android:layout_toEndOf="@id/cardImg3"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="SMSF 1µ CBC Filter"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Fine Micro Carbon Filter"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -246,20 +364,60 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg4"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="SMSF 10µ SED Filter"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="SMSF 10µ SED Filter"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/sediment0055_sediment_filter" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus4"
+                            android:layout_toEndOf="@id/cardImg4"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="SMSF 10µ SED Filter"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Coarse Sediment Filter"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -281,20 +439,60 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg5"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="Inline Filter Assembly"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Inline Filter Assembly"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/inline_filter" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus5"
+                            android:layout_toEndOf="@id/cardImg5"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Inline Filter Assembly"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Inline Filter Cartridge"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -340,20 +538,60 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg6"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="Installation Kit (3-Way Valve)"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Installation Kit"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/_3_way_valve" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus6"
+                            android:layout_toEndOf="@id/cardImg6"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Installation Kit (3-Way Valve)"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Diverter Valve &amp; Tubing"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -375,20 +613,60 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg7"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="Aquatal Dispenser Parts"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Aquatal Dispenser Parts"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/aquatal_png" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus7"
+                            android:layout_toEndOf="@id/cardImg7"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Aquatal Dispenser Parts"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Spouts, Tanks &amp; Valves"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -410,20 +688,60 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg8"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="UV Lamp Assembly"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="UV Lamp Assembly"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/uv_lamp" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus8"
+                            android:layout_toEndOf="@id/cardImg8"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="UV Lamp Assembly"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Ultraviolet Sterilizer"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -442,23 +760,64 @@
                         android:layout_marginVertical="8dp"
                         android:background="#F1F5F9" />
 
+                    <!-- Part 4 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg9"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="Touch Panel Board"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Touch Panel Board"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/touch_panel" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus9"
+                            android:layout_toEndOf="@id/cardImg9"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Touch Panel Board"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Digital Touch Sensor"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -477,23 +836,64 @@
                         android:layout_marginVertical="8dp"
                         android:background="#F1F5F9" />
 
+                    <!-- Part 5 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="6dp">
+                        android:paddingVertical="4dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardImg10"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:fontFamily="@font/poppins"
-                            android:text="PBC / PCB Main Control Board"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            app:cardBackgroundColor="#F8FAFC"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="#E2E8F0"
+                            app:strokeWidth="1dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="PBC Main Control Board"
+                                android:padding="6dp"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/pbc_board" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="14dp"
+                            android:layout_toStartOf="@id/tvStatus10"
+                            android:layout_toEndOf="@id/cardImg10"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="PBC / PCB Main Control Board"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="Main Logic Circuit Board"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
+
+                        </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tvStatus10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -510,6 +910,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Save Changes Action Button -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btnAddServiceItem"
                 android:layout_width="match_parent"
@@ -539,7 +940,11 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
