@@ -100,7 +100,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins_black_ttf"
                 android:letterSpacing="0.05"
-                android:text="REPLACEMENT FILTERS (STEP 3)"
+                android:text="REPLACEMENT FILTERS"
                 android:textColor="#1C4E75"
                 android:textSize="12sp"
                 android:textStyle="bold" />
