@@ -45,6 +45,13 @@ public class AdminProfileActivity extends AppCompatActivity {
             startActivity(new Intent(this, MonthlyAnalyticsActivity.class));
         });
 
+        View btnManageItems = findViewById(R.id.btnProfileManageItems);
+        if (btnManageItems != null) {
+            btnManageItems.setOnClickListener(v -> {
+                startActivity(new Intent(this, AdminManageItemsActivity.class));
+            });
+        }
+
         View btnAddTech = findViewById(R.id.btnProfileAddTech);
         if (btnAddTech != null) {
             btnAddTech.setOnClickListener(v -> {
