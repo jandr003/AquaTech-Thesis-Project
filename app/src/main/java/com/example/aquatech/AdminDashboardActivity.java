@@ -73,10 +73,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(this, AdminLogsActivity.class))
         );
 
-        findViewById(R.id.cardActionManageTechs).setOnClickListener(v ->
-                startActivity(new Intent(this, ManageTechniciansActivity.class))
-        );
-
         // Bottom Navigation Bar
         View navHome = findViewById(R.id.navHome);
         if (navHome != null) {
