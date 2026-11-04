@@ -277,17 +277,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/bg_pdf_status_pending_pill"
-                        android:paddingHorizontal="10dp"
+                        android:background="@drawable/bg_solid_amber_pill"
+                        android:drawablePadding="6dp"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
                         android:text="PENDING"
-                        android:textColor="#D97706"
+                        android:textColor="@color/white"
                         android:textSize="11sp"
                         android:textStyle="bold"
-                        android:gravity="center_vertical"
                         app:drawableStartCompat="@drawable/ic_pdf_dot"
-                        android:drawablePadding="6dp"
-                        app:drawableTint="#D97706" />
+                        app:drawableTint="@color/white" />
 
                 </LinearLayout>
             </LinearLayout>

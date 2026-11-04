@@ -469,11 +469,11 @@
                         android:id="@+id/tvReceiptStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_pdf_status_pending_pill"
+                        android:background="@drawable/bg_solid_amber_pill"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="6dp"
                         android:text="PENDING"
-                        android:textColor="#B45309"
+                        android:textColor="@color/white"
                         android:textSize="11sp"
                         android:textStyle="bold" />
                 </LinearLayout>
