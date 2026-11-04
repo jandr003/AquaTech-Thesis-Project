@@ -287,17 +287,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/bg_pdf_status_green_pill"
+                        android:background="@drawable/bg_solid_green_pill"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="6dp"
                         android:text="COMPLETED"
-                        android:textColor="#166534"
+                        android:textColor="@color/white"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        android:gravity="center_vertical"
                         app:drawableStartCompat="@drawable/ic_pdf_dot"
-                        android:drawablePadding="8dp"
-                        app:drawableTint="#166534" />
+                        app:drawableTint="@color/white" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -944,18 +944,18 @@
                                     android:id="@+id/compTechStatusBadge"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/bg_pdf_status_green_pill"
+                                    android:background="@drawable/bg_solid_green_pill"
+                                    android:drawablePadding="6dp"
+                                    android:maxLines="1"
                                     android:paddingHorizontal="12dp"
                                     android:paddingVertical="6dp"
+                                    android:singleLine="true"
                                     android:text="COMPLETED"
-                                    android:textColor="#166534"
+                                    android:textColor="@color/white"
                                     android:textSize="11sp"
                                     android:textStyle="bold"
-                                    android:maxLines="1"
-                                    android:singleLine="true"
                                     app:drawableStartCompat="@drawable/ic_pdf_dot"
-                                    android:drawablePadding="6dp"
-                                    app:drawableTint="#166534" />
+                                    app:drawableTint="@color/white" />
 
                             </LinearLayout>
                         </LinearLayout>
