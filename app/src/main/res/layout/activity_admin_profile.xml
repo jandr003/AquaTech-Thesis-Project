@@ -229,7 +229,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:contentDescription="Manage Items"
-                            android:src="@drawable/ic_total_requests"
+                            android:src="@drawable/ic_admin_manage_parts"
                             app:tint="#2196F3" />
 
                         <LinearLayout
