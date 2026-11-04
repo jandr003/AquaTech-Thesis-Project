@@ -63,19 +63,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/ivTechAvatar" />
 
+        <RatingBar
+            android:id="@+id/rbTechRating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="4.5"
+            android:stepSize="0.5"
+            android:progressTint="#F59E0B"
+            app:layout_constraintStart_toStartOf="@id/tvTechName"
+            app:layout_constraintTop_toBottomOf="@id/tvTechName" />
+
         <ProgressBar
             android:id="@+id/pbTechRating"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="6dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:max="50"
             android:progress="45"
             android:progressBackgroundTint="#E2E8F0"
             android:progressTint="#F59E0B"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tvTechName"
-            app:layout_constraintTop_toBottomOf="@id/tvTechName" />
+            app:layout_constraintTop_toBottomOf="@id/rbTechRating" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

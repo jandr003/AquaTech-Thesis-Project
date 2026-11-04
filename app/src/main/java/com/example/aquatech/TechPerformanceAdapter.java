@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,8 +39,14 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
         holder.tvTechName.setText(tech.fullName != null ? tech.fullName : "Unknown Tech");
         holder.tvTechRating.setText(String.format(Locale.getDefault(), "%.1f ★", tech.rating));
 
+        if (holder.rbTechRating != null) {
+            holder.rbTechRating.setRating((float) tech.rating);
+        }
+
         int progressValue = (int) (tech.rating * 10);
-        holder.pbTechRating.setProgress(progressValue);
+        if (holder.pbTechRating != null) {
+            holder.pbTechRating.setProgress(progressValue);
+        }
 
         if (holder.ivAvatar != null) {
             if (tech.profileImageUrl != null && !tech.profileImageUrl.isEmpty()) {
@@ -76,6 +83,7 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
         TextView tvTechName, tvTechRating;
         ImageView ivAvatar;
         ProgressBar pbTechRating;
+        RatingBar rbTechRating;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +91,7 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
             tvTechRating = itemView.findViewById(R.id.tvTechRating);
             ivAvatar = itemView.findViewById(R.id.ivTechAvatar);
             pbTechRating = itemView.findViewById(R.id.pbTechRating);
+            rbTechRating = itemView.findViewById(R.id.rbTechRating);
         }
     }
 }
