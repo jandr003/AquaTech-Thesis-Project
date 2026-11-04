@@ -592,6 +592,7 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
+                        android:contentDescription="Home"
                         android:src="@drawable/ic_pdf_house"
                         app:tint="#2196F3" />
 
@@ -599,38 +600,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Dashboard"
+                        android:fontFamily="@font/poppins"
+                        android:text="Home"
                         android:textColor="#2196F3"
                         android:textSize="10.5sp"
                         android:textStyle="bold" />
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/navRequests"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/ic_pdf_document"
-                        app:tint="#64748B" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Requests"
-                        android:textColor="#64748B"
-                        android:textSize="10.5sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -647,6 +622,7 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
+                        android:contentDescription="Technicians"
                         android:src="@drawable/ic_manage_techs"
                         app:tint="#64748B" />
 
@@ -654,14 +630,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Techs"
+                        android:fontFamily="@font/poppins"
+                        android:text="Technicians"
                         android:textColor="#64748B"
                         android:textSize="10.5sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/navLogs"
+                    android:id="@+id/navHistory"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -674,17 +652,20 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:src="@drawable/ic_logs"
+                        android:contentDescription="History"
+                        android:src="@drawable/ic_time_history"
                         app:tint="#64748B" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="Logs"
+                        android:fontFamily="@font/poppins"
+                        android:text="History"
                         android:textColor="#64748B"
                         android:textSize="10.5sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -701,6 +682,7 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
+                        android:contentDescription="Profile"
                         android:src="@drawable/ic_person_white"
                         app:tint="#64748B" />
 
@@ -708,10 +690,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
+                        android:fontFamily="@font/poppins"
                         android:text="Profile"
                         android:textColor="#64748B"
                         android:textSize="10.5sp"
                         android:textStyle="bold" />
+
                 </LinearLayout>
 
             </LinearLayout>
