@@ -747,22 +747,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private void showProfileMenu() {
-        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialogTheme);
-        View view = getLayoutInflater().inflate(R.layout.layout_profile_bottom_sheet, null);
-        dialog.setContentView(view);
-        view.findViewById(R.id.bsEditProfileOption).setOnClickListener(v -> {
-            dialog.dismiss();
-            editProfileLauncher.launch(new Intent(this, EditProfileActivity.class));
-        });
-        view.findViewById(R.id.bsHistoryOption).setOnClickListener(v -> {
-            dialog.dismiss();
-            startActivity(new Intent(this, ServiceHistoryActivity.class));
-        });
-        view.findViewById(R.id.bsLogoutOption).setOnClickListener(v -> {
-            dialog.dismiss();
-            showLogoutDialog();
-        });
-        dialog.show();
+        startActivity(new Intent(this, EditProfileActivity.class));
     }
 
     private void showLogoutDialog() {
