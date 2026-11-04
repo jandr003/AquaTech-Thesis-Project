@@ -30,7 +30,7 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:contentDescription="Warning"
-                android:src="@drawable/ic_trash_delete"
+                android:src="@drawable/ic_overdue"
                 app:tint="#EF4444" />
 
         </com.google.android.material.card.MaterialCardView>
