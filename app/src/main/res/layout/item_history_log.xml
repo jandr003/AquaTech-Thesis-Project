@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
-    app:strokeWidth="0dp"
-    app:cardBackgroundColor="#FFFFFF">
+    android:layout_marginVertical="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="2dp"
+    app:strokeColor="#E2E8F0"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <View
-            android:layout_width="6dp"
+            android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:background="#3EB5E8" />
+            android:background="#2196F3" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,11 +41,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="ASC2026-3774"
-                    android:textColor="#1A237E"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.02"/>
+                    android:letterSpacing="0.02"
+                    android:text="#ASC2026-3774"
+                    android:textColor="#2196F3"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/historyDate"
@@ -49,24 +54,22 @@
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/poppins"
                     android:text="Mar 06, 2026"
-                    android:textColor="#9E9E9E"
-                    android:textSize="11sp" />
-            </RelativeLayout>
+                    android:textColor="#64748B"
+                    android:textSize="11.5sp" />
 
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
-                android:background="#F5F5F5" />
-
+                android:background="#F1F5F9" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2">
-
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -78,25 +81,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
+                        android:letterSpacing="0.05"
                         android:text="CUSTOMER"
-                        android:textColor="#3EB5E8"
-                        android:textSize="9sp"
-                        android:textStyle="bold"
-                        android:letterSpacing="0.1" />
+                        android:textColor="#2196F3"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/historyCustomer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:ellipsize="end"
                         android:fontFamily="@font/poppins"
-                        android:text="John Andrew"
-                        android:textColor="#424242"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
                         android:maxLines="1"
-                        android:ellipsize="end" />
-                </LinearLayout>
+                        android:text="John Andrew"
+                        android:textColor="#1E293B"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -108,25 +112,26 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="SERVICE"
-                        android:textColor="#3EB5E8"
-                        android:textSize="9sp"
-                        android:textStyle="bold"
-                        android:letterSpacing="0.1" />
+                        android:letterSpacing="0.05"
+                        android:text="SERVICE TYPE"
+                        android:textColor="#2196F3"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/historyService"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:ellipsize="end"
                         android:fontFamily="@font/poppins"
-                        android:text="Filter Preventive"
-                        android:textColor="#616161"
-                        android:textSize="12sp"
                         android:maxLines="1"
-                        android:ellipsize="end" />
+                        android:text="Filter Preventive"
+                        android:textColor="#64748B"
+                        android:textSize="13sp" />
+
                 </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 
