@@ -16,24 +16,12 @@
         android:orientation="vertical"
         android:padding="28dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            app:cardBackgroundColor="#FEF2F2"
-            app:cardCornerRadius="32dp"
-            app:cardElevation="0dp"
-            app:strokeColor="#FCA5A5"
-            app:strokeWidth="1dp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:contentDescription="Warning"
-                android:src="@drawable/ic_overdue"
-                app:tint="#EF4444" />
-
-        </com.google.android.material.card.MaterialCardView>
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="Warning"
+            android:src="@drawable/ic_overdue"
+            app:tint="#EF4444" />
 
         <TextView
             android:id="@+id/tvDeleteDialogTitle"
