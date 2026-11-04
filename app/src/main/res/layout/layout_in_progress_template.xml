@@ -282,17 +282,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/bg_pdf_status_blue_pill"
+                        android:background="@drawable/bg_solid_blue_pill"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="6dp"
                         android:text="IN PROGRESS"
-                        android:textColor="#2563EB"
+                        android:textColor="@color/white"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        android:gravity="center_vertical"
                         app:drawableStartCompat="@drawable/ic_pdf_dot"
-                        android:drawablePadding="8dp"
-                        app:drawableTint="#2563EB" />
+                        app:drawableTint="@color/white" />
 
                 </LinearLayout>
             </LinearLayout>
