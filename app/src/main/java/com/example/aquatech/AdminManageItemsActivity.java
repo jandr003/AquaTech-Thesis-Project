@@ -130,7 +130,6 @@ public class AdminManageItemsActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         row.setPadding(0, 8, 0, 8);
 
-        // Image Card
         MaterialCardView cardImg = new MaterialCardView(this);
         int cardId = View.generateViewId();
         cardImg.setId(cardId);
@@ -192,7 +191,6 @@ public class AdminManageItemsActivity extends AppCompatActivity {
         actionContainer.addView(tvStatus);
         actionContainer.addView(btnDelete);
 
-        // Center Info Container
         LinearLayout infoContainer = new LinearLayout(this);
         RelativeLayout.LayoutParams infoParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
