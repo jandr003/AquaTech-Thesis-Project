@@ -107,8 +107,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void saveUserData(String userId, String firstName, String lastName, String email, String mobile, String address) {
-        boolean isTechnician = email.toLowerCase().endsWith("@aquasmartguard.ph");
-        String role = isTechnician ? "Technician" : "Customer";
+        String role = "Customer";
         String fullName = firstName + " " + lastName;
 
         Map<String, Object> userData = new HashMap<>();
@@ -122,36 +121,18 @@ public class SignupActivity extends AppCompatActivity {
         userData.put("address", address);
         userData.put("role", role);
         userData.put("userType", role);
+        userData.put("accountStatus", "active");
 
-        String initialStatus = isTechnician ? "pending" : "active";
-        userData.put("accountStatus", initialStatus);
-
-        if (isTechnician) {
-            String techId = "ASC-T" + (new Random().nextInt(900) + 100);
-            userData.put("techId", techId);
-
-            Map<String, Object> verification = new HashMap<>();
-            verification.put("status", "Not Verified");
-            userData.put("verification", verification);
-
-            mDatabase.child("Technicians").child(userId).setValue(userData);
-        } else {
-            String refNo = "ASC-" + (new Random().nextInt(9000) + 1000);
-            userData.put("referenceNo", refNo);
-            userData.put("avatarResId", R.drawable.man_user_circle_icon);
-            userData.put("profileBgColor", "#F0F7FF");
-        }
+        String refNo = "ASC-" + (new Random().nextInt(9000) + 1000);
+        userData.put("referenceNo", refNo);
+        userData.put("avatarResId", R.drawable.man_user_circle_icon);
+        userData.put("profileBgColor", "#F0F7FF");
 
         mDatabase.child("Users").child(userId).setValue(userData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(SignupActivity.this, role + " Registered Successfully!", Toast.LENGTH_SHORT).show();
-
-                        if (isTechnician) {
-                            startActivity(new Intent(SignupActivity.this, TechnicianVerificationActivity.class));
-                        } else {
-                            startActivity(new Intent(SignupActivity.this, CustomerSetupActivity.class));
-                        }
+                        Toast.makeText(SignupActivity.this, "Account Registered Successfully!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(SignupActivity.this, CustomerSetupActivity.class));
                         finish();
                     } else {
                         Toast.makeText(SignupActivity.this, "Data Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

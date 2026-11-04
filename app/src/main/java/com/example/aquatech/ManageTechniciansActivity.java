@@ -170,7 +170,9 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
 
     @Override
     public void onViewVerification(TechnicianModel tech) {
-        showVerificationDialog(tech);
+        if (tech != null && tech.fullName != null) {
+            Toast.makeText(this, "Technician: " + tech.fullName + " (Status: " + tech.accountStatus + ")", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -200,50 +202,6 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
-    }
-
-    private void showVerificationDialog(TechnicianModel tech) {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_admin_review_tech);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        TextView tvTitle = dialog.findViewById(R.id.tvReviewTitle);
-        tvTitle.setText("Review: " + tech.fullName);
-
-        ImageView ivId = dialog.findViewById(R.id.ivTechIdImage);
-        ImageView ivCert = dialog.findViewById(R.id.ivTechCertImage);
-
-        if (tech.verification != null) {
-            if (tech.verification.idUrl != null) Glide.with(this).load(tech.verification.idUrl).placeholder(R.drawable.img_place_holder).into(ivId);
-            if (tech.verification.certUrl != null) Glide.with(this).load(tech.verification.certUrl).placeholder(R.drawable.img_place_holder).into(ivCert);
-        }
-
-        String uidToUpdate = techToUidMap.get(tech.email);
-        if (uidToUpdate == null) uidToUpdate = tech.techId;
-        final String finalUid = uidToUpdate;
-
-        dialog.findViewById(R.id.btnApproveTech).setOnClickListener(v -> {
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("/Users/" + finalUid + "/accountStatus", "active");
-            updates.put("/Users/" + finalUid + "/verification/status", "Verified");
-            updates.put("/Technicians/" + finalUid + "/accountStatus", "active");
-            updates.put("/Technicians/" + finalUid + "/verification/status", "Verified");
-            FirebaseDatabase.getInstance(DB_URL).getReference().updateChildren(updates);
-            dialog.dismiss();
-        });
-
-        dialog.findViewById(R.id.btnRejectTech).setOnClickListener(v -> {
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("/Users/" + finalUid + "/accountStatus", "rejected");
-            updates.put("/Users/" + finalUid + "/verification/status", "Rejected");
-            updates.put("/Technicians/" + finalUid + "/accountStatus", "rejected");
-            updates.put("/Technicians/" + finalUid + "/verification/status", "Rejected");
-            FirebaseDatabase.getInstance(DB_URL).getReference().updateChildren(updates);
-            dialog.dismiss();
-        });
-
-        dialog.findViewById(R.id.btnCancelReview).setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
     }
 
     private void setupStatusBar() {
