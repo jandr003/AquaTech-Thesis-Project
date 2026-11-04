@@ -17,8 +17,8 @@
         android:padding="28dp">
 
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
             android:contentDescription="Warning"
             android:src="@drawable/ic_overdue"
             app:tint="#EF4444" />
