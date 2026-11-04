@@ -55,9 +55,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
         tvGreeting = findViewById(R.id.tvGreeting);
         updateGreetingText();
 
-        findViewById(R.id.adminAvatar).setOnClickListener(v -> {
-            startActivity(new Intent(this, AdminProfileActivity.class));
-        });
         findViewById(R.id.notificationIcon).setOnClickListener(v -> {
             Log.d("ADMIN_DASHBOARD", "Notification icon clicked");
         });

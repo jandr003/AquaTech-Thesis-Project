@@ -25,37 +25,24 @@
             android:layout_marginStart="20dp"
             android:adjustViewBounds="true"
             android:src="@drawable/asc_logooo"
-            app:layout_constraintBottom_toBottomOf="@+id/adminAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/notificationIcon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/adminAvatar" />
+            app:layout_constraintTop_toTopOf="@+id/notificationIcon" />
 
         <ImageView
             android:id="@+id/notificationIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="12dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="4dp"
-            android:src="@drawable/notification_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/adminAvatar"
-            app:layout_constraintEnd_toStartOf="@+id/adminAvatar"
-            app:layout_constraintTop_toTopOf="@+id/adminAvatar"
-            app:tint="@color/white" />
-
-        <ImageView
-            android:id="@+id/adminAvatar"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="20dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/ic_person_outline_white"
+            android:padding="6dp"
+            android:src="@drawable/notification_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/waveSecondary"
