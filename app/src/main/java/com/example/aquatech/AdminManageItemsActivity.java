@@ -159,7 +159,6 @@ public class AdminManageItemsActivity extends AppCompatActivity {
         }
         cardImg.addView(ivPhoto);
 
-        // Right Action Container (Status + Delete Icon)
         LinearLayout actionContainer = new LinearLayout(this);
         int actionId = View.generateViewId();
         actionContainer.setId(actionId);
