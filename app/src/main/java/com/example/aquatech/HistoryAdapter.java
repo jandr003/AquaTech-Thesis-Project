@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,19 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.tvDate.setText(item.getDate());
         holder.tvItems.setText(item.getItemsSummary());
         holder.tvPrice.setText(item.getTotalPrice());
-        holder.tvStatus.setText(item.getStatus());
+
+        String status = item.getStatus();
+        if (status == null || status.isEmpty()) status = "COMPLETED";
+        status = status.replaceAll("[^a-zA-Z ]", "").trim().toUpperCase();
+        holder.tvStatus.setText(status);
+
+        if ("CANCELLED".equalsIgnoreCase(status)) {
+            holder.tvStatus.setTextColor(Color.WHITE);
+            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
+        } else {
+            holder.tvStatus.setTextColor(Color.WHITE);
+            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
+        }
     }
 
     @Override
