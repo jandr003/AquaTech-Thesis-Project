@@ -65,7 +65,7 @@
                 android:id="@+id/tvFileSize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-     W           android:layout_marginTop="1dp"
+                android:layout_marginTop="1dp"
                 android:fontFamily="@font/poppins"
                 android:text="1.2 MB"
                 android:textColor="#64748B"

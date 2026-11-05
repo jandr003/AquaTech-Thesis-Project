@@ -17,25 +17,13 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/iconContainer"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            app:cardBackgroundColor="#E0F2FE"
-            app:cardCornerRadius="21dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp">
-
-            <ImageView
-                android:id="@+id/ivLogIcon"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_gravity="center"
-                android:contentDescription="Log Icon"
-                android:src="@drawable/ic_help_account"
-                app:tint="#2196F3" />
-
-        </com.google.android.material.card.MaterialCardView>
+        <ImageView
+            android:id="@+id/ivLogIcon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="Log Icon"
+            android:src="@drawable/ic_help_account"
+            app:tint="#2196F3" />
 
         <LinearLayout
             android:layout_width="0dp"
