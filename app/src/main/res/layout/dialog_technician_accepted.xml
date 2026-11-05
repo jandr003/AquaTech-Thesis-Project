@@ -42,7 +42,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="Request Accepted!"
                 android:textColor="#2196F3"
-                android:textSize="15sp"
+                android:textSize="15.5sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -66,9 +66,9 @@
             android:layout_height="38dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins"
-            android:text="VIEW"
+            android:text="VIEW DETAILS"
             android:textColor="#2196F3"
-            android:textSize="13.5sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
