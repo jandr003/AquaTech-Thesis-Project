@@ -16,29 +16,18 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardTechAvatar"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivTechProfile"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            app:cardBackgroundColor="#F8FAFC"
-            app:cardCornerRadius="36dp"
-            app:cardElevation="0dp"
-            app:strokeColor="#2196F3"
-            app:strokeWidth="2dp"
+            android:contentDescription="Technician Photo"
+            android:scaleType="centerCrop"
+            android:src="@drawable/technician_avatar1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivTechProfile"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="Technician Photo"
-                android:scaleType="centerCrop"
-                android:src="@drawable/technician_avatar1"
-                app:shapeAppearanceOverlay="@style/CircleImage" />
-
-        </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeWidth="0dp" />
 
         <TextView
             android:id="@+id/tvTechName"
@@ -52,7 +41,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardTechAvatar" />
+            app:layout_constraintTop_toBottomOf="@id/ivTechProfile" />
 
         <TextView
             android:id="@+id/tvRatingDesc"
