@@ -52,7 +52,7 @@
                     android:contentDescription="Close Dialog"
                     android:focusable="true"
                     android:padding="6dp"
-                    android:src="@drawable/exit"
+                    android:src="@drawable/ic_rejected_x"
                     app:tint="#64748B" />
 
             </RelativeLayout>
