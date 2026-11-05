@@ -21,22 +21,21 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivTechAvatarDialog"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:contentDescription="Technician Avatar"
-            android:padding="2dp"
-            android:src="@drawable/new_technician"
+            android:scaleType="centerCrop"
+            android:src="@drawable/technician_avatar1"
             app:shapeAppearanceOverlay="@style/CircleImage"
-            app:strokeColor="#2196F3"
-            app:strokeWidth="1.5dp" />
+            app:strokeWidth="0dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="10dp"
             android:layout_toStartOf="@id/arrowForward"
             android:layout_toEndOf="@id/ivTechAvatarDialog"
             android:orientation="vertical">
