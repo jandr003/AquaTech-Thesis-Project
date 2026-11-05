@@ -1,70 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="320dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="8dp">
+    android:layout_margin="20dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="12dp"
+    app:strokeColor="#E2E8F0"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="24dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_black_ttf"
+            android:fontFamily="@font/poppins"
             android:text="Maintenance Complete?"
-            android:textColor="#333333"
+            android:textColor="#1E293B"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:fontFamily="@font/poppins_black_ttf"
-            android:text="Are you sure you want to finish this service request?"
-            android:textColor="#666666"
-            android:textSize="14sp" />
+            android:text="Are you sure you want to finalize and finish this service request?"
+            android:textColor="#64748B"
+            android:textSize="12.5sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancelDialog"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/poppins_black_ttf"
+                android:fontFamily="@font/poppins"
                 android:text="Cancel"
-                android:textAllCaps="false"
-                android:textColor="#757575"
-                app:cornerRadius="12dp"
-                app:strokeColor="#E0E0E0" />
+                android:textColor="#64748B"
+                android:textSize="14sp"
+                app:cornerRadius="12dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnConfirmDialog"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:backgroundTint="#37AAFD"
-                android:fontFamily="@font/poppins_black_ttf"
+                android:backgroundTint="#2196F3"
+                android:fontFamily="@font/poppins"
                 android:text="Yes, Finish"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 app:cornerRadius="12dp"
                 app:elevation="2dp" />
+
         </LinearLayout>
+
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+</com.google.android.material.card.MaterialCardView>
