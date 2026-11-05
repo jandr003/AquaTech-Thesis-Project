@@ -128,7 +128,6 @@
             android:layout_marginVertical="6dp"
             android:background="#F1F5F9" />
 
-        <!-- Marketing Switch -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
