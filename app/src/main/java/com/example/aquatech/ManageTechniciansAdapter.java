@@ -68,14 +68,26 @@ public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechnic
         holder.tvStatus.setBackgroundResource(statusBg);
         holder.tvStatus.setTextColor(textColor);
 
+        int[] techAvatars = {
+                R.drawable.technician_avatar1,
+                R.drawable.technician_avatar2,
+                R.drawable.technician_avatar3,
+                R.drawable.technician_avatar4,
+                R.drawable.technician_avatar5,
+                R.drawable.technician_avatar6,
+                R.drawable.technician_avatar7,
+                R.drawable.technician_avatar8
+        };
+        int defaultAvatar = techAvatars[Math.abs(position) % techAvatars.length];
+
         if (tech.profileImageUrl != null && !tech.profileImageUrl.isEmpty()) {
             Glide.with(context)
                     .load(tech.profileImageUrl)
-                    .placeholder(R.drawable.new_technician)
+                    .placeholder(defaultAvatar)
                     .circleCrop()
                     .into(holder.ivProfile);
         } else {
-            holder.ivProfile.setImageResource(R.drawable.new_technician);
+            holder.ivProfile.setImageResource(defaultAvatar);
         }
 
         holder.btnView.setOnClickListener(v -> {

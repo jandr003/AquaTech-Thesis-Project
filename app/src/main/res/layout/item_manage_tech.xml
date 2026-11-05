@@ -34,8 +34,9 @@
                 android:id="@+id/ivTechItemProfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="Technician Avatar"
                 android:scaleType="centerCrop"
-                android:src="@drawable/new_technician" />
+                android:src="@drawable/technician_avatar1" />
 
         </com.google.android.material.card.MaterialCardView>
 
