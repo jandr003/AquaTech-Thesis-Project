@@ -35,10 +35,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="File Icon"
-                android:padding="10dp"
+                android:padding="6dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_paperclip"
-                app:tint="#2196F3" />
+                android:src="@drawable/upload_file_png" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -66,7 +65,7 @@
                 android:id="@+id/tvFileSize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+     W           android:layout_marginTop="1dp"
                 android:fontFamily="@font/poppins"
                 android:text="1.2 MB"
                 android:textColor="#64748B"
