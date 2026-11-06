@@ -44,8 +44,9 @@ public class TechnicianNotificationAdapter extends RecyclerView.Adapter<Technici
         }
 
         holder.tvTime.setText(notif.getTimeAgo());
-        holder.ivIcon.setImageResource(notif.getIconResId());
-        holder.cardIconBg.setCardBackgroundColor(getIconBgColor(type));
+        if (holder.ivIcon != null) {
+            holder.ivIcon.setImageResource(notif.getIconResId());
+        }
     }
 
     private String getDisplayTitle(String type) {
@@ -78,7 +79,6 @@ public class TechnicianNotificationAdapter extends RecyclerView.Adapter<Technici
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvBody, tvTime;
         ImageView ivIcon;
-        CardView cardIconBg;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,7 +86,6 @@ public class TechnicianNotificationAdapter extends RecyclerView.Adapter<Technici
             tvBody = itemView.findViewById(R.id.tvNotifBody);
             tvTime = itemView.findViewById(R.id.tvNotifTime);
             ivIcon = itemView.findViewById(R.id.ivNotifIcon);
-            cardIconBg = itemView.findViewById(R.id.cardIconBg);
         }
     }
 }
