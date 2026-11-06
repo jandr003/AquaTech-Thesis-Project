@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -56,7 +57,17 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
                 R.drawable.technician_avatar8
         };
         if (holder.ivTechAvatar != null) {
-            holder.ivTechAvatar.setImageResource(techAvatars[Math.abs(position) % techAvatars.length]);
+            if (item.getProfileImageUrl() != null && !item.getProfileImageUrl().isEmpty()) {
+                Glide.with(context)
+                        .load(item.getProfileImageUrl())
+                        .placeholder(techAvatars[Math.abs(position) % techAvatars.length])
+                        .circleCrop()
+                        .into(holder.ivTechAvatar);
+            } else if (item.getAvatarResId() != -1) {
+                holder.ivTechAvatar.setImageResource(item.getAvatarResId());
+            } else {
+                holder.ivTechAvatar.setImageResource(techAvatars[Math.abs(position) % techAvatars.length]);
+            }
         }
 
         holder.tvTechName.setText(item.getTechName() != null ? item.getTechName() : "Unknown Tech");
