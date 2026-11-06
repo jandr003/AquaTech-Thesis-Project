@@ -40,37 +40,27 @@
             android:layout_toEndOf="@id/ivTechAvatarDialog"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvTechNameDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/poppins"
+                android:maxLines="1"
+                android:text="Technician Name"
+                android:textColor="#1E293B"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvTechNameDialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/tvTechIdDialog"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/poppins"
-                    android:maxLines="1"
-                    android:text="Technician Name"
-                    android:textColor="#1E293B"
-                    android:textSize="14.5sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvTechIdDialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/poppins"
-                    android:text="ASC-T001"
-                    android:textColor="#2196F3"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvTechIdDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/poppins"
+                android:text="ID: ASC-T001"
+                android:textColor="#64748B"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvTechStatusDialog"
