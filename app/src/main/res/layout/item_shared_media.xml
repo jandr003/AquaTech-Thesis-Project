@@ -27,7 +27,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/maintenance_technician1" />
 
-        <!-- Document File Overlay -->
         <LinearLayout
             android:id="@+id/sharedMediaDocOverlay"
             android:layout_width="match_parent"
