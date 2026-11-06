@@ -16,6 +16,7 @@
         android:layout_height="32dp"
         android:contentDescription="Notification Icon"
         android:src="@drawable/ic_bell_notification"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="#2196F3" />
@@ -33,7 +34,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/tvNotifTime"
         app:layout_constraintStart_toEndOf="@id/ivNotifIcon"
-        app:layout_constraintTop_toTopOf="@id/ivNotifIcon" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvNotifTime"
