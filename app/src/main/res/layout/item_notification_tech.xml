@@ -10,34 +10,37 @@
     android:paddingHorizontal="16dp"
     android:paddingVertical="12dp">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardIconBg"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        app:cardBackgroundColor="#FDF2F2"
-        app:cardCornerRadius="28dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:cardBackgroundColor="#EBF5FF"
+        app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
+        app:strokeWidth="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/ivNotifIcon"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
+            android:contentDescription="Notification Icon"
             android:src="@drawable/ic_bell_notification"
-            app:tint="#0F172A" />
-    </androidx.cardview.widget.CardView>
+            app:tint="#2196F3" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tvNotifTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="14dp"
         android:layout_marginEnd="8dp"
-        android:fontFamily="@font/poppins_black_ttf"
+        android:fontFamily="@font/poppins"
         android:text="Notification Title"
-        android:textColor="#0F172A"
+        android:textColor="#1E293B"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/tvNotifTime"
@@ -50,8 +53,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
         android:text="10:04 am"
-        android:textColor="#94A3B8"
-        android:textSize="12sp"
+        android:textColor="#64748B"
+        android:textSize="11.5sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvNotifTitle" />
 
@@ -61,10 +64,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/poppins"
+        android:lineSpacingExtra="2dp"
         android:text="This is a sample notification message for the technician side of the app."
         android:textColor="#64748B"
-        android:textSize="13sp"
-        android:lineSpacingExtra="2dp"
+        android:textSize="12.5sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvNotifTitle"
         app:layout_constraintTop_toBottomOf="@id/tvNotifTitle" />
