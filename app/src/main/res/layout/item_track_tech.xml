@@ -17,12 +17,15 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivTechAvatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/new_technician"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:contentDescription="Technician Avatar"
+            android:scaleType="centerCrop"
+            android:src="@drawable/technician_avatar1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleImage" />
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            app:strokeWidth="0dp" />
 
         <TextView
             android:id="@+id/tvTechName"

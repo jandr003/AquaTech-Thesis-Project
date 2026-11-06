@@ -44,6 +44,21 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServiceLogModel item = list.get(position);
+
+        int[] techAvatars = {
+                R.drawable.technician_avatar1,
+                R.drawable.technician_avatar2,
+                R.drawable.technician_avatar3,
+                R.drawable.technician_avatar4,
+                R.drawable.technician_avatar5,
+                R.drawable.technician_avatar6,
+                R.drawable.technician_avatar7,
+                R.drawable.technician_avatar8
+        };
+        if (holder.ivTechAvatar != null) {
+            holder.ivTechAvatar.setImageResource(techAvatars[Math.abs(position) % techAvatars.length]);
+        }
+
         holder.tvTechName.setText(item.getTechName() != null ? item.getTechName() : "Unknown Tech");
         holder.tvTicketID.setText(item.getSroNumber() != null ? item.getSroNumber() : "N/A");
         String serviceType = item.getTechRole();
