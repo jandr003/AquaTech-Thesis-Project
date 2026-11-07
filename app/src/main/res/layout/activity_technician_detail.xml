@@ -340,16 +340,17 @@
                             android:id="@+id/ivTechCert"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="6dp"
+                            android:contentDescription="Technician Certification ID"
+                            android:padding="32dp"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/maintenance_technician1" />
+                            android:src="@drawable/img_place_holder"
+                            app:tint="#94A3B8" />
 
                     </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Shared Media & Attachments Gallery Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
