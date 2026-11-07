@@ -130,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="#ASC2026-0014"
-                            android:textColor="#2563EB"
+                            android:textColor="#2196F3"
                             android:textSize="17sp"
                             android:textStyle="bold" />
 
@@ -140,12 +140,12 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/bg_pdf_status_green_pill"
+                            android:background="@drawable/bg_solid_green_pill"
                             android:fontFamily="@font/poppins"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="4dp"
-                            android:text="● COMPLETED"
-                            android:textColor="#059669"
+                            android:text="COMPLETED"
+                            android:textColor="@color/white"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
