@@ -259,13 +259,13 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/bg_version_chip"
+                            android:background="@drawable/bg_solid_blue_pill"
                             android:fontFamily="@font/poppins"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="3dp"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="4dp"
                             android:text="TECH-0001"
-                            android:textColor="#2196F3"
-                            android:textSize="12.5sp"
+                            android:textColor="@color/white"
+                            android:textSize="11.5sp"
                             android:textStyle="bold" />
 
                     </RelativeLayout>
