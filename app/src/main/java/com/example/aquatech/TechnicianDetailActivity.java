@@ -90,9 +90,23 @@ public class TechnicianDetailActivity extends AppCompatActivity {
                     if (phone == null) phone = snapshot.child("phoneNumber").getValue(String.class);
                     if (phone != null) tvTechDetailPhone.setText(phone);
 
+                    int[] techAvatars = {
+                            R.drawable.technician_avatar1,
+                            R.drawable.technician_avatar2,
+                            R.drawable.technician_avatar3,
+                            R.drawable.technician_avatar4,
+                            R.drawable.technician_avatar5,
+                            R.drawable.technician_avatar6,
+                            R.drawable.technician_avatar7,
+                            R.drawable.technician_avatar8
+                    };
+                    int defaultAvatar = techAvatars[Math.abs(techId.hashCode()) % techAvatars.length];
+
                     String avatarUrl = snapshot.child("profileImageUrl").getValue(String.class);
                     if (avatarUrl != null && !avatarUrl.isEmpty()) {
-                        Glide.with(TechnicianDetailActivity.this).load(avatarUrl).into(ivTechDetailAvatar);
+                        Glide.with(TechnicianDetailActivity.this).load(avatarUrl).placeholder(defaultAvatar).into(ivTechDetailAvatar);
+                    } else {
+                        ivTechDetailAvatar.setImageResource(defaultAvatar);
                     }
 
                     String certUrl = snapshot.child("verification").child("certUrl").getValue(String.class);
