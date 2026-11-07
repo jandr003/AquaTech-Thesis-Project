@@ -42,6 +42,7 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
         holder.tvTechName.setText("Submitted by: " + item.getTechName());
         holder.tvCustomer.setText("Customer: " + item.getCustomerName());
         holder.tvServiceType.setText(item.getTechRole());
+
         holder.btnApprove.setOnClickListener(v -> listener.onApprove(item.getSroNumber()));
         holder.btnReject.setOnClickListener(v -> {
             if (item.getTechUid() != null) {
@@ -50,7 +51,11 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
                 listener.onReject(item.getSroNumber(), "", item.getTechName());
             }
         });
-        // holder.btnEdit.setOnClickListener(v -> listener.onEdit(item.getSroNumber()));
+
+        if (holder.btnViewReport != null) {
+            holder.btnViewReport.setOnClickListener(v -> listener.onEdit(item.getSroNumber()));
+        }
+        holder.itemView.setOnClickListener(v -> listener.onEdit(item.getSroNumber()));
     }
 
     @Override
@@ -60,7 +65,7 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTicketID, tvTechName, tvServiceType, tvCustomer;
-        Button btnApprove, btnReject;
+        Button btnApprove, btnReject, btnViewReport;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +76,7 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
 
             btnApprove = itemView.findViewById(R.id.btnAdminApprove);
             btnReject = itemView.findViewById(R.id.btnAdminArchive);
+            btnViewReport = itemView.findViewById(R.id.btnAdminViewReport);
         }
     }
 }
