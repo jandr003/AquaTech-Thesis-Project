@@ -37,7 +37,7 @@
                     android:contentDescription="Privacy"
                     android:padding="11dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_privacy_lock"
+                    android:src="@drawable/ic_dialog_privacy_shield"
                     app:tint="#2196F3" />
 
             </com.google.android.material.card.MaterialCardView>
