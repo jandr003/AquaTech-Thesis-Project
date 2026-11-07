@@ -5,18 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="2dp"
-    android:layout_marginVertical="6dp"
+    android:layout_marginVertical="4dp"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="20dp"
-    app:cardElevation="3dp"
-    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="2dp"
     app:strokeColor="#E2E8F0"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="18dp">
+        android:padding="14dp">
 
         <TextView
             android:id="@+id/tvSubmitTicketID"
@@ -24,8 +23,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:text="#ASC2026-0542"
-            android:textColor="#2563EB"
-            android:textSize="16sp"
+            android:textColor="#2196F3"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,10 +36,10 @@
             android:background="@drawable/bg_solid_amber_pill"
             android:fontFamily="@font/poppins"
             android:paddingHorizontal="10dp"
-            android:paddingVertical="4dp"
+            android:paddingVertical="3dp"
             android:text="PENDING APPROVAL"
             android:textColor="@color/white"
-            android:textSize="10.5sp"
+            android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tvSubmitTicketID"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,11 +49,11 @@
             android:id="@+id/tvSubmitTechName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/poppins"
             android:text="Submitted by: Technician John"
             android:textColor="#1C4E75"
-            android:textSize="13.5sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSubmitTicketID" />
@@ -67,7 +66,7 @@
             android:fontFamily="@font/poppins"
             android:text="Customer: Mary Dela Torre"
             android:textColor="#1E293B"
-            android:textSize="13.5sp"
+            android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSubmitTechName" />
@@ -76,11 +75,11 @@
             android:id="@+id/tvSubmitServiceType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins"
             android:text="Filter Preventive and Parts Replacement"
             android:textColor="#64748B"
-            android:textSize="12.5sp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSubmitCustomer" />
 
@@ -88,14 +87,14 @@
             android:id="@+id/dividerSub"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:background="#E2E8F0"
             app:layout_constraintTop_toBottomOf="@id/tvSubmitServiceType" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:gravity="end"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/dividerSub">
@@ -104,30 +103,30 @@
                 android:id="@+id/btnAdminArchive"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
-                android:layout_height="42dp"
-                android:layout_marginEnd="10dp"
+                android:layout_height="38dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/poppins"
                 android:paddingHorizontal="16dp"
                 android:text="REJECT"
                 android:textColor="#EF4444"
-                android:textSize="12sp"
+                android:textSize="11.5sp"
                 android:textStyle="bold"
-                app:cornerRadius="12dp"
+                app:cornerRadius="10dp"
                 app:strokeColor="#EF4444"
                 app:strokeWidth="1.5dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAdminApprove"
                 android:layout_width="wrap_content"
-                android:layout_height="42dp"
+                android:layout_height="38dp"
                 android:backgroundTint="#2196F3"
                 android:fontFamily="@font/poppins"
                 android:paddingHorizontal="20dp"
                 android:text="APPROVE"
                 android:textColor="#FFFFFF"
-                android:textSize="12sp"
+                android:textSize="11.5sp"
                 android:textStyle="bold"
-                app:cornerRadius="12dp"
+                app:cornerRadius="10dp"
                 app:elevation="2dp" />
 
         </LinearLayout>
