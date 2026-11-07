@@ -65,14 +65,6 @@
                         android:src="@drawable/technician_groupchat"
                         app:shapeAppearanceOverlay="@style/CircleImage" />
 
-                    <View
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignBottom="@id/ivGroupPhotoMain"
-                        android:layout_alignEnd="@id/ivGroupPhotoMain"
-                        android:background="@drawable/circle_blue"
-                        android:backgroundTint="#22C55E" />
-
                 </RelativeLayout>
 
                 <TextView
