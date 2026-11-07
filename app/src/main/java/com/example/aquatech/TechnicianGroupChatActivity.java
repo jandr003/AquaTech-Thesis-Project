@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -96,6 +97,11 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(v -> finish());
         btnSend.setOnClickListener(v -> sendTeamMessage());
+
+        View btnInfo = findViewById(R.id.btnTeamInfo);
+        if (btnInfo != null) {
+            btnInfo.setOnClickListener(v -> startActivity(new Intent(this, GroupChatInfoActivity.class)));
+        }
 
         View btnFile = findViewById(R.id.btnAttachFile);
         if (btnFile != null) btnFile.setOnClickListener(v -> fileLauncher.launch(new String[]{"*/*"}));
