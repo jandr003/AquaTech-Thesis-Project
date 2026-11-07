@@ -27,21 +27,6 @@
             android:src="@drawable/ic_arrow_back_gray"
             app:tint="#0F172A" />
 
-        <ImageView
-            android:id="@+id/btnGroupOverflow"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="Options"
-            android:focusable="true"
-            android:padding="8dp"
-            android:src="@drawable/ic_chevron_down"
-            android:rotation="270"
-            app:tint="#0F172A" />
-
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
