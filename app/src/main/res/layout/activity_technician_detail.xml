@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8FAFC">
 
-    <!-- Header Bar -->
     <RelativeLayout
         android:id="@+id/headerTitle"
         android:layout_width="match_parent"
@@ -94,11 +93,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:background="@drawable/bg_pdf_status_blue_pill"
+                        android:background="@drawable/bg_solid_blue_pill"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
                         android:text="AquaTech Certified Technician"
-                        android:textColor="#2196F3"
+                        android:textColor="@color/white"
                         android:textSize="11.5sp"
                         android:textStyle="bold" />
 
@@ -268,11 +267,11 @@
                             android:id="@+id/tvTechDetailStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_pdf_status_green_pill"
+                            android:background="@drawable/bg_solid_green_pill"
                             android:paddingHorizontal="10dp"
                             android:paddingVertical="3dp"
                             android:text="VERIFIED TECHNICIAN"
-                            android:textColor="#166534"
+                            android:textColor="@color/white"
                             android:textSize="10.5sp"
                             android:textStyle="bold" />
 
