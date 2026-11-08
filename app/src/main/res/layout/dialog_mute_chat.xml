@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="12dp"
+    app:strokeColor="#E2E8F0"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="Mute notifications"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/poppins"
+            android:text="Mute notifications for Technicians Team Chat"
+            android:textColor="#64748B"
+            android:textSize="12.5sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#E2E8F0" />
+
+        <RadioGroup
+            android:id="@+id/rgMuteDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <RadioButton
+                android:id="@+id/rbMute15Min"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:buttonTint="#2196F3"
+                android:fontFamily="@font/poppins"
+                android:text="For 15 minutes"
+                android:textColor="#0F172A"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rbMute1Hour"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:buttonTint="#2196F3"
+                android:fontFamily="@font/poppins"
+                android:text="For 1 hour"
+                android:textColor="#0F172A"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rbMute8Hours"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:buttonTint="#2196F3"
+                android:fontFamily="@font/poppins"
+                android:text="For 8 hours"
+                android:textColor="#0F172A"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rbMute24Hours"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:buttonTint="#2196F3"
+                android:fontFamily="@font/poppins"
+                android:text="For 24 hours"
+                android:textColor="#0F172A"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rbMuteUntilOn"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:buttonTint="#2196F3"
+                android:checked="true"
+                android:fontFamily="@font/poppins"
+                android:text="Until I turn it back on"
+                android:textColor="#0F172A"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelMute"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/poppins"
+                android:text="Cancel"
+                android:textColor="#64748B"
+                android:textSize="13.5sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirmMute"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:backgroundTint="#2196F3"
+                android:fontFamily="@font/poppins"
+                android:paddingHorizontal="20dp"
+                android:text="Mute"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                app:elevation="2dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

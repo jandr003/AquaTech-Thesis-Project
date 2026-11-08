@@ -1,7 +1,9 @@
 package com.example.aquatech;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -39,13 +41,31 @@ public class GroupChatInfoActivity extends AppCompatActivity {
 
         View btnMute = findViewById(R.id.rowMuteChat);
         if (btnMute != null) {
-            btnMute.setOnClickListener(v -> Toast.makeText(this, "Notifications Muted for Team Chat", Toast.LENGTH_SHORT).show());
+            btnMute.setOnClickListener(v -> showMuteDialog());
         }
 
         View btnLeave = findViewById(R.id.rowLeaveChat);
         if (btnLeave != null) {
             btnLeave.setOnClickListener(v -> showLeaveChatDialog());
         }
+    }
+
+    private void showMuteDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_mute_chat);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        dialog.findViewById(R.id.btnCancelMute).setOnClickListener(v -> dialog.dismiss());
+
+        dialog.findViewById(R.id.btnConfirmMute).setOnClickListener(v -> {
+            Toast.makeText(this, "Team Chat Muted", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
     private void showLeaveChatDialog() {
