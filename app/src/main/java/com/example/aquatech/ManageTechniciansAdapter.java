@@ -40,7 +40,13 @@ public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechnic
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TechnicianModel tech = techList.get(position);
         
-        String name = tech.fullName != null ? tech.fullName : (tech.name != null ? tech.name : "Unknown Technician");
+        String name = tech.fullName;
+        if (name == null || name.isEmpty()) {
+            name = tech.name;
+        }
+        if (name == null || name.isEmpty()) {
+            name = "Unknown Technician";
+        }
         holder.tvName.setText(name);
 
         if (tech.techId != null && !tech.techId.isEmpty()) {
@@ -91,17 +97,21 @@ public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechnic
         }
 
         holder.btnView.setOnClickListener(v -> {
-            if (listener != null) listener.onViewVerification(tech);
+            if (listener != null) {
+                listener.onViewVerification(tech);
+            }
         });
 
         holder.btnDelete.setOnClickListener(v -> {
-            if (listener != null) listener.onDeleteTech(tech);
+            if (listener != null) {
+                listener.onDeleteTech(tech);
+            }
         });
     }
 
     @Override
     public int getItemCount() {
-        return techList.size();
+        return techList != null ? techList.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
