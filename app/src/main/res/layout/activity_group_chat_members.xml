@@ -58,10 +58,10 @@
             android:layout_marginBottom="12dp"
             android:fontFamily="@font/poppins_black_ttf"
             android:letterSpacing="0.05"
-            android:text="12 ACTIVE MEMBERS"
             android:textColor="#1C4E75"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="12 ACTIVE MEMBERS" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGroupMembersFull"

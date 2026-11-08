@@ -93,7 +93,7 @@ public class GroupChatMembersActivity extends AppCompatActivity {
                 }
 
                 if (tvFullMembersCount != null) {
-                    tvFullMembersCount.setText(techList.size() + " Active Team Members");
+                    tvFullMembersCount.setText(techList.size() + " ACTIVE MEMBERS");
                 }
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
