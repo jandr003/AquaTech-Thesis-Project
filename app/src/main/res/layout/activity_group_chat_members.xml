@@ -49,7 +49,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/groupMembersHeader">
 
-        <!-- Members Count Header Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,10 +85,8 @@
                     android:textSize="12.5sp" />
 
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Members List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGroupMembersFull"
             android:layout_width="match_parent"
@@ -101,5 +98,4 @@
             tools:listitem="@layout/item_dialog_tech" />
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
