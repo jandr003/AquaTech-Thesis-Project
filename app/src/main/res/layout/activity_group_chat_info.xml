@@ -233,7 +233,8 @@
                             android:layout_width="22dp"
                             android:layout_height="22dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_display_settings"
+                            android:contentDescription="Customise"
+                            android:src="@drawable/ic_theme_customise_palette"
                             app:tint="#0F172A" />
 
                     </com.google.android.material.card.MaterialCardView>
