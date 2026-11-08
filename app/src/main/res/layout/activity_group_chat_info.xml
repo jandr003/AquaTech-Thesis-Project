@@ -469,7 +469,8 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_notification_alerts"
+                    android:contentDescription="Notifications &amp; Sounds"
+                    android:src="@drawable/ic_bell_sound_ring"
                     app:tint="#0F172A" />
 
                 <LinearLayout
