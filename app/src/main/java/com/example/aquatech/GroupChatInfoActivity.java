@@ -8,11 +8,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class GroupChatInfoActivity extends AppCompatActivity {
+
+    private TextView tvMembersCount;
+    private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +32,7 @@ public class GroupChatInfoActivity extends AppCompatActivity {
 
         setupStatusBar();
         initializeViews();
+        loadRealtimeMembersCount();
     }
 
     private void setupStatusBar() {
@@ -32,6 +44,8 @@ public class GroupChatInfoActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        tvMembersCount = findViewById(R.id.tvMembersCount);
+
         View btnBack = findViewById(R.id.btnBackGroupInfo);
         if (btnBack != null) {
             btnBack.setOnClickListener(v -> finish());
@@ -40,7 +54,8 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         View btnMembers = findViewById(R.id.rowSeeMembers);
         if (btnMembers != null) {
             btnMembers.setOnClickListener(v -> {
-                Toast.makeText(this, "12 Active Technicians in Team Chat", Toast.LENGTH_SHORT).show();
+                String countText = tvMembersCount != null ? tvMembersCount.getText().toString() : "Team Members";
+                Toast.makeText(this, countText + " in Team Chat", Toast.LENGTH_SHORT).show();
             });
         }
 
@@ -53,6 +68,23 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         if (btnLeave != null) {
             btnLeave.setOnClickListener(v -> showLeaveChatDialog());
         }
+    }
+
+    private void loadRealtimeMembersCount() {
+        DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians");
+        techRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long count = snapshot.getChildrenCount();
+                if (count == 0) count = 1;
+                if (tvMembersCount != null) {
+                    tvMembersCount.setText(count + " members");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
 
     private void showMuteDialog() {
