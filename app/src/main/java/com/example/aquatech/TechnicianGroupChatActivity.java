@@ -2,6 +2,7 @@ package com.example.aquatech;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import android.net.Uri;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -54,6 +54,20 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
 
     private ChildEventListener messageListener;
 
+    private final ActivityResultLauncher<String> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(), uri -> {
+                if (uri != null) {
+                    uploadAndSendAttachment(uri, "image");
+                }
+            });
+
+    private final ActivityResultLauncher<String[]> fileLauncher = registerForActivityResult(
+            new ActivityResultContracts.OpenDocument(), uri -> {
+                if (uri != null) {
+                    uploadAndSendAttachment(uri, "document");
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,16 +92,6 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
         loadGroupMessages();
     }
 
-    private final ActivityResultLauncher<String> galleryLauncher = registerForActivityResult(
-            new ActivityResultContracts.GetContent(), uri -> {
-                if (uri != null) uploadAndSendAttachment(uri, "image");
-            });
-
-    private final ActivityResultLauncher<String[]> fileLauncher = registerForActivityResult(
-            new ActivityResultContracts.OpenDocument(), uri -> {
-                if (uri != null) uploadAndSendAttachment(uri, "document");
-            });
-
     private void initializeViews() {
         rvMessages = findViewById(R.id.rvTeamGroupMessages);
         etMessage = findViewById(R.id.etTeamMessage);
@@ -100,14 +104,20 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
 
         View btnInfo = findViewById(R.id.btnTeamInfo);
         if (btnInfo != null) {
-            btnInfo.setOnClickListener(v -> startActivity(new Intent(this, GroupChatInfoActivity.class)));
+            btnInfo.setOnClickListener(v -> {
+                startActivity(new Intent(this, GroupChatInfoActivity.class));
+            });
         }
 
         View btnFile = findViewById(R.id.btnAttachFile);
-        if (btnFile != null) btnFile.setOnClickListener(v -> fileLauncher.launch(new String[]{"*/*"}));
+        if (btnFile != null) {
+            btnFile.setOnClickListener(v -> fileLauncher.launch(new String[]{"*/*"}));
+        }
 
         View btnGallery = findViewById(R.id.btnAttachGallery);
-        if (btnGallery != null) btnGallery.setOnClickListener(v -> galleryLauncher.launch("image/*"));
+        if (btnGallery != null) {
+            btnGallery.setOnClickListener(v -> galleryLauncher.launch("image/*"));
+        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
@@ -127,20 +137,31 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
                     chatAdapter.notifyItemInserted(messageList.size() - 1);
                     rvMessages.scrollToPosition(messageList.size() - 1);
                 }
-                if (emptyLayout != null) emptyLayout.setVisibility(messageList.isEmpty() ? View.VISIBLE : View.GONE);
+                if (emptyLayout != null) {
+                    emptyLayout.setVisibility(messageList.isEmpty() ? View.VISIBLE : View.GONE);
+                }
             }
 
-            @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
         groupChatRef.addChildEventListener(messageListener);
     }
 
     private void sendTeamMessage() {
         String text = etMessage.getText().toString().trim();
-        if (text.isEmpty()) return;
+        if (text.isEmpty()) {
+            return;
+        }
 
         etMessage.setText("");
 
@@ -155,22 +176,28 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
     }
 
     private void uploadAndSendAttachment(Uri uri, String type) {
-        if (uri == null) return;
+        if (uri == null) {
+            return;
+        }
         Toast.makeText(this, "Uploading attachment...", Toast.LENGTH_SHORT).show();
 
         String fileName = "team_file_" + System.currentTimeMillis();
         StorageReference ref = FirebaseStorage.getInstance().getReference().child("GroupChats/TechniciansTeam/" + fileName);
 
-        ref.putFile(uri).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(downloadUrl -> {
-            DatabaseReference newMsgRef = groupChatRef.push();
-            Map<String, Object> msgMap = new HashMap<>();
-            msgMap.put("senderId", currentTechUid);
-            msgMap.put("senderName", currentTechName);
-            msgMap.put("message", "Attached " + (type.contains("image") ? "Image" : "Document") + ": " + downloadUrl.toString());
-            msgMap.put("timestamp", ServerValue.TIMESTAMP);
-            newMsgRef.setValue(msgMap);
-            Toast.makeText(TechnicianGroupChatActivity.this, "Attachment Sent!", Toast.LENGTH_SHORT).show();
-        })).addOnFailureListener(e -> Toast.makeText(TechnicianGroupChatActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        ref.putFile(uri).addOnSuccessListener(taskSnapshot -> {
+            taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(downloadUrl -> {
+                DatabaseReference newMsgRef = groupChatRef.push();
+                Map<String, Object> msgMap = new HashMap<>();
+                msgMap.put("senderId", currentTechUid);
+                msgMap.put("senderName", currentTechName);
+                msgMap.put("message", "Attached " + (type.contains("image") ? "Image" : "Document") + ": " + downloadUrl.toString());
+                msgMap.put("timestamp", ServerValue.TIMESTAMP);
+                newMsgRef.setValue(msgMap);
+                Toast.makeText(TechnicianGroupChatActivity.this, "Attachment Sent!", Toast.LENGTH_SHORT).show();
+            });
+        }).addOnFailureListener(e -> {
+            Toast.makeText(TechnicianGroupChatActivity.this, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
