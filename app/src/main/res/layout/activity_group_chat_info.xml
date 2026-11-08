@@ -263,21 +263,7 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvMembersCount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="6dp"
-                android:text="1 member"
-                android:textColor="#64748B"
-                android:textSize="13.5sp"
-                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/rowSeeMembers"
