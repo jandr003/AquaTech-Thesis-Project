@@ -32,11 +32,16 @@ public class GroupChatInfoActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackGroupInfo).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackGroupInfo);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View btnMembers = findViewById(R.id.rowSeeMembers);
         if (btnMembers != null) {
-            btnMembers.setOnClickListener(v -> Toast.makeText(this, "12 Active Technicians in Team Chat", Toast.LENGTH_SHORT).show());
+            btnMembers.setOnClickListener(v -> {
+                Toast.makeText(this, "12 Active Technicians in Team Chat", Toast.LENGTH_SHORT).show();
+            });
         }
 
         View btnMute = findViewById(R.id.rowMuteChat);
@@ -58,12 +63,18 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
-        dialog.findViewById(R.id.btnCancelMute).setOnClickListener(v -> dialog.dismiss());
+        View btnCancel = dialog.findViewById(R.id.btnCancelMute);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
 
-        dialog.findViewById(R.id.btnConfirmMute).setOnClickListener(v -> {
-            Toast.makeText(this, "Team Chat Muted", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
+        View btnConfirm = dialog.findViewById(R.id.btnConfirmMute);
+        if (btnConfirm != null) {
+            btnConfirm.setOnClickListener(v -> {
+                Toast.makeText(this, "Team Chat Muted", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            });
+        }
 
         dialog.show();
     }
