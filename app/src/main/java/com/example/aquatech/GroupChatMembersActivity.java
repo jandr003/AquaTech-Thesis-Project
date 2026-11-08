@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,7 @@ public class GroupChatMembersActivity extends AppCompatActivity {
 
     private RecyclerView rvGroupMembers;
     private TextView tvFullMembersCount;
-    private DialogTechAdapter adapter;
+    private GroupMemberAdapter adapter;
     private final List<Map<String, String>> techList = new ArrayList<>();
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
@@ -51,16 +50,19 @@ public class GroupChatMembersActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackGroupMembers).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackGroupMembers);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         tvFullMembersCount = findViewById(R.id.tvFullMembersCount);
         rvGroupMembers = findViewById(R.id.rvGroupMembersFull);
 
-        rvGroupMembers.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new DialogTechAdapter(techList, (name, uid) -> {
-            Toast.makeText(this, "Team Member: " + name, Toast.LENGTH_SHORT).show();
-        });
-        rvGroupMembers.setAdapter(adapter);
+        if (rvGroupMembers != null) {
+            rvGroupMembers.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new GroupMemberAdapter(techList);
+            rvGroupMembers.setAdapter(adapter);
+        }
     }
 
     private void loadGroupMembersData() {
@@ -76,13 +78,16 @@ public class GroupChatMembersActivity extends AppCompatActivity {
 
                     String uid = ds.getKey();
                     String techIdCode = ds.child("techId").getValue(String.class);
-                    if (techIdCode == null) techIdCode = "ASC-T00" + (techList.size() + 1);
+                    if (techIdCode == null) techIdCode = "ID: ASC-T00" + (techList.size() + 1);
+
+                    String avatarUrl = ds.child("profileImageUrl").getValue(String.class);
 
                     Map<String, String> map = new HashMap<>();
                     map.put("name", name);
                     map.put("uid", uid);
                     map.put("techId", techIdCode);
                     map.put("status", "Available");
+                    if (avatarUrl != null) map.put("avatarUrl", avatarUrl);
 
                     techList.add(map);
                 }
@@ -90,7 +95,9 @@ public class GroupChatMembersActivity extends AppCompatActivity {
                 if (tvFullMembersCount != null) {
                     tvFullMembersCount.setText(techList.size() + " Active Team Members");
                 }
-                adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
