@@ -49,43 +49,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/groupMembersHeader">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvFullMembersCount"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="0dp"
-            app:strokeColor="#E2E8F0"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tvFullMembersCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="12 Active Members"
-                    android:textColor="#1E293B"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/poppins"
-                    android:text="Authorized Field Technicians &amp; Dispatch Team in Technicians Team Chat"
-                    android:textColor="#64748B"
-                    android:textSize="12.5sp" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            android:fontFamily="@font/poppins_black_ttf"
+            android:letterSpacing="0.05"
+            android:text="12 ACTIVE MEMBERS"
+            android:textColor="#1C4E75"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGroupMembersFull"
