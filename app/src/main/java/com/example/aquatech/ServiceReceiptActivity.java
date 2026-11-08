@@ -154,22 +154,48 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         }
 
         String sroAtTop = currentSnapshot.child("referenceNo").getValue(String.class);
-        if (sroAtTop == null) sroAtTop = currentSnapshot.child("sroNumber").getValue(String.class);
-        ((TextView)pdfView.findViewById(R.id.pdfTicketId)).setText(sroAtTop != null ? sroAtTop : "SRO-00000000");
+        if (sroAtTop == null) {
+            sroAtTop = currentSnapshot.child("sroNumber").getValue(String.class);
+        }
+        TextView tvTicket = pdfView.findViewById(R.id.pdfTicketId);
+        if (tvTicket != null) {
+            tvTicket.setText(sroAtTop != null ? sroAtTop : "SRO-00000000");
+        }
 
-        ((TextView)pdfView.findViewById(R.id.pdfCustomerName)).setText(tvReceiptCustomerName.getText());
+        TextView tvCustName = pdfView.findViewById(R.id.pdfCustomerName);
+        if (tvCustName != null) {
+            tvCustName.setText(tvReceiptCustomerName.getText());
+        }
+
         String phone = currentSnapshot.child("customerPhone").getValue(String.class);
-        if (phone == null) phone = currentSnapshot.child("userPhone").getValue(String.class);
-        ((TextView)pdfView.findViewById(R.id.pdfContact)).setText(phone != null ? phone : "Not Provided");
-        ((TextView)pdfView.findViewById(R.id.pdfAddress)).setText(tvReceiptAddress.getText());
+        if (phone == null) {
+            phone = currentSnapshot.child("userPhone").getValue(String.class);
+        }
+        TextView tvContact = pdfView.findViewById(R.id.pdfContact);
+        if (tvContact != null) {
+            tvContact.setText(phone != null ? phone : "Not Provided");
+        }
+
+        TextView tvAddress = pdfView.findViewById(R.id.pdfAddress);
+        if (tvAddress != null) {
+            tvAddress.setText(tvReceiptAddress.getText());
+        }
 
         String unitModel = currentSnapshot.child("unitName").getValue(String.class);
-        if (unitModel == null) unitModel = currentSnapshot.child("unitModel").getValue(String.class);
-        if (unitModel == null) unitModel = "";
-        
+        if (unitModel == null) {
+            unitModel = currentSnapshot.child("unitModel").getValue(String.class);
+        }
+        if (unitModel == null) {
+            unitModel = "";
+        }
+
         String unitNumber = currentSnapshot.child("unitNumber").getValue(String.class);
-        if (unitNumber == null) unitNumber = currentSnapshot.child("itemUnitNumber").getValue(String.class);
-        if (unitNumber == null) unitNumber = "0000";
+        if (unitNumber == null) {
+            unitNumber = currentSnapshot.child("itemUnitNumber").getValue(String.class);
+        }
+        if (unitNumber == null) {
+            unitNumber = "0000";
+        }
 
         String friendlyProductName = "STANDING WATER PURIFIER";
         String baseUnitTemplate = "ST-FXCU1-M-HCA-WT-**-***";
