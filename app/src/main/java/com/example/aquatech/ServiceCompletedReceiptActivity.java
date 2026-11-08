@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.TextViewCompat;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,12 +72,18 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
 
     private void updateUI(DataSnapshot snapshot) {
         String sro = snapshot.child("referenceNo").getValue(String.class);
-        if (sro == null) sro = snapshot.child("sroNumber").getValue(String.class);
+        if (sro == null) {
+            sro = snapshot.child("sroNumber").getValue(String.class);
+        }
         TextView tvTicketId = findViewById(R.id.compTicketId);
-        if (tvTicketId != null) tvTicketId.setText(sro != null ? sro : ticketId);
+        if (tvTicketId != null) {
+            tvTicketId.setText(sro != null ? sro : ticketId);
+        }
 
         Long completionTs = snapshot.child("completionTimestamp").getValue(Long.class);
-        if (completionTs == null) completionTs = snapshot.child("submissionTimestamp").getValue(Long.class);
+        if (completionTs == null) {
+            completionTs = snapshot.child("submissionTimestamp").getValue(Long.class);
+        }
         
         if (completionTs != null) {
             String dateStr = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date(completionTs));
@@ -92,9 +97,9 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
         TextView statusBadge = findViewById(R.id.compStatusBadge);
         if (statusBadge != null) {
             statusBadge.setText("COMPLETED");
-            statusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-            statusBadge.setTextColor(Color.parseColor("#166534"));
-            TextViewCompat.setCompoundDrawableTintList(statusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
+            statusBadge.setBackgroundResource(R.drawable.bg_solid_green_pill);
+            statusBadge.setTextColor(Color.WHITE);
+            TextViewCompat.setCompoundDrawableTintList(statusBadge, ColorStateList.valueOf(Color.WHITE));
         }
 
         TextView tvCustName = findViewById(R.id.compCustomerName);
@@ -178,9 +183,9 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
         TextView payBadge = findViewById(R.id.compPaymentBadge);
         if (payBadge != null) {
             payBadge.setText("PAID");
-            payBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-            payBadge.setTextColor(Color.parseColor("#166534"));
-            TextViewCompat.setCompoundDrawableTintList(payBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
+            payBadge.setBackgroundResource(R.drawable.bg_solid_green_pill);
+            payBadge.setTextColor(Color.WHITE);
+            TextViewCompat.setCompoundDrawableTintList(payBadge, ColorStateList.valueOf(Color.WHITE));
         }
 
         ImageView ivTechSign = findViewById(R.id.compTechSign);
