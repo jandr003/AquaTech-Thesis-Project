@@ -308,7 +308,8 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_paperclip"
+                    android:contentDescription="Invitation Link"
+                    android:src="@drawable/ic_chain_link"
                     app:tint="#0F172A" />
 
                 <LinearLayout
