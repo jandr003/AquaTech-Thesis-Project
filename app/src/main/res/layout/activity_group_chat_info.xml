@@ -27,6 +27,19 @@
             android:src="@drawable/ic_arrow_back_gray"
             app:tint="#0F172A" />
 
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/btnBackGroupInfo"
+            android:fontFamily="@font/poppins"
+            android:text="Group Info"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
