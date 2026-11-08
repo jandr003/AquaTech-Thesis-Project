@@ -2,6 +2,7 @@ package com.example.aquatech;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -54,8 +55,7 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         View btnMembers = findViewById(R.id.rowSeeMembers);
         if (btnMembers != null) {
             btnMembers.setOnClickListener(v -> {
-                String countText = tvMembersCount != null ? tvMembersCount.getText().toString() : "Team Members";
-                Toast.makeText(this, countText + " in Team Chat", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, ManageTechniciansActivity.class));
             });
         }
 
