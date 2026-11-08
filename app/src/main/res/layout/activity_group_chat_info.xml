@@ -112,7 +112,8 @@
                             android:layout_width="22dp"
                             android:layout_height="22dp"
                             android:layout_gravity="center"
-                            android:src="@android:drawable/ic_input_add"
+                            android:contentDescription="Invite"
+                            android:src="@drawable/ic_invite_user_add"
                             app:tint="#0F172A" />
 
                     </com.google.android.material.card.MaterialCardView>
