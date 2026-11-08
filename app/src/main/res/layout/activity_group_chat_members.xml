@@ -95,7 +95,7 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingBottom="16dp"
-            tools:listitem="@layout/item_dialog_tech" />
+            tools:listitem="@layout/item_group_member" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
