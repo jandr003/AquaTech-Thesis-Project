@@ -97,19 +97,20 @@
                 android:layout_marginEnd="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="#F1F5F9"
+                app:cardBackgroundColor="#E0F2FE"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
 
                 <TextView
+                    android:id="@+id/tvChipPhotosText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/poppins"
                     android:paddingHorizontal="16dp"
-                    android:text="Photos"
-                    android:textColor="#0F172A"
+                    android:text="Photos ✕"
+                    android:textColor="#2196F3"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -121,19 +122,20 @@
                 android:layout_height="36dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardBackgroundColor="#E0F2FE"
+                app:cardBackgroundColor="#F1F5F9"
                 app:cardCornerRadius="18dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="0dp">
 
                 <TextView
+                    android:id="@+id/tvChipVideosText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/poppins"
                     android:paddingHorizontal="16dp"
-                    android:text="Videos ✕"
-                    android:textColor="#2196F3"
+                    android:text="Videos"
+                    android:textColor="#0F172A"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -280,9 +282,6 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

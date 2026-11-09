@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,6 +82,45 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
         if (tabMedia != null) tabMedia.setOnClickListener(v -> selectTab(1));
         if (tabFiles != null) tabFiles.setOnClickListener(v -> selectTab(2));
         if (tabLinks != null) tabLinks.setOnClickListener(v -> selectTab(3));
+
+        MaterialCardView chipPhotos = findViewById(R.id.chipPhotos);
+        MaterialCardView chipVideos = findViewById(R.id.chipVideos);
+        TextView tvChipPhotos = findViewById(R.id.tvChipPhotosText);
+        TextView tvChipVideos = findViewById(R.id.tvChipVideosText);
+
+        if (chipPhotos != null) {
+            chipPhotos.setOnClickListener(v -> {
+                chipPhotos.setCardBackgroundColor(Color.parseColor("#E0F2FE"));
+                if (tvChipPhotos != null) {
+                    tvChipPhotos.setText("Photos ✕");
+                    tvChipPhotos.setTextColor(Color.parseColor("#2196F3"));
+                }
+                if (chipVideos != null) {
+                    chipVideos.setCardBackgroundColor(Color.parseColor("#F1F5F9"));
+                }
+                if (tvChipVideos != null) {
+                    tvChipVideos.setText("Videos");
+                    tvChipVideos.setTextColor(Color.parseColor("#0F172A"));
+                }
+            });
+        }
+
+        if (chipVideos != null) {
+            chipVideos.setOnClickListener(v -> {
+                chipVideos.setCardBackgroundColor(Color.parseColor("#E0F2FE"));
+                if (tvChipVideos != null) {
+                    tvChipVideos.setText("Videos ✕");
+                    tvChipVideos.setTextColor(Color.parseColor("#2196F3"));
+                }
+                if (chipPhotos != null) {
+                    chipPhotos.setCardBackgroundColor(Color.parseColor("#F1F5F9"));
+                }
+                if (tvChipPhotos != null) {
+                    tvChipPhotos.setText("Photos");
+                    tvChipPhotos.setTextColor(Color.parseColor("#0F172A"));
+                }
+            });
+        }
 
         mediaAdapter = new SharedMediaAdapter(mediaList);
         if (rvMedia != null) {
