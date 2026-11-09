@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Top Action Bar -->
     <RelativeLayout
         android:id="@+id/topBarMedia"
         android:layout_width="match_parent"
@@ -43,7 +42,6 @@
 
     </RelativeLayout>
 
-    <!-- Filter Chips Row -->
     <HorizontalScrollView
         android:id="@+id/filterChipsScroll"
         android:layout_width="match_parent"
@@ -145,7 +143,6 @@
 
     </HorizontalScrollView>
 
-    <!-- Main Content RecyclerView Area -->
     <FrameLayout
         android:id="@+id/contentArea"
         android:layout_width="match_parent"
@@ -178,7 +175,6 @@
 
     </FrameLayout>
 
-    <!-- Bottom Navigation Bar (Media, Files, Links) -->
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomNavCardMedia"
         android:layout_width="match_parent"
@@ -192,7 +188,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <!-- Tab 1: Media -->
             <LinearLayout
                 android:id="@+id/tabMedia"
                 android:layout_width="0dp"
@@ -224,7 +219,6 @@
 
             </LinearLayout>
 
-            <!-- Tab 2: Files -->
             <LinearLayout
                 android:id="@+id/tabFiles"
                 android:layout_width="0dp"
@@ -256,7 +250,6 @@
 
             </LinearLayout>
 
-            <!-- Tab 3: Links -->
             <LinearLayout
                 android:id="@+id/tabLinks"
                 android:layout_width="0dp"

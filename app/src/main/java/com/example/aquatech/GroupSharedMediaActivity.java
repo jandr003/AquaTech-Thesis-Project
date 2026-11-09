@@ -35,7 +35,7 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
     private SharedMediaAdapter mediaAdapter;
     private final List<ChatMessage> mediaList = new ArrayList<>();
 
-    private int currentTab = 1; // 1: Media, 2: Files, 3: Links
+    private int currentTab = 1;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     @Override
