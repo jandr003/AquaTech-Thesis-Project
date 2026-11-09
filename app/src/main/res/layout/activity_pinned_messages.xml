@@ -38,7 +38,7 @@
             android:fontFamily="@font/poppins"
             android:text="Pinned messages"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="17.5sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

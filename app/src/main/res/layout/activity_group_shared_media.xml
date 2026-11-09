@@ -34,10 +34,10 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@id/btnBackSharedMedia"
-            android:fontFamily="@font/poppins_black_ttf"
+            android:fontFamily="@font/poppins"
             android:text="Media, files and links"
             android:textColor="#0F172A"
-            android:textSize="20sp"
+            android:textSize="17.5sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
