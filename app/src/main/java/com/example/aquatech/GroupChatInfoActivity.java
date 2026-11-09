@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
+
 public class GroupChatInfoActivity extends AppCompatActivity {
 
     @Override
@@ -72,6 +74,14 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        String teamLink = "https://aquatech.smartguard.ph/join/team-chat-" + currentYear;
+
+        TextView tvLink = dialog.findViewById(R.id.tvInviteLinkUrl);
+        if (tvLink != null) {
+            tvLink.setText(teamLink);
+        }
+
         View btnClose = dialog.findViewById(R.id.btnCloseInviteDialog);
         if (btnClose != null) {
             btnClose.setOnClickListener(v -> dialog.dismiss());
@@ -80,7 +90,6 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         View btnCopy = dialog.findViewById(R.id.btnCopyInviteLink);
         if (btnCopy != null) {
             btnCopy.setOnClickListener(v -> {
-                String teamLink = "https://aquatech.smartguard.ph/join/team-chat-2026";
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Team Chat Link", teamLink);
                 if (clipboard != null) {
