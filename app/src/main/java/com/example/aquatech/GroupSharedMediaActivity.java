@@ -212,12 +212,30 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
     }
 
     private void showSharedByFilterDialog() {
-        String[] members = {"All Members", "Technician John", "Technician Rafael", "Admin Dispatch"};
-        new AlertDialog.Builder(this)
-                .setTitle("Shared By")
-                .setItems(members, (dialog, which) -> {
-                    Toast.makeText(this, "Filtering by: " + members[which], Toast.LENGTH_SHORT).show();
-                })
-                .show();
+        DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians");
+        techRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> memberNames = new ArrayList<>();
+                memberNames.add("All Members");
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String name = ds.child("fullName").getValue(String.class);
+                    if (name == null) name = ds.child("name").getValue(String.class);
+                    if (name != null && !name.isEmpty()) {
+                        memberNames.add(name);
+                    }
+                }
+                String[] namesArray = memberNames.toArray(new String[0]);
+                new AlertDialog.Builder(GroupSharedMediaActivity.this)
+                        .setTitle("Shared By")
+                        .setItems(namesArray, (dialog, which) -> {
+                            Toast.makeText(GroupSharedMediaActivity.this, "Filtering by: " + namesArray[which], Toast.LENGTH_SHORT).show();
+                        })
+                        .show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
 }
