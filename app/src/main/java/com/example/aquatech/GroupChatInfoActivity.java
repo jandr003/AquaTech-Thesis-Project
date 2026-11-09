@@ -62,7 +62,7 @@ public class GroupChatInfoActivity extends AppCompatActivity {
 
         View btnPinned = findViewById(R.id.rowPinnedMessages);
         if (btnPinned != null) {
-            btnPinned.setOnClickListener(v -> showPinnedMessagesDialog());
+            btnPinned.setOnClickListener(v -> startActivity(new Intent(this, PinnedMessagesActivity.class)));
         }
 
         View btnMute = findViewById(R.id.rowMuteChat);
