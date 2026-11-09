@@ -46,24 +46,27 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/bubble_user"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="8dp">
+                app:cardBackgroundColor="#2196F3"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
 
                 <TextView
                     android:id="@+id/tvPinnedMsgText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="9dp"
                     android:text="Hi"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/tvPinnedStatusText"
