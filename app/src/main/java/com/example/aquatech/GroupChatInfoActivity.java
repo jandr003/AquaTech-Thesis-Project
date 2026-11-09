@@ -77,7 +77,6 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             btnClose.setOnClickListener(v -> dialog.dismiss());
         }
 
-        TextView tvCopyMsg = dialog.findViewById(R.id.tvCopyStatusMsg);
         View btnCopy = dialog.findViewById(R.id.btnCopyInviteLink);
         if (btnCopy != null) {
             btnCopy.setOnClickListener(v -> {
@@ -86,9 +85,6 @@ public class GroupChatInfoActivity extends AppCompatActivity {
                 ClipData clip = ClipData.newPlainText("Team Chat Link", teamLink);
                 if (clipboard != null) {
                     clipboard.setPrimaryClip(clip);
-                }
-                if (tvCopyMsg != null) {
-                    tvCopyMsg.setVisibility(View.VISIBLE);
                 }
                 Toast.makeText(this, "Invitation link copied to clipboard!", Toast.LENGTH_SHORT).show();
             });
