@@ -55,6 +55,11 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             btnInviteLink.setOnClickListener(v -> showInviteLinkDialog());
         }
 
+        View btnMedia = findViewById(R.id.rowViewMedia);
+        if (btnMedia != null) {
+            btnMedia.setOnClickListener(v -> startActivity(new Intent(this, GroupSharedMediaActivity.class)));
+        }
+
         View btnMute = findViewById(R.id.rowMuteChat);
         if (btnMute != null) {
             btnMute.setOnClickListener(v -> showMuteDialog());
