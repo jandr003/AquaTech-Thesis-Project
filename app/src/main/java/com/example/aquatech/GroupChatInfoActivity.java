@@ -90,6 +90,7 @@ public class GroupChatInfoActivity extends AppCompatActivity {
                 if (tvCopyMsg != null) {
                     tvCopyMsg.setVisibility(View.VISIBLE);
                 }
+                Toast.makeText(this, "Invitation link copied to clipboard!", Toast.LENGTH_SHORT).show();
             });
         }
 
