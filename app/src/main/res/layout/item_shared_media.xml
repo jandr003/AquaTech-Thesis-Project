@@ -2,18 +2,17 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="110dp"
-    android:layout_height="110dp"
-    android:layout_marginEnd="12dp"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_margin="1.5dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="3dp"
-    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="0dp"
     app:strokeColor="#E2E8F0"
-    app:strokeWidth="1dp">
+    app:strokeWidth="0.5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,4 +61,5 @@
         </LinearLayout>
 
     </RelativeLayout>
+
 </com.google.android.material.card.MaterialCardView>
