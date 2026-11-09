@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,6 +91,11 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
 
         if (tabLinks != null) {
             tabLinks.setOnClickListener(v -> selectTab(3));
+        }
+
+        MaterialCardView chipSharedBy = findViewById(R.id.chipSharedBy);
+        if (chipSharedBy != null) {
+            chipSharedBy.setOnClickListener(v -> showSharedByFilterDialog());
         }
 
         MaterialCardView chipPhotos = findViewById(R.id.chipPhotos);
@@ -202,5 +209,15 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
+    }
+
+    private void showSharedByFilterDialog() {
+        String[] members = {"All Members", "Technician John", "Technician Rafael", "Admin Dispatch"};
+        new AlertDialog.Builder(this)
+                .setTitle("Shared By")
+                .setItems(members, (dialog, which) -> {
+                    Toast.makeText(this, "Filtering by: " + members[which], Toast.LENGTH_SHORT).show();
+                })
+                .show();
     }
 }
