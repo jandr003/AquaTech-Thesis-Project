@@ -3,10 +3,13 @@ package com.example.aquatech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,6 +51,30 @@ public class PinnedMessagesAdapter extends RecyclerView.Adapter<PinnedMessagesAd
         }
 
         holder.tvStatus.setText("Delivered");
+
+        int[] techAvatars = {
+                R.drawable.technician_avatar1,
+                R.drawable.technician_avatar2,
+                R.drawable.technician_avatar3,
+                R.drawable.technician_avatar4,
+                R.drawable.technician_avatar5,
+                R.drawable.technician_avatar6,
+                R.drawable.technician_avatar7,
+                R.drawable.technician_avatar8
+        };
+        int defaultAvatar = techAvatars[Math.abs(position) % techAvatars.length];
+
+        if (holder.ivAvatar != null) {
+            if (msg.getFileUrl() != null && !msg.getFileUrl().isEmpty() && msg.getFileUrl().contains("http")) {
+                Glide.with(holder.itemView.getContext())
+                        .load(msg.getFileUrl())
+                        .placeholder(defaultAvatar)
+                        .circleCrop()
+                        .into(holder.ivAvatar);
+            } else {
+                holder.ivAvatar.setImageResource(defaultAvatar);
+            }
+        }
     }
 
     @Override
@@ -57,6 +84,7 @@ public class PinnedMessagesAdapter extends RecyclerView.Adapter<PinnedMessagesAd
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvSender, tvMessage, tvTime, tvStatus;
+        ImageView ivAvatar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +92,7 @@ public class PinnedMessagesAdapter extends RecyclerView.Adapter<PinnedMessagesAd
             tvMessage = itemView.findViewById(R.id.tvPinnedMsgText);
             tvTime = itemView.findViewById(R.id.tvPinnedTime);
             tvStatus = itemView.findViewById(R.id.tvPinnedStatusText);
+            ivAvatar = itemView.findViewById(R.id.ivPinnedSenderAvatar);
         }
     }
 }
