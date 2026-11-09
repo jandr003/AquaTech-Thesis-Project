@@ -79,9 +79,17 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
         tvTabFilesLabel = findViewById(R.id.tvTabFilesLabel);
         tvTabLinksLabel = findViewById(R.id.tvTabLinksLabel);
 
-        if (tabMedia != null) tabMedia.setOnClickListener(v -> selectTab(1));
-        if (tabFiles != null) tabFiles.setOnClickListener(v -> selectTab(2));
-        if (tabLinks != null) tabLinks.setOnClickListener(v -> selectTab(3));
+        if (tabMedia != null) {
+            tabMedia.setOnClickListener(v -> selectTab(1));
+        }
+
+        if (tabFiles != null) {
+            tabFiles.setOnClickListener(v -> selectTab(2));
+        }
+
+        if (tabLinks != null) {
+            tabLinks.setOnClickListener(v -> selectTab(3));
+        }
 
         MaterialCardView chipPhotos = findViewById(R.id.chipPhotos);
         MaterialCardView chipVideos = findViewById(R.id.chipVideos);
@@ -134,14 +142,29 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
         int activeColor = Color.parseColor("#2196F3");
         int inactiveColor = Color.parseColor("#64748B");
 
-        if (ivTabMediaIcon != null) ivTabMediaIcon.setColorFilter(tab == 1 ? activeColor : inactiveColor);
-        if (tvTabMediaLabel != null) tvTabMediaLabel.setTextColor(tab == 1 ? activeColor : inactiveColor);
+        if (ivTabMediaIcon != null) {
+            ivTabMediaIcon.setColorFilter(tab == 1 ? activeColor : inactiveColor);
+        }
 
-        if (ivTabFilesIcon != null) ivTabFilesIcon.setColorFilter(tab == 2 ? activeColor : inactiveColor);
-        if (tvTabFilesLabel != null) tvTabFilesLabel.setTextColor(tab == 2 ? activeColor : inactiveColor);
+        if (tvTabMediaLabel != null) {
+            tvTabMediaLabel.setTextColor(tab == 1 ? activeColor : inactiveColor);
+        }
 
-        if (ivTabLinksIcon != null) ivTabLinksIcon.setColorFilter(tab == 3 ? activeColor : inactiveColor);
-        if (tvTabLinksLabel != null) tvTabLinksLabel.setTextColor(tab == 3 ? activeColor : inactiveColor);
+        if (ivTabFilesIcon != null) {
+            ivTabFilesIcon.setColorFilter(tab == 2 ? activeColor : inactiveColor);
+        }
+
+        if (tvTabFilesLabel != null) {
+            tvTabFilesLabel.setTextColor(tab == 2 ? activeColor : inactiveColor);
+        }
+
+        if (ivTabLinksIcon != null) {
+            ivTabLinksIcon.setColorFilter(tab == 3 ? activeColor : inactiveColor);
+        }
+
+        if (tvTabLinksLabel != null) {
+            tvTabLinksLabel.setTextColor(tab == 3 ? activeColor : inactiveColor);
+        }
 
         if (rvMedia != null) {
             if (tab == 1) {
