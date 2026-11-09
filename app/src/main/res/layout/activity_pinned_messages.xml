@@ -32,11 +32,13 @@
             android:id="@+id/tvHeaderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/btnBackPinnedMessages"
             android:fontFamily="@font/poppins"
             android:text="Pinned messages"
             android:textColor="@color/white"
-            android:textSize="17.5sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
