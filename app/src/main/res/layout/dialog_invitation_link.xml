@@ -49,11 +49,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="#EBF5FF"
-            app:cardCornerRadius="14dp"
+            app:cardBackgroundColor="#F8FAFC"
+            app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
-            app:strokeColor="#2196F3"
-            app:strokeWidth="1.5dp">
+            app:strokeColor="#E2E8F0"
+            app:strokeWidth="1dp">
 
             <TextView
                 android:id="@+id/tvInviteLinkUrl"
@@ -61,10 +61,11 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:fontFamily="@font/poppins"
+                android:gravity="center"
                 android:padding="14dp"
                 android:singleLine="true"
                 android:text="https://aquatech.smartguard.ph/join/team-chat-2026"
-                android:textColor="#1C4E75"
+                android:textColor="#2196F3"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
