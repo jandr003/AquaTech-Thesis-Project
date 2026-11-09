@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,20 +65,35 @@ public class GroupChatInfoActivity extends AppCompatActivity {
     }
 
     private void showInviteLinkDialog() {
-        String teamLink = "https://aquatech.smartguard.ph/join/team-chat-2026";
-        new AlertDialog.Builder(this)
-                .setTitle("Team Chat Invitation Link")
-                .setMessage("Share this official invitation link to add authorized technicians to the team chat:\n\n" + teamLink)
-                .setPositiveButton("Copy Link", (dialog, which) -> {
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("Team Chat Link", teamLink);
-                    if (clipboard != null) {
-                        clipboard.setPrimaryClip(clip);
-                    }
-                    Toast.makeText(this, "Invitation link copied to clipboard!", Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("Close", null)
-                .show();
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_invitation_link);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        View btnClose = dialog.findViewById(R.id.btnCloseInviteDialog);
+        if (btnClose != null) {
+            btnClose.setOnClickListener(v -> dialog.dismiss());
+        }
+
+        TextView tvCopyMsg = dialog.findViewById(R.id.tvCopyStatusMsg);
+        View btnCopy = dialog.findViewById(R.id.btnCopyInviteLink);
+        if (btnCopy != null) {
+            btnCopy.setOnClickListener(v -> {
+                String teamLink = "https://aquatech.smartguard.ph/join/team-chat-2026";
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Team Chat Link", teamLink);
+                if (clipboard != null) {
+                    clipboard.setPrimaryClip(clip);
+                }
+                if (tvCopyMsg != null) {
+                    tvCopyMsg.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+        dialog.show();
     }
 
     private void showMuteDialog() {
