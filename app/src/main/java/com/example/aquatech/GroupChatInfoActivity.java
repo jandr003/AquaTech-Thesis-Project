@@ -2,6 +2,8 @@ package com.example.aquatech;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -45,6 +47,11 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             });
         }
 
+        View btnInviteLink = findViewById(R.id.rowInviteLink);
+        if (btnInviteLink != null) {
+            btnInviteLink.setOnClickListener(v -> showInviteLinkDialog());
+        }
+
         View btnMute = findViewById(R.id.rowMuteChat);
         if (btnMute != null) {
             btnMute.setOnClickListener(v -> showMuteDialog());
@@ -54,6 +61,23 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         if (btnLeave != null) {
             btnLeave.setOnClickListener(v -> showLeaveChatDialog());
         }
+    }
+
+    private void showInviteLinkDialog() {
+        String teamLink = "https://aquatech.smartguard.ph/join/team-chat-2026";
+        new AlertDialog.Builder(this)
+                .setTitle("Team Chat Invitation Link")
+                .setMessage("Share this official invitation link to add authorized technicians to the team chat:\n\n" + teamLink)
+                .setPositiveButton("Copy Link", (dialog, which) -> {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Team Chat Link", teamLink);
+                    if (clipboard != null) {
+                        clipboard.setPrimaryClip(clip);
+                    }
+                    Toast.makeText(this, "Invitation link copied to clipboard!", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Close", null)
+                .show();
     }
 
     private void showMuteDialog() {
