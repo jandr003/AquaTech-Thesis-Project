@@ -58,7 +58,8 @@
             android:padding="24dp"
             android:text="No pinned messages yet.\nLong press any chat message to pin it."
             android:textColor="#94A3B8"
-            android:textSize="13.5sp" />
+            android:textSize="13.5sp"
+            tools:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPinnedMessagesFull"
@@ -71,5 +72,4 @@
             tools:listitem="@layout/item_pinned_message_row" />
 
     </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
