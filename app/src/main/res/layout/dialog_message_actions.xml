@@ -65,7 +65,7 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:contentDescription="Copy"
-                android:src="@drawable/ic_notes_document"
+                android:src="@drawable/ic_copy_documents"
                 app:tint="#2196F3" />
 
             <TextView
