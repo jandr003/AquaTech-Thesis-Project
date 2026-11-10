@@ -9,7 +9,8 @@
     <RelativeLayout
         android:id="@+id/topBarMedia"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="64dp"
+        android:background="#2196F3"
         android:paddingHorizontal="12dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -24,8 +25,8 @@
             android:contentDescription="Back"
             android:focusable="true"
             android:padding="8dp"
-            android:src="@drawable/ic_arrow_back_gray"
-            app:tint="#0F172A" />
+            android:src="@drawable/arrow_back"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/tvHeaderTitle"
@@ -36,7 +37,7 @@
             android:layout_toEndOf="@id/btnBackSharedMedia"
             android:fontFamily="@font/poppins"
             android:text="Media, files and links"
-            android:textColor="#0F172A"
+            android:textColor="@color/white"
             android:textSize="17.5sp"
             android:textStyle="bold" />
 
