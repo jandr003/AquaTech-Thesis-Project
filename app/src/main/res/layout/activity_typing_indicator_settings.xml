@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Top Action Bar -->
     <RelativeLayout
         android:id="@+id/topBarTyping"
         android:layout_width="match_parent"
@@ -51,7 +50,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBarTyping">
 
-        <!-- Show Typing Indicator Switch Row -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
