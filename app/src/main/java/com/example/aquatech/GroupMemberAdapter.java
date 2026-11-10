@@ -38,8 +38,17 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         String status = member.get("status");
         String avatarUrl = member.get("avatarUrl");
 
-        holder.tvName.setText(name != null && !name.isEmpty() ? name : "Technician Member");
-        holder.tvId.setText(techIdStr != null ? techIdStr : "ID: ASC-T001");
+        if (name != null && !name.isEmpty()) {
+            holder.tvName.setText(name);
+        } else {
+            holder.tvName.setText("Technician Member");
+        }
+
+        if (techIdStr != null && !techIdStr.isEmpty()) {
+            holder.tvId.setText(techIdStr);
+        } else {
+            holder.tvId.setText("ID: ASC-T001");
+        }
 
         if ("Set nickname".equalsIgnoreCase(status) || (status != null && (status.contains("Set nickname") || status.contains("Nickname")))) {
             holder.tvStatus.setText(status);
