@@ -70,6 +70,11 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             btnMute.setOnClickListener(v -> showMuteDialog());
         }
 
+        View btnSounds = findViewById(R.id.rowNotificationsSounds);
+        if (btnSounds != null) {
+            btnSounds.setOnClickListener(v -> showSoundPrefDialog());
+        }
+
         View btnLeave = findViewById(R.id.rowLeaveChat);
         if (btnLeave != null) {
             btnLeave.setOnClickListener(v -> showLeaveChatDialog());
@@ -129,6 +134,25 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         if (btnConfirm != null) {
             btnConfirm.setOnClickListener(v -> {
                 Toast.makeText(this, "Team Chat Muted", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            });
+        }
+
+        dialog.show();
+    }
+
+    private void showSoundPrefDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_notification_sounds_pref);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        View btnDone = dialog.findViewById(R.id.btnDoneSoundPref);
+        if (btnDone != null) {
+            btnDone.setOnClickListener(v -> {
+                Toast.makeText(this, "Sound preferences saved", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             });
         }
