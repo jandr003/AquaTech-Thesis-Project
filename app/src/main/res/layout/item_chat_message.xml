@@ -150,18 +150,39 @@
         android:layout_height="0dp"
         android:visibility="gone" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ivSeenReceiptAvatar"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+    <LinearLayout
+        android:id="@+id/layoutSeenReceiptsBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/messageContainer"
         android:layout_alignEnd="@id/messageContainer"
         android:layout_marginTop="2dp"
-        android:contentDescription="Seen Receipt Avatar"
-        android:scaleType="centerCrop"
-        android:src="@drawable/technician_avatar1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:visibility="gone"
-        app:shapeAppearanceOverlay="@style/CircleImage"
-        tools:visibility="visible" />
+        tools:visibility="visible">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivSeenReceiptAvatar"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:contentDescription="Seen Avatar"
+            android:scaleType="centerCrop"
+            android:src="@drawable/technician_avatar1"
+            app:shapeAppearanceOverlay="@style/CircleImage" />
+
+        <TextView
+            android:id="@+id/tvSeenCountBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/poppins"
+            android:text="10 and others"
+            android:textColor="#64748B"
+            android:textSize="10.5sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
 </RelativeLayout>

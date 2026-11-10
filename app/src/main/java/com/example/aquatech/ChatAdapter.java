@@ -240,10 +240,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             chatHolder.messageContainer.setLayoutParams(params);
 
-            if (chatHolder.ivSeenReceiptAvatar != null) {
+            if (chatHolder.layoutSeenBadge != null) {
                 boolean isLastMessage = (position == getItemCount() - 1);
                 if (isFromMe && isLastMessage) {
-                    chatHolder.ivSeenReceiptAvatar.setVisibility(View.VISIBLE);
+                    chatHolder.layoutSeenBadge.setVisibility(View.VISIBLE);
                     int[] avatars = {
                             R.drawable.technician_avatar1,
                             R.drawable.technician_avatar2,
@@ -255,12 +255,24 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             R.drawable.technician_avatar8
                     };
                     int avatarIndex = Math.abs(position) % avatars.length;
-                    Glide.with(chatHolder.itemView.getContext())
-                            .load(avatars[avatarIndex])
-                            .circleCrop()
-                            .into(chatHolder.ivSeenReceiptAvatar);
+                    if (chatHolder.ivSeenReceiptAvatar != null) {
+                        Glide.with(chatHolder.itemView.getContext())
+                                .load(avatars[avatarIndex])
+                                .circleCrop()
+                                .into(chatHolder.ivSeenReceiptAvatar);
+                    }
+
+                    int totalTechCount = 11;
+                    if (chatHolder.tvSeenCountBadge != null) {
+                        if (totalTechCount > 1) {
+                            chatHolder.tvSeenCountBadge.setText((totalTechCount - 1) + " and others");
+                            chatHolder.tvSeenCountBadge.setVisibility(View.VISIBLE);
+                        } else {
+                            chatHolder.tvSeenCountBadge.setVisibility(View.GONE);
+                        }
+                    }
                 } else {
-                    chatHolder.ivSeenReceiptAvatar.setVisibility(View.GONE);
+                    chatHolder.layoutSeenBadge.setVisibility(View.GONE);
                 }
             }
         }
@@ -272,8 +284,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     static class ChatViewHolder extends RecyclerView.ViewHolder {
-        TextView tvMessage, tvTime, tvDateHeader, tvSenderLabel, tvFileName, tvFileSize;
-        View messageContainer, fileAttachmentLayout;
+        TextView tvMessage, tvTime, tvDateHeader, tvSenderLabel, tvFileName, tvFileSize, tvSeenCountBadge;
+        View messageContainer, fileAttachmentLayout, layoutSeenBadge;
         ImageView techAvatarIcon, ivSeenReceiptAvatar;
         ChatViewHolder(View v) {
             super(v);
@@ -286,7 +298,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             fileAttachmentLayout = v.findViewById(R.id.fileAttachmentLayout);
             tvFileName = v.findViewById(R.id.tvFileName);
             tvFileSize = v.findViewById(R.id.tvFileSize);
+            layoutSeenBadge = v.findViewById(R.id.layoutSeenReceiptsBadge);
             ivSeenReceiptAvatar = v.findViewById(R.id.ivSeenReceiptAvatar);
+            tvSeenCountBadge = v.findViewById(R.id.tvSeenCountBadge);
         }
     }
 
