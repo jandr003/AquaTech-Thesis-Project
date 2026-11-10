@@ -47,6 +47,9 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         } else if ("Offline".equalsIgnoreCase(status)) {
             holder.tvStatus.setText("Offline");
             holder.tvStatus.setTextColor(Color.parseColor("#94A3B8"));
+        } else if (status != null && (status.contains("Set nickname") || status.contains("Nickname"))) {
+            holder.tvStatus.setText(status);
+            holder.tvStatus.setTextColor(Color.parseColor("#64748B"));
         } else {
             holder.tvStatus.setText("Available for task");
             holder.tvStatus.setTextColor(Color.parseColor("#059669"));

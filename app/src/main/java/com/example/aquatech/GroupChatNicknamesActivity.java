@@ -82,8 +82,8 @@ public class GroupChatNicknamesActivity extends AppCompatActivity {
                     Map<String, String> map = new HashMap<>();
                     map.put("name", name);
                     map.put("uid", uid);
-                    map.put("techId", nickname != null ? "Nickname: " + nickname : "Set nickname");
-                    map.put("status", "Available");
+                    map.put("techId", "ID: ASC-T00" + (techList.size() + 1));
+                    map.put("status", nickname != null ? nickname : "Set nickname");
                     if (avatarUrl != null) map.put("avatarUrl", avatarUrl);
 
                     techList.add(map);
