@@ -41,15 +41,15 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         holder.tvName.setText(name != null && !name.isEmpty() ? name : "Technician Member");
         holder.tvId.setText(techIdStr != null ? techIdStr : "ID: ASC-T001");
 
-        if ("Busy".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
+        if ("Set nickname".equalsIgnoreCase(status) || (status != null && (status.contains("Set nickname") || status.contains("Nickname")))) {
+            holder.tvStatus.setText(status);
+            holder.tvStatus.setTextColor(Color.parseColor("#64748B"));
+        } else if ("Busy".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
             holder.tvStatus.setText("Ongoing Task");
             holder.tvStatus.setTextColor(Color.parseColor("#2196F3"));
         } else if ("Offline".equalsIgnoreCase(status)) {
             holder.tvStatus.setText("Offline");
             holder.tvStatus.setTextColor(Color.parseColor("#94A3B8"));
-        } else if (status != null && (status.contains("Set nickname") || status.contains("Nickname"))) {
-            holder.tvStatus.setText(status);
-            holder.tvStatus.setTextColor(Color.parseColor("#64748B"));
         } else {
             holder.tvStatus.setText("Available for task");
             holder.tvStatus.setTextColor(Color.parseColor("#059669"));
