@@ -112,22 +112,6 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void showPinnedMessagesDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_pinned_messages);
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-
-        View btnClose = dialog.findViewById(R.id.btnClosePinnedDialog);
-        if (btnClose != null) {
-            btnClose.setOnClickListener(v -> dialog.dismiss());
-        }
-
-        dialog.show();
-    }
-
     private void showMuteDialog() {
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
