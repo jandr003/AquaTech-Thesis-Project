@@ -52,7 +52,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (messageList.get(position).isSystem()) return VIEW_TYPE_SYSTEM;
+        if (messageList.get(position).isSystem()) {
+            return VIEW_TYPE_SYSTEM;
+        }
         return VIEW_TYPE_MESSAGE;
     }
 
@@ -89,8 +91,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             chatHolder.tvMessage.setVisibility(View.VISIBLE);
 
             boolean showDateHeader = false;
-            if (position == 0) showDateHeader = true;
-            else {
+            if (position == 0) {
+                showDateHeader = true;
+            } else {
                 ChatMessage prevMsg = messageList.get(position - 1);
                 SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
                 if (!fmt.format(new Date(message.getTimestamp())).equals(fmt.format(new Date(prevMsg.getTimestamp())))) {
@@ -117,7 +120,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     isSameAsNext = true;
                 }
             }
-            if (showDateHeader) isSameAsPrevious = false;
+            if (showDateHeader) {
+                isSameAsPrevious = false;
+            }
 
             int avatarRes;
             String labelText;
@@ -188,10 +193,15 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 params.setMargins(120, isSameAsPrevious ? 1 : 8, 16, isSameAsNext ? 1 : 8);
                 chatHolder.techAvatarIcon.setVisibility(View.GONE);
 
-                if (!isSameAsPrevious && !isSameAsNext) chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user);
-                else if (!isSameAsPrevious) chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user_top);
-                else if (!isSameAsNext) chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user_bottom);
-                else chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user_middle);
+                if (!isSameAsPrevious && !isSameAsNext) {
+                    chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user);
+                } else if (!isSameAsPrevious) {
+                    chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user_top);
+                } else if (!isSameAsNext) {
+                    chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user_bottom);
+                } else {
+                    chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_user_middle);
+                }
             } else {
                 chatHolder.tvMessage.setTextColor(Color.BLACK);
                 chatHolder.tvTime.setTextColor(Color.BLACK);
@@ -215,11 +225,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
 
                 if (!isSameAsNext) {
-                    if (isSameAsPrevious) chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai_bottom);
-                    else chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai);
+                    if (isSameAsPrevious) {
+                        chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai_bottom);
+                    } else {
+                        chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai);
+                    }
                 } else {
-                    if (!isSameAsPrevious) chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai_top);
-                    else chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai_middle);
+                    if (!isSameAsPrevious) {
+                        chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai_top);
+                    } else {
+                        chatHolder.messageContainer.setBackgroundResource(R.drawable.bubble_ai_middle);
+                    }
                 }
             }
             chatHolder.messageContainer.setLayoutParams(params);
@@ -251,7 +267,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public int getItemCount() { return messageList.size(); }
+    public int getItemCount() {
+        return messageList != null ? messageList.size() : 0;
+    }
 
     static class ChatViewHolder extends RecyclerView.ViewHolder {
         TextView tvMessage, tvTime, tvDateHeader, tvSenderLabel, tvFileName, tvFileSize;
