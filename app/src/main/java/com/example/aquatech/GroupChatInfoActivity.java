@@ -79,6 +79,11 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         if (btnReadReceipts != null) {
             btnReadReceipts.setOnClickListener(v -> startActivity(new Intent(this, ReadReceiptsSettingsActivity.class)));
         }
+
+        View btnTyping = findViewById(R.id.rowTypingIndicator);
+        if (btnTyping != null) {
+            btnTyping.setOnClickListener(v -> startActivity(new Intent(this, TypingIndicatorSettingsActivity.class)));
+        }
     }
 
     private void showInviteLinkDialog() {
