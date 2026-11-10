@@ -41,14 +41,6 @@
             android:src="@drawable/technician_groupchat"
             app:shapeAppearanceOverlay="@style/CircleImage" />
 
-        <View
-            android:id="@+id/vOnlineDotGroup"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_alignBottom="@id/groupAvatarHeader"
-            android:layout_alignEnd="@id/groupAvatarHeader"
-            android:background="@drawable/circle_green_bg" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -150,21 +142,6 @@
             android:textSize="12.5sp" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvTypingStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="4dp"
-        android:fontFamily="@font/poppins"
-        android:text="Technician is typing..."
-        android:textColor="#2196F3"
-        android:textSize="12sp"
-        android:textStyle="italic"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/inputBarContainer"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/inputBarContainer"

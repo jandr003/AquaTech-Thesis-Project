@@ -223,6 +223,30 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             }
             chatHolder.messageContainer.setLayoutParams(params);
+
+            if (chatHolder.ivSeenReceiptAvatar != null) {
+                boolean isLastMessage = (position == getItemCount() - 1);
+                if (isFromMe && isLastMessage) {
+                    chatHolder.ivSeenReceiptAvatar.setVisibility(View.VISIBLE);
+                    int[] avatars = {
+                            R.drawable.technician_avatar1,
+                            R.drawable.technician_avatar2,
+                            R.drawable.technician_avatar3,
+                            R.drawable.technician_avatar4,
+                            R.drawable.technician_avatar5,
+                            R.drawable.technician_avatar6,
+                            R.drawable.technician_avatar7,
+                            R.drawable.technician_avatar8
+                    };
+                    int avatarIndex = Math.abs(position) % avatars.length;
+                    Glide.with(chatHolder.itemView.getContext())
+                            .load(avatars[avatarIndex])
+                            .circleCrop()
+                            .into(chatHolder.ivSeenReceiptAvatar);
+                } else {
+                    chatHolder.ivSeenReceiptAvatar.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
@@ -232,7 +256,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     static class ChatViewHolder extends RecyclerView.ViewHolder {
         TextView tvMessage, tvTime, tvDateHeader, tvSenderLabel, tvFileName, tvFileSize;
         View messageContainer, fileAttachmentLayout;
-        ImageView techAvatarIcon;
+        ImageView techAvatarIcon, ivSeenReceiptAvatar;
         ChatViewHolder(View v) {
             super(v);
             tvMessage = v.findViewById(R.id.tvMessage);
@@ -244,6 +268,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             fileAttachmentLayout = v.findViewById(R.id.fileAttachmentLayout);
             tvFileName = v.findViewById(R.id.tvFileName);
             tvFileSize = v.findViewById(R.id.tvFileSize);
+            ivSeenReceiptAvatar = v.findViewById(R.id.ivSeenReceiptAvatar);
         }
     }
 

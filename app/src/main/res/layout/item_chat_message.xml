@@ -150,4 +150,18 @@
         android:layout_height="0dp"
         android:visibility="gone" />
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivSeenReceiptAvatar"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_below="@id/messageContainer"
+        android:layout_alignEnd="@id/messageContainer"
+        android:layout_marginTop="2dp"
+        android:contentDescription="Seen Receipt Avatar"
+        android:scaleType="centerCrop"
+        android:src="@drawable/technician_avatar1"
+        android:visibility="gone"
+        app:shapeAppearanceOverlay="@style/CircleImage"
+        tools:visibility="visible" />
+
 </RelativeLayout>
