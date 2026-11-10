@@ -66,7 +66,7 @@
                 android:layout_height="28dp"
                 android:contentDescription="Copy"
                 android:src="@drawable/ic_copy_documents"
-                app:tint="#2196F3" />
+                app:tint="#0F172A" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
                 android:layout_height="28dp"
                 android:contentDescription="Pin"
                 android:src="@drawable/ic_pushpin_thumbtack"
-                app:tint="#2196F3" />
+                app:tint="#0F172A" />
 
             <TextView
                 android:id="@+id/tvActionPinLabel"
@@ -106,8 +106,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="Pin"
                 android:textColor="#0F172A"
-                android:textSize="12.5sp"
-                android:textStyle="bold" />
+                android:textSize="12.5sp" />
 
         </LinearLayout>
 
