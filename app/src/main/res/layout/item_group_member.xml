@@ -63,10 +63,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/poppins"
-                android:text="Available for task"
                 android:textColor="#059669"
                 android:textSize="11.5sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Available for task" />
 
         </LinearLayout>
     </LinearLayout>
