@@ -79,11 +79,6 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         if (btnReadReceipts != null) {
             btnReadReceipts.setOnClickListener(v -> startActivity(new Intent(this, ReadReceiptsSettingsActivity.class)));
         }
-
-        View btnLeave = findViewById(R.id.rowLeaveChat);
-        if (btnLeave != null) {
-            btnLeave.setOnClickListener(v -> showLeaveChatDialog());
-        }
     }
 
     private void showInviteLinkDialog() {
@@ -144,14 +139,5 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         }
 
         dialog.show();
-    }
-
-    private void showLeaveChatDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Leave Technicians Team Chat?")
-                .setMessage("Are you sure you want to leave the team channel?")
-                .setPositiveButton("Leave", (dialog, which) -> finish())
-                .setNegativeButton("Cancel", null)
-                .show();
     }
 }
