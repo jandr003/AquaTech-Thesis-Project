@@ -125,8 +125,7 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:contentDescription="More"
-                android:rotation="270"
-                android:src="@drawable/ic_chevron_down"
+                android:src="@drawable/ic_more_dots_horizontal"
                 app:tint="#0F172A" />
 
             <TextView
