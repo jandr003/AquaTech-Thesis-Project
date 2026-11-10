@@ -75,6 +75,11 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             btnSounds.setOnClickListener(v -> startActivity(new Intent(this, NotificationSoundsSettingsActivity.class)));
         }
 
+        View btnReadReceipts = findViewById(R.id.rowReadReceipts);
+        if (btnReadReceipts != null) {
+            btnReadReceipts.setOnClickListener(v -> startActivity(new Intent(this, ReadReceiptsSettingsActivity.class)));
+        }
+
         View btnLeave = findViewById(R.id.rowLeaveChat);
         if (btnLeave != null) {
             btnLeave.setOnClickListener(v -> showLeaveChatDialog());
