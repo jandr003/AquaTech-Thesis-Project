@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins"
-            android:text="Customize alert tone and vibration preferences"
+            android:text="Customize alert sound and vibration for Technicians Team Chat"
             android:textColor="#64748B"
             android:textSize="12.5sp" />
 
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Message Alert Ringtone"
+                    android:text="Notification Tone"
                     android:textColor="#0F172A"
                     android:textSize="14.5sp"
                     android:textStyle="bold" />
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/poppins"
-                    android:text="Play sound when team message arrives"
+                    android:text="Default (AquaTech Alert Chime)"
                     android:textColor="#64748B"
                     android:textSize="11.5sp" />
 
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Vibrate on Message"
+                    android:text="Vibrate"
                     android:textColor="#0F172A"
                     android:textSize="14.5sp"
                     android:textStyle="bold" />
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:fontFamily="@font/poppins"
-                    android:text="Vibrate phone on incoming team messages"
+                    android:text="Vibrate on incoming team messages"
                     android:textColor="#64748B"
                     android:textSize="11.5sp" />
 
@@ -153,5 +153,4 @@
             app:elevation="2dp" />
 
     </LinearLayout>
-
 </com.google.android.material.card.MaterialCardView>
