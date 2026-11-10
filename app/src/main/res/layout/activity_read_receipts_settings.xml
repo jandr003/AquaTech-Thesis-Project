@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Top Action Bar -->
     <RelativeLayout
         android:id="@+id/topBarReadReceipts"
         android:layout_width="match_parent"
@@ -50,7 +49,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBarReadReceipts">
 
-        <!-- Show Read Receipts Switch Row -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,5 +91,4 @@
             android:textSize="13sp" />
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
