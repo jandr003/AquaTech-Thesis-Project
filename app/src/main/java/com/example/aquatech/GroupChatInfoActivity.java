@@ -50,6 +50,11 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             });
         }
 
+        View btnNicknames = findViewById(R.id.btnActionNicknames);
+        if (btnNicknames != null) {
+            btnNicknames.setOnClickListener(v -> startActivity(new Intent(this, GroupChatNicknamesActivity.class)));
+        }
+
         View btnInviteLink = findViewById(R.id.rowInviteLink);
         if (btnInviteLink != null) {
             btnInviteLink.setOnClickListener(v -> showInviteLinkDialog());
