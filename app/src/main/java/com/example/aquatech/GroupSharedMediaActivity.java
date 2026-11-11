@@ -190,8 +190,12 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
                 mediaList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ChatMessage msg = ds.getValue(ChatMessage.class);
-                    if (msg != null && (msg.getFileUri() != null || msg.getFileUrl() != null || (msg.getText() != null && msg.getText().contains("http")))) {
-                        mediaList.add(msg);
+                    if (msg != null) {
+                        boolean hasMedia = msg.getFileUri() != null || msg.getFileUrl() != null;
+                        boolean hasLink = msg.getText() != null && msg.getText().contains("http");
+                        if (hasMedia || hasLink) {
+                            mediaList.add(msg);
+                        }
                     }
                 }
 
@@ -220,7 +224,9 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
                 memberNames.add("All Members");
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String name = ds.child("fullName").getValue(String.class);
-                    if (name == null) name = ds.child("name").getValue(String.class);
+                    if (name == null || name.isEmpty()) {
+                        name = ds.child("name").getValue(String.class);
+                    }
                     if (name != null && !name.isEmpty()) {
                         memberNames.add(name);
                     }
