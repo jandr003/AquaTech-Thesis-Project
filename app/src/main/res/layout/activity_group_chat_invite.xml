@@ -112,9 +112,9 @@
                             android:ellipsize="middle"
                             android:fontFamily="@font/poppins"
                             android:singleLine="true"
-                            android:text="https://aquatech.smartguard.ph/join/team-chat-2026"
                             android:textColor="#2196F3"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="https://aquatech.smartguard.ph/join/team-chat-2026" />
 
                     </LinearLayout>
 
