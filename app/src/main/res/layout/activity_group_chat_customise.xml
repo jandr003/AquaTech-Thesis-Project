@@ -10,7 +10,7 @@
         android:id="@+id/customiseHeader"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="#0F172A"
+        android:background="#2196F3"
         android:paddingHorizontal="12dp"
         app:layout_constraintTop_toTopOf="parent">
 
