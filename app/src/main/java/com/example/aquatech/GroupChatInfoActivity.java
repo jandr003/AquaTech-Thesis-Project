@@ -45,7 +45,7 @@ public class GroupChatInfoActivity extends AppCompatActivity {
 
         View btnInvite = findViewById(R.id.btnActionInvite);
         if (btnInvite != null) {
-            btnInvite.setOnClickListener(v -> showInviteMemberDialog());
+            btnInvite.setOnClickListener(v -> startActivity(new Intent(this, GroupChatInviteActivity.class)));
         }
 
         View btnMembers = findViewById(R.id.rowSeeMembers);
@@ -130,36 +130,6 @@ public class GroupChatInfoActivity extends AppCompatActivity {
         View btnCopy = dialog.findViewById(R.id.btnCopyInviteLink);
         if (btnCopy != null) {
             btnCopy.setOnClickListener(v -> {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("Team Chat Link", teamLink);
-                if (clipboard != null) {
-                    clipboard.setPrimaryClip(clip);
-                }
-                Toast.makeText(this, "Invitation link copied to clipboard!", Toast.LENGTH_SHORT).show();
-            });
-        }
-
-        dialog.show();
-    }
-
-    private void showInviteMemberDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_invite_technician);
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-
-        View btnClose = dialog.findViewById(R.id.btnCloseInviteMemberDialog);
-        if (btnClose != null) {
-            btnClose.setOnClickListener(v -> dialog.dismiss());
-        }
-
-        View btnCopy = dialog.findViewById(R.id.btnCopyInviteMemberLink);
-        if (btnCopy != null) {
-            btnCopy.setOnClickListener(v -> {
-                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-                String teamLink = "https://aquatech.smartguard.ph/join/team-chat-" + currentYear;
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Team Chat Link", teamLink);
                 if (clipboard != null) {
