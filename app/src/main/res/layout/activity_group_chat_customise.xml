@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F172A">
+    android:background="#F8FAFC">
 
-    <!-- Header Bar -->
     <RelativeLayout
         android:id="@+id/customiseHeader"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="#0F172A"
+        android:background="#2196F3"
         android:paddingHorizontal="12dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -64,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="Mode"
-                android:textColor="#F8FAFC"
+                android:textColor="#1E293B"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -134,7 +133,7 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/poppins"
                 android:text="Live Preview"
-                android:textColor="#F8FAFC"
+                android:textColor="#1E293B"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -219,7 +218,7 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/poppins"
                 android:text="Chat Theme Color"
-                android:textColor="#F8FAFC"
+                android:textColor="#1E293B"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -240,7 +239,7 @@
                     app:cardBackgroundColor="#2196F3"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="2dp"
-                    app:strokeColor="#FFFFFF"
+                    app:strokeColor="#1E293B"
                     app:strokeWidth="2.5dp" />
 
                 <com.google.android.material.card.MaterialCardView
