@@ -50,7 +50,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
             holder.tvId.setText("ID: ASC-T001");
         }
 
-        if ("Set nickname".equalsIgnoreCase(status) || (status != null && (status.contains("Set nickname") || status.contains("Nickname")))) {
+        if (status != null && (status.contains("Tap to edit") || status.contains("Nickname"))) {
             holder.tvStatus.setText(status);
             holder.tvStatus.setTextColor(Color.parseColor("#64748B"));
         } else if ("Busy".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
