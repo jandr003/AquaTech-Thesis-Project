@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechniciansAdapter.ViewHolder> {
@@ -39,7 +42,7 @@ public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechnic
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TechnicianModel tech = techList.get(position);
-        
+
         String name = tech.fullName;
         if (name == null || name.isEmpty()) {
             name = tech.name;
@@ -111,7 +114,10 @@ public class ManageTechniciansAdapter extends RecyclerView.Adapter<ManageTechnic
 
     @Override
     public int getItemCount() {
-        return techList != null ? techList.size() : 0;
+        if (techList != null) {
+            return techList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
