@@ -99,13 +99,19 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBackTeamChat);
         emptyLayout = findViewById(R.id.emptyTeamChatLayout);
 
-        btnBack.setOnClickListener(v -> finish());
-        btnSend.setOnClickListener(v -> sendTeamMessage());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        if (btnSend != null) {
+            btnSend.setOnClickListener(v -> sendTeamMessage());
+        }
 
         View btnInfo = findViewById(R.id.btnTeamInfo);
         if (btnInfo != null) {
             btnInfo.setOnClickListener(v -> {
-                startActivity(new Intent(this, GroupChatInfoActivity.class));
+                Intent intent = new Intent(this, GroupChatInfoActivity.class);
+                startActivity(intent);
             });
         }
 
@@ -121,10 +127,11 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
-        rvMessages.setLayoutManager(layoutManager);
-
-        chatAdapter = new ChatAdapter(messageList, ChatAdapter.MODE_TECH_CHAT);
-        rvMessages.setAdapter(chatAdapter);
+        if (rvMessages != null) {
+            rvMessages.setLayoutManager(layoutManager);
+            chatAdapter = new ChatAdapter(messageList, ChatAdapter.MODE_TECH_CHAT);
+            rvMessages.setAdapter(chatAdapter);
+        }
     }
 
     private void loadGroupMessages() {
@@ -134,8 +141,12 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
                 ChatMessage msg = snapshot.getValue(ChatMessage.class);
                 if (msg != null) {
                     messageList.add(msg);
-                    chatAdapter.notifyItemInserted(messageList.size() - 1);
-                    rvMessages.scrollToPosition(messageList.size() - 1);
+                    if (chatAdapter != null) {
+                        chatAdapter.notifyItemInserted(messageList.size() - 1);
+                    }
+                    if (rvMessages != null) {
+                        rvMessages.scrollToPosition(messageList.size() - 1);
+                    }
                 }
                 if (emptyLayout != null) {
                     emptyLayout.setVisibility(messageList.isEmpty() ? View.VISIBLE : View.GONE);
@@ -158,6 +169,9 @@ public class TechnicianGroupChatActivity extends AppCompatActivity {
     }
 
     private void sendTeamMessage() {
+        if (etMessage == null) {
+            return;
+        }
         String text = etMessage.getText().toString().trim();
         if (text.isEmpty()) {
             return;
