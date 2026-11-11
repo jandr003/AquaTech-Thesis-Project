@@ -200,7 +200,7 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="12dp"
                         android:background="@drawable/bubble_user"
-                        android:backgroundTint="#2196F3"
+                        android:backgroundTint="#7C3AED"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="10dp">
 
@@ -246,8 +246,7 @@
                     app:cardBackgroundColor="#2196F3"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="2dp"
-                    app:strokeColor="#FFFFFF"
-                    app:strokeWidth="2.5dp" />
+                    app:strokeWidth="0dp" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionPurple"
@@ -259,7 +258,8 @@
                     app:cardBackgroundColor="#7C3AED"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="2dp"
-                    app:strokeWidth="0dp" />
+                    app:strokeColor="#FFFFFF"
+                    app:strokeWidth="2.5dp" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionTeal"
