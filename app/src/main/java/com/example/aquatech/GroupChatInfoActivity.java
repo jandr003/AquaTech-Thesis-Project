@@ -60,6 +60,11 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             btnSearch.setOnClickListener(v -> startActivity(new Intent(this, GroupChatSearchActivity.class)));
         }
 
+        View btnCustomise = findViewById(R.id.btnActionCustomise);
+        if (btnCustomise != null) {
+            btnCustomise.setOnClickListener(v -> showCustomiseDialog());
+        }
+
         View btnInviteLink = findViewById(R.id.rowInviteLink);
         if (btnInviteLink != null) {
             btnInviteLink.setOnClickListener(v -> showInviteLinkDialog());
@@ -126,6 +131,29 @@ public class GroupChatInfoActivity extends AppCompatActivity {
                     clipboard.setPrimaryClip(clip);
                 }
                 Toast.makeText(this, "Invitation link copied to clipboard!", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        dialog.show();
+    }
+
+    private void showCustomiseDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_customise_group_chat);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        View btnClose = dialog.findViewById(R.id.btnCloseCustomiseDialog);
+        if (btnClose != null) {
+            btnClose.setOnClickListener(v -> dialog.dismiss());
+        }
+
+        View rowTheme = dialog.findViewById(R.id.rowCustomiseTheme);
+        if (rowTheme != null) {
+            rowTheme.setOnClickListener(v -> {
+                Toast.makeText(this, "Chat theme set to AquaTech Blue (Default)", Toast.LENGTH_SHORT).show();
             });
         }
 
