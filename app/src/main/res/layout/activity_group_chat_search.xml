@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- Top Action Search Bar -->
     <RelativeLayout
         android:id="@+id/topBarSearch"
         android:layout_width="match_parent"
