@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8FAFC">
 
-    <!-- Top Action Bar -->
     <RelativeLayout
         android:id="@+id/topBarInvite"
         android:layout_width="match_parent"
@@ -59,7 +58,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Share Team Link Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCopyInviteLink"
                 android:layout_width="match_parent"
@@ -140,7 +138,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Search Field -->
             <EditText
                 android:id="@+id/etSearchInviteTech"
                 android:layout_width="match_parent"
@@ -156,7 +153,6 @@
                 android:textColorHint="#94A3B8"
                 android:textSize="13.5sp" />
 
-            <!-- Section Header -->
             <TextView
                 android:id="@+id/tvSectionTitle"
                 android:layout_width="wrap_content"
