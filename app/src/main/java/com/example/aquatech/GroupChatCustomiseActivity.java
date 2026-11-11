@@ -1,5 +1,7 @@
 package com.example.aquatech;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -103,13 +105,13 @@ public class GroupChatCustomiseActivity extends AppCompatActivity {
         }
 
         if (previewCard != null) {
-            if (mode == 1) {
-                previewCard.setCardBackgroundColor(Color.parseColor("#F8FAFC"));
-            } else if (mode == 2) {
-                previewCard.setCardBackgroundColor(Color.parseColor("#0F172A"));
-            } else {
-                previewCard.setCardBackgroundColor(Color.parseColor("#1E293B"));
-            }
+            int targetCardColor = (mode == 1) ? Color.parseColor("#F8FAFC") : (mode == 2 ? Color.parseColor("#020617") : Color.parseColor("#1E293B"));
+            int fromCardColor = previewCard.getCardBackgroundColor().getDefaultColor();
+
+            ValueAnimator anim = ValueAnimator.ofObject(new ArgbEvaluator(), fromCardColor, targetCardColor);
+            anim.setDuration(300);
+            anim.addUpdateListener(animation -> previewCard.setCardBackgroundColor((int) animation.getAnimatedValue()));
+            anim.start();
         }
     }
 
@@ -125,7 +127,13 @@ public class GroupChatCustomiseActivity extends AppCompatActivity {
                 selectedColorCard = card;
 
                 if (previewOutgoingBubble != null) {
-                    previewOutgoingBubble.getBackground().setTint(Color.parseColor(hexColor));
+                    int targetColor = Color.parseColor(hexColor);
+                    int fromColor = Color.parseColor("#2196F3");
+
+                    ValueAnimator anim = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, targetColor);
+                    anim.setDuration(300);
+                    anim.addUpdateListener(animation -> previewOutgoingBubble.getBackground().setTint((int) animation.getAnimatedValue()));
+                    anim.start();
                 }
             });
         }
