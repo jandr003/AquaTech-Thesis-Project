@@ -1,6 +1,5 @@
 package com.example.aquatech;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -45,29 +44,42 @@ public class GroupChatInfoActivity extends AppCompatActivity {
 
         View btnInvite = findViewById(R.id.btnActionInvite);
         if (btnInvite != null) {
-            btnInvite.setOnClickListener(v -> startActivity(new Intent(this, GroupChatInviteActivity.class)));
+            btnInvite.setOnClickListener(v -> {
+                Intent intent = new Intent(this, GroupChatInviteActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnMembers = findViewById(R.id.rowSeeMembers);
         if (btnMembers != null) {
             btnMembers.setOnClickListener(v -> {
-                startActivity(new Intent(this, GroupChatMembersActivity.class));
+                Intent intent = new Intent(this, GroupChatMembersActivity.class);
+                startActivity(intent);
             });
         }
 
         View btnNicknames = findViewById(R.id.btnActionNicknames);
         if (btnNicknames != null) {
-            btnNicknames.setOnClickListener(v -> startActivity(new Intent(this, GroupChatNicknamesActivity.class)));
+            btnNicknames.setOnClickListener(v -> {
+                Intent intent = new Intent(this, GroupChatNicknamesActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnSearch = findViewById(R.id.btnActionSearch);
         if (btnSearch != null) {
-            btnSearch.setOnClickListener(v -> startActivity(new Intent(this, GroupChatSearchActivity.class)));
+            btnSearch.setOnClickListener(v -> {
+                Intent intent = new Intent(this, GroupChatSearchActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnCustomise = findViewById(R.id.btnActionCustomise);
         if (btnCustomise != null) {
-            btnCustomise.setOnClickListener(v -> startActivity(new Intent(this, GroupChatCustomiseActivity.class)));
+            btnCustomise.setOnClickListener(v -> {
+                Intent intent = new Intent(this, GroupChatCustomiseActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnInviteLink = findViewById(R.id.rowInviteLink);
@@ -77,12 +89,18 @@ public class GroupChatInfoActivity extends AppCompatActivity {
 
         View btnMedia = findViewById(R.id.rowViewMedia);
         if (btnMedia != null) {
-            btnMedia.setOnClickListener(v -> startActivity(new Intent(this, GroupSharedMediaActivity.class)));
+            btnMedia.setOnClickListener(v -> {
+                Intent intent = new Intent(this, GroupSharedMediaActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnPinned = findViewById(R.id.rowPinnedMessages);
         if (btnPinned != null) {
-            btnPinned.setOnClickListener(v -> startActivity(new Intent(this, PinnedMessagesActivity.class)));
+            btnPinned.setOnClickListener(v -> {
+                Intent intent = new Intent(this, PinnedMessagesActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnMute = findViewById(R.id.rowMuteChat);
@@ -92,17 +110,26 @@ public class GroupChatInfoActivity extends AppCompatActivity {
 
         View btnSounds = findViewById(R.id.rowNotificationsSounds);
         if (btnSounds != null) {
-            btnSounds.setOnClickListener(v -> startActivity(new Intent(this, NotificationSoundsSettingsActivity.class)));
+            btnSounds.setOnClickListener(v -> {
+                Intent intent = new Intent(this, NotificationSoundsSettingsActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnReadReceipts = findViewById(R.id.rowReadReceipts);
         if (btnReadReceipts != null) {
-            btnReadReceipts.setOnClickListener(v -> startActivity(new Intent(this, ReadReceiptsSettingsActivity.class)));
+            btnReadReceipts.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ReadReceiptsSettingsActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnTyping = findViewById(R.id.rowTypingIndicator);
         if (btnTyping != null) {
-            btnTyping.setOnClickListener(v -> startActivity(new Intent(this, TypingIndicatorSettingsActivity.class)));
+            btnTyping.setOnClickListener(v -> {
+                Intent intent = new Intent(this, TypingIndicatorSettingsActivity.class);
+                startActivity(intent);
+            });
         }
     }
 
