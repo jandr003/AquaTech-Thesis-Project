@@ -91,7 +91,10 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
 
     @Override
     public int getItemCount() {
-        return memberList != null ? memberList.size() : 0;
+        if (memberList != null) {
+            return memberList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
