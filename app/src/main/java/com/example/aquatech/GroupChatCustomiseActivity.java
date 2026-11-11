@@ -68,7 +68,7 @@ public class GroupChatCustomiseActivity extends AppCompatActivity {
         setupColorOption(R.id.colorOptionRed, "#EF4444");
         setupColorOption(R.id.colorOptionAmber, "#F59E0B");
         setupColorOption(R.id.colorOptionGreen, "#059669");
-        setupColorOption(R.id.colorOptionSlate, "#0F172A");
+        setupColorOption(R.id.colorOptionSlate, "#64748B");
         setupColorOption(R.id.colorOptionNavy, "#1E3A8A");
 
         selectedColorCard = findViewById(R.id.colorOptionBlue);

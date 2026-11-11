@@ -316,10 +316,11 @@
                     android:layout_margin="8dp"
                     android:clickable="true"
                     android:focusable="true"
-                    app:cardBackgroundColor="#0F172A"
+                    app:cardBackgroundColor="#64748B"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="2dp"
-                    app:strokeWidth="0dp" />
+                    app:strokeColor="#FFFFFF"
+                    app:strokeWidth="1dp" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionNavy"
