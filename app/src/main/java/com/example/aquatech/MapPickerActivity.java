@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -18,14 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.osmdroid.config.Configuration;
-import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.events.MapListener;
 import org.osmdroid.events.ScrollEvent;
 import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.MapEventsOverlay;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -56,65 +53,98 @@ public class MapPickerActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClearSearch);
         btnConfirm = findViewById(R.id.btnConfirmLocation);
 
-        mMap.setTileSource(TileSourceFactory.MAPNIK);
-        mMap.setMultiTouchControls(true);
-        mMap.getController().setZoom(17.0);
+        if (mMap != null) {
+            mMap.setTileSource(TileSourceFactory.MAPNIK);
+            mMap.setMultiTouchControls(true);
+            mMap.getController().setZoom(17.0);
 
-        GeoPoint startPoint = new GeoPoint(14.558472, 121.032389);
-        mMap.getController().setCenter(startPoint);
+            GeoPoint startPoint = new GeoPoint(14.558472, 121.032389);
+            mMap.getController().setCenter(startPoint);
+        }
 
         setupListeners();
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(v -> finish());
-        
-        btnClear.setOnClickListener(v -> {
-            etSearch.setText("");
-            btnClear.setVisibility(View.GONE);
-        });
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                btnClear.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
-            }
-            @Override public void afterTextChanged(Editable s) {}
-        });
+        if (btnClear != null) {
+            btnClear.setOnClickListener(v -> {
+                if (etSearch != null) {
+                    etSearch.setText("");
+                }
+                btnClear.setVisibility(View.GONE);
+            });
+        }
 
-        etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                searchLocation(etSearch.getText().toString());
-                return true;
-            }
-            return false;
-        });
+        if (etSearch != null) {
+            etSearch.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-        btnConfirm.setOnClickListener(v -> {
-            if (selectedPoint != null) {
-                Intent data = new Intent();
-                data.putExtra("ADDRESS", selectedAddress);
-                data.putExtra("LAT", selectedPoint.getLatitude());
-                data.putExtra("LNG", selectedPoint.getLongitude());
-                setResult(RESULT_OK, data);
-                finish();
-            }
-        });
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (btnClear != null) {
+                        btnClear.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
+                    }
+                }
 
-        mMap.addMapListener(new MapListener() {
-            @Override public boolean onScroll(ScrollEvent event) { updateCenter(); return true; }
-            @Override public boolean onZoom(ZoomEvent event) { return true; }
-        });
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+
+            etSearch.setOnEditorActionListener((v, actionId, event) -> {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchLocation(etSearch.getText().toString());
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        if (btnConfirm != null) {
+            btnConfirm.setOnClickListener(v -> {
+                if (selectedPoint != null) {
+                    Intent data = new Intent();
+                    data.putExtra("ADDRESS", selectedAddress);
+                    data.putExtra("LAT", selectedPoint.getLatitude());
+                    data.putExtra("LNG", selectedPoint.getLongitude());
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
+            });
+        }
+
+        if (mMap != null) {
+            mMap.addMapListener(new MapListener() {
+                @Override
+                public boolean onScroll(ScrollEvent event) {
+                    updateCenter();
+                    return true;
+                }
+
+                @Override
+                public boolean onZoom(ZoomEvent event) {
+                    return true;
+                }
+            });
+        }
     }
 
     private void updateCenter() {
-        GeoPoint center = (GeoPoint) mMap.getMapCenter();
-        selectedPoint = center;
-        new ReverseGeocodeTask().execute(center);
+        if (mMap != null) {
+            GeoPoint center = (GeoPoint) mMap.getMapCenter();
+            selectedPoint = center;
+            new ReverseGeocodeTask().execute(center);
+        }
     }
 
     private void searchLocation(String query) {
-        if (query.isEmpty()) return;
+        if (query == null || query.isEmpty()) {
+            return;
+        }
         new SearchTask().execute(query);
     }
 
@@ -127,11 +157,19 @@ public class MapPickerActivity extends AppCompatActivity {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("User-Agent", getPackageName());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder sb = new StringBuilder(); String line;
-                while ((line = reader.readLine()) != null) sb.append(line);
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
                 JSONArray array = new JSONArray(sb.toString());
-                return array.length() > 0 ? array.getJSONObject(0) : null;
-            } catch (Exception e) { return null; }
+                if (array.length() > 0) {
+                    return array.getJSONObject(0);
+                }
+                return null;
+            } catch (Exception e) {
+                return null;
+            }
         }
 
         @Override
@@ -140,9 +178,13 @@ public class MapPickerActivity extends AppCompatActivity {
                 double lat = result.optDouble("lat");
                 double lon = result.optDouble("lon");
                 GeoPoint point = new GeoPoint(lat, lon);
-                mMap.getController().animateTo(point);
+                if (mMap != null) {
+                    mMap.getController().animateTo(point);
+                }
                 selectedAddress = result.optString("display_name");
-                tvAddress.setText(selectedAddress);
+                if (tvAddress != null) {
+                    tvAddress.setText(selectedAddress);
+                }
             } else {
                 Toast.makeText(MapPickerActivity.this, "Location not found", Toast.LENGTH_SHORT).show();
             }
@@ -158,22 +200,42 @@ public class MapPickerActivity extends AppCompatActivity {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("User-Agent", getPackageName());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder sb = new StringBuilder(); String line;
-                while ((line = reader.readLine()) != null) sb.append(line);
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
                 JSONObject json = new JSONObject(sb.toString());
                 return json.optString("display_name");
-            } catch (Exception e) { return null; }
+            } catch (Exception e) {
+                return null;
+            }
         }
 
         @Override
         protected void onPostExecute(String address) {
             if (address != null) {
                 selectedAddress = address;
-                tvAddress.setText(address);
+                if (tvAddress != null) {
+                    tvAddress.setText(address);
+                }
             }
         }
     }
 
-    @Override protected void onResume() { super.onResume(); mMap.onResume(); }
-    @Override protected void onPause() { super.onPause(); mMap.onPause(); }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mMap != null) {
+            mMap.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMap != null) {
+            mMap.onPause();
+        }
+    }
 }
