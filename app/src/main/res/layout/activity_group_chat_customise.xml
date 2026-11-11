@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC">
+
+    <!-- Header Bar -->
+    <RelativeLayout
+        android:id="@+id/customiseHeader"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="#2196F3"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBackCustomiseChat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/arrow_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/btnBackCustomiseChat"
+            android:fontFamily="@font/poppins"
+            android:text="Customise"
+            android:textColor="@color/white"
+            android:textSize="17.5sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/customiseHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Mode Selector Segmented Controls -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Mode"
+                android:textColor="#1E293B"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_bg"
+                android:backgroundTint="#F1F5F9"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnModeLight"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2196F3"
+                    android:fontFamily="@font/poppins"
+                    android:text="☀️ Light"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12.5sp"
+                    app:cornerRadius="18dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnModeDark"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins"
+                    android:text="🌙 Dark"
+                    android:textAllCaps="false"
+                    android:textColor="#64748B"
+                    android:textSize="12.5sp"
+                    app:cornerRadius="18dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnModeDevice"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins"
+                    android:text="💻 Device"
+                    android:textAllCaps="false"
+                    android:textColor="#64748B"
+                    android:textSize="12.5sp"
+                    app:cornerRadius="18dp" />
+
+            </LinearLayout>
+
+            <!-- Live Preview Card -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/poppins"
+                android:text="Live Preview"
+                android:textColor="#1E293B"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/previewCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#0F172A"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/bg_version_chip"
+                        android:backgroundTint="#334155"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="3dp"
+                        android:text="Today"
+                        android:textColor="#94A3B8"
+                        android:textSize="11sp" />
+
+                    <!-- Incoming Preview Bubble -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bubble_ai"
+                        android:backgroundTint="#334155"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="This will become your chat theme 🌟"
+                            android:textColor="#FFFFFF"
+                            android:textSize="13.5sp" />
+
+                    </LinearLayout>
+
+                    <!-- Outgoing Preview Bubble -->
+                    <LinearLayout
+                        android:id="@+id/previewOutgoingBubble"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bubble_user"
+                        android:backgroundTint="#2196F3"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:id="@+id/tvPreviewSentText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Your sent messages will be in this color."
+                            android:textColor="#FFFFFF"
+                            android:textSize="13.5sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Color Palette Selector Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/poppins"
+                android:text="Chat Theme Color"
+                android:textColor="#1E293B"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:alignmentMode="alignMargins"
+                android:columnCount="4">
+
+                <!-- Color 1: AquaTech Blue -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorOptionBlue"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#2196F3"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="#1E293B"
+                    app:strokeWidth="2dp" />
+
+                <!-- Color 2: Purple -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorOptionPurple"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#7C3AED"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Color 3: Teal -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorOptionTeal"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#0D9488"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Color 4: Crimson Red -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorOptionRed"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#EF4444"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Color 5: Amber Gold -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorOptionAmber"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#F59E0B"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Color 6: Emerald Green -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorOptionGreen"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#059669"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Color 7: Deep Slate -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorOptionSlate"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#0F172A"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp" />
+
+                <!-- Color 8: Royal Navy -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/colorOptionNavy"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#1E3A8A"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp" />
+
+            </GridLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveCustomiseTheme"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="28dp"
+                android:backgroundTint="#2196F3"
+                android:fontFamily="@font/poppins"
+                android:text="Customize your theme"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="26dp"
+                app:elevation="2dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
