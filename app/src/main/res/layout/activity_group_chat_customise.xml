@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F172A">
+    android:background="#F8FAFC">
 
     <RelativeLayout
         android:id="@+id/customiseHeader"
@@ -43,13 +43,6 @@
 
     </RelativeLayout>
 
-    <View
-        android:id="@+id/headerDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#1E293B"
-        app:layout_constraintTop_toBottomOf="@id/customiseHeader" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -57,7 +50,7 @@
         android:overScrollMode="never"
         android:paddingBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerDivider">
+        app:layout_constraintTop_toBottomOf="@id/customiseHeader">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
                 android:text="Mode"
-                android:textColor="#F8FAFC"
+                android:textColor="#1E293B"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -78,10 +71,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
-                app:cardBackgroundColor="#1E293B"
+                app:cardBackgroundColor="#F1F5F9"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#334155"
+                app:strokeColor="#CBD5E1"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -92,28 +85,28 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnModeLight"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/poppins"
-                        android:text="Light"
-                        android:textAllCaps="false"
-                        android:textColor="#94A3B8"
-                        android:textSize="12.5sp"
-                        app:cornerRadius="20dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnModeDark"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:backgroundTint="#2196F3"
                         android:fontFamily="@font/poppins"
-                        android:text="Dark"
+                        android:text="Light"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
+                        android:textSize="12.5sp"
+                        app:cornerRadius="20dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnModeDark"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins"
+                        android:text="Dark"
+                        android:textAllCaps="false"
+                        android:textColor="#64748B"
                         android:textSize="12.5sp"
                         app:cornerRadius="20dp" />
 
@@ -126,7 +119,7 @@
                         android:fontFamily="@font/poppins"
                         android:text="Device"
                         android:textAllCaps="false"
-                        android:textColor="#94A3B8"
+                        android:textColor="#64748B"
                         android:textSize="12.5sp"
                         app:cornerRadius="20dp" />
 
@@ -140,19 +133,20 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/poppins"
                 android:text="Live Preview"
-                android:textColor="#F8FAFC"
+                android:textColor="#1E293B"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
+            <!-- Light Mode Live Preview Box -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/previewCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:cardBackgroundColor="#1E293B"
+                app:cardBackgroundColor="#F8FAFC"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#334155"
+                app:strokeColor="#CBD5E1"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -166,20 +160,21 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/bg_version_chip"
-                        android:backgroundTint="#334155"
+                        android:backgroundTint="#E2E8F0"
                         android:fontFamily="@font/poppins"
                         android:paddingHorizontal="14dp"
                         android:paddingVertical="4dp"
                         android:text="Today"
-                        android:textColor="#94A3B8"
+                        android:textColor="#64748B"
                         android:textSize="11.5sp" />
 
+                    <!-- Light Mode Incoming Message Bubble -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="12dp"
                         android:background="@drawable/bubble_ai"
-                        android:backgroundTint="#334155"
+                        android:backgroundTint="#E2E8F0"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="10dp">
 
@@ -188,11 +183,12 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="This will become your chat theme"
-                            android:textColor="#FFFFFF"
+                            android:textColor="#0F172A"
                             android:textSize="13.5sp" />
 
                     </LinearLayout>
 
+                    <!-- Light Mode Outgoing Message Bubble -->
                     <LinearLayout
                         android:id="@+id/previewOutgoingBubble"
                         android:layout_width="wrap_content"
@@ -200,7 +196,7 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="12dp"
                         android:background="@drawable/bubble_user"
-                        android:backgroundTint="#1E3A8A"
+                        android:backgroundTint="#2196F3"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="10dp">
 
@@ -225,7 +221,7 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/poppins"
                 android:text="Chat Theme Color"
-                android:textColor="#F8FAFC"
+                android:textColor="#1E293B"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -246,7 +242,8 @@
                     app:cardBackgroundColor="#2196F3"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="2dp"
-                    app:strokeWidth="0dp" />
+                    app:strokeColor="#1E293B"
+                    app:strokeWidth="2.5dp" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionPurple"
@@ -330,8 +327,7 @@
                     app:cardBackgroundColor="#1E3A8A"
                     app:cardCornerRadius="30dp"
                     app:cardElevation="2dp"
-                    app:strokeColor="#FFFFFF"
-                    app:strokeWidth="2.5dp" />
+                    app:strokeWidth="0dp" />
 
             </GridLayout>
 
