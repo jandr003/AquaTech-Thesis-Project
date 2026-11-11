@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,12 +10,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 public class GroupChatCustomiseActivity extends AppCompatActivity {
 
     private View previewOutgoingBubble;
+    private MaterialCardView previewCard;
     private MaterialCardView selectedColorCard;
+    private MaterialButton btnModeLight, btnModeDark, btnModeDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,23 @@ public class GroupChatCustomiseActivity extends AppCompatActivity {
         }
 
         previewOutgoingBubble = findViewById(R.id.previewOutgoingBubble);
+        previewCard = findViewById(R.id.previewCard);
+
+        btnModeLight = findViewById(R.id.btnModeLight);
+        btnModeDark = findViewById(R.id.btnModeDark);
+        btnModeDevice = findViewById(R.id.btnModeDevice);
+
+        if (btnModeLight != null) {
+            btnModeLight.setOnClickListener(v -> setPreviewMode(1));
+        }
+
+        if (btnModeDark != null) {
+            btnModeDark.setOnClickListener(v -> setPreviewMode(2));
+        }
+
+        if (btnModeDevice != null) {
+            btnModeDevice.setOnClickListener(v -> setPreviewMode(3));
+        }
 
         setupColorOption(R.id.colorOptionBlue, "#2196F3");
         setupColorOption(R.id.colorOptionPurple, "#7C3AED");
@@ -58,6 +79,37 @@ public class GroupChatCustomiseActivity extends AppCompatActivity {
                 Toast.makeText(this, "Chat theme updated!", Toast.LENGTH_SHORT).show();
                 finish();
             });
+        }
+    }
+
+    private void setPreviewMode(int mode) {
+        int activeBg = Color.parseColor("#2196F3");
+        int activeText = Color.WHITE;
+        int inactiveText = Color.parseColor("#64748B");
+
+        if (btnModeLight != null) {
+            btnModeLight.setBackgroundTintList(ColorStateList.valueOf(mode == 1 ? activeBg : Color.TRANSPARENT));
+            btnModeLight.setTextColor(mode == 1 ? activeText : inactiveText);
+        }
+
+        if (btnModeDark != null) {
+            btnModeDark.setBackgroundTintList(ColorStateList.valueOf(mode == 2 ? activeBg : Color.TRANSPARENT));
+            btnModeDark.setTextColor(mode == 2 ? activeText : inactiveText);
+        }
+
+        if (btnModeDevice != null) {
+            btnModeDevice.setBackgroundTintList(ColorStateList.valueOf(mode == 3 ? activeBg : Color.TRANSPARENT));
+            btnModeDevice.setTextColor(mode == 3 ? activeText : inactiveText);
+        }
+
+        if (previewCard != null) {
+            if (mode == 1) {
+                previewCard.setCardBackgroundColor(Color.parseColor("#F8FAFC"));
+            } else if (mode == 2) {
+                previewCard.setCardBackgroundColor(Color.parseColor("#0F172A"));
+            } else {
+                previewCard.setCardBackgroundColor(Color.parseColor("#1E293B"));
+            }
         }
     }
 
