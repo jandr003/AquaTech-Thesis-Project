@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F8FAFC">
 
-    <!-- Header Bar -->
     <RelativeLayout
         android:id="@+id/customiseHeader"
         android:layout_width="match_parent"
@@ -59,7 +58,6 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Mode Selector Segmented Controls -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,7 +118,6 @@
 
             </LinearLayout>
 
-            <!-- Live Preview Card -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -160,7 +157,6 @@
                         android:textColor="#94A3B8"
                         android:textSize="11sp" />
 
-                    <!-- Incoming Preview Bubble -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -180,7 +176,6 @@
 
                     </LinearLayout>
 
-                    <!-- Outgoing Preview Bubble -->
                     <LinearLayout
                         android:id="@+id/previewOutgoingBubble"
                         android:layout_width="wrap_content"
@@ -207,7 +202,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Color Palette Selector Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -225,7 +219,6 @@
                 android:alignmentMode="alignMargins"
                 android:columnCount="4">
 
-                <!-- Color 1: AquaTech Blue -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionBlue"
                     android:layout_width="60dp"
@@ -239,7 +232,6 @@
                     app:strokeColor="#1E293B"
                     app:strokeWidth="2dp" />
 
-                <!-- Color 2: Purple -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionPurple"
                     android:layout_width="60dp"
@@ -252,7 +244,6 @@
                     app:cardElevation="2dp"
                     app:strokeWidth="0dp" />
 
-                <!-- Color 3: Teal -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionTeal"
                     android:layout_width="60dp"
@@ -265,7 +256,6 @@
                     app:cardElevation="2dp"
                     app:strokeWidth="0dp" />
 
-                <!-- Color 4: Crimson Red -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionRed"
                     android:layout_width="60dp"
@@ -278,7 +268,6 @@
                     app:cardElevation="2dp"
                     app:strokeWidth="0dp" />
 
-                <!-- Color 5: Amber Gold -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionAmber"
                     android:layout_width="60dp"
@@ -291,7 +280,6 @@
                     app:cardElevation="2dp"
                     app:strokeWidth="0dp" />
 
-                <!-- Color 6: Emerald Green -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionGreen"
                     android:layout_width="60dp"
@@ -304,7 +292,6 @@
                     app:cardElevation="2dp"
                     app:strokeWidth="0dp" />
 
-                <!-- Color 7: Deep Slate -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionSlate"
                     android:layout_width="60dp"
@@ -317,7 +304,6 @@
                     app:cardElevation="2dp"
                     app:strokeWidth="0dp" />
 
-                <!-- Color 8: Royal Navy -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/colorOptionNavy"
                     android:layout_width="60dp"
