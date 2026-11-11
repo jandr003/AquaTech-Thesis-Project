@@ -55,6 +55,11 @@ public class GroupChatInfoActivity extends AppCompatActivity {
             btnNicknames.setOnClickListener(v -> startActivity(new Intent(this, GroupChatNicknamesActivity.class)));
         }
 
+        View btnSearch = findViewById(R.id.btnActionSearch);
+        if (btnSearch != null) {
+            btnSearch.setOnClickListener(v -> startActivity(new Intent(this, GroupChatSearchActivity.class)));
+        }
+
         View btnInviteLink = findViewById(R.id.rowInviteLink);
         if (btnInviteLink != null) {
             btnInviteLink.setOnClickListener(v -> showInviteLinkDialog());
