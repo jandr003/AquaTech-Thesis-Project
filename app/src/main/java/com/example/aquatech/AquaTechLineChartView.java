@@ -128,7 +128,9 @@ public class AquaTechLineChartView extends View {
         int width = getWidth();
         int height = getHeight();
 
-        if (width <= 0 || height <= 0) return;
+        if (width <= 0 || height <= 0) {
+            return;
+        }
 
         if (dataValues == null || dataValues.isEmpty()) {
             loadSampleData();
@@ -142,11 +144,15 @@ public class AquaTechLineChartView extends View {
         float chartWidth = width - paddingLeft - paddingRight;
         float chartHeight = height - paddingTop - paddingBottom;
 
-        if (chartWidth <= 0 || chartHeight <= 0) return;
+        if (chartWidth <= 0 || chartHeight <= 0) {
+            return;
+        }
 
         float maxVal = 10f;
         for (float val : dataValues) {
-            if (val > maxVal) maxVal = val;
+            if (val > maxVal) {
+                maxVal = val;
+            }
         }
         maxVal = (float) Math.ceil(maxVal / 10.0) * 10f;
 
