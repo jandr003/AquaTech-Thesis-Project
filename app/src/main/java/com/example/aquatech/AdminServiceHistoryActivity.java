@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.HorizontalScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,7 +66,10 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackAdminHistory).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackAdminHistory);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         tvHeaderTotalCount = findViewById(R.id.tvTotalHistoryCount);
         tvStatTotal = findViewById(R.id.tvStatTotal);
@@ -138,8 +139,12 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
 
                     String ticketId = ds.getKey();
                     String sroNumber = ds.child("referenceNo").getValue(String.class);
-                    if (sroNumber == null) sroNumber = ds.child("sroNumber").getValue(String.class);
-                    if (sroNumber == null) sroNumber = ticketId;
+                    if (sroNumber == null) {
+                        sroNumber = ds.child("sroNumber").getValue(String.class);
+                    }
+                    if (sroNumber == null) {
+                        sroNumber = ticketId;
+                    }
 
                     String custName = ds.child("customerName").getValue(String.class);
                     String custPhone = ds.child("customerPhone").getValue(String.class);
@@ -168,17 +173,27 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
 
                 Collections.reverse(fullHistoryList);
 
-                if (tvHeaderTotalCount != null) tvHeaderTotalCount.setText(totalCount + " Records");
-                if (tvStatTotal != null) tvStatTotal.setText(String.valueOf(totalCount));
-                if (tvStatCompleted != null) tvStatCompleted.setText(String.valueOf(completedCount));
-                if (tvStatPending != null) tvStatPending.setText(String.valueOf(pendingCount));
+                if (tvHeaderTotalCount != null) {
+                    tvHeaderTotalCount.setText(totalCount + " Records");
+                }
+
+                if (tvStatTotal != null) {
+                    tvStatTotal.setText(String.valueOf(totalCount));
+                }
+
+                if (tvStatCompleted != null) {
+                    tvStatCompleted.setText(String.valueOf(completedCount));
+                }
+
+                if (tvStatPending != null) {
+                    tvStatPending.setText(String.valueOf(pendingCount));
+                }
 
                 applyFilters();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -259,20 +274,26 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
             }
 
             holder.tvCustomer.setText(item.getCustomerName() != null ? item.getCustomerName() : "Customer Name");
-            
+
             String serviceType = item.getUnitName();
-            if (serviceType == null || serviceType.isEmpty()) serviceType = "Water dispenser service";
+            if (serviceType == null || serviceType.isEmpty()) {
+                serviceType = "Water dispenser service";
+            }
             holder.tvServiceType.setText(serviceType);
 
             String techName = item.getTechName();
-            if (techName == null || techName.isEmpty()) techName = "Assigned technician";
+            if (techName == null || techName.isEmpty()) {
+                techName = "Assigned technician";
+            }
             holder.tvTech.setText("Technician: " + techName);
 
             String dateStr = item.getDateTime();
             holder.tvDate.setText("Service Date: " + (dateStr != null && !dateStr.isEmpty() ? dateStr : "—"));
 
             String status = item.getStatus();
-            if (status == null || status.isEmpty()) status = "Completed";
+            if (status == null || status.isEmpty()) {
+                status = "Completed";
+            }
             holder.tvStatus.setText(status);
 
             if ("Completed".equalsIgnoreCase(status)) {
@@ -298,7 +319,10 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return list.size();
+            if (list != null) {
+                return list.size();
+            }
+            return 0;
         }
 
         static class ViewHolder extends RecyclerView.ViewHolder {
