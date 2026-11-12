@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,26 +30,41 @@ public class AuditLogAdapter extends RecyclerView.Adapter<AuditLogAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Map<String, String> item = logList.get(position);
-        
-        holder.tvTicketID.setText(item.getOrDefault("ticketID", "N/A"));
-        holder.tvSRO.setText(item.getOrDefault("sroNumber", "N/A"));
-        holder.tvCustomerID.setText(item.getOrDefault("customerID", "N/A"));
-        
-        String status = item.getOrDefault("status", "Pending");
-        holder.tvStatus.setText(status.toUpperCase());
 
-        if ("Completed".equalsIgnoreCase(status) || "Resolved".equalsIgnoreCase(status)) {
-            holder.tvStatus.setTextColor(Color.parseColor("#8BC34A"));
-            holder.tvStatus.setBackgroundResource(R.drawable.status_circle_green);
-        } else {
-            holder.tvStatus.setTextColor(Color.parseColor("#FF9800"));
-            holder.tvStatus.setBackgroundResource(R.drawable.status_circle_green);
+        if (item != null) {
+            if (holder.tvTicketID != null) {
+                holder.tvTicketID.setText(item.getOrDefault("ticketID", "N/A"));
+            }
+
+            if (holder.tvSRO != null) {
+                holder.tvSRO.setText(item.getOrDefault("sroNumber", "N/A"));
+            }
+
+            if (holder.tvCustomerID != null) {
+                holder.tvCustomerID.setText(item.getOrDefault("customerID", "N/A"));
+            }
+
+            String status = item.getOrDefault("status", "Pending");
+            if (holder.tvStatus != null && status != null) {
+                holder.tvStatus.setText(status.toUpperCase());
+
+                if ("Completed".equalsIgnoreCase(status) || "Resolved".equalsIgnoreCase(status)) {
+                    holder.tvStatus.setTextColor(Color.parseColor("#8BC34A"));
+                    holder.tvStatus.setBackgroundResource(R.drawable.status_circle_green);
+                } else {
+                    holder.tvStatus.setTextColor(Color.parseColor("#FF9800"));
+                    holder.tvStatus.setBackgroundResource(R.drawable.status_circle_green);
+                }
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return logList.size();
+        if (logList != null) {
+            return logList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
