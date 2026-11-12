@@ -1,6 +1,7 @@
 package com.example.aquatech;
 
 public class ChatMessage {
+
     private String text;
     private String senderId;
     private String senderName;
@@ -15,12 +16,10 @@ public class ChatMessage {
     private String fileUrl;
     private String fileUri;
 
-    // Receipt fields
     private boolean isReceipt;
     private String ticketId;
 
     public ChatMessage() {
-        // Required for Firebase
     }
 
     public ChatMessage(String text, String senderId, boolean isSystem) {
@@ -58,42 +57,113 @@ public class ChatMessage {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public String getText() { return text; }
-    public void setText(String text) { this.text = text; }
+    public String getText() {
+        return text;
+    }
 
-    public String getSenderId() { return senderId; }
-    public void setSenderId(String senderId) { this.senderId = senderId; }
+    public void setText(String text) {
+        this.text = text;
+    }
 
-    public String getSenderName() { return senderName; }
-    public void setSenderName(String senderName) { this.senderName = senderName; }
+    public String getSenderId() {
+        return senderId;
+    }
 
-    public long getTimestamp() { return timestamp; }
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
 
-    public boolean isSystem() { return isSystem; }
-    public void setSystem(boolean system) { isSystem = system; }
+    public String getSenderName() {
+        return senderName;
+    }
 
-    public boolean isUser() { return isUser; }
-    public void setUser(boolean user) { isUser = user; }
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
 
-    public boolean isFile() { return isFile; }
-    public void setFile(boolean file) { isFile = file; }
+    public long getTimestamp() {
+        return timestamp;
+    }
 
-    public String getFileName() { return fileName; }
-    public void setFileName(String fileName) { this.fileName = fileName; }
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 
-    public String getFileSize() { return fileSize; }
-    public void setFileSize(String fileSize) { this.fileSize = fileSize; }
+    public boolean isSystem() {
+        return isSystem;
+    }
 
-    public String getFileUrl() { return fileUrl != null ? fileUrl : fileUri; }
-    public void setFileUrl(String fileUrl) { this.fileUrl = fileUrl; }
+    public void setSystem(boolean system) {
+        isSystem = system;
+    }
 
-    public String getFileUri() { return fileUri != null ? fileUri : fileUrl; }
-    public void setFileUri(String fileUri) { this.fileUri = fileUri; }
+    public boolean isUser() {
+        return isUser;
+    }
 
-    public boolean isReceipt() { return isReceipt; }
-    public void setReceipt(boolean receipt) { isReceipt = receipt; }
+    public void setUser(boolean user) {
+        isUser = user;
+    }
 
-    public String getTicketId() { return ticketId; }
-    public void setTicketId(String ticketId) { this.ticketId = ticketId; }
+    public boolean isFile() {
+        return isFile;
+    }
+
+    public void setFile(boolean file) {
+        isFile = file;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(String fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public String getFileUrl() {
+        if (fileUrl != null) {
+            return fileUrl;
+        }
+        return fileUri;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public String getFileUri() {
+        if (fileUri != null) {
+            return fileUri;
+        }
+        return fileUrl;
+    }
+
+    public void setFileUri(String fileUri) {
+        this.fileUri = fileUri;
+    }
+
+    public boolean isReceipt() {
+        return isReceipt;
+    }
+
+    public void setReceipt(boolean receipt) {
+        isReceipt = receipt;
+    }
+
+    public String getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(String ticketId) {
+        this.ticketId = ticketId;
+    }
 }
