@@ -1,10 +1,12 @@
 package com.example.aquatech;
 
 import androidx.fragment.app.FragmentManager;
+
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
-import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AquaTimePickerDialog {
 
@@ -18,8 +20,14 @@ public class AquaTimePickerDialog {
     public static void showStart(FragmentManager fm, OnTimePicked callback) {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        if (hour < OFFICE_START_HOUR) hour = OFFICE_START_HOUR;
-        if (hour >= OFFICE_END_HOUR) hour = OFFICE_END_HOUR - 1;
+
+        if (hour < OFFICE_START_HOUR) {
+            hour = OFFICE_START_HOUR;
+        }
+
+        if (hour >= OFFICE_END_HOUR) {
+            hour = OFFICE_END_HOUR - 1;
+        }
 
         MaterialTimePicker picker = new MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_12H)
@@ -34,7 +42,6 @@ public class AquaTimePickerDialog {
             int selectedMinute = picker.getMinute();
 
             if (selectedHour < OFFICE_START_HOUR || selectedHour >= OFFICE_END_HOUR) {
-                String message = "Please select a time between 8:00 AM and 5:00 PM.";
                 return;
             }
 
@@ -51,8 +58,11 @@ public class AquaTimePickerDialog {
             }
             String endTime = formatTime(endCalendar.get(Calendar.HOUR_OF_DAY), endCalendar.get(Calendar.MINUTE));
 
-            callback.onPicked(startTime, endTime);
+            if (callback != null) {
+                callback.onPicked(startTime, endTime);
+            }
         });
+
         picker.show(fm, "start_time_picker");
     }
 
@@ -63,13 +73,18 @@ public class AquaTimePickerDialog {
                 String[] parts = startTimeStr.replace(" AM", "").replace(" PM", "").split(":");
                 int startHour = Integer.parseInt(parts[0]);
                 int startMin = Integer.parseInt(parts[1]);
-                if (startTimeStr.contains("PM") && startHour != 12) startHour += 12;
-                if (startTimeStr.contains("AM") && startHour == 12) startHour = 0;
+
+                if (startTimeStr.contains("PM") && startHour != 12) {
+                    startHour += 12;
+                }
+
+                if (startTimeStr.contains("AM") && startHour == 12) {
+                    startHour = 0;
+                }
+
                 startCal.set(Calendar.HOUR_OF_DAY, startHour);
                 startCal.set(Calendar.MINUTE, startMin);
-            }
-            catch (Exception e) {
-            }
+            } catch (Exception ignored) {}
         }
 
         MaterialTimePicker picker = new MaterialTimePicker.Builder()
@@ -90,15 +105,20 @@ public class AquaTimePickerDialog {
             }
 
             String endTime = formatTime(selectedHour, selectedMinute);
-            callback.onPicked(null, endTime);
+            if (callback != null) {
+                callback.onPicked(null, endTime);
+            }
         });
+
         picker.show(fm, "end_time_picker");
     }
 
     private static String formatTime(int hour, int minute) {
         String amPm = hour >= 12 ? "PM" : "AM";
         int displayHour = hour % 12;
-        if (displayHour == 0) displayHour = 12;
-        return String.format("%02d:%02d %s", displayHour, minute, amPm);
+        if (displayHour == 0) {
+            displayHour = 12;
+        }
+        return String.format(Locale.US, "%02d:%02d %s", displayHour, minute, amPm);
     }
 }
