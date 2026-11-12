@@ -46,11 +46,17 @@ public class AdminLogsActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackLogs).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackLogs);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         rvAdminLogs = findViewById(R.id.rvAdminLogs);
-        rvAdminLogs.setLayoutManager(new LinearLayoutManager(this));
-        logAdapter = new AdminLogAdapter(logList);
-        rvAdminLogs.setAdapter(logAdapter);
+        if (rvAdminLogs != null) {
+            rvAdminLogs.setLayoutManager(new LinearLayoutManager(this));
+            logAdapter = new AdminLogAdapter(logList);
+            rvAdminLogs.setAdapter(logAdapter);
+        }
     }
 
     private void setupFirebase() {
@@ -62,7 +68,9 @@ public class AdminLogsActivity extends AppCompatActivity {
                 logList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     AdminLogModel log = ds.getValue(AdminLogModel.class);
-                    if (log != null) logList.add(log);
+                    if (log != null) {
+                        logList.add(log);
+                    }
                 }
                 Collections.reverse(logList);
                 if (tvLogCountBadge != null) {
