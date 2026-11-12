@@ -42,7 +42,10 @@ public class AdminAddTechnicianActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackAddTech).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackAddTech);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         etFullName = findViewById(R.id.etTechFullName);
         etEmail = findViewById(R.id.etTechEmail);
@@ -50,7 +53,10 @@ public class AdminAddTechnicianActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etTechPassword);
         etConfirmPassword = findViewById(R.id.etTechConfirmPassword);
 
-        findViewById(R.id.btnSubmitCreateTech).setOnClickListener(v -> handleCreateTechnician());
+        View btnSubmit = findViewById(R.id.btnSubmitCreateTech);
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> handleCreateTechnician());
+        }
     }
 
     private void handleCreateTechnician() {
