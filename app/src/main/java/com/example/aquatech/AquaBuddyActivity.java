@@ -97,18 +97,21 @@ public class AquaBuddyActivity extends AppCompatActivity {
         if (botChatRef != null) {
             loadChatHistory();
             startTrackingTechnician();
-            handleIncomingFiles(); 
+            handleIncomingFiles();
             setupNotificationMonitor();
-
             checkAndSendInitialGreeting();
         } else {
             addMessageToUI("Hello there, buddy! I'm AquaBuddy, your friendly assistant. How's your day going? I'm here to help you with your water dispenser needs!", false, false);
         }
-        
+
         resetInactivityTimer();
     }
 
     private void checkAndSendInitialGreeting() {
+        if (botChatRef == null) {
+            return;
+        }
+
         botChatRef.limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -116,7 +119,9 @@ public class AquaBuddyActivity extends AppCompatActivity {
                     sendBotMessage("Hi buddy! I noticed you clicked for assistance. How are you doing today? I'm ready to help you with any problems or requests you have! 😊");
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -133,9 +138,12 @@ public class AquaBuddyActivity extends AppCompatActivity {
     }
 
     private void setupNotificationMonitor() {
-        if (currentUid == null) return;
+        if (currentUid == null) {
+            return;
+        }
+
         notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("CustomerNotifications").child(currentUid);
-        
+
         notifListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -149,46 +157,60 @@ public class AquaBuddyActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot s) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot s) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         };
+
         notifRef.addChildEventListener(notifListener);
         notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot snapshot) { isInitialNotifLoad = false; }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                isInitialNotifLoad = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void showIncomingCallDialog(String message, String callerTechId) {
         new AlertDialog.Builder(this)
-            .setTitle("Incoming Call")
-            .setMessage(Html.fromHtml(message))
-            .setCancelable(false)
-            .setPositiveButton("Answer", (dialog, which) -> {
-                String cTid = (callerTechId != null && !callerTechId.isEmpty()) ? callerTechId : assignedTechId;
-                String cTname = (assignedTechName != null) ? assignedTechName : "Technician";
+                .setTitle("Incoming Call")
+                .setMessage(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY))
+                .setCancelable(false)
+                .setPositiveButton("Answer", (dialog, which) -> {
+                    String cTid = (callerTechId != null && !callerTechId.isEmpty()) ? callerTechId : assignedTechId;
+                    String cTname = (assignedTechName != null) ? assignedTechName : "Technician";
 
-                if (cTid != null) {
-                    String chatId = cTid + "_" + currentUid;
-                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("active");
-                }
+                    if (cTid != null) {
+                        String chatId = cTid + "_" + currentUid;
+                        FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("active");
+                    }
 
-                Intent intent = new Intent(this, CustomerVoiceCallActivity.class);
-                intent.putExtra("NAME", cTname);
-                intent.putExtra("TECH_ID", cTid);
-                intent.putExtra("CUSTOMER_ID", currentUid);
-                startActivity(intent);
-            })
-            .setNegativeButton("Decline", (dialog, which) -> {
-                String cTid = (callerTechId != null && !callerTechId.isEmpty()) ? callerTechId : assignedTechId;
-                if (cTid != null) {
-                    String chatId = cTid + "_" + currentUid;
-                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
-                }
-            })
-            .show();
+                    Intent intent = new Intent(this, CustomerVoiceCallActivity.class);
+                    intent.putExtra("NAME", cTname);
+                    intent.putExtra("TECH_ID", cTid);
+                    intent.putExtra("CUSTOMER_ID", currentUid);
+                    startActivity(intent);
+                })
+                .setNegativeButton("Decline", (dialog, which) -> {
+                    String cTid = (callerTechId != null && !callerTechId.isEmpty()) ? callerTechId : assignedTechId;
+                    if (cTid != null) {
+                        String chatId = cTid + "_" + currentUid;
+                        FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                    }
+                })
+                .show();
     }
 
     private void handleIncomingFiles() {
@@ -196,17 +218,18 @@ public class AquaBuddyActivity extends AppCompatActivity {
             String msg = "Hi buddy! Great news! Your service request has been processed and your schedule is now confirmed. You can view the details in your request history. See you soon! 😊";
             saveMessage(msg, false, false);
         }
-        
+
         if (getIntent().getBooleanExtra("SEND_FILE_MESSAGE", false)) {
             String fileName = getIntent().getStringExtra("FILE_NAME");
             String fileUri = getIntent().getStringExtra("FILE_URI");
             String ticketId = getIntent().getStringExtra("TICKET_ID");
-            if (fileName != null) {
+
+            if (fileName != null && botChatRef != null) {
                 ChatMessage combinedMsg = new ChatMessage(
-                    "Here's your receipt, buddy! I've sent it to your history as well. Take care!",
-                    fileName, 
-                    "2 MB", 
-                    fileUri
+                        "Here's your receipt, buddy! I've sent it to your history as well. Take care!",
+                        fileName,
+                        "2 MB",
+                        fileUri
                 );
                 botChatRef.push().setValue(combinedMsg);
                 if (currentUid != null) {
@@ -217,31 +240,39 @@ public class AquaBuddyActivity extends AppCompatActivity {
     }
 
     private void resetInactivityTimer() {
-        autoEndHandler.removeCallbacks(autoEndRunnable);
-        autoEndHandler.postDelayed(autoEndRunnable, INACTIVITY_LIMIT);
+        if (autoEndHandler != null && autoEndRunnable != null) {
+            autoEndHandler.removeCallbacks(autoEndRunnable);
+            autoEndHandler.postDelayed(autoEndRunnable, INACTIVITY_LIMIT);
+        }
     }
 
     private void startTrackingTechnician() {
-        if (currentUid == null) return;
+        if (currentUid == null || requestsRef == null) {
+            return;
+        }
+
         Query latestRequest = requestsRef.orderByChild("userId").equalTo(currentUid).limitToLast(1);
         latestRequest.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String techName = ds.child("assignedTechName").getValue(String.class);
-                    if (techName == null) techName = ds.child("technicianName").getValue(String.class);
+                    if (techName == null) {
+                        techName = ds.child("technicianName").getValue(String.class);
+                    }
                     String techId = ds.child("assignedTechId").getValue(String.class);
-                    String status = ds.child("status").getValue(String.class);
 
-                    if (techId != null) assignedTechId = techId;
-                    if (techName != null) assignedTechName = techName;
-
-
-                    if ("Assigned".equalsIgnoreCase(status) || "In Progress".equalsIgnoreCase(status)) {
+                    if (techId != null) {
+                        assignedTechId = techId;
+                    }
+                    if (techName != null) {
+                        assignedTechName = techName;
                     }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -263,22 +294,28 @@ public class AquaBuddyActivity extends AppCompatActivity {
         chatRecyclerView = findViewById(R.id.chatRecyclerView);
         etMessage = findViewById(R.id.etMessage);
         btnSend = findViewById(R.id.btnSend);
-        findViewById(R.id.lessThanIcon).setOnClickListener(v -> finish());
+
+        View btnLess = findViewById(R.id.lessThanIcon);
+        if (btnLess != null) {
+            btnLess.setOnClickListener(v -> finish());
+        }
 
         View btnAttach = findViewById(R.id.btnAttach);
         if (btnAttach != null) {
             btnAttach.setOnClickListener(v -> openFilePicker());
         }
 
-        btnSend.setOnClickListener(v -> {
-            String text = etMessage.getText().toString().trim();
-            if (!text.isEmpty()) {
-                saveMessage(text, true, false);
-                handleInternalLogic(text);
-                etMessage.setText("");
-                resetInactivityTimer();
-            }
-        });
+        if (btnSend != null && etMessage != null) {
+            btnSend.setOnClickListener(v -> {
+                String text = etMessage.getText().toString().trim();
+                if (!text.isEmpty()) {
+                    saveMessage(text, true, false);
+                    handleInternalLogic(text);
+                    etMessage.setText("");
+                    resetInactivityTimer();
+                }
+            });
+        }
     }
 
     private static final int PICK_FILE_REQUEST = 101;
@@ -297,28 +334,36 @@ public class AquaBuddyActivity extends AppCompatActivity {
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedUri = data.getData();
             String fileName = "Attachment_" + System.currentTimeMillis();
+
             try {
                 Cursor cursor = getContentResolver().query(selectedUri, null, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    if (nameIndex != -1) fileName = cursor.getString(nameIndex);
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                        if (nameIndex != -1) {
+                            fileName = cursor.getString(nameIndex);
+                        }
+                    }
                     cursor.close();
                 }
             } catch (Exception ignored) {}
 
             ChatMessage attachmentMsg = new ChatMessage(
-                "Attached file: " + fileName,
-                fileName,
-                "File Attachment",
-                selectedUri.toString()
+                    "Attached file: " + fileName,
+                    fileName,
+                    "File Attachment",
+                    selectedUri.toString()
             );
             attachmentMsg.setUser(true);
+
             if (botChatRef != null) {
                 botChatRef.push().setValue(attachmentMsg);
-            } else {
+            } else if (messageList != null && chatAdapter != null) {
                 messageList.add(attachmentMsg);
                 chatAdapter.notifyItemInserted(messageList.size() - 1);
-                chatRecyclerView.scrollToPosition(messageList.size() - 1);
+                if (chatRecyclerView != null) {
+                    chatRecyclerView.scrollToPosition(messageList.size() - 1);
+                }
             }
             sendBotMessage("Got your file, buddy! I've logged " + fileName + " in your request notes.");
         }
@@ -359,25 +404,41 @@ public class AquaBuddyActivity extends AppCompatActivity {
         chatAdapter = new ChatAdapter(messageList, ChatAdapter.MODE_BOT);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
-        chatRecyclerView.setLayoutManager(layoutManager);
-        chatRecyclerView.setAdapter(chatAdapter);
+        if (chatRecyclerView != null) {
+            chatRecyclerView.setLayoutManager(layoutManager);
+            chatRecyclerView.setAdapter(chatAdapter);
+        }
     }
 
     private void loadChatHistory() {
+        if (botChatRef == null) {
+            return;
+        }
+
         botChatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ChatMessage msg = snapshot.getValue(ChatMessage.class);
-                if (msg != null) {
+                if (msg != null && messageList != null && chatAdapter != null) {
                     messageList.add(msg);
                     chatAdapter.notifyItemInserted(messageList.size() - 1);
-                    chatRecyclerView.scrollToPosition(messageList.size() - 1);
+                    if (chatRecyclerView != null) {
+                        chatRecyclerView.scrollToPosition(messageList.size() - 1);
+                    }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -400,7 +461,10 @@ public class AquaBuddyActivity extends AppCompatActivity {
     }
 
     private void sendMessageToBot(String text) {
-        if (sessionName == null || sessionsClient == null) return;
+        if (sessionName == null || sessionsClient == null) {
+            return;
+        }
+
         QueryInput queryInput = QueryInput.newBuilder()
                 .setText(TextInput.newBuilder().setText(text).setLanguageCode("en-US")).build();
 
@@ -410,7 +474,7 @@ public class AquaBuddyActivity extends AppCompatActivity {
                         .setSession(sessionName.toString()).setQueryInput(queryInput).build();
                 DetectIntentResponse response = sessionsClient.detectIntent(request);
                 String botReply = response.getQueryResult().getFulfillmentText();
-                
+
                 if (botReply != null && !botReply.toLowerCase().contains("buddy")) {
                     botReply += ", buddy!";
                 }
@@ -430,9 +494,13 @@ public class AquaBuddyActivity extends AppCompatActivity {
 
     private void addMessageToUI(String text, boolean isUser, boolean isSystem) {
         ChatMessage message = new ChatMessage(text, isUser, isSystem);
-        messageList.add(message);
-        chatAdapter.notifyItemInserted(messageList.size() - 1);
-        chatRecyclerView.scrollToPosition(messageList.size() - 1);
+        if (messageList != null && chatAdapter != null) {
+            messageList.add(message);
+            chatAdapter.notifyItemInserted(messageList.size() - 1);
+            if (chatRecyclerView != null) {
+                chatRecyclerView.scrollToPosition(messageList.size() - 1);
+            }
+        }
     }
 
     private void setupStatusBar() {
@@ -446,7 +514,11 @@ public class AquaBuddyActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        autoEndHandler.removeCallbacks(autoEndRunnable);
-        if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
+        if (autoEndHandler != null && autoEndRunnable != null) {
+            autoEndHandler.removeCallbacks(autoEndRunnable);
+        }
+        if (notifRef != null && notifListener != null) {
+            notifRef.removeEventListener(notifListener);
+        }
     }
 }
