@@ -2,6 +2,7 @@ package com.example.aquatech;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -59,45 +60,71 @@ public class ChatSettingsActivity extends AppCompatActivity {
     }
 
     private void loadSavedSettings() {
+        if (sharedPreferences == null) {
+            return;
+        }
+
         boolean notifOn = sharedPreferences.getBoolean("tech_notif", true);
         boolean activeOn = sharedPreferences.getBoolean("active_status", true);
         String lang = sharedPreferences.getString("bot_lang", "Taglish");
 
-        switchTechNotif.setChecked(notifOn);
-        switchActiveStatus.setChecked(activeOn);
-        tvCurrentLanguage.setText(lang);
+        if (switchTechNotif != null) {
+            switchTechNotif.setChecked(notifOn);
+        }
+
+        if (switchActiveStatus != null) {
+            switchActiveStatus.setChecked(activeOn);
+        }
+
+        if (tvCurrentLanguage != null) {
+            tvCurrentLanguage.setText(lang);
+        }
     }
 
     private void setupClickListeners() {
-        btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        btnBotLanguage.setOnClickListener(v -> showLanguageDialog());
+        if (btnBotLanguage != null) {
+            btnBotLanguage.setOnClickListener(v -> showLanguageDialog());
+        }
 
-        switchTechNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharedPreferences.edit().putBoolean("tech_notif", isChecked).apply();
-        });
+        if (switchTechNotif != null) {
+            switchTechNotif.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (sharedPreferences != null) {
+                    sharedPreferences.edit().putBoolean("tech_notif", isChecked).apply();
+                }
+            });
+        }
 
-        switchActiveStatus.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharedPreferences.edit().putBoolean("active_status", isChecked).apply();
-        });
+        if (switchActiveStatus != null) {
+            switchActiveStatus.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (sharedPreferences != null) {
+                    sharedPreferences.edit().putBoolean("active_status", isChecked).apply();
+                }
+            });
+        }
 
-        btnClearBotChat.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                .setTitle("Clear Chat?")
-                .setMessage("Delete all AquaBuddy history?")
-                .setPositiveButton("Clear", (dialog, which) -> {
-                    Toast.makeText(this, "Chat history cleared!", Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
-        });
+        if (btnClearBotChat != null) {
+            btnClearBotChat.setOnClickListener(v -> {
+                new AlertDialog.Builder(this)
+                        .setTitle("Clear Chat?")
+                        .setMessage("Delete all AquaBuddy history?")
+                        .setPositiveButton("Clear", (dialog, which) -> {
+                            Toast.makeText(this, "Chat history cleared!", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+            });
+        }
     }
 
     private void showLanguageDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_select_language);
-        
+
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
@@ -105,28 +132,47 @@ public class ChatSettingsActivity extends AppCompatActivity {
         RadioGroup rgLanguages = dialog.findViewById(R.id.rgLanguages);
         Button btnSave = dialog.findViewById(R.id.btnSaveLanguage);
 
-        String current = tvCurrentLanguage.getText().toString();
-        if (current.equals("Tagalog")) rgLanguages.check(R.id.rbTagalog);
-        else if (current.equals("English")) rgLanguages.check(R.id.rbEnglish);
-        else rgLanguages.check(R.id.rbTaglish);
+        String current = tvCurrentLanguage != null ? tvCurrentLanguage.getText().toString() : "";
+        if (rgLanguages != null) {
+            if ("Tagalog".equals(current)) {
+                rgLanguages.check(R.id.rbTagalog);
+            } else if ("English".equals(current)) {
+                rgLanguages.check(R.id.rbEnglish);
+            } else {
+                rgLanguages.check(R.id.rbTaglish);
+            }
+        }
 
-        btnSave.setOnClickListener(v -> {
-            int selectedId = rgLanguages.getCheckedRadioButtonId();
-            String lang = "Taglish";
-            
-            if (selectedId == R.id.rbTagalog) lang = "Tagalog";
-            else if (selectedId == R.id.rbEnglish) lang = "English";
-            
-            updateLanguage(dialog, lang);
-        });
+        if (btnSave != null && rgLanguages != null) {
+            btnSave.setOnClickListener(v -> {
+                int selectedId = rgLanguages.getCheckedRadioButtonId();
+                String lang = "Taglish";
+
+                if (selectedId == R.id.rbTagalog) {
+                    lang = "Tagalog";
+                } else if (selectedId == R.id.rbEnglish) {
+                    lang = "English";
+                }
+
+                updateLanguage(dialog, lang);
+            });
+        }
 
         dialog.show();
     }
 
     private void updateLanguage(Dialog dialog, String lang) {
-        tvCurrentLanguage.setText(lang);
-        sharedPreferences.edit().putString("bot_lang", lang).apply();
+        if (tvCurrentLanguage != null) {
+            tvCurrentLanguage.setText(lang);
+        }
+
+        if (sharedPreferences != null) {
+            sharedPreferences.edit().putString("bot_lang", lang).apply();
+        }
+
         Toast.makeText(this, "Language set to " + lang, Toast.LENGTH_SHORT).show();
-        dialog.dismiss();
+        if (dialog != null) {
+            dialog.dismiss();
+        }
     }
 }
