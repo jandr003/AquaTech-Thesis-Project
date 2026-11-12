@@ -58,7 +58,10 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackHistoryDetails).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackHistoryDetails);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         tvTicketID = findViewById(R.id.tvTicketIDDetails);
         tvStatusPill = findViewById(R.id.tvStatusPillDetails);
@@ -89,8 +92,12 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String sroNumber = snapshot.child("referenceNo").getValue(String.class);
-                    if (sroNumber == null) sroNumber = snapshot.child("sroNumber").getValue(String.class);
-                    if (sroNumber == null) sroNumber = ticketId;
+                    if (sroNumber == null) {
+                        sroNumber = snapshot.child("sroNumber").getValue(String.class);
+                    }
+                    if (sroNumber == null) {
+                        sroNumber = ticketId;
+                    }
 
                     if (sroNumber != null && !sroNumber.isEmpty()) {
                         String upper = sroNumber.toUpperCase().trim();
@@ -111,7 +118,9 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                     }
 
                     String status = snapshot.child("status").getValue(String.class);
-                    if (status == null || status.isEmpty()) status = "Completed";
+                    if (status == null || status.isEmpty()) {
+                        status = "Completed";
+                    }
                     tvStatusPill.setText(status);
 
                     if ("Completed".equalsIgnoreCase(status)) {
@@ -129,14 +138,24 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                     }
 
                     String unitName = snapshot.child("unitName").getValue(String.class);
-                    if (unitName == null || unitName.isEmpty()) unitName = "WL CUBE FIREWALL";
+                    if (unitName == null || unitName.isEmpty()) {
+                        unitName = "WL CUBE FIREWALL";
+                    }
                     tvItemName.setText(unitName);
 
                     String unitCode = snapshot.child("unitCode").getValue(String.class);
-                    if (unitCode == null) unitCode = snapshot.child("unitModelCode").getValue(String.class);
-                    if (unitCode == null) unitCode = snapshot.child("serialNumber").getValue(String.class);
-                    if (unitCode == null) unitCode = snapshot.child("itemCode").getValue(String.class);
-                    if (unitCode == null) unitCode = snapshot.child("skuCode").getValue(String.class);
+                    if (unitCode == null) {
+                        unitCode = snapshot.child("unitModelCode").getValue(String.class);
+                    }
+                    if (unitCode == null) {
+                        unitCode = snapshot.child("serialNumber").getValue(String.class);
+                    }
+                    if (unitCode == null) {
+                        unitCode = snapshot.child("itemCode").getValue(String.class);
+                    }
+                    if (unitCode == null) {
+                        unitCode = snapshot.child("skuCode").getValue(String.class);
+                    }
 
                     tvItemCode.setText((unitCode != null && !unitCode.isEmpty()) ? unitCode : "F-FXCU1-M-HCA-TT-XX-XXX");
 
@@ -147,7 +166,9 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                     tvServiceAddress.setText(address != null && !address.isEmpty() ? address : "Complete saved service address");
 
                     String phone = snapshot.child("customerPhone").getValue(String.class);
-                    if (phone == null) phone = snapshot.child("userPhone").getValue(String.class);
+                    if (phone == null) {
+                        phone = snapshot.child("userPhone").getValue(String.class);
+                    }
                     tvCustomerPhone.setText(phone != null && !phone.isEmpty() ? phone : "Registered contact number");
 
                     String techName = snapshot.child("assignedTechName").getValue(String.class);
@@ -176,7 +197,9 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
 
                     ImageView ivProofInline = findViewById(R.id.ivProofOfServiceInline2);
                     String proofUrl = snapshot.child("proofImageUrl").getValue(String.class);
-                    if (proofUrl == null) proofUrl = snapshot.child("proofUrl").getValue(String.class);
+                    if (proofUrl == null) {
+                        proofUrl = snapshot.child("proofUrl").getValue(String.class);
+                    }
                     if (ivProofInline != null && proofUrl != null && !proofUrl.isEmpty()) {
                         ivProofInline.setPadding(0, 0, 0, 0);
                         ivProofInline.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -194,18 +217,22 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                             rbRating.setVisibility(View.VISIBLE);
                             rbRating.setRating(rating);
                         }
-                        if (tvScore != null) tvScore.setText(String.format(Locale.US, "%.1f Stars", rating));
+                        if (tvScore != null) {
+                            tvScore.setText(String.format(Locale.US, "%.1f Stars", rating));
+                        }
                     } else {
-                        if (rbRating != null) rbRating.setVisibility(View.GONE);
-                        if (tvScore != null) tvScore.setText("Not Rated Yet");
+                        if (rbRating != null) {
+                            rbRating.setVisibility(View.GONE);
+                        }
+                        if (tvScore != null) {
+                            tvScore.setText("Not Rated Yet");
+                        }
                     }
-
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 }
