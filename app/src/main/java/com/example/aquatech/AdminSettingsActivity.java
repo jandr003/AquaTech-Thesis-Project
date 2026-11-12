@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class AdminSettingsActivity extends AppCompatActivity {
 
@@ -43,29 +42,63 @@ public class AdminSettingsActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        findViewById(R.id.btnChangePassword).setOnClickListener(v -> {
-            startActivity(new Intent(this, ConfirmPasswordActivity.class));
-        });
+        View btnChangePassword = findViewById(R.id.btnChangePassword);
+        if (btnChangePassword != null) {
+            btnChangePassword.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ConfirmPasswordActivity.class);
+                startActivity(intent);
+            });
+        }
 
         SwitchMaterial swRequest = findViewById(R.id.switchRequestAlerts);
         SwitchMaterial swUrgent = findViewById(R.id.switchUrgentAlerts);
 
-        swRequest.setChecked(prefs.getBoolean("admin_notif_requests", true));
-        swUrgent.setChecked(prefs.getBoolean("admin_notif_urgent", true));
+        if (swRequest != null && prefs != null) {
+            swRequest.setChecked(prefs.getBoolean("admin_notif_requests", true));
+            swRequest.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                prefs.edit().putBoolean("admin_notif_requests", isChecked).apply();
+            });
+        }
 
-        swRequest.setOnCheckedChangeListener((buttonView, isChecked) -> 
-            prefs.edit().putBoolean("admin_notif_requests", isChecked).apply());
-        
-        swUrgent.setOnCheckedChangeListener((buttonView, isChecked) -> 
-            prefs.edit().putBoolean("admin_notif_urgent", isChecked).apply());
+        if (swUrgent != null && prefs != null) {
+            swUrgent.setChecked(prefs.getBoolean("admin_notif_urgent", true));
+            swUrgent.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                prefs.edit().putBoolean("admin_notif_urgent", isChecked).apply();
+            });
+        }
 
-        findViewById(R.id.btnLanguage).setOnClickListener(v -> showLanguageDialog());
-        findViewById(R.id.btnDisplay).setOnClickListener(v -> Toast.makeText(this, "Display settings coming soon", Toast.LENGTH_SHORT).show());
+        View btnLanguage = findViewById(R.id.btnLanguage);
+        if (btnLanguage != null) {
+            btnLanguage.setOnClickListener(v -> showLanguageDialog());
+        }
 
-        findViewById(R.id.btnHelpCenter).setOnClickListener(v -> startActivity(new Intent(this, HelpCenterActivity.class)));
-        findViewById(R.id.btnAbout).setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
+        View btnDisplay = findViewById(R.id.btnDisplay);
+        if (btnDisplay != null) {
+            btnDisplay.setOnClickListener(v -> {
+                Toast.makeText(this, "Display settings coming soon", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        View btnHelpCenter = findViewById(R.id.btnHelpCenter);
+        if (btnHelpCenter != null) {
+            btnHelpCenter.setOnClickListener(v -> {
+                Intent intent = new Intent(this, HelpCenterActivity.class);
+                startActivity(intent);
+            });
+        }
+
+        View btnAbout = findViewById(R.id.btnAbout);
+        if (btnAbout != null) {
+            btnAbout.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+            });
+        }
 
         View btnProfile = findViewById(R.id.btnAdminProfile);
         if (btnProfile != null) {
@@ -79,15 +112,26 @@ public class AdminSettingsActivity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_language);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
 
-        dialog.findViewById(R.id.btnLangEnglish).setOnClickListener(v -> {
-            prefs.edit().putString("app_language", "en").apply();
-            dialog.dismiss();
-            Toast.makeText(this, "Language set to English", Toast.LENGTH_SHORT).show();
-        });
+        View btnEng = dialog.findViewById(R.id.btnLangEnglish);
+        if (btnEng != null) {
+            btnEng.setOnClickListener(v -> {
+                if (prefs != null) {
+                    prefs.edit().putString("app_language", "en").apply();
+                }
+                dialog.dismiss();
+                Toast.makeText(this, "Language set to English", Toast.LENGTH_SHORT).show();
+            });
+        }
 
-        dialog.findViewById(R.id.btnCancelLang).setOnClickListener(v -> dialog.dismiss());
+        View btnCancel = dialog.findViewById(R.id.btnCancelLang);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
+
         dialog.show();
     }
 }
