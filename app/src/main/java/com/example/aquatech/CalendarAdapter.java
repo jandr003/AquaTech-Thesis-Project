@@ -5,10 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -38,40 +39,68 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         CalendarItem item = calendarList.get(position);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(item.getDate());
+        if (item == null) {
+            return;
+        }
 
-        holder.tvDayName.setText(new SimpleDateFormat("EEE", Locale.getDefault()).format(item.getDate()));
+        Calendar cal = Calendar.getInstance();
+        if (item.getDate() != null) {
+            cal.setTime(item.getDate());
+            holder.tvDayName.setText(new SimpleDateFormat("EEE", Locale.getDefault()).format(item.getDate()));
+        }
         holder.tvDateNumber.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
 
         int dotColor;
-        switch (item.getStatus()) {
-            case "COMPLETED": dotColor = Color.parseColor("#00C1A4"); break;
-            case "IN_PROGRESS": dotColor = Color.parseColor("#2196F3"); break;
-            case "OPEN": dotColor = Color.parseColor("#FF5252"); break;
-            default: dotColor = Color.TRANSPARENT; break;
-        }
-        holder.vStatusDot.setBackgroundColor(dotColor);
-
-        if (item.isSelected()) {
-            holder.cvDay.setCardBackgroundColor(Color.parseColor("#2196F3"));
-            holder.tvDayName.setTextColor(Color.WHITE);
-            holder.tvDateNumber.setTextColor(Color.WHITE);
-            holder.vStatusDot.setBackgroundColor(Color.WHITE);
-            holder.cvDay.setCardElevation(6f);
-        } else {
-            holder.cvDay.setCardBackgroundColor(Color.TRANSPARENT);
-            holder.tvDayName.setTextColor(Color.parseColor("#888888"));
-            holder.tvDateNumber.setTextColor(Color.parseColor("#1A3C40"));
-            holder.cvDay.setCardElevation(0f);
+        String status = item.getStatus() != null ? item.getStatus() : "";
+        switch (status) {
+            case "COMPLETED":
+                dotColor = Color.parseColor("#00C1A4");
+                break;
+            case "IN_PROGRESS":
+                dotColor = Color.parseColor("#2196F3");
+                break;
+            case "OPEN":
+                dotColor = Color.parseColor("#FF5252");
+                break;
+            default:
+                dotColor = Color.TRANSPARENT;
+                break;
         }
 
-        holder.itemView.setOnClickListener(v -> listener.onDateClick(item, position));
+        if (holder.vStatusDot != null) {
+            holder.vStatusDot.setBackgroundColor(dotColor);
+        }
+
+        if (holder.cvDay != null) {
+            if (item.isSelected()) {
+                holder.cvDay.setCardBackgroundColor(Color.parseColor("#2196F3"));
+                holder.tvDayName.setTextColor(Color.WHITE);
+                holder.tvDateNumber.setTextColor(Color.WHITE);
+                if (holder.vStatusDot != null) {
+                    holder.vStatusDot.setBackgroundColor(Color.WHITE);
+                }
+                holder.cvDay.setCardElevation(6f);
+            } else {
+                holder.cvDay.setCardBackgroundColor(Color.TRANSPARENT);
+                holder.tvDayName.setTextColor(Color.parseColor("#888888"));
+                holder.tvDateNumber.setTextColor(Color.parseColor("#1A3C40"));
+                holder.cvDay.setCardElevation(0f);
+            }
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDateClick(item, position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return calendarList.size();
+        if (calendarList != null) {
+            return calendarList.size();
+        }
+        return 0;
     }
 
     public static class CalendarViewHolder extends RecyclerView.ViewHolder {
