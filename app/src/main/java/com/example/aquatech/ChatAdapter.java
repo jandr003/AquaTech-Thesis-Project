@@ -280,7 +280,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return messageList != null ? messageList.size() : 0;
+        if (messageList != null) {
+            return messageList.size();
+        }
+        return 0;
     }
 
     static class ChatViewHolder extends RecyclerView.ViewHolder {
