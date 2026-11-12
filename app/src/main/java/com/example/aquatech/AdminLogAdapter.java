@@ -4,8 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 public class AdminLogAdapter extends RecyclerView.Adapter<AdminLogAdapter.ViewHolder> {
@@ -26,12 +28,17 @@ public class AdminLogAdapter extends RecyclerView.Adapter<AdminLogAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AdminLogModel log = logList.get(position);
-        holder.tvMessage.setText(log.getMessage());
+        if (log != null && holder.tvMessage != null) {
+            holder.tvMessage.setText(log.getMessage() != null ? log.getMessage() : "");
+        }
     }
 
     @Override
     public int getItemCount() {
-        return logList.size();
+        if (logList != null) {
+            return logList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
