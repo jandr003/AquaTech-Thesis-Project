@@ -72,7 +72,9 @@ public class AquaTechCircleGaugeView extends View {
         int width = getWidth();
         int height = getHeight();
 
-        if (width <= 0 || height <= 0) return;
+        if (width <= 0 || height <= 0) {
+            return;
+        }
 
         float strokeWidth = 26f;
         float padding = strokeWidth / 2f + 6f;
