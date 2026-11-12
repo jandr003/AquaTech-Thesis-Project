@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.chip.Chip;
@@ -73,7 +72,10 @@ public class AdminAddServiceItemActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackAddServiceItem).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackAddServiceItem);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         ivImagePreview = findViewById(R.id.ivItemImagePreview);
         tvPhotoHint = findViewById(R.id.tvUploadPhotoHint);
@@ -89,11 +91,19 @@ public class AdminAddServiceItemActivity extends AppCompatActivity {
         if (chipGroupCategory != null) {
             chipGroupCategory.setOnCheckedChangeListener((group, checkedId) -> {
                 if (checkedId == R.id.chipCategoryParts) {
-                    if (chipParts != null) chipParts.setTextColor(Color.parseColor("#2196F3"));
-                    if (chipFilter != null) chipFilter.setTextColor(Color.parseColor("#64748B"));
+                    if (chipParts != null) {
+                        chipParts.setTextColor(Color.parseColor("#2196F3"));
+                    }
+                    if (chipFilter != null) {
+                        chipFilter.setTextColor(Color.parseColor("#64748B"));
+                    }
                 } else {
-                    if (chipFilter != null) chipFilter.setTextColor(Color.parseColor("#2196F3"));
-                    if (chipParts != null) chipParts.setTextColor(Color.parseColor("#64748B"));
+                    if (chipFilter != null) {
+                        chipFilter.setTextColor(Color.parseColor("#2196F3"));
+                    }
+                    if (chipParts != null) {
+                        chipParts.setTextColor(Color.parseColor("#64748B"));
+                    }
                 }
             });
         }
@@ -103,7 +113,10 @@ public class AdminAddServiceItemActivity extends AppCompatActivity {
             cardPhoto.setOnClickListener(v -> openGalleryPicker());
         }
 
-        findViewById(R.id.btnSubmitSaveItem).setOnClickListener(v -> handleSaveServiceItem());
+        View btnSubmit = findViewById(R.id.btnSubmitSaveItem);
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> handleSaveServiceItem());
+        }
     }
 
     private void openGalleryPicker() {
@@ -133,7 +146,9 @@ public class AdminAddServiceItemActivity extends AppCompatActivity {
     private void saveItemToDatabase(String name, String code, String priceStr, String category) {
         DatabaseReference ref = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceItems");
         String itemId = ref.push().getKey();
-        if (itemId == null) itemId = "ITEM_" + System.currentTimeMillis();
+        if (itemId == null) {
+            itemId = "ITEM_" + System.currentTimeMillis();
+        }
 
         Map<String, Object> data = new HashMap<>();
         data.put("itemId", itemId);
