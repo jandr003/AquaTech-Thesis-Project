@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
@@ -27,29 +29,51 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HistoryItem item = historyList.get(position);
-        
-        holder.tvTicketId.setText(item.getTicketId());
-        holder.tvDate.setText(item.getDate());
-        holder.tvItems.setText(item.getItemsSummary());
-        holder.tvPrice.setText(item.getTotalPrice());
+        if (item == null) {
+            return;
+        }
+
+        if (holder.tvTicketId != null) {
+            holder.tvTicketId.setText(item.getTicketId() != null ? item.getTicketId() : "");
+        }
+
+        if (holder.tvDate != null) {
+            holder.tvDate.setText(item.getDate() != null ? item.getDate() : "");
+        }
+
+        if (holder.tvItems != null) {
+            holder.tvItems.setText(item.getItemsSummary() != null ? item.getItemsSummary() : "");
+        }
+
+        if (holder.tvPrice != null) {
+            holder.tvPrice.setText(item.getTotalPrice() != null ? item.getTotalPrice() : "");
+        }
 
         String status = item.getStatus();
-        if (status == null || status.isEmpty()) status = "COMPLETED";
-        status = status.replaceAll("[^a-zA-Z ]", "").trim().toUpperCase();
-        holder.tvStatus.setText(status);
+        if (status == null || status.isEmpty()) {
+            status = "COMPLETED";
+        }
 
-        if ("CANCELLED".equalsIgnoreCase(status)) {
-            holder.tvStatus.setTextColor(Color.WHITE);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
-        } else {
-            holder.tvStatus.setTextColor(Color.WHITE);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
+        status = status.replaceAll("[^a-zA-Z ]", "").trim().toUpperCase();
+        if (holder.tvStatus != null) {
+            holder.tvStatus.setText(status);
+
+            if ("CANCELLED".equalsIgnoreCase(status)) {
+                holder.tvStatus.setTextColor(Color.WHITE);
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
+            } else {
+                holder.tvStatus.setTextColor(Color.WHITE);
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return historyList.size();
+        if (historyList != null) {
+            return historyList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
