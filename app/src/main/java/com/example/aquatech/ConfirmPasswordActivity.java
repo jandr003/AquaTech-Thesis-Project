@@ -52,11 +52,13 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
         initializeViews();
         setupFilters();
         setupRealTimeValidation();
-        
+
         setupPasswordToggle(yourNewPass);
         setupPasswordToggle(reNewPass);
 
-        btnDonePassword.setOnClickListener(v -> handlePasswordReset());
+        if (btnDonePassword != null) {
+            btnDonePassword.setOnClickListener(v -> handlePasswordReset());
+        }
     }
 
     private void setupStatusBar() {
@@ -76,58 +78,95 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
         }
 
         yourNewPass = findViewById(R.id.yourNewPass);
-        reNewPass   = findViewById(R.id.reNewPass);
+        reNewPass = findViewById(R.id.reNewPass);
         yourNewPassWarning = findViewById(R.id.yourNewPassWarning);
-        reNewPassWarning   = findViewById(R.id.reNewPassWarning);
+        reNewPassWarning = findViewById(R.id.reNewPassWarning);
         btnDonePassword = findViewById(R.id.btnDonePassword);
 
-        indicatorEight   = findViewById(R.id.IndicatorEight);
-        indicatorLower   = findViewById(R.id.IndicatorLower);
-        indicatorUpper   = findViewById(R.id.IndicatorUpper);
-        indicatorNumber  = findViewById(R.id.IndicatorNumber);
+        indicatorEight = findViewById(R.id.IndicatorEight);
+        indicatorLower = findViewById(R.id.IndicatorLower);
+        indicatorUpper = findViewById(R.id.IndicatorUpper);
+        indicatorNumber = findViewById(R.id.IndicatorNumber);
         indicatorSpecial = findViewById(R.id.IndicatorSpecial);
     }
 
     private void setupFilters() {
-        InputFilter[] filters = new InputFilter[]{ new InputFilter.LengthFilter(15) };
-        yourNewPass.setFilters(filters);
-        reNewPass.setFilters(filters);
+        InputFilter[] filters = new InputFilter[]{new InputFilter.LengthFilter(15)};
+        if (yourNewPass != null) {
+            yourNewPass.setFilters(filters);
+        }
+        if (reNewPass != null) {
+            reNewPass.setFilters(filters);
+        }
     }
 
     private void setupRealTimeValidation() {
-        yourNewPass.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                updateIndicators(s.toString());
-            }
-        });
+        if (yourNewPass != null) {
+            yourNewPass.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    updateIndicators(s.toString());
+                }
+            });
+        }
     }
 
     private void updateIndicators(String password) {
-        indicatorEight.setImageResource(password.length() >= 8 ? R.drawable.ic_check_on : R.drawable.circle_indicator);
-        indicatorLower.setImageResource(password.matches(".*[a-z].*") ? R.drawable.ic_check_on : R.drawable.circle_indicator);
-        indicatorUpper.setImageResource(password.matches(".*[A-Z].*") ? R.drawable.ic_check_on : R.drawable.circle_indicator);
-        indicatorNumber.setImageResource(password.matches(".*\\d.*") ? R.drawable.ic_check_on : R.drawable.circle_indicator);
-        indicatorSpecial.setImageResource(password.matches(".*[!@#$%^&*()_+\\-=\\{\\}\\[\\]|\\\\:;\"'<>,.?/].*") ? R.drawable.ic_check_on : R.drawable.circle_indicator);
+        if (password == null) {
+            return;
+        }
+
+        if (indicatorEight != null) {
+            indicatorEight.setImageResource(password.length() >= 8 ? R.drawable.ic_check_on : R.drawable.circle_indicator);
+        }
+
+        if (indicatorLower != null) {
+            indicatorLower.setImageResource(password.matches(".*[a-z].*") ? R.drawable.ic_check_on : R.drawable.circle_indicator);
+        }
+
+        if (indicatorUpper != null) {
+            indicatorUpper.setImageResource(password.matches(".*[A-Z].*") ? R.drawable.ic_check_on : R.drawable.circle_indicator);
+        }
+
+        if (indicatorNumber != null) {
+            indicatorNumber.setImageResource(password.matches(".*\\d.*") ? R.drawable.ic_check_on : R.drawable.circle_indicator);
+        }
+
+        if (indicatorSpecial != null) {
+            indicatorSpecial.setImageResource(password.matches(".*[!@#$%^&*()_+\\-=\\{\\}\\[\\]|\\\\:;\"'<>,.?/].*") ? R.drawable.ic_check_on : R.drawable.circle_indicator);
+        }
     }
 
     private void handlePasswordReset() {
-        String pass1 = yourNewPass.getText().toString().trim();
-        String pass2 = reNewPass.getText().toString().trim();
+        String pass1 = yourNewPass.getText() != null ? yourNewPass.getText().toString().trim() : "";
+        String pass2 = reNewPass.getText() != null ? reNewPass.getText().toString().trim() : "";
 
-        yourNewPassWarning.setVisibility(View.GONE);
-        reNewPassWarning.setVisibility(View.GONE);
+        if (yourNewPassWarning != null) {
+            yourNewPassWarning.setVisibility(View.GONE);
+        }
+
+        if (reNewPassWarning != null) {
+            reNewPassWarning.setVisibility(View.GONE);
+        }
 
         if (pass1.length() < 8) {
-            yourNewPassWarning.setText("Password should be 8–15 characters");
-            yourNewPassWarning.setVisibility(View.VISIBLE);
+            if (yourNewPassWarning != null) {
+                yourNewPassWarning.setText("Password should be 8–15 characters");
+                yourNewPassWarning.setVisibility(View.VISIBLE);
+            }
             return;
         }
 
         if (!pass1.equals(pass2)) {
-            reNewPassWarning.setVisibility(View.VISIBLE);
+            if (reNewPassWarning != null) {
+                reNewPassWarning.setVisibility(View.VISIBLE);
+            }
             return;
         }
 
@@ -148,7 +187,7 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
                 if (user != null) {
                     user.updatePassword(pass1);
                 }
-                
+
                 pd.dismiss();
                 Toast.makeText(this, "Password updated successfully!", Toast.LENGTH_LONG).show();
 
@@ -164,6 +203,10 @@ public class ConfirmPasswordActivity extends AppCompatActivity {
     }
 
     private void setupPasswordToggle(EditText editText) {
+        if (editText == null) {
+            return;
+        }
+
         editText.setOnTouchListener((v, event) -> {
             final int DRAWABLE_END = 2;
             if (event.getAction() == MotionEvent.ACTION_UP) {
