@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,12 +23,15 @@ public class AccountDeletionActivity extends AppCompatActivity {
 
         setupStatusBar();
 
-        findViewById(R.id.btnBackDelete).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackDelete);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         MaterialButton btnConfirm = findViewById(R.id.btnConfirmDelete);
-        btnConfirm.setOnClickListener(v -> {
-            deleteAccount();
-        });
+        if (btnConfirm != null) {
+            btnConfirm.setOnClickListener(v -> deleteAccount());
+        }
     }
 
     private void setupStatusBar() {
@@ -40,7 +45,6 @@ public class AccountDeletionActivity extends AppCompatActivity {
     private void deleteAccount() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            // Paalala: Sa production, kailangan mag-reauthenticate ng user bago mag-delete
             user.delete().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     Toast.makeText(this, "Account deleted successfully", Toast.LENGTH_LONG).show();
