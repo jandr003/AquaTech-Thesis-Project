@@ -33,6 +33,9 @@ public class CompletedRequestAdapter extends RecyclerView.Adapter<CompletedReque
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServiceLogModel model = completedList.get(position);
+        if (model == null) {
+            return;
+        }
 
         holder.tvCustomerName.setText(model.getCustomerName() != null ? model.getCustomerName() : "Guest Customer");
         holder.tvTicketID.setText(model.getSroNumber() != null ? model.getSroNumber() : "N/A");
@@ -57,17 +60,24 @@ public class CompletedRequestAdapter extends RecyclerView.Adapter<CompletedReque
         holder.tvCompletionTime.setText("Completed on: " + (model.getDateTime() != null ? model.getDateTime() : "N/A"));
         holder.tvLocation.setText(model.getAddress() != null ? model.getAddress() : "No address provided");
 
-        holder.btnViewDetails.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ServiceReportDetailsActivity.class);
-            intent.putExtra("TICKET_ID", model.getSroNumber());
-            intent.putExtra("CUSTOMER_NAME", model.getCustomerName());
-            context.startActivity(intent);
-        });
+        if (holder.btnViewDetails != null) {
+            holder.btnViewDetails.setOnClickListener(v -> {
+                if (context != null) {
+                    Intent intent = new Intent(context, ServiceReportDetailsActivity.class);
+                    intent.putExtra("TICKET_ID", model.getSroNumber());
+                    intent.putExtra("CUSTOMER_NAME", model.getCustomerName());
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return completedList.size();
+        if (completedList != null) {
+            return completedList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
