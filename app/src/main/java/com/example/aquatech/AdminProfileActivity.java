@@ -28,7 +28,7 @@ public class AdminProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_profile);
-        
+
         mAuth = FirebaseAuth.getInstance();
         setupStatusBar();
         initializeViews();
@@ -39,44 +39,62 @@ public class AdminProfileActivity extends AppCompatActivity {
         profileName = findViewById(R.id.profileName);
         profileEmail = findViewById(R.id.profileEmail);
 
-        findViewById(R.id.btnBackProfile).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackProfile);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        findViewById(R.id.btnProfileAnalytics).setOnClickListener(v -> {
-            startActivity(new Intent(this, MonthlyAnalyticsActivity.class));
-        });
+        View btnAnalytics = findViewById(R.id.btnProfileAnalytics);
+        if (btnAnalytics != null) {
+            btnAnalytics.setOnClickListener(v -> {
+                Intent intent = new Intent(this, MonthlyAnalyticsActivity.class);
+                startActivity(intent);
+            });
+        }
 
         View btnManageItems = findViewById(R.id.btnProfileManageItems);
         if (btnManageItems != null) {
             btnManageItems.setOnClickListener(v -> {
-                startActivity(new Intent(this, AdminManageItemsActivity.class));
+                Intent intent = new Intent(this, AdminManageItemsActivity.class);
+                startActivity(intent);
             });
         }
 
         View btnAddTech = findViewById(R.id.btnProfileAddTech);
         if (btnAddTech != null) {
             btnAddTech.setOnClickListener(v -> {
-                startActivity(new Intent(this, ManageTechniciansActivity.class));
+                Intent intent = new Intent(this, ManageTechniciansActivity.class);
+                startActivity(intent);
             });
         }
 
-        findViewById(R.id.btnProfileSettings).setOnClickListener(v -> {
-            startActivity(new Intent(this, AdminSettingsActivity.class));
-        });
+        View btnSettings = findViewById(R.id.btnProfileSettings);
+        if (btnSettings != null) {
+            btnSettings.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AdminSettingsActivity.class);
+                startActivity(intent);
+            });
+        }
 
-        findViewById(R.id.btnProfileLogout).setOnClickListener(v -> {
-            mAuth.signOut();
-            Intent intent = new Intent(this, SplashActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        });
+        View btnLogout = findViewById(R.id.btnProfileLogout);
+        if (btnLogout != null) {
+            btnLogout.setOnClickListener(v -> {
+                mAuth.signOut();
+                Intent intent = new Intent(this, SplashActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            });
+        }
     }
 
     private void displayAdminData() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String email = user.getEmail() != null ? user.getEmail().toLowerCase().trim() : "";
-            profileEmail.setText(email);
+            if (profileEmail != null) {
+                profileEmail.setText(email);
+            }
 
             String uid = user.getUid();
             FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid)
@@ -86,29 +104,35 @@ public class AdminProfileActivity extends AppCompatActivity {
                             if (snapshot.exists()) {
                                 String fullName = snapshot.child("fullName").getValue(String.class);
                                 if (fullName != null && !fullName.isEmpty()) {
-                                    profileName.setText(fullName);
+                                    if (profileName != null) {
+                                        profileName.setText(fullName);
+                                    }
                                     return;
                                 }
                             }
-                            profileName.setText(getDisplayNameByEmail(email));
+                            if (profileName != null) {
+                                profileName.setText(getDisplayNameByEmail(email));
+                            }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            profileName.setText(getDisplayNameByEmail(email));
+                            if (profileName != null) {
+                                profileName.setText(getDisplayNameByEmail(email));
+                            }
                         }
                     });
         }
     }
 
     private String getDisplayNameByEmail(String email) {
-        if (email.equals("management@aquasmartguard.ph") || email.equals("admin@aquasmartguard.ph")) {
+        if (email != null && (email.equals("management@aquasmartguard.ph") || email.equals("admin@aquasmartguard.ph"))) {
             return "Administrator";
-        } else {
-            FirebaseUser user = mAuth.getCurrentUser();
-            if (user != null && user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
-                return user.getDisplayName();
-            }
+        }
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null && user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
+            return user.getDisplayName();
         }
         return "Administrator";
     }
