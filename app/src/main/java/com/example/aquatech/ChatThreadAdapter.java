@@ -67,7 +67,9 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String realName = snapshot.child("fullName").getValue(String.class);
-                        if (realName == null) realName = snapshot.child("name").getValue(String.class);
+                        if (realName == null) {
+                            realName = snapshot.child("name").getValue(String.class);
+                        }
                         if (realName != null && !realName.trim().isEmpty()) {
                             holder.tvCustomerName.setText(realName.trim());
                         }
@@ -129,7 +131,10 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return chatThreads != null ? chatThreads.size() : 0;
+        if (chatThreads != null) {
+            return chatThreads.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
