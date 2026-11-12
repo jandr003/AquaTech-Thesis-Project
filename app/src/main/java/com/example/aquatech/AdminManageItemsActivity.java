@@ -54,7 +54,10 @@ public class AdminManageItemsActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackManageItems).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackManageItems);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         layoutAddedItemsContainer = findViewById(R.id.layoutAddedItemsContainer);
         tvHeaderAddedItems = findViewById(R.id.tvHeaderAddedItems);
@@ -65,7 +68,10 @@ public class AdminManageItemsActivity extends AppCompatActivity {
             btnAddHeader.setOnClickListener(v -> startActivity(new Intent(this, AdminAddServiceItemActivity.class)));
         }
 
-        findViewById(R.id.btnAddServiceItem).setOnClickListener(v -> startActivity(new Intent(this, AdminAddServiceItemActivity.class)));
+        View btnAdd = findViewById(R.id.btnAddServiceItem);
+        if (btnAdd != null) {
+            btnAdd.setOnClickListener(v -> startActivity(new Intent(this, AdminAddServiceItemActivity.class)));
+        }
 
         bindDeleteButton(R.id.btnDeleteItem1, "Filter 0064-CBC");
         bindDeleteButton(R.id.btnDeleteItem2, "Filter 0055-SEDIMENT");
@@ -87,8 +93,12 @@ public class AdminManageItemsActivity extends AppCompatActivity {
                 if (layoutAddedItemsContainer != null) {
                     layoutAddedItemsContainer.removeAllViews();
                     if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
-                        if (tvHeaderAddedItems != null) tvHeaderAddedItems.setVisibility(View.VISIBLE);
-                        if (cardAddedItems != null) cardAddedItems.setVisibility(View.VISIBLE);
+                        if (tvHeaderAddedItems != null) {
+                            tvHeaderAddedItems.setVisibility(View.VISIBLE);
+                        }
+                        if (cardAddedItems != null) {
+                            cardAddedItems.setVisibility(View.VISIBLE);
+                        }
 
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             String itemId = ds.getKey();
@@ -99,20 +109,25 @@ public class AdminManageItemsActivity extends AppCompatActivity {
                             addDynamicItemRow(itemId, itemName, category, photoUri);
                         }
                     } else {
-                        if (tvHeaderAddedItems != null) tvHeaderAddedItems.setVisibility(View.GONE);
-                        if (cardAddedItems != null) cardAddedItems.setVisibility(View.GONE);
+                        if (tvHeaderAddedItems != null) {
+                            tvHeaderAddedItems.setVisibility(View.GONE);
+                        }
+                        if (cardAddedItems != null) {
+                            cardAddedItems.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void addDynamicItemRow(String itemId, String itemName, String category, String photoUri) {
-        if (layoutAddedItemsContainer == null || itemName == null) return;
+        if (layoutAddedItemsContainer == null || itemName == null) {
+            return;
+        }
 
         if (layoutAddedItemsContainer.getChildCount() > 0) {
             View divider = new View(this);
@@ -240,19 +255,25 @@ public class AdminManageItemsActivity extends AppCompatActivity {
             tvMsg.setText("Are you sure you want to remove " + itemName + " from Step 3 requests?");
         }
 
-        dialog.findViewById(R.id.btnCancelDeleteItem).setOnClickListener(v -> dialog.dismiss());
+        View btnCancel = dialog.findViewById(R.id.btnCancelDeleteItem);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
 
-        dialog.findViewById(R.id.btnConfirmDeleteItem).setOnClickListener(v -> {
-            if (itemId != null) {
-                FirebaseDatabase.getInstance(DB_URL).getReference("ServiceItems").child(itemId).removeValue()
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(this, itemName + " removed successfully!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-            dialog.dismiss();
-        });
+        View btnConfirm = dialog.findViewById(R.id.btnConfirmDeleteItem);
+        if (btnConfirm != null) {
+            btnConfirm.setOnClickListener(v -> {
+                if (itemId != null) {
+                    FirebaseDatabase.getInstance(DB_URL).getReference("ServiceItems").child(itemId).removeValue()
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(this, itemName + " removed successfully!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+                dialog.dismiss();
+            });
+        }
 
         dialog.show();
     }
@@ -277,12 +298,18 @@ public class AdminManageItemsActivity extends AppCompatActivity {
             tvMsg.setText("Are you sure you want to remove " + itemName + " from Step 3 requests?");
         }
 
-        dialog.findViewById(R.id.btnCancelDeleteItem).setOnClickListener(v -> dialog.dismiss());
+        View btnCancel = dialog.findViewById(R.id.btnCancelDeleteItem);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
 
-        dialog.findViewById(R.id.btnConfirmDeleteItem).setOnClickListener(v -> {
-            Toast.makeText(this, itemName + " removed successfully", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
+        View btnConfirm = dialog.findViewById(R.id.btnConfirmDeleteItem);
+        if (btnConfirm != null) {
+            btnConfirm.setOnClickListener(v -> {
+                Toast.makeText(this, itemName + " removed successfully", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            });
+        }
 
         dialog.show();
     }
