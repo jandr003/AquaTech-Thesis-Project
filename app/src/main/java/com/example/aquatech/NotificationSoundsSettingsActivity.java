@@ -46,9 +46,17 @@ public class NotificationSoundsSettingsActivity extends AppCompatActivity {
         if (switchMainMaster != null) {
             switchMainMaster.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (tvMainSwitchLabel != null) {
-                    tvMainSwitchLabel.setText(isChecked ? "On" : "Off");
+                    if (isChecked) {
+                        tvMainSwitchLabel.setText("On");
+                    } else {
+                        tvMainSwitchLabel.setText("Off");
+                    }
                 }
-                Toast.makeText(this, isChecked ? "Notifications On" : "Notifications Off", Toast.LENGTH_SHORT).show();
+                if (isChecked) {
+                    Toast.makeText(this, "Notifications On", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Notifications Off", Toast.LENGTH_SHORT).show();
+                }
             });
         }
     }

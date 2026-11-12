@@ -41,7 +41,11 @@ public class ReadReceiptsSettingsActivity extends AppCompatActivity {
         switchReadReceipts = findViewById(R.id.switchReadReceipts);
         if (switchReadReceipts != null) {
             switchReadReceipts.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                Toast.makeText(this, isChecked ? "Read receipts enabled" : "Read receipts disabled", Toast.LENGTH_SHORT).show();
+                if (isChecked) {
+                    Toast.makeText(this, "Read receipts enabled", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Read receipts disabled", Toast.LENGTH_SHORT).show();
+                }
             });
         }
     }

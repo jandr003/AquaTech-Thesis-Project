@@ -41,7 +41,11 @@ public class TypingIndicatorSettingsActivity extends AppCompatActivity {
         switchTypingIndicator = findViewById(R.id.switchTypingIndicator);
         if (switchTypingIndicator != null) {
             switchTypingIndicator.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                Toast.makeText(this, isChecked ? "Typing indicator enabled" : "Typing indicator disabled", Toast.LENGTH_SHORT).show();
+                if (isChecked) {
+                    Toast.makeText(this, "Typing indicator enabled", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Typing indicator disabled", Toast.LENGTH_SHORT).show();
+                }
             });
         }
     }

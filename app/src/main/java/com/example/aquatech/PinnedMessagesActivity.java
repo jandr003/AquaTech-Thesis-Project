@@ -75,17 +75,21 @@ public class PinnedMessagesActivity extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ChatMessage msg = ds.getValue(ChatMessage.class);
                     Boolean isPinned = ds.child("isPinned").getValue(Boolean.class);
-                    if (msg != null && (Boolean.TRUE.equals(isPinned) || msg.isSystem())) {
-                        pinnedList.add(msg);
+                    if (msg != null) {
+                        if (Boolean.TRUE.equals(isPinned) || msg.isSystem()) {
+                            pinnedList.add(msg);
+                        }
                     }
                 }
 
                 if (tvEmpty != null) {
                     tvEmpty.setVisibility(pinnedList.isEmpty() ? View.VISIBLE : View.GONE);
                 }
+
                 if (rvPinned != null) {
                     rvPinned.setVisibility(pinnedList.isEmpty() ? View.GONE : View.VISIBLE);
                 }
+
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
                 }
