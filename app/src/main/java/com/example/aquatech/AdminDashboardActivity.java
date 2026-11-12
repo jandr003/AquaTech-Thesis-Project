@@ -55,39 +55,61 @@ public class AdminDashboardActivity extends AppCompatActivity {
         tvGreeting = findViewById(R.id.tvGreeting);
         updateGreetingText();
 
-        findViewById(R.id.notificationIcon).setOnClickListener(v -> {
-            Log.d("ADMIN_DASHBOARD", "Notification icon clicked");
-        });
+        View notifIcon = findViewById(R.id.notificationIcon);
+        if (notifIcon != null) {
+            notifIcon.setOnClickListener(v -> Log.d("ADMIN_DASHBOARD", "Notification icon clicked"));
+        }
 
+        View cardOpen = findViewById(R.id.cardOpen);
+        if (cardOpen != null) {
+            cardOpen.setOnClickListener(v -> startActivity(new Intent(this, OpenRequestsActivity.class)));
+        }
 
-        findViewById(R.id.cardOpen).setOnClickListener(v -> startActivity(new Intent(this, OpenRequestsActivity.class)));
-        findViewById(R.id.cardInProgress).setOnClickListener(v -> startActivity(new Intent(this, TrackTechniciansActivity.class)));
-        findViewById(R.id.cardSubmissions).setOnClickListener(v -> startActivity(new Intent(this, SubmissionsActivity.class)));
-        findViewById(R.id.cardCompleted).setOnClickListener(v -> startActivity(new Intent(this, CompletedRequestsActivity.class)));
+        View cardInProgress = findViewById(R.id.cardInProgress);
+        if (cardInProgress != null) {
+            cardInProgress.setOnClickListener(v -> startActivity(new Intent(this, TrackTechniciansActivity.class)));
+        }
 
-        findViewById(R.id.cardActionTechPerf).setOnClickListener(v -> {
-            startActivity(new Intent(this, TechnicianPerformanceListActivity.class));
-        });
+        View cardSubmissions = findViewById(R.id.cardSubmissions);
+        if (cardSubmissions != null) {
+            cardSubmissions.setOnClickListener(v -> startActivity(new Intent(this, SubmissionsActivity.class)));
+        }
 
-        findViewById(R.id.cardActionLogs).setOnClickListener(v ->
-                startActivity(new Intent(this, AdminLogsActivity.class))
-        );
+        View cardCompleted = findViewById(R.id.cardCompleted);
+        if (cardCompleted != null) {
+            cardCompleted.setOnClickListener(v -> startActivity(new Intent(this, CompletedRequestsActivity.class)));
+        }
+
+        View cardTechPerf = findViewById(R.id.cardActionTechPerf);
+        if (cardTechPerf != null) {
+            cardTechPerf.setOnClickListener(v -> startActivity(new Intent(this, TechnicianPerformanceListActivity.class)));
+        }
+
+        View cardLogs = findViewById(R.id.cardActionLogs);
+        if (cardLogs != null) {
+            cardLogs.setOnClickListener(v -> startActivity(new Intent(this, AdminLogsActivity.class)));
+        }
 
         View navHome = findViewById(R.id.navHome);
         if (navHome != null) {
             navHome.setOnClickListener(v -> {
                 View sv = findViewById(R.id.dashboardScrollView);
-                if (sv != null) sv.scrollTo(0, 0);
+                if (sv != null) {
+                    sv.scrollTo(0, 0);
+                }
             });
         }
+
         View navTechs = findViewById(R.id.navTechs);
         if (navTechs != null) {
             navTechs.setOnClickListener(v -> startActivity(new Intent(this, ManageTechniciansActivity.class)));
         }
+
         View navHistory = findViewById(R.id.navHistory);
         if (navHistory != null) {
             navHistory.setOnClickListener(v -> startActivity(new Intent(this, AdminServiceHistoryActivity.class)));
         }
+
         View navProfile = findViewById(R.id.navProfile);
         if (navProfile != null) {
             navProfile.setOnClickListener(v -> startActivity(new Intent(this, AdminProfileActivity.class)));
@@ -99,30 +121,56 @@ public class AdminDashboardActivity extends AppCompatActivity {
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (isFinishing() || isDestroyed()) return;
-                int completed = 0, inProgress = 0, openCount = 0, submission = 0;
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+
+                int completed = 0;
+                int inProgress = 0;
+                int openCount = 0;
+                int submission = 0;
+
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String status = ds.child("status").getValue(String.class);
                     String assignedTechName = ds.child("assignedTechName").getValue(String.class);
 
-
                     if (status != null) {
                         String s = status.trim().toLowerCase();
-                        if (s.equals("completed")) completed++;
-                        else if (s.equals("submission") || s.equals("submitted")) submission++;
-                        else if (s.equals("in progress") || s.equals("ongoing") || s.equals("arrived")) inProgress++;
-                        else if (s.equals("open") || s.equals("assigned")) {
-                            if (assignedTechName != null && !assignedTechName.isEmpty()) inProgress++;
-                            else openCount++;
+                        if (s.equals("completed")) {
+                            completed++;
+                        } else if (s.equals("submission") || s.equals("submitted")) {
+                            submission++;
+                        } else if (s.equals("in progress") || s.equals("ongoing") || s.equals("arrived")) {
+                            inProgress++;
+                        } else if (s.equals("open") || s.equals("assigned")) {
+                            if (assignedTechName != null && !assignedTechName.isEmpty()) {
+                                inProgress++;
+                            } else {
+                                openCount++;
+                            }
                         }
                     }
                 }
-                if (tvCompletedCount != null) tvCompletedCount.setText(String.valueOf(completed));
-                if (tvInProgressCount != null) tvInProgressCount.setText(String.valueOf(inProgress));
-                if (tvOverdueCount != null) tvOverdueCount.setText(String.valueOf(openCount));
-                if (tvSubmissionCount != null) tvSubmissionCount.setText(String.valueOf(submission));
+
+                if (tvCompletedCount != null) {
+                    tvCompletedCount.setText(String.valueOf(completed));
+                }
+
+                if (tvInProgressCount != null) {
+                    tvInProgressCount.setText(String.valueOf(inProgress));
+                }
+
+                if (tvOverdueCount != null) {
+                    tvOverdueCount.setText(String.valueOf(openCount));
+                }
+
+                if (tvSubmissionCount != null) {
+                    tvSubmissionCount.setText(String.valueOf(submission));
+                }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -139,24 +187,33 @@ public class AdminDashboardActivity extends AppCompatActivity {
     }
 
     private String getAdminEmail() {
-        if (getIntent() != null && getIntent().hasExtra("USER_EMAIL")) return getIntent().getStringExtra("USER_EMAIL").toLowerCase().trim();
+        if (getIntent() != null && getIntent().hasExtra("USER_EMAIL")) {
+            String emailExtra = getIntent().getStringExtra("USER_EMAIL");
+            if (emailExtra != null) {
+                return emailExtra.toLowerCase().trim();
+            }
+        }
         FirebaseUser user = mAuth.getCurrentUser();
-        return (user != null && user.getEmail() != null) ? user.getEmail().toLowerCase().trim() : "";
+        if (user != null && user.getEmail() != null) {
+            return user.getEmail().toLowerCase().trim();
+        }
+        return "";
     }
 
     private void setAdminIdentity() {
         String email = getAdminEmail();
-        tvAdminName.setText(getDisplayNameByEmail(email));
+        if (tvAdminName != null) {
+            tvAdminName.setText(getDisplayNameByEmail(email));
+        }
     }
 
     private String getDisplayNameByEmail(String email) {
-        if (email.equals("management@aquasmartguard.ph") || email.equals("admin@aquasmartguard.ph")) {
+        if (email != null && (email.equals("management@aquasmartguard.ph") || email.equals("admin@aquasmartguard.ph"))) {
             return "Administrator";
-        } else {
-            FirebaseUser user = mAuth.getCurrentUser();
-            if (user != null && user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
-                return user.getDisplayName();
-            }
+        }
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null && user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
+            return user.getDisplayName();
         }
         return "Administrator";
     }
@@ -170,7 +227,10 @@ public class AdminDashboardActivity extends AppCompatActivity {
     }
 
     private void updateGreetingText() {
-        if (tvGreeting == null) return;
+        if (tvGreeting == null) {
+            return;
+        }
+
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
 
