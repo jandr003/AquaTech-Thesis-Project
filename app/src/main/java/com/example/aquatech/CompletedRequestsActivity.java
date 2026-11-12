@@ -3,11 +3,9 @@ package com.example.aquatech;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,12 +42,18 @@ public class CompletedRequestsActivity extends AppCompatActivity {
 
         rvCompletedRequests = findViewById(R.id.rvCompletedRequests);
         tvEmptyCompleted = findViewById(R.id.tvEmptyCompleted);
-        findViewById(R.id.btnBackCompleted).setOnClickListener(v -> finish());
 
-        rvCompletedRequests.setLayoutManager(new LinearLayoutManager(this));
-        completedList = new ArrayList<>();
-        adapter = new CompletedRequestAdapter(completedList);
-        rvCompletedRequests.setAdapter(adapter);
+        View btnBack = findViewById(R.id.btnBackCompleted);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        if (rvCompletedRequests != null) {
+            rvCompletedRequests.setLayoutManager(new LinearLayoutManager(this));
+            completedList = new ArrayList<>();
+            adapter = new CompletedRequestAdapter(completedList);
+            rvCompletedRequests.setAdapter(adapter);
+        }
 
         requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
         loadCompletedRequests();
@@ -64,6 +68,10 @@ public class CompletedRequestsActivity extends AppCompatActivity {
     }
 
     private void loadCompletedRequests() {
+        if (requestsRef == null) {
+            return;
+        }
+
         requestsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -76,13 +84,16 @@ public class CompletedRequestsActivity extends AppCompatActivity {
                         if (customerName == null || customerName.isEmpty()) {
                             customerName = ds.child("name").getValue(String.class);
                         }
-                        
-                        String ticketId = ds.child("ticketId").getValue(String.class);
-                        if (ticketId == null) ticketId = ds.getKey();
 
-                        String serviceType = getServiceTypeLabel(ds);
+                        String ticketId = ds.child("ticketId").getValue(String.class);
+                        if (ticketId == null) {
+                            ticketId = ds.getKey();
+                        }
+
                         String address = ds.child("address").getValue(String.class);
-                        if (address == null) address = ds.child("customerAddress").getValue(String.class);
+                        if (address == null) {
+                            address = ds.child("customerAddress").getValue(String.class);
+                        }
 
                         String completionTime = "Date not available";
                         Long timestamp = ds.child("completedTimestamp").getValue(Long.class);
@@ -98,13 +109,13 @@ public class CompletedRequestsActivity extends AppCompatActivity {
                         model.setSroNumber(ticketId);
                         model.setCustomerName(customerName != null ? customerName : "Guest Customer");
                         model.setTechRole(classification[0]);
-                        
+
                         String displayDetails = classification[1] + " — " + classification[2];
                         if (rawRemarks != null && !rawRemarks.trim().isEmpty()) {
                             displayDetails = rawRemarks + " (" + classification[1] + ")";
                         }
                         model.setRemarks(displayDetails);
-                        
+
                         String purchaseType = ds.child("purchaseType").getValue(String.class);
                         model.setPurchaseType(purchaseType != null ? purchaseType : "SUBSCRIPTION");
 
@@ -116,19 +127,30 @@ public class CompletedRequestsActivity extends AppCompatActivity {
                     }
                 }
 
-                tvEmptyCompleted.setVisibility(completedList.isEmpty() ? View.VISIBLE : View.GONE);
-                adapter.notifyDataSetChanged();
+                if (tvEmptyCompleted != null) {
+                    tvEmptyCompleted.setVisibility(completedList.isEmpty() ? View.VISIBLE : View.GONE);
+                }
+
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
 
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private boolean matchKeywords(String text, String... keywords) {
-        if (text == null || text.isEmpty()) return false;
+        if (text == null || text.isEmpty()) {
+            return false;
+        }
+
         String lower = text.toLowerCase(Locale.ROOT);
         for (String kw : keywords) {
-            if (lower.contains(kw.toLowerCase(Locale.ROOT))) return true;
+            if (lower.contains(kw.toLowerCase(Locale.ROOT))) {
+                return true;
+            }
         }
         return false;
     }
@@ -167,10 +189,25 @@ public class CompletedRequestsActivity extends AppCompatActivity {
 
     private String getServiceTypeLabel(DataSnapshot ds) {
         StringBuilder sb = new StringBuilder();
-        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) sb.append("Filter Preventive");
-        if (hasQty(ds, "qty_wayvalve")) { if (sb.length() > 0) sb.append(", "); sb.append("Installation Kit"); }
-        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) { if (sb.length() > 0) sb.append(", "); sb.append("Other Parts"); }
-        return sb.toString().isEmpty() ? "General Maintenance" : sb.toString();
+        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
+            sb.append("Filter Preventive");
+        }
+
+        if (hasQty(ds, "qty_wayvalve")) {
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
+            sb.append("Installation Kit");
+        }
+
+        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
+            sb.append("Other Parts");
+        }
+
+        return sb.length() == 0 ? "General Maintenance" : sb.toString();
     }
 
     private boolean hasQty(DataSnapshot ds, String key) {
