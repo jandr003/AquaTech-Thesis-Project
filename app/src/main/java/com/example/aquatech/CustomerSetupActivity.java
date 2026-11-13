@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,6 +40,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
         initializeViews();
         fetchUserData();
         setupClickListeners();
+        loadDynamicAdminItems();
     }
 
     private void initializeViews() {
@@ -83,6 +85,27 @@ public class CustomerSetupActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {}
             });
         }
+    }
+
+    private void loadDynamicAdminItems() {
+        DatabaseReference itemsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceItems");
+        itemsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String itemName = ds.child("itemName").getValue(String.class);
+                        String category = ds.child("category").getValue(String.class);
+                        if (itemName != null && !itemName.isEmpty() && category != null && category.contains("Dispenser")) {
+                            Log.d("SETUP_ITEMS", "Dynamic item added from Admin: " + itemName);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
 
     private void setupClickListeners() {
