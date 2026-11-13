@@ -37,22 +37,32 @@ public class DialogTechAdapter extends RecyclerView.Adapter<DialogTechAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Map<String, String> tech = techList.get(position);
+        if (tech == null) {
+            return;
+        }
+
         String name = tech.get("name");
         String uid = tech.get("uid");
         String techIdStr = tech.get("techId");
         String status = tech.get("status");
 
         String displayName = (name != null && !name.isEmpty()) ? name : "Unknown Technician";
-        holder.tvName.setText(displayName);
+        if (holder.tvName != null) {
+            holder.tvName.setText(displayName);
+        }
 
-        holder.tvId.setText(techIdStr != null ? techIdStr : "N/A");
+        if (holder.tvId != null) {
+            holder.tvId.setText(techIdStr != null ? techIdStr : "N/A");
+        }
 
-        if ("Busy".equalsIgnoreCase(status)) {
-            holder.tvStatus.setText("Currently performing a task (Busy)");
-            holder.tvStatus.setTextColor(Color.parseColor("#FF5252"));
-        } else {
-            holder.tvStatus.setText("Available for task");
-            holder.tvStatus.setTextColor(Color.parseColor("#8BC34A"));
+        if (holder.tvStatus != null) {
+            if ("Busy".equalsIgnoreCase(status)) {
+                holder.tvStatus.setText("Currently performing a task (Busy)");
+                holder.tvStatus.setTextColor(Color.parseColor("#FF5252"));
+            } else {
+                holder.tvStatus.setText("Available for task");
+                holder.tvStatus.setTextColor(Color.parseColor("#8BC34A"));
+            }
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -64,7 +74,10 @@ public class DialogTechAdapter extends RecyclerView.Adapter<DialogTechAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return techList.size();
+        if (techList != null) {
+            return techList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
