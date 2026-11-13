@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/poppins"
-            android:text="MANAGE PRODUCTS &amp; UNITS"
+            android:text="MANAGE WATER PURIFIERS"
             android:textColor="@color/white"
             android:textSize="17.5sp"
             android:textStyle="bold" />
@@ -46,7 +46,7 @@
             android:layout_centerVertical="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:contentDescription="Add New Product"
+            android:contentDescription="Add New Purifier"
             android:focusable="true"
             android:padding="8dp"
             android:src="@android:drawable/ic_input_add"
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Water Dispenser Product Catalog"
+                        android:text="Water Purifier Product Catalog"
                         android:textColor="#1E293B"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -99,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Manage certified dispenser products available for new customer account setup."
+                        android:text="Manage certified water purifier units available for new customer account setup."
                         android:textColor="#64748B"
                         android:textSize="13sp" />
 
@@ -114,7 +114,7 @@
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins_black_ttf"
                 android:letterSpacing="0.05"
-                android:text="REGISTERED DISPENSER PRODUCTS"
+                android:text="REGISTERED WATER PURIFIERS"
                 android:textColor="#1C4E75"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -134,7 +134,7 @@
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#2196F3"
                 android:fontFamily="@font/poppins"
-                android:text="+ Add New Dispenser Product"
+                android:text="+ Add New Water Purifier"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="15sp"
