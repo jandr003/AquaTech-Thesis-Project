@@ -46,7 +46,11 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
 
         setupStatusBar();
         initializeDataSync();
-        findViewById(R.id.compLogoImg).setOnClickListener(v -> finish());
+
+        View btnLogo = findViewById(R.id.compLogoImg);
+        if (btnLogo != null) {
+            btnLogo.setOnClickListener(v -> finish());
+        }
     }
 
     private void setupStatusBar() {
@@ -66,15 +70,22 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
                     updateUI(snapshot);
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void updateUI(DataSnapshot snapshot) {
+        if (snapshot == null) {
+            return;
+        }
+
         String sro = snapshot.child("referenceNo").getValue(String.class);
         if (sro == null) {
             sro = snapshot.child("sroNumber").getValue(String.class);
         }
+
         TextView tvTicketId = findViewById(R.id.compTicketId);
         if (tvTicketId != null) {
             tvTicketId.setText(sro != null ? sro : ticketId);
@@ -84,14 +95,20 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
         if (completionTs == null) {
             completionTs = snapshot.child("submissionTimestamp").getValue(Long.class);
         }
-        
+
         if (completionTs != null) {
             String dateStr = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date(completionTs));
             String timeStr = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date(completionTs));
+
             TextView tvSubDate = findViewById(R.id.compSubDate);
-            if (tvSubDate != null) tvSubDate.setText(dateStr);
+            if (tvSubDate != null) {
+                tvSubDate.setText(dateStr);
+            }
+
             TextView tvSubTime = findViewById(R.id.compSubTime);
-            if (tvSubTime != null) tvSubTime.setText(timeStr);
+            if (tvSubTime != null) {
+                tvSubTime.setText(timeStr);
+            }
         }
 
         TextView statusBadge = findViewById(R.id.compStatusBadge);
@@ -103,21 +120,38 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
         }
 
         TextView tvCustName = findViewById(R.id.compCustomerName);
-        if (tvCustName != null) tvCustName.setText(snapshot.child("customerName").getValue(String.class));
+        if (tvCustName != null) {
+            String custName = snapshot.child("customerName").getValue(String.class);
+            tvCustName.setText(custName != null ? custName : "Registered Customer");
+        }
 
         TextView tvContact = findViewById(R.id.compContact);
-        if (tvContact != null) tvContact.setText(snapshot.child("contactNumber").getValue(String.class));
+        if (tvContact != null) {
+            String contact = snapshot.child("contactNumber").getValue(String.class);
+            tvContact.setText(contact != null ? contact : "");
+        }
 
         TextView tvAddress = findViewById(R.id.compAddress);
-        if (tvAddress != null) tvAddress.setText(snapshot.child("address").getValue(String.class));
+        if (tvAddress != null) {
+            String addr = snapshot.child("address").getValue(String.class);
+            tvAddress.setText(addr != null ? addr : "");
+        }
 
         String unitModel = snapshot.child("unitName").getValue(String.class);
-        if (unitModel == null) unitModel = snapshot.child("unitModel").getValue(String.class);
-        if (unitModel == null) unitModel = "";
+        if (unitModel == null) {
+            unitModel = snapshot.child("unitModel").getValue(String.class);
+        }
+        if (unitModel == null) {
+            unitModel = "";
+        }
 
         String unitNumber = snapshot.child("unitNumber").getValue(String.class);
-        if (unitNumber == null) unitNumber = snapshot.child("itemUnitNumber").getValue(String.class);
-        if (unitNumber == null) unitNumber = "0000";
+        if (unitNumber == null) {
+            unitNumber = snapshot.child("itemUnitNumber").getValue(String.class);
+        }
+        if (unitNumber == null) {
+            unitNumber = "0000";
+        }
 
         String friendlyProductName = "STANDING WATER PURIFIER";
         String baseUnitTemplate = "ST-FXCU1-M-HCA-WT-**-***";
@@ -139,14 +173,22 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
         String finalUnitCode = baseUnitTemplate.replace("**-***", unitNumber);
 
         TextView tvUnitName = findViewById(R.id.compUnitName);
-        if (tvUnitName != null) tvUnitName.setText(friendlyProductName);
+        if (tvUnitName != null) {
+            tvUnitName.setText(friendlyProductName);
+        }
 
         TextView tvUnitCode = findViewById(R.id.compUnitCode);
-        if (tvUnitCode != null) tvUnitCode.setText(finalUnitCode);
+        if (tvUnitCode != null) {
+            tvUnitCode.setText(finalUnitCode);
+        }
 
         String purchaseType = snapshot.child("purchaseType").getValue(String.class);
-        if (purchaseType == null) purchaseType = snapshot.child("typeOfPurchase").getValue(String.class);
-        if (purchaseType == null) purchaseType = snapshot.child("installationLocation").getValue(String.class);
+        if (purchaseType == null) {
+            purchaseType = snapshot.child("typeOfPurchase").getValue(String.class);
+        }
+        if (purchaseType == null) {
+            purchaseType = snapshot.child("installationLocation").getValue(String.class);
+        }
 
         if (purchaseType != null) {
             String upper = purchaseType.toUpperCase();
@@ -160,24 +202,32 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
         }
 
         TextView tvLocation = findViewById(R.id.compLocation);
-        if (tvLocation != null) tvLocation.setText(purchaseType != null ? purchaseType : "SUBSCRIPTION");
+        if (tvLocation != null) {
+            tvLocation.setText(purchaseType != null ? purchaseType : "SUBSCRIPTION");
+        }
 
         String serviceType = snapshot.child("serviceType").getValue(String.class);
         TextView tvServiceType = findViewById(R.id.compServiceType);
-        if (tvServiceType != null) tvServiceType.setText(serviceType != null ? serviceType : "General Service");
-        
+        if (tvServiceType != null) {
+            tvServiceType.setText(serviceType != null ? serviceType : "General Service");
+        }
+
         String techRemarks = snapshot.child("technicianRemarks").getValue(String.class);
         TextView tvRemarks = findViewById(R.id.compRemarks);
-        if (tvRemarks != null) tvRemarks.setText(techRemarks != null ? techRemarks : "Service completed successfully.");
+        if (tvRemarks != null) {
+            tvRemarks.setText(techRemarks != null ? techRemarks : "Service completed successfully.");
+        }
 
         String pm = snapshot.child("paymentMethod").getValue(String.class);
         TextView tvPaymentMethod = findViewById(R.id.compPaymentMethod);
-        if (tvPaymentMethod != null) tvPaymentMethod.setText(pm != null ? pm : "COD");
+        if (tvPaymentMethod != null) {
+            tvPaymentMethod.setText(pm != null ? pm : "COD");
+        }
 
         Object total = snapshot.child("totalAmount").getValue();
         TextView tvTotal = findViewById(R.id.compTotalAmount);
         if (tvTotal != null && total instanceof Number) {
-            tvTotal.setText(String.format(Locale.getDefault(), "₱ %,.2f", ((Number)total).doubleValue()));
+            tvTotal.setText(String.format(Locale.getDefault(), "₱ %,.2f", ((Number) total).doubleValue()));
         }
 
         TextView payBadge = findViewById(R.id.compPaymentBadge);
@@ -189,7 +239,6 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
         }
 
         ImageView ivTechSign = findViewById(R.id.compTechSign);
-
         String techSig = snapshot.child("technicianSignature").getValue(String.class);
         if (ivTechSign != null && techSig != null && !techSig.isEmpty()) {
             int resId = getResources().getIdentifier(techSig, "drawable", getPackageName());
@@ -202,15 +251,36 @@ public class ServiceCompletedReceiptActivity extends AppCompatActivity {
     }
 
     private void addOrderRow(DataSnapshot snapshot, LinearLayout container, String key, String label, int price) {
+        if (snapshot == null || container == null) {
+            return;
+        }
+
         Object val = snapshot.child(key).getValue();
         int q = 0;
-        if (val instanceof Number) q = ((Number) val).intValue();
+        if (val instanceof Number) {
+            q = ((Number) val).intValue();
+        }
+
         if (q > 0) {
             View row = LayoutInflater.from(this).inflate(R.layout.item_pdf_billing_row, container, false);
-            ((TextView)row.findViewById(R.id.pdfItemName)).setText(label);
-            ((TextView)row.findViewById(R.id.pdfItemQty)).setText(String.valueOf(q));
-            ((TextView)row.findViewById(R.id.pdfItemPrice)).setText(String.format(Locale.getDefault(), "₱ %,d.00", q * price));
-            container.addView(row);
+            if (row != null) {
+                TextView tvName = row.findViewById(R.id.pdfItemName);
+                if (tvName != null) {
+                    tvName.setText(label);
+                }
+
+                TextView tvQty = row.findViewById(R.id.pdfItemQty);
+                if (tvQty != null) {
+                    tvQty.setText(String.valueOf(q));
+                }
+
+                TextView tvPrice = row.findViewById(R.id.pdfItemPrice);
+                if (tvPrice != null) {
+                    tvPrice.setText(String.format(Locale.getDefault(), "₱ %,d.00", q * price));
+                }
+
+                container.addView(row);
+            }
         }
     }
 }
