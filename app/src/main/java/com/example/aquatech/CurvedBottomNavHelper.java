@@ -2,12 +2,15 @@ package com.example.aquatech;
 
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class CurvedBottomNavHelper {
 
     public static void setupAnimatedNav(BottomNavigationView bottomNav) {
-        if (bottomNav == null) return;
+        if (bottomNav == null) {
+            return;
+        }
 
         bottomNav.post(() -> {
             int selectedId = bottomNav.getSelectedItemId();
@@ -21,7 +24,9 @@ public class CurvedBottomNavHelper {
     }
 
     public static void animateItemClick(BottomNavigationView bottomNav, int selectedItemId) {
-        if (bottomNav == null) return;
+        if (bottomNav == null) {
+            return;
+        }
 
         View selectedView = bottomNav.findViewById(selectedItemId);
         if (selectedView != null) {
