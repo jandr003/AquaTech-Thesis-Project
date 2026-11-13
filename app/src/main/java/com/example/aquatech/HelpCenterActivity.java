@@ -12,7 +12,6 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,8 +42,11 @@ public class HelpCenterActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackHelp).setOnClickListener(v -> finish());
-        
+        View btnBack = findViewById(R.id.btnBackHelp);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         etSearch = findViewById(R.id.etSearchHelp);
         faqCard = findViewById(R.id.faqCard);
         tvPopularTitle = findViewById(R.id.tvPopularTopics);
@@ -66,32 +68,46 @@ public class HelpCenterActivity extends AppCompatActivity {
         tvQ4 = findViewById(R.id.tvQuestion4);
         tvQ5 = findViewById(R.id.tvQuestion5);
 
-        findViewById(R.id.btnChatSupport).setOnClickListener(v -> {
-            startActivity(new Intent(this, AquaBuddyActivity.class));
-        });
+        View btnChatSupport = findViewById(R.id.btnChatSupport);
+        if (btnChatSupport != null) {
+            btnChatSupport.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AquaBuddyActivity.class);
+                startActivity(intent);
+            });
+        }
 
-        findViewById(R.id.btnCallSupport).setOnClickListener(v -> {
-            String phoneNumber = "tel:09123456789"; 
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse(phoneNumber));
-            startActivity(intent);
-        });
+        View btnCallSupport = findViewById(R.id.btnCallSupport);
+        if (btnCallSupport != null) {
+            btnCallSupport.setOnClickListener(v -> {
+                String phoneNumber = "tel:09123456789";
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(phoneNumber));
+                startActivity(intent);
+            });
+        }
     }
 
     private void setupSearch() {
         if (etSearch != null) {
             etSearch.addTextChangedListener(new TextWatcher() {
-                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    filterFaqs(s.toString().toLowerCase().trim());
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s != null) {
+                        filterFaqs(s.toString().toLowerCase().trim());
+                    }
                 }
-                @Override public void afterTextChanged(Editable s) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {}
             });
         }
     }
 
     private void filterFaqs(String query) {
-        if (query.isEmpty()) {
+        if (query == null || query.isEmpty()) {
             showAllFaqs();
             return;
         }
@@ -102,34 +118,96 @@ public class HelpCenterActivity extends AppCompatActivity {
         boolean f4 = tvQ4 != null && tvQ4.getText().toString().toLowerCase().contains(query);
         boolean f5 = tvQ5 != null && tvQ5.getText().toString().toLowerCase().contains(query);
 
-        if (faq1 != null) faq1.setVisibility(f1 ? View.VISIBLE : View.GONE);
-        if (faq2 != null) faq2.setVisibility(f2 ? View.VISIBLE : View.GONE);
-        if (faq3 != null) faq3.setVisibility(f3 ? View.VISIBLE : View.GONE);
-        if (faq4 != null) faq4.setVisibility(f4 ? View.VISIBLE : View.GONE);
-        if (faq5 != null) faq5.setVisibility(f5 ? View.VISIBLE : View.GONE);
+        if (faq1 != null) {
+            faq1.setVisibility(f1 ? View.VISIBLE : View.GONE);
+        }
 
-        if (div1 != null) div1.setVisibility(f1 && (f2 || f3 || f4 || f5) ? View.VISIBLE : View.GONE);
-        if (div2 != null) div2.setVisibility(f2 && (f3 || f4 || f5) ? View.VISIBLE : View.GONE);
-        if (div3 != null) div3.setVisibility(f3 && (f4 || f5) ? View.VISIBLE : View.GONE);
-        if (div4 != null) div4.setVisibility(f4 && f5 ? View.VISIBLE : View.GONE);
+        if (faq2 != null) {
+            faq2.setVisibility(f2 ? View.VISIBLE : View.GONE);
+        }
+
+        if (faq3 != null) {
+            faq3.setVisibility(f3 ? View.VISIBLE : View.GONE);
+        }
+
+        if (faq4 != null) {
+            faq4.setVisibility(f4 ? View.VISIBLE : View.GONE);
+        }
+
+        if (faq5 != null) {
+            faq5.setVisibility(f5 ? View.VISIBLE : View.GONE);
+        }
+
+        if (div1 != null) {
+            div1.setVisibility(f1 && (f2 || f3 || f4 || f5) ? View.VISIBLE : View.GONE);
+        }
+
+        if (div2 != null) {
+            div2.setVisibility(f2 && (f3 || f4 || f5) ? View.VISIBLE : View.GONE);
+        }
+
+        if (div3 != null) {
+            div3.setVisibility(f3 && (f4 || f5) ? View.VISIBLE : View.GONE);
+        }
+
+        if (div4 != null) {
+            div4.setVisibility(f4 && f5 ? View.VISIBLE : View.GONE);
+        }
 
         boolean hasAnyMatch = f1 || f2 || f3 || f4 || f5;
-        if (faqCard != null) faqCard.setVisibility(hasAnyMatch ? View.VISIBLE : View.GONE);
-        if (tvPopularTitle != null) tvPopularTitle.setVisibility(hasAnyMatch ? View.VISIBLE : View.GONE);
+        if (faqCard != null) {
+            faqCard.setVisibility(hasAnyMatch ? View.VISIBLE : View.GONE);
+        }
+
+        if (tvPopularTitle != null) {
+            tvPopularTitle.setVisibility(hasAnyMatch ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void showAllFaqs() {
-        if (faq1 != null) faq1.setVisibility(View.VISIBLE);
-        if (faq2 != null) faq2.setVisibility(View.VISIBLE);
-        if (faq3 != null) faq3.setVisibility(View.VISIBLE);
-        if (faq4 != null) faq4.setVisibility(View.VISIBLE);
-        if (faq5 != null) faq5.setVisibility(View.VISIBLE);
-        if (div1 != null) div1.setVisibility(View.VISIBLE);
-        if (div2 != null) div2.setVisibility(View.VISIBLE);
-        if (div3 != null) div3.setVisibility(View.VISIBLE);
-        if (div4 != null) div4.setVisibility(View.VISIBLE);
-        if (faqCard != null) faqCard.setVisibility(View.VISIBLE);
-        if (tvPopularTitle != null) tvPopularTitle.setVisibility(View.VISIBLE);
+        if (faq1 != null) {
+            faq1.setVisibility(View.VISIBLE);
+        }
+
+        if (faq2 != null) {
+            faq2.setVisibility(View.VISIBLE);
+        }
+
+        if (faq3 != null) {
+            faq3.setVisibility(View.VISIBLE);
+        }
+
+        if (faq4 != null) {
+            faq4.setVisibility(View.VISIBLE);
+        }
+
+        if (faq5 != null) {
+            faq5.setVisibility(View.VISIBLE);
+        }
+
+        if (div1 != null) {
+            div1.setVisibility(View.VISIBLE);
+        }
+
+        if (div2 != null) {
+            div2.setVisibility(View.VISIBLE);
+        }
+
+        if (div3 != null) {
+            div3.setVisibility(View.VISIBLE);
+        }
+
+        if (div4 != null) {
+            div4.setVisibility(View.VISIBLE);
+        }
+
+        if (faqCard != null) {
+            faqCard.setVisibility(View.VISIBLE);
+        }
+
+        if (tvPopularTitle != null) {
+            tvPopularTitle.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupFaqs() {
@@ -141,7 +219,10 @@ public class HelpCenterActivity extends AppCompatActivity {
     }
 
     private void setupFaqToggle(View layout, int answerId, int arrowId) {
-        if (layout == null) return;
+        if (layout == null) {
+            return;
+        }
+
         final TextView tvAnswer = layout.findViewById(answerId);
         final ImageView ivArrow = layout.findViewById(arrowId);
 
