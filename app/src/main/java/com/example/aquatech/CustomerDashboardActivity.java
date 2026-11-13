@@ -28,11 +28,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -76,7 +74,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     private RecyclerView rvChatThreads;
     private ChatThreadAdapter chatThreadAdapter;
-    private List<DataSnapshot> chatThreadsList = new ArrayList<>();
+    private final List<DataSnapshot> chatThreadsList = new ArrayList<>();
 
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
@@ -96,9 +94,15 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     String uName = data.getStringExtra("unit_name");
                     String serial = data.getStringExtra("serial_no");
                     int unitImg = data.getIntExtra("image_res", R.drawable.titled_design1);
-                    if (unitValue != null) unitValue.setText(uName);
-                    if (unitName != null) unitName.setText(serial);
-                    if (imgDispenser != null) imgDispenser.setImageResource(unitImg);
+                    if (unitValue != null) {
+                        unitValue.setText(uName);
+                    }
+                    if (unitName != null) {
+                        unitName.setText(serial);
+                    }
+                    if (imgDispenser != null) {
+                        imgDispenser.setImageResource(unitImg);
+                    }
                     saveUnitToFirebase(uName, serial);
                 }
             });
@@ -121,15 +125,17 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         setupServiceRequestMonitor();
         setupNotificationMonitor();
         setupMessageNotificationListener();
-        setupCustomerChatThreadsListener(); 
-        setupMessageClickListener();         
+        setupCustomerChatThreadsListener();
+        setupMessageClickListener();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         isActivityInForeground = true;
-        if (messageDotListener != null) chatsRef.addListenerForSingleValueEvent(messageDotListener);
+        if (messageDotListener != null && chatsRef != null) {
+            chatsRef.addListenerForSingleValueEvent(messageDotListener);
+        }
         reloadUserProfile();
     }
 
@@ -141,7 +147,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     private void reloadUserProfile() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) return;
+        if (user == null) {
+            return;
+        }
 
         DatabaseReference profileRef = FirebaseDatabase.getInstance(DB_URL)
                 .getReference("Users").child(user.getUid());
@@ -151,10 +159,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String name = snapshot.child("fullName").getValue(String.class);
-                    if (name == null) name = snapshot.child("name").getValue(String.class);
+                    if (name == null) {
+                        name = snapshot.child("name").getValue(String.class);
+                    }
                     if (name != null && customerUserName != null) {
                         customerUserName.setText(name);
-                        Log.d("PROFILE", "Name updated to: " + name);
                     }
 
                     String rootUnit = snapshot.child("unitName").getValue(String.class);
@@ -162,18 +171,24 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     String rootRef = snapshot.child("referenceNo").getValue(String.class);
 
                     if (rootUnit != null) {
-                        if (unitValue != null) unitValue.setText(rootUnit);
-                        if (unitName != null) unitName.setText(rootSerial != null ? rootSerial : "---");
-                        if (refValue != null) refValue.setText(rootRef != null ? rootRef : "---");
-                        if (imgDispenser != null) imgDispenser.setImageResource(getImageForUnit(rootUnit));
+                        if (unitValue != null) {
+                            unitValue.setText(rootUnit);
+                        }
+                        if (unitName != null) {
+                            unitName.setText(rootSerial != null ? rootSerial : "---");
+                        }
+                        if (refValue != null) {
+                            refValue.setText(rootRef != null ? rootRef : "---");
+                        }
+                        if (imgDispenser != null) {
+                            imgDispenser.setImageResource(getImageForUnit(rootUnit));
+                        }
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("PROFILE", "Failed to reload: " + error.getMessage());
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -197,26 +212,31 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             messageCard.setCardBackgroundColor(Color.parseColor("#3EB5E8"));
         }
 
-        // Bottom Navigation Bar
         View navHome = findViewById(R.id.navCustHome);
         if (navHome != null) {
             navHome.setOnClickListener(v -> {
                 View sv = findViewById(R.id.customerScrollView);
-                if (sv != null) sv.scrollTo(0, 0);
+                if (sv != null) {
+                    sv.scrollTo(0, 0);
+                }
             });
         }
+
         View navRequest = findViewById(R.id.navCustRequest);
         if (navRequest != null) {
             navRequest.setOnClickListener(v -> startActivity(new Intent(this, ServiceRequestActivity.class)));
         }
+
         View navMessages = findViewById(R.id.navCustMessages);
         if (navMessages != null) {
             navMessages.setOnClickListener(v -> startActivity(new Intent(this, CustomerChatListActivity.class)));
         }
+
         View navHistory = findViewById(R.id.navCustHistory);
         if (navHistory != null) {
             navHistory.setOnClickListener(v -> startActivity(new Intent(this, ServiceHistoryActivity.class)));
         }
+
         View navProfile = findViewById(R.id.navCustProfile);
         if (navProfile != null) {
             navProfile.setOnClickListener(v -> startActivity(new Intent(this, CustomerSetupActivity.class)));
@@ -225,7 +245,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     private void setupMessageNotificationListener() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) return;
+        if (user == null) {
+            return;
+        }
+
         String myUid = user.getUid();
         messageDotListener = new ValueEventListener() {
             @Override
@@ -241,7 +264,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 String lastMsg = chat.child("lastMessage").getValue(String.class);
                                 String tName = chat.child("techName").getValue(String.class);
                                 if (lastMsg != null && messageSubtitle != null) {
-                                    messageSubtitle.setText(Html.fromHtml("<b>" + (tName != null ? tName : "Tech") + "</b>: " + lastMsg));
+                                    messageSubtitle.setText(Html.fromHtml("<b>" + (tName != null ? tName : "Tech") + "</b>: " + lastMsg, Html.FROM_HTML_MODE_LEGACY));
                                     messageSubtitle.setTextColor(Color.WHITE);
                                 }
                                 break;
@@ -254,18 +277,25 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                         messageSubtitle.setTextColor(Color.parseColor("#B0BEC5"));
                     }
                 }
-                if (msgNotificationDot != null) msgNotificationDot.setVisibility(hasUnread ? View.VISIBLE : View.GONE);
+
+                if (msgNotificationDot != null) {
+                    msgNotificationDot.setVisibility(hasUnread ? View.VISIBLE : View.GONE);
+                }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
         chatsRef.addValueEventListener(messageDotListener);
     }
 
     private void setupCustomerChatThreadsListener() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) return;
-        String myUid = user.getUid();
+        if (user == null) {
+            return;
+        }
 
+        String myUid = user.getUid();
         DatabaseReference userChatsRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats");
 
         userChatsRef.orderByChild("customerId").equalTo(myUid)
@@ -288,6 +318,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 }
                                 break;
                             }
+
                             for (DataSnapshot chatSnapshot : snapshot.getChildren()) {
                                 chatThreadsList.add(chatSnapshot);
                             }
@@ -303,7 +334,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                         if (messageSubtitle != null) {
                             if (hasUnread && !latestMessage.isEmpty()) {
-                                messageSubtitle.setText(Html.fromHtml("<b>" + latestSender + "</b>: " + latestMessage));
+                                messageSubtitle.setText(Html.fromHtml("<b>" + latestSender + "</b>: " + latestMessage, Html.FROM_HTML_MODE_LEGACY));
                                 messageSubtitle.setTextColor(Color.WHITE);
                             } else if (currentRequestStatus != null && currentRequestStatus.equalsIgnoreCase("In Progress")) {
                                 messageSubtitle.setText("Chat with your technician");
@@ -316,9 +347,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("CHAT_THREADS", "Error loading chats: " + error.getMessage());
-                    }
+                    public void onCancelled(@NonNull DatabaseError error) {}
                 });
     }
 
@@ -346,48 +375,83 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String name = snapshot.child("fullName").getValue(String.class);
-                        if (name == null) name = snapshot.child("name").getValue(String.class);
-                        if (name != null && customerUserName != null) customerUserName.setText(name);
+                        if (name == null) {
+                            name = snapshot.child("name").getValue(String.class);
+                        }
+                        if (name != null && customerUserName != null) {
+                            customerUserName.setText(name);
+                        }
 
                         String rootUnit = snapshot.child("unitName").getValue(String.class);
                         String rootSerial = snapshot.child("serialNo").getValue(String.class);
                         String rootRef = snapshot.child("referenceNo").getValue(String.class);
 
                         if (rootUnit != null) {
-                            if (unitValue != null) unitValue.setText(rootUnit);
-                            if (unitName != null) unitName.setText(rootSerial != null ? rootSerial : "---");
-                            if (refValue != null) refValue.setText(rootRef != null ? rootRef : "---");
-                            if (imgDispenser != null) imgDispenser.setImageResource(getImageForUnit(rootUnit));
+                            if (unitValue != null) {
+                                unitValue.setText(rootUnit);
+                            }
+                            if (unitName != null) {
+                                unitName.setText(rootSerial != null ? rootSerial : "---");
+                            }
+                            if (refValue != null) {
+                                refValue.setText(rootRef != null ? rootRef : "---");
+                            }
+                            if (imgDispenser != null) {
+                                imgDispenser.setImageResource(getImageForUnit(rootUnit));
+                            }
                         } else {
                             DataSnapshot unitsFolder = snapshot.child("units");
                             if (unitsFolder.exists() && unitsFolder.hasChildren()) {
                                 DataSnapshot lastUnit = null;
-                                for (DataSnapshot u : unitsFolder.getChildren()) { lastUnit = u; }
+                                for (DataSnapshot u : unitsFolder.getChildren()) {
+                                    lastUnit = u;
+                                }
                                 if (lastUnit != null) {
                                     String uLabel = lastUnit.child("unitName").getValue(String.class);
                                     String uSerial = lastUnit.child("serialNo").getValue(String.class);
                                     String sro = lastUnit.child("referenceNo").getValue(String.class);
-                                    if (unitValue != null) unitValue.setText(uLabel != null ? uLabel : "---");
-                                    if (unitName != null) unitName.setText(uSerial != null ? uSerial : "---");
-                                    if (refValue != null) refValue.setText(sro != null ? sro : "---");
-                                    if (imgDispenser != null && uLabel != null) imgDispenser.setImageResource(getImageForUnit(uLabel));
+
+                                    if (unitValue != null) {
+                                        unitValue.setText(uLabel != null ? uLabel : "---");
+                                    }
+                                    if (unitName != null) {
+                                        unitName.setText(uSerial != null ? uSerial : "---");
+                                    }
+                                    if (refValue != null) {
+                                        refValue.setText(sro != null ? sro : "---");
+                                    }
+                                    if (imgDispenser != null && uLabel != null) {
+                                        imgDispenser.setImageResource(getImageForUnit(uLabel));
+                                    }
                                 }
                             }
                         }
                     }
                 }
-                @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
             };
             userRef.addValueEventListener(userListener);
         }
     }
 
     private void clearSampleData() {
-        if (customerUserName != null) customerUserName.setText("Loading...");
-        if (refValue != null) refValue.setText("---");
-        if (unitValue != null) unitValue.setText("---");
-        if (unitName != null) unitName.setText("---");
-        if (imgDispenser != null) imgDispenser.setImageDrawable(null);
+        if (customerUserName != null) {
+            customerUserName.setText("Loading...");
+        }
+        if (refValue != null) {
+            refValue.setText("---");
+        }
+        if (unitValue != null) {
+            unitValue.setText("---");
+        }
+        if (unitName != null) {
+            unitName.setText("---");
+        }
+        if (imgDispenser != null) {
+            imgDispenser.setImageDrawable(null);
+        }
     }
 
     private void handleIncomingSetupData() {
@@ -396,24 +460,37 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             String uName = intent.getStringExtra("UNIT_NAME");
             String uNo = intent.getStringExtra("UNIT_NO");
             String serialTemplate = getTemplateForUnit(uName);
-            String finalSerial = serialTemplate.replace("**-***", uNo);
-            if (unitValue != null) unitValue.setText(uName);
-            if (unitName != null) unitName.setText(finalSerial);
+            String finalSerial = serialTemplate.replace("**-***", uNo != null ? uNo : "");
+
+            if (unitValue != null) {
+                unitValue.setText(uName);
+            }
+            if (unitName != null) {
+                unitName.setText(finalSerial);
+            }
+
             int imgRes = getImageForUnit(uName);
-            if (imgDispenser != null) imgDispenser.setImageResource(imgRes);
+            if (imgDispenser != null) {
+                imgDispenser.setImageResource(imgRes);
+            }
+
             saveUnitToFirebase(uName, finalSerial);
         }
     }
 
     private void setupServiceRequestMonitor() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) return;
+        if (user == null || requestsRef == null) {
+            return;
+        }
 
         monitorQuery = requestsRef.orderByChild("userId").equalTo(user.getUid());
         monitorListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (isFinishing() || isDestroyed()) return;
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
 
                 String oldStatus = currentRequestStatus;
                 hasActiveRequest = false;
@@ -425,17 +502,19 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String status = ds.child("status").getValue(String.class);
-                        if (status == null) continue;
+                        if (status == null) {
+                            continue;
+                        }
 
-                        boolean isFinished = status.equalsIgnoreCase("Completed") || 
-                                           status.equalsIgnoreCase("Cancelled") || 
-                                           status.equalsIgnoreCase("Rejected");
+                        boolean isFinished = status.equalsIgnoreCase("Completed") ||
+                                status.equalsIgnoreCase("Cancelled") ||
+                                status.equalsIgnoreCase("Rejected");
 
                         if (!isFinished) {
                             hasActiveRequest = true;
                             currentRequestStatus = status;
                             currentTicketId = ds.getKey();
-                            
+
                             String tName = ds.child("assignedTechName").getValue(String.class);
                             String tId = ds.child("assignedTechId").getValue(String.class);
                             if (tId != null && !tId.isEmpty()) {
@@ -462,7 +541,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                 View msgBtn = findViewById(R.id.messageRequestButton);
                 boolean isAccepted = "In Progress".equalsIgnoreCase(currentRequestStatus);
-                if (msgBtn != null) msgBtn.setAlpha((isAccepted) ? 1.0f : 0.6f);
+                if (msgBtn != null) {
+                    msgBtn.setAlpha((isAccepted) ? 1.0f : 0.6f);
+                }
 
                 if (!isAccepted && messageSubtitle != null) {
                     messageSubtitle.setText("Waiting for technician to accept...");
@@ -470,13 +551,19 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                 isInitialRequestLoad = false;
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
-        monitorQuery.addValueEventListener(monitorListener);
+        if (monitorQuery != null && monitorListener != null) {
+            monitorQuery.addValueEventListener(monitorListener);
+        }
     }
 
     private void showTopNotificationPopup(String techName) {
-        if (isFinishing() || isDestroyed() || notificationContainer == null) return;
+        if (isFinishing() || isDestroyed() || notificationContainer == null) {
+            return;
+        }
 
         LayoutInflater inflater = LayoutInflater.from(this);
         View layout = inflater.inflate(R.layout.dialog_technician_accepted, notificationContainer, false);
@@ -485,7 +572,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         TextView btnView = layout.findViewById(R.id.btnAcceptedView);
         ImageView btnClose = layout.findViewById(R.id.btnCloseAccepted);
 
-        if (tvTechName != null) tvTechName.setText("Technician " + techName + " is on the way");
+        if (tvTechName != null) {
+            tvTechName.setText("Technician " + techName + " is on the way");
+        }
 
         if (btnView != null) {
             btnView.setOnClickListener(v -> {
@@ -499,23 +588,31 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         }
 
         if (btnClose != null) {
-            btnClose.setOnClickListener(v -> notificationContainer.removeAllViews());
+            btnClose.setOnClickListener(v -> {
+                if (notificationContainer != null) {
+                    notificationContainer.removeAllViews();
+                }
+            });
         }
 
         notificationContainer.removeAllViews();
         notificationContainer.addView(layout);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (notificationContainer != null) notificationContainer.removeAllViews();
+            if (notificationContainer != null) {
+                notificationContainer.removeAllViews();
+            }
         }, 15000);
     }
 
     private void showRatingDialog(String ticketId, String techName, String techId) {
-        if (hasRated) return;
+        if (hasRated) {
+            return;
+        }
         hasRated = true;
 
         Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_rate_technician); 
+        dialog.setContentView(R.layout.dialog_rate_technician);
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
@@ -525,7 +622,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
         Button btnSubmit = dialog.findViewById(R.id.btnSubmitRating);
 
-        tvTechName.setText(techName != null ? techName : "Technician");
+        if (tvTechName != null) {
+            tvTechName.setText(techName != null ? techName : "Technician");
+        }
 
         if (techId != null) {
             DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(techId);
@@ -533,40 +632,52 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String url = snapshot.getValue(String.class);
-                    if (url != null && !url.isEmpty()) {
-                        Glide.with(CustomerDashboardActivity.this).load(url).circleCrop().into(ivTechProfile);
-                    } else {
-                        ivTechProfile.setImageResource(R.drawable.new_technician);
+                    if (ivTechProfile != null) {
+                        if (url != null && !url.isEmpty()) {
+                            Glide.with(CustomerDashboardActivity.this).load(url).circleCrop().into(ivTechProfile);
+                        } else {
+                            ivTechProfile.setImageResource(R.drawable.new_technician);
+                        }
                     }
                 }
-                @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
             });
-        } else {
+        } else if (ivTechProfile != null) {
             ivTechProfile.setImageResource(R.drawable.new_technician);
         }
 
-        btnSubmit.setOnClickListener(v -> {
-            float rating = ratingBar.getRating();
-            if (rating < 1) {
-                Toast.makeText(this, "Please rate at least 1 star", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> {
+                if (ratingBar == null) {
+                    return;
+                }
 
-            Map<String, Object> ratingUpdate = new HashMap<>();
-            ratingUpdate.put("rating", rating);
-            ratingUpdate.put("rated", true);
+                float rating = ratingBar.getRating();
+                if (rating < 1) {
+                    Toast.makeText(this, "Please rate at least 1 star", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            requestsRef.child(ticketId).updateChildren(ratingUpdate)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(this, "Thank you for your rating!", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                        hasRated = false;
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Failed to submit rating", Toast.LENGTH_SHORT).show();
-                        hasRated = false;
-                    });
-        });
+                Map<String, Object> ratingUpdate = new HashMap<>();
+                ratingUpdate.put("rating", rating);
+                ratingUpdate.put("rated", true);
+
+                if (requestsRef != null && ticketId != null) {
+                    requestsRef.child(ticketId).updateChildren(ratingUpdate)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(this, "Thank you for your rating!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                                hasRated = false;
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(this, "Failed to submit rating", Toast.LENGTH_SHORT).show();
+                                hasRated = false;
+                            });
+                }
+            });
+        }
 
         dialog.setOnDismissListener(d -> hasRated = false);
         dialog.show();
@@ -574,7 +685,10 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     private void setupNotificationMonitor() {
         FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) return;
+        if (user == null) {
+            return;
+        }
+
         notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("CustomerNotifications").child(user.getUid());
         notifListener = new ChildEventListener() {
             @Override
@@ -584,12 +698,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     if (n != null && n.getMessage() != null) {
                         String type = n.getType();
                         if ("CALL".equalsIgnoreCase(type)) {
-                            if (isActivityInForeground) showIncomingCallPopup(n.getMessage(), n.getTicketId());
+                            if (isActivityInForeground) {
+                                showIncomingCallPopup(n.getMessage(), n.getTicketId());
+                            }
                             snapshot.getRef().removeValue();
                         } else if ("CHAT".equalsIgnoreCase(type) || "ACCEPTED".equalsIgnoreCase(type)) {
                             if ("In Progress".equalsIgnoreCase(currentRequestStatus)) {
                                 if (messageSubtitle != null) {
-                                    messageSubtitle.setText(Html.fromHtml(n.getMessage()));
+                                    messageSubtitle.setText(Html.fromHtml(n.getMessage(), Html.FROM_HTML_MODE_LEGACY));
                                     messageSubtitle.setTextColor(Color.parseColor("#FFD700"));
                                 }
                             }
@@ -597,75 +713,108 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
         notifRef.addChildEventListener(notifListener);
         notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot snapshot) { isInitialNotifLoad = false; }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                isInitialNotifLoad = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void showIncomingCallPopup(String message, String callerTechId) {
-        if (isFinishing() || isDestroyed()) return;
+        if (isFinishing() || isDestroyed() || mAuth == null) {
+            return;
+        }
 
         String currentTechId = callerTechId != null ? callerTechId : assignedTechId;
         String myUid = mAuth.getUid();
         String techName = assignedTechName != null ? assignedTechName : "AquaTech Technician";
 
         IncomingCallPopup popup = new IncomingCallPopup(
-            this,
-            techName,
-            "AquaTech Technician",
-            currentTechId,
-            myUid,
-            false,
-            new IncomingCallPopup.OnCallActionListener() {
-                @Override
-                public void onAnswer() {
-                    String chatId = currentTechId + "_" + myUid;
+                this,
+                techName,
+                "AquaTech Technician",
+                currentTechId,
+                myUid,
+                false,
+                new IncomingCallPopup.OnCallActionListener() {
+                    @Override
+                    public void onAnswer() {
+                        String chatId = currentTechId + "_" + myUid;
 
-                    Map<String, Object> callUpdates = new HashMap<>();
-                    callUpdates.put("callStatus", "active");
-                    callUpdates.put("callStartTime", ServerValue.TIMESTAMP);
+                        Map<String, Object> callUpdates = new HashMap<>();
+                        callUpdates.put("callStatus", "active");
+                        callUpdates.put("callStartTime", ServerValue.TIMESTAMP);
 
-                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).updateChildren(callUpdates);
+                        FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).updateChildren(callUpdates);
 
-                    Intent intent = new Intent(CustomerDashboardActivity.this, CustomerVoiceCallActivity.class);
-                    intent.putExtra("NAME", techName);
-                    intent.putExtra("TECH_ID", currentTechId);
-                    intent.putExtra("CUSTOMER_ID", myUid);
-                    startActivity(intent);
+                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerVoiceCallActivity.class);
+                        intent.putExtra("NAME", techName);
+                        intent.putExtra("TECH_ID", currentTechId);
+                        intent.putExtra("CUSTOMER_ID", myUid);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onDecline() {
+                        String chatId = currentTechId + "_" + myUid;
+                        FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                    }
                 }
-
-                @Override
-                public void onDecline() {
-                    String chatId = currentTechId + "_" + myUid;
-                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
-                }
-            }
         );
         popup.show();
     }
 
     private String getTemplateForUnit(String name) {
-        if (name == null) return "F-FXCU1-M-HCA-TT-**-***";
+        if (name == null) {
+            return "F-FXCU1-M-HCA-TT-**-***";
+        }
+
         String upper = name.toUpperCase();
-        if (upper.contains("SLIM")) return "S-FXCU1-M-HCA-AA-**-***";
-        if (upper.contains("COUNTER")) return "CT-FXCU1-M-HCA-WT-**-***";
-        if (upper.contains("STANDING")) return "ST-FXCU1-M-HCA-WT-**-***";
+        if (upper.contains("SLIM")) {
+            return "S-FXCU1-M-HCA-AA-**-***";
+        }
+        if (upper.contains("COUNTER")) {
+            return "CT-FXCU1-M-HCA-WT-**-***";
+        }
+        if (upper.contains("STANDING")) {
+            return "ST-FXCU1-M-HCA-WT-**-***";
+        }
         return "F-FXCU1-M-HCA-TT-**-***";
     }
 
     private int getImageForUnit(String name) {
-        if (name == null) return R.drawable.titled_design1;
+        if (name == null) {
+            return R.drawable.titled_design1;
+        }
+
         String upper = name.toUpperCase();
-        if (upper.contains("SLIM")) return R.drawable.titled_design2;
-        if (upper.contains("COUNTER")) return R.drawable.titled_design3;
-        if (upper.contains("STANDING")) return R.drawable.titled_design4;
+        if (upper.contains("SLIM")) {
+            return R.drawable.titled_design2;
+        }
+        if (upper.contains("COUNTER")) {
+            return R.drawable.titled_design3;
+        }
+        if (upper.contains("STANDING")) {
+            return R.drawable.titled_design4;
+        }
         return R.drawable.titled_design1;
     }
 
@@ -679,44 +828,75 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        if (customerIcon != null) customerIcon.setOnClickListener(v -> showProfileMenu());
-        if (settingIcon != null) settingIcon.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
-        if (notificationIcon != null) notificationIcon.setOnClickListener(v -> startActivity(new Intent(this, NotificationActivity.class)));
-        if (editPen != null) editPen.setOnClickListener(v -> unitSelectionLauncher.launch(new Intent(this, UnitSelectionActivity.class)));
+        if (customerIcon != null) {
+            customerIcon.setOnClickListener(v -> showProfileMenu());
+        }
 
-        findViewById(R.id.requestButton).setOnClickListener(v -> {
-            if (hasActiveRequest) {
-                showActiveRequestAlert();
-            } else {
-                startActivity(new Intent(this, ServiceRequestActivity.class));
-            }
-        });
+        if (settingIcon != null) {
+            settingIcon.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
+        }
 
-        findViewById(R.id.trackRequestButton).setOnClickListener(v -> { if (hasActiveRequest) startActivity(new Intent(this, ServiceLogActivity.class)); else showNoActiveRequestAlert(); });
-        findViewById(R.id.messageRequestButton).setOnClickListener(v -> {
-            if (assignedTechId == null || assignedTechId.isEmpty()) {
-                showNoTechAssignedAlert();
-            } else if (!"In Progress".equalsIgnoreCase(currentRequestStatus)) {
-                showTechNotAcceptedAlert();
-            } else {
-                if (msgNotificationDot != null) msgNotificationDot.setVisibility(View.GONE);
-                Intent intent = new Intent(this, CustomerChatActivity.class);
-                intent.putExtra("TECH_ID", assignedTechId);
-                intent.putExtra("TECH_NAME", assignedTechName);
-                intent.putExtra("CUSTOMER_ID", mAuth.getUid());
-                startActivity(intent);
-            }
-        });
-        findViewById(R.id.requestAssistanceButton).setOnClickListener(v -> startActivity(new Intent(this, AquaBuddyActivity.class)));
+        if (notificationIcon != null) {
+            notificationIcon.setOnClickListener(v -> startActivity(new Intent(this, NotificationActivity.class)));
+        }
+
+        if (editPen != null) {
+            editPen.setOnClickListener(v -> unitSelectionLauncher.launch(new Intent(this, UnitSelectionActivity.class)));
+        }
+
+        View btnReq = findViewById(R.id.requestButton);
+        if (btnReq != null) {
+            btnReq.setOnClickListener(v -> {
+                if (hasActiveRequest) {
+                    showActiveRequestAlert();
+                } else {
+                    startActivity(new Intent(this, ServiceRequestActivity.class));
+                }
+            });
+        }
+
+        View btnTrack = findViewById(R.id.trackRequestButton);
+        if (btnTrack != null) {
+            btnTrack.setOnClickListener(v -> {
+                if (hasActiveRequest) {
+                    startActivity(new Intent(this, ServiceLogActivity.class));
+                } else {
+                    showNoActiveRequestAlert();
+                }
+            });
+        }
+
+        View btnMessage = findViewById(R.id.messageRequestButton);
+        if (btnMessage != null) {
+            btnMessage.setOnClickListener(v -> {
+                if (assignedTechId == null || assignedTechId.isEmpty()) {
+                    showNoTechAssignedAlert();
+                } else if (!"In Progress".equalsIgnoreCase(currentRequestStatus)) {
+                    showTechNotAcceptedAlert();
+                } else {
+                    if (msgNotificationDot != null) {
+                        msgNotificationDot.setVisibility(View.GONE);
+                    }
+                    Intent intent = new Intent(this, CustomerChatActivity.class);
+                    intent.putExtra("TECH_ID", assignedTechId);
+                    intent.putExtra("TECH_NAME", assignedTechName);
+                    intent.putExtra("CUSTOMER_ID", mAuth.getUid());
+                    startActivity(intent);
+                }
+            });
+        }
+
+        View btnAssistance = findViewById(R.id.requestAssistanceButton);
+        if (btnAssistance != null) {
+            btnAssistance.setOnClickListener(v -> startActivity(new Intent(this, AquaBuddyActivity.class)));
+        }
     }
 
     private void showActiveRequestAlert() {
         new AlertDialog.Builder(this)
                 .setTitle("Ongoing Request")
                 .setMessage("You currently have an active service request. Please wait for it to be completed before submitting a new one.")
-                .setPositiveButton("Track Progress", (dialog, which) -> {
-                    startActivity(new Intent(this, ServiceLogActivity.class));
-                })
+                .setPositiveButton("Track Progress", (dialog, which) -> startActivity(new Intent(this, ServiceLogActivity.class)))
                 .setNegativeButton("Close", null)
                 .show();
     }
@@ -753,14 +933,30 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private void showLogoutDialog() {
         Dialog d = new Dialog(this);
         d.setContentView(R.layout.dialog_logout);
-        if (d.getWindow() != null) d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        d.findViewById(R.id.btnCancelLogout).setOnClickListener(v -> d.dismiss());
-        d.findViewById(R.id.btnConfirmLogout).setOnClickListener(v -> { d.dismiss(); logoutUser(); });
+        if (d.getWindow() != null) {
+            d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        View btnCancel = d.findViewById(R.id.btnCancelLogout);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> d.dismiss());
+        }
+
+        View btnConfirm = d.findViewById(R.id.btnConfirmLogout);
+        if (btnConfirm != null) {
+            btnConfirm.setOnClickListener(v -> {
+                d.dismiss();
+                logoutUser();
+            });
+        }
+
         d.show();
     }
 
     private void logoutUser() {
-        mAuth.signOut();
+        if (mAuth != null) {
+            mAuth.signOut();
+        }
         Intent intent = new Intent(this, SplashActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -780,9 +976,17 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (monitorQuery != null && monitorListener != null) monitorQuery.removeEventListener(monitorListener);
-        if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
-        if (chatsRef != null && messageDotListener != null) chatsRef.removeEventListener(messageDotListener);
-        if (userRef != null && userListener != null) userRef.removeEventListener(userListener);
+        if (monitorQuery != null && monitorListener != null) {
+            monitorQuery.removeEventListener(monitorListener);
+        }
+        if (notifRef != null && notifListener != null) {
+            notifRef.removeEventListener(notifListener);
+        }
+        if (chatsRef != null && messageDotListener != null) {
+            chatsRef.removeEventListener(messageDotListener);
+        }
+        if (userRef != null && userListener != null) {
+            userRef.removeEventListener(userListener);
+        }
     }
 }
