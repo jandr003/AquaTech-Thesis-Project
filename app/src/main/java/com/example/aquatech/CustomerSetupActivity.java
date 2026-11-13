@@ -55,6 +55,10 @@ public class CustomerSetupActivity extends AppCompatActivity {
     }
 
     private void fetchUserData() {
+        if (mAuth == null) {
+            return;
+        }
+
         String uid = mAuth.getUid();
         if (uid != null) {
             userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
@@ -63,31 +67,59 @@ public class CustomerSetupActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String name = snapshot.child("fullName").getValue(String.class);
-                        if (name == null) name = snapshot.child("name").getValue(String.class);
-                        
+                        if (name == null) {
+                            name = snapshot.child("name").getValue(String.class);
+                        }
+
                         if (name != null && !name.isEmpty()) {
-                            setUpAccountTitle.setText("HI " + name.toUpperCase() + ", SET UP YOUR ACCOUNT");
+                            if (setUpAccountTitle != null) {
+                                setUpAccountTitle.setText("HI " + name.toUpperCase() + ", SET UP YOUR ACCOUNT");
+                            }
                         }
                     }
                 }
-                @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
             });
         }
     }
 
     private void setupClickListeners() {
-        card1.setOnClickListener(v -> selectCard(card1, "WL CUBE FIREWALL"));
-        card2.setOnClickListener(v -> selectCard(card2, "SMART SLIM"));
-        card3.setOnClickListener(v -> selectCard(card3, "COUNTER TOP WATER PURIFIER"));
-        card4.setOnClickListener(v -> selectCard(card4, "STANDING WATER PURIFIER"));
+        if (card1 != null) {
+            card1.setOnClickListener(v -> selectCard(card1, "WL CUBE FIREWALL"));
+        }
+
+        if (card2 != null) {
+            card2.setOnClickListener(v -> selectCard(card2, "SMART SLIM"));
+        }
+
+        if (card3 != null) {
+            card3.setOnClickListener(v -> selectCard(card3, "COUNTER TOP WATER PURIFIER"));
+        }
+
+        if (card4 != null) {
+            card4.setOnClickListener(v -> selectCard(card4, "STANDING WATER PURIFIER"));
+        }
     }
 
     private void selectCard(CardView selectedCard, String unitName) {
-        card1.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
-        card2.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
-        card3.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
-        card4.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
-        selectedCard.setCardBackgroundColor(Color.parseColor("#E3F2FD"));
+        if (card1 != null) {
+            card1.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
+        }
+        if (card2 != null) {
+            card2.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
+        }
+        if (card3 != null) {
+            card3.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
+        }
+        if (card4 != null) {
+            card4.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
+        }
+
+        if (selectedCard != null) {
+            selectedCard.setCardBackgroundColor(Color.parseColor("#E3F2FD"));
+        }
 
         if (userRef != null) {
             userRef.child("selectedUnit").setValue(unitName)
