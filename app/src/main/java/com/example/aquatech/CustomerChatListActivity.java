@@ -27,7 +27,7 @@ public class CustomerChatListActivity extends AppCompatActivity {
     private RecyclerView rvChatThreads;
     private TextView tvEmpty;
     private DatabaseReference userChatsRef;
-    private List<DataSnapshot> chatThreadsList = new ArrayList<>();
+    private final List<DataSnapshot> chatThreadsList = new ArrayList<>();
     private ChatThreadAdapter adapter;
     private String myUid;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -46,7 +46,11 @@ public class CustomerChatListActivity extends AppCompatActivity {
 
         rvChatThreads = findViewById(R.id.rvChatThreads);
         tvEmpty = findViewById(R.id.tvEmptyChats);
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View cardGroup = findViewById(R.id.cardTechGroupChat);
         if (cardGroup != null) {
@@ -56,9 +60,11 @@ public class CustomerChatListActivity extends AppCompatActivity {
             });
         }
 
-        rvChatThreads.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ChatThreadAdapter(chatThreadsList, myUid);
-        rvChatThreads.setAdapter(adapter);
+        if (rvChatThreads != null) {
+            rvChatThreads.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new ChatThreadAdapter(chatThreadsList, myUid);
+            rvChatThreads.setAdapter(adapter);
+        }
 
         userChatsRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats");
         setupBottomNav();
@@ -78,11 +84,13 @@ public class CustomerChatListActivity extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (id == R.id.nav_tech_performance) {
-                    startActivity(new Intent(this, WorkPerformanceActivity.class));
+                    Intent intent = new Intent(this, WorkPerformanceActivity.class);
+                    startActivity(intent);
                     finish();
                     return true;
                 } else if (id == R.id.nav_tech_profile) {
-                    startActivity(new Intent(this, EditProfileActivity.class));
+                    Intent intent = new Intent(this, EditProfileActivity.class);
+                    startActivity(intent);
                     finish();
                     return true;
                 }
@@ -92,6 +100,10 @@ public class CustomerChatListActivity extends AppCompatActivity {
     }
 
     private void loadChatThreads() {
+        if (userChatsRef == null) {
+            return;
+        }
+
         userChatsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -99,18 +111,26 @@ public class CustomerChatListActivity extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String cId = ds.child("customerId").getValue(String.class);
                     String tId = ds.child("techId").getValue(String.class);
-                    if (myUid.equals(cId) || myUid.equals(tId)) {
+                    if (myUid != null && (myUid.equals(cId) || myUid.equals(tId))) {
                         chatThreadsList.add(ds);
                     }
                 }
-                adapter.notifyDataSetChanged();
-                tvEmpty.setVisibility(chatThreadsList.isEmpty() ? View.VISIBLE : View.GONE);
+
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
+
+                if (tvEmpty != null) {
+                    tvEmpty.setVisibility(chatThreadsList.isEmpty() ? View.VISIBLE : View.GONE);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                tvEmpty.setText("Error loading chats");
-                tvEmpty.setVisibility(View.VISIBLE);
+                if (tvEmpty != null) {
+                    tvEmpty.setText("Error loading chats");
+                    tvEmpty.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
