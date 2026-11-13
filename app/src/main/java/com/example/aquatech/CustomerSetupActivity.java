@@ -94,21 +94,25 @@ public class CustomerSetupActivity extends AppCompatActivity {
     }
 
     private void loadDynamicAdminItems() {
-        DatabaseReference itemsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceItems");
-        itemsRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference productsRef = FirebaseDatabase.getInstance(DB_URL).getReference("Products");
+        productsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dynamicUnitsList.clear();
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        String itemName = ds.child("itemName").getValue(String.class);
+                        String unitName = ds.child("unitName").getValue(String.class);
+                        if (unitName == null) {
+                            unitName = ds.child("itemName").getValue(String.class);
+                        }
+
                         String category = ds.child("category").getValue(String.class);
                         String photoUri = ds.child("photoUri").getValue(String.class);
 
-                        if (itemName != null && !itemName.isEmpty()) {
+                        if (unitName != null && !unitName.isEmpty()) {
                             Map<String, String> map = new HashMap<>();
-                            map.put("unitName", itemName);
-                            map.put("category", category != null ? category : "Certified Dispenser Unit");
+                            map.put("unitName", unitName);
+                            map.put("category", category != null ? category : "Certified Water Purifier");
                             if (photoUri != null) {
                                 map.put("photoUri", photoUri);
                             }
@@ -116,7 +120,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
                         }
                     }
                 }
-                Log.d("SETUP_ITEMS", "Total dynamic products loaded for Customer Setup: " + dynamicUnitsList.size());
+                Log.d("SETUP_ITEMS", "Total dynamic Water Purifiers loaded for Customer Setup: " + dynamicUnitsList.size());
             }
 
             @Override
