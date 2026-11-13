@@ -72,8 +72,12 @@ public class GroupChatNicknamesActivity extends AppCompatActivity {
                 techList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String name = ds.child("fullName").getValue(String.class);
-                    if (name == null) name = ds.child("name").getValue(String.class);
-                    if (name == null) name = "Technician Member";
+                    if (name == null) {
+                        name = ds.child("name").getValue(String.class);
+                    }
+                    if (name == null) {
+                        name = "Technician Member";
+                    }
 
                     String nickname = ds.child("nickname").getValue(String.class);
                     String uid = ds.getKey();
@@ -84,7 +88,9 @@ public class GroupChatNicknamesActivity extends AppCompatActivity {
                     map.put("uid", uid);
                     map.put("techId", "ID: ASC-T00" + (techList.size() + 1));
                     map.put("status", nickname != null ? "Nickname: " + nickname : "Tap to edit nickname");
-                    if (avatarUrl != null) map.put("avatarUrl", avatarUrl);
+                    if (avatarUrl != null) {
+                        map.put("avatarUrl", avatarUrl);
+                    }
 
                     techList.add(map);
                 }
@@ -109,7 +115,7 @@ public class GroupChatNicknamesActivity extends AppCompatActivity {
                 .setView(etNickname)
                 .setPositiveButton("Set", (dialog, which) -> {
                     String newNick = etNickname.getText().toString().trim();
-                    if (!newNick.isEmpty()) {
+                    if (!newNick.isEmpty() && uid != null) {
                         FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(uid).child("nickname").setValue(newNick);
                         Toast.makeText(this, "Nickname updated!", Toast.LENGTH_SHORT).show();
                     }
