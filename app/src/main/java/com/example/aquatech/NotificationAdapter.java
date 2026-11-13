@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.os.Build;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,20 +31,33 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
         NotificationModel notif = notificationList.get(position);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            holder.tvMessage.setText(Html.fromHtml(notif.getMessage(), Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            holder.tvMessage.setText(Html.fromHtml(notif.getMessage()));
+        if (notif == null) {
+            return;
         }
 
-        holder.tvTime.setText(notif.getTimeAgo());
-        holder.ivIcon.setImageResource(notif.getIconResId());
+        if (holder.tvMessage != null && notif.getMessage() != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.tvMessage.setText(Html.fromHtml(notif.getMessage(), Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                holder.tvMessage.setText(Html.fromHtml(notif.getMessage()));
+            }
+        }
+
+        if (holder.tvTime != null) {
+            holder.tvTime.setText(notif.getTimeAgo() != null ? notif.getTimeAgo() : "");
+        }
+
+        if (holder.ivIcon != null) {
+            holder.ivIcon.setImageResource(notif.getIconResId());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return notificationList.size();
+        if (notificationList != null) {
+            return notificationList.size();
+        }
+        return 0;
     }
 
     static class NotificationViewHolder extends RecyclerView.ViewHolder {
