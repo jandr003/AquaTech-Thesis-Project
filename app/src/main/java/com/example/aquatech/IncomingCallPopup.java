@@ -72,7 +72,9 @@ public class IncomingCallPopup {
         ImageView btnAnswer = dialog.findViewById(R.id.btnAnswerCall);
         if (btnAnswer != null) {
             btnAnswer.setOnClickListener(v -> {
-                if (listener != null) listener.onAnswer();
+                if (listener != null) {
+                    listener.onAnswer();
+                }
                 dialog.dismiss();
             });
         }
@@ -80,7 +82,9 @@ public class IncomingCallPopup {
         ImageView btnDecline = dialog.findViewById(R.id.btnDeclineCall);
         if (btnDecline != null) {
             btnDecline.setOnClickListener(v -> {
-                if (listener != null) listener.onDecline();
+                if (listener != null) {
+                    listener.onDecline();
+                }
                 dialog.dismiss();
             });
         }
