@@ -60,6 +60,14 @@ public class AdminProfileActivity extends AppCompatActivity {
             });
         }
 
+        View btnManageProducts = findViewById(R.id.btnProfileManageProducts);
+        if (btnManageProducts != null) {
+            btnManageProducts.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AdminManageProductsActivity.class);
+                startActivity(intent);
+            });
+        }
+
         View btnAddTech = findViewById(R.id.btnProfileAddTech);
         if (btnAddTech != null) {
             btnAddTech.setOnClickListener(v -> {
