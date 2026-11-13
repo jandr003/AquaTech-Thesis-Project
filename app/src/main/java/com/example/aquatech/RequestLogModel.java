@@ -1,6 +1,7 @@
 package com.example.aquatech;
 
 public class RequestLogModel {
+
     private String ticketId;
     private String customerName;
     private String customerId;
@@ -29,15 +30,47 @@ public class RequestLogModel {
         this.rating = rating;
     }
 
-    public String getTicketId() { return ticketId != null ? ticketId : "N/A"; }
-    public String getCustomerName() { return customerName != null ? customerName : "N/A"; }
-    public String getCustomerId() { return customerId != null ? customerId : "N/A"; }
-    public String getTechName() { return techName != null ? techName : "Unassigned"; }
-    public String getTechId() { return techId != null ? techId : "N/A"; }
-    public String getStatus() { return status != null ? status : "Pending"; }
-    public String getServiceType() { return serviceType != null ? serviceType : "General"; }
-    public Long getTimestamp() { return timestamp; }
-    public Long getAssignedTime() { return assignedTime; }
-    public Long getCompletedTime() { return completedTime; }
-    public Float getRating() { return rating; }
+    public String getTicketId() {
+        return ticketId != null ? ticketId : "N/A";
+    }
+
+    public String getCustomerName() {
+        return customerName != null ? customerName : "N/A";
+    }
+
+    public String getCustomerId() {
+        return customerId != null ? customerId : "N/A";
+    }
+
+    public String getTechName() {
+        return techName != null ? techName : "Unassigned";
+    }
+
+    public String getTechId() {
+        return techId != null ? techId : "N/A";
+    }
+
+    public String getStatus() {
+        return status != null ? status : "Pending";
+    }
+
+    public String getServiceType() {
+        return serviceType != null ? serviceType : "General";
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public Long getAssignedTime() {
+        return assignedTime;
+    }
+
+    public Long getCompletedTime() {
+        return completedTime;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
 }
