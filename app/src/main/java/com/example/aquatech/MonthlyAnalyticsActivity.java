@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
@@ -58,16 +57,23 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-    private List<RequestLogModel> logList = new ArrayList<>();
-    private List<RequestLogModel> filteredList = new ArrayList<>();
+    private final List<RequestLogModel> logList = new ArrayList<>();
+    private final List<RequestLogModel> filteredList = new ArrayList<>();
     private RequestLogAdapter logAdapter;
 
-    private int totalCount = 0, completedCount = 0, inProgressCount = 0, pendingCount = 0;
-    private long totalResponseTime = 0, totalResolutionTime = 0;
-    private int responseCount = 0, resolutionCount = 0;
+    private int totalCount = 0;
+    private int completedCount = 0;
+    private int inProgressCount = 0;
+    private int pendingCount = 0;
+
+    private long totalResponseTime = 0;
+    private long totalResolutionTime = 0;
+    private int responseCount = 0;
+    private int resolutionCount = 0;
+
     private float totalRating = 0;
     private int ratingCount = 0;
-    private int[] weeklyCounts = new int[4];
+    private final int[] weeklyCounts = new int[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +102,21 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         }
 
         rvMonthlyLog = findViewById(R.id.rvMonthlyDetailedLog);
-        rvMonthlyLog.setLayoutManager(new LinearLayoutManager(this));
-        logAdapter = new RequestLogAdapter(filteredList);
-        rvMonthlyLog.setAdapter(logAdapter);
+        if (rvMonthlyLog != null) {
+            rvMonthlyLog.setLayoutManager(new LinearLayoutManager(this));
+            logAdapter = new RequestLogAdapter(filteredList);
+            rvMonthlyLog.setAdapter(logAdapter);
+        }
 
-        findViewById(R.id.btnBackAnalytics).setOnClickListener(v -> finish());
-        findViewById(R.id.btnExportMonthlyPdf).setOnClickListener(v -> generateMonthlyReportPDF());
+        View btnBack = findViewById(R.id.btnBackAnalytics);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        View btnExport = findViewById(R.id.btnExportMonthlyPdf);
+        if (btnExport != null) {
+            btnExport.setOnClickListener(v -> generateMonthlyReportPDF());
+        }
     }
 
     private void setupFirebase() {
@@ -118,10 +133,14 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String ticketId = ds.child("ticketId").getValue(String.class);
-                    if (ticketId == null) ticketId = ds.getKey();
+                    if (ticketId == null) {
+                        ticketId = ds.getKey();
+                    }
 
                     String customerName = ds.child("customerName").getValue(String.class);
-                    if (customerName == null) customerName = "Unknown";
+                    if (customerName == null) {
+                        customerName = "Unknown";
+                    }
 
                     String customerId = ds.child("customerId").getValue(String.class);
                     if (customerId == null) {
@@ -134,29 +153,35 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                     }
 
                     String status = ds.child("status").getValue(String.class);
-                    if (status == null) status = "Pending";
+                    if (status == null) {
+                        status = "Pending";
+                    }
 
                     String techName = ds.child("assignedTechName").getValue(String.class);
-                    if (techName == null) techName = "Unassigned";
+                    if (techName == null) {
+                        techName = "Unassigned";
+                    }
 
                     String techId = ds.child("assignedTechId").getValue(String.class);
-                    if (techId == null) techId = "";
+                    if (techId == null) {
+                        techId = "";
+                    }
 
                     Long timestamp = ds.child("timestamp").getValue(Long.class);
                     Long assignedTime = ds.child("assignedTimestamp").getValue(Long.class);
                     Long completedTime = ds.child("completedTimestamp").getValue(Long.class);
-                    if (completedTime == null) completedTime = ds.child("maintenanceEndTime").getValue(Long.class);
+                    if (completedTime == null) {
+                        completedTime = ds.child("maintenanceEndTime").getValue(Long.class);
+                    }
 
                     Float rating = ds.child("rating").getValue(Float.class);
-
                     String serviceType = getServiceTypeLabel(ds);
 
                     boolean isCurrentMonth = false;
                     if (timestamp != null) {
                         Calendar cal = Calendar.getInstance();
                         cal.setTimeInMillis(timestamp);
-                        isCurrentMonth = (cal.get(Calendar.MONTH) == currentMonth &&
-                                cal.get(Calendar.YEAR) == currentYear);
+                        isCurrentMonth = (cal.get(Calendar.MONTH) == currentMonth && cal.get(Calendar.YEAR) == currentYear);
                     }
 
                     RequestLogModel item = new RequestLogModel(
@@ -180,7 +205,9 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
                         if (timestamp != null) {
                             int week = getWeekOfMonth(timestamp);
-                            if (week >= 1 && week <= 4) weeklyCounts[week - 1]++;
+                            if (week >= 1 && week <= 4) {
+                                weeklyCounts[week - 1]++;
+                            }
                         }
 
                         if ("Completed".equalsIgnoreCase(status)) {
@@ -219,17 +246,25 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
 
     private String getServiceTypeLabel(DataSnapshot ds) {
         StringBuilder sb = new StringBuilder();
-        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10"))
+        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
             sb.append("Filter Preventive");
+        }
+
         if (hasQty(ds, "qty_wayvalve")) {
-            if (sb.length() > 0) sb.append(", ");
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
             sb.append("Installation Kit");
         }
+
         if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp") ||
                 hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
-            if (sb.length() > 0) sb.append(", ");
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
             sb.append("Other Parts");
         }
+
         return sb.length() == 0 ? "General Maintenance" : sb.toString();
     }
 
@@ -239,61 +274,79 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void setupSearch() {
-        searchAuditLog.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                filterList(query);
-                return true;
-            }
+        if (searchAuditLog != null) {
+            searchAuditLog.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    filterList(query);
+                    return true;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterList(newText);
-                return true;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    filterList(newText);
+                    return true;
+                }
+            });
+        }
     }
 
     private void filterList(String query) {
         filteredList.clear();
-        if (query.isEmpty()) {
+        if (query == null || query.isEmpty()) {
             filteredList.addAll(logList);
         } else {
             String q = query.toLowerCase();
             for (RequestLogModel item : logList) {
-                if (item.getTicketId().toLowerCase().contains(q) ||
+                if (item.getTicketId() != null && item.getTicketId().toLowerCase().contains(q) ||
                         (item.getCustomerName() != null && item.getCustomerName().toLowerCase().contains(q)) ||
-                        item.getStatus().toLowerCase().contains(q)) {
+                        (item.getStatus() != null && item.getStatus().toLowerCase().contains(q))) {
                     filteredList.add(item);
                 }
             }
         }
-        logAdapter.notifyDataSetChanged();
+
+        if (logAdapter != null) {
+            logAdapter.notifyDataSetChanged();
+        }
     }
 
     private void updateUI() {
-        tvTotalJobs.setText(String.valueOf(totalCount));
+        if (tvTotalJobs != null) {
+            tvTotalJobs.setText(String.valueOf(totalCount));
+        }
+
         if (totalCount > 0) {
             int rate = (completedCount * 100) / totalCount;
             if (gaugeCompletionRate != null) {
                 gaugeCompletionRate.setPercentage(rate);
             }
-            tvRateTrend.setText(rate >= 80 ? "↑ High" : (rate >= 50 ? "→ Stable" : "↓ Low"));
+            if (tvRateTrend != null) {
+                tvRateTrend.setText(rate >= 80 ? "↑ High" : (rate >= 50 ? "→ Stable" : "↓ Low"));
+            }
         } else {
             if (gaugeCompletionRate != null) {
                 gaugeCompletionRate.setPercentage(0f);
             }
-            tvRateTrend.setText("No Data");
+            if (tvRateTrend != null) {
+                tvRateTrend.setText("No Data");
+            }
         }
 
         long avgResponse = responseCount > 0 ? totalResponseTime / responseCount : 0;
-        tvAvgResponse.setText(avgResponse + " mins");
+        if (tvAvgResponse != null) {
+            tvAvgResponse.setText(avgResponse + " mins");
+        }
 
         long avgResolution = resolutionCount > 0 ? totalResolutionTime / resolutionCount : 0;
-        tvResolutionTime.setText(avgResolution + " mins");
+        if (tvResolutionTime != null) {
+            tvResolutionTime.setText(avgResolution + " mins");
+        }
 
-        tvCsatScore.setText("⭐ " + (ratingCount > 0 ? String.format(Locale.US, "%.1f", totalRating / ratingCount) : "0.0") +
-                (ratingCount > 0 ? " (" + ratingCount + ")" : ""));
+        if (tvCsatScore != null) {
+            tvCsatScore.setText("⭐ " + (ratingCount > 0 ? String.format(Locale.US, "%.1f", totalRating / ratingCount) : "0.0") +
+                    (ratingCount > 0 ? " (" + ratingCount + ")" : ""));
+        }
 
         updateBars();
     }
@@ -320,9 +373,18 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(timestamp);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        if (day <= 7) return 1;
-        if (day <= 14) return 2;
-        if (day <= 21) return 3;
+        if (day <= 7) {
+            return 1;
+        }
+
+        if (day <= 14) {
+            return 2;
+        }
+
+        if (day <= 21) {
+            return 3;
+        }
+
         return 4;
     }
 
@@ -332,7 +394,11 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         Paint titlePaint = new Paint();
         titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
-        int pageWidth = 595, pageHeight = 842, margin = 40, y = 50;
+        int pageWidth = 595;
+        int pageHeight = 842;
+        int margin = 40;
+        int y = 50;
+
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create();
         PdfDocument.Page page = document.startPage(pageInfo);
         Canvas canvas = page.getCanvas();
@@ -362,7 +428,7 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         canvas.drawText("In Progress: " + inProgressCount, margin + 200, y + 50, paint);
         canvas.drawText("Pending: " + pendingCount, margin + 200, y + 75, paint);
         canvas.drawText("Success Rate: " + Math.round(gaugeCompletionRate != null ? gaugeCompletionRate.getPercentage() : 0f) + "%", margin + 350, y + 50, paint);
-        canvas.drawText("Avg Rating: " + tvCsatScore.getText(), margin + 350, y + 75, paint);
+        canvas.drawText("Avg Rating: " + (tvCsatScore != null ? tvCsatScore.getText() : "0.0"), margin + 350, y + 75, paint);
         y += 140;
 
         paint.setFakeBoldText(true);
@@ -370,9 +436,18 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
         canvas.drawText("WEEKLY GROWTH TRENDS", margin, y, paint);
         y += 30;
 
-        int barWidth = 80, barSpacing = 40, graphBottom = y + 150, maxHeight = 120;
+        int barWidth = 80;
+        int barSpacing = 40;
+        int graphBottom = y + 150;
+        int maxHeight = 120;
         int maxWeek = 1;
-        for (int c : weeklyCounts) if (c > maxWeek) maxWeek = c;
+
+        for (int c : weeklyCounts) {
+            if (c > maxWeek) {
+                maxWeek = c;
+            }
+        }
+
         String[] weeks = {"Week 1", "Week 2", "Week 3", "Week 4"};
         for (int i = 0; i < 4; i++) {
             int barX = margin + i * (barWidth + barSpacing);
@@ -427,7 +502,9 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
     }
 
     private String truncate(String text, int maxLen) {
-        if (text == null) return "";
+        if (text == null) {
+            return "";
+        }
         return text.length() > maxLen ? text.substring(0, maxLen - 2) + ".." : text;
     }
 
@@ -455,7 +532,9 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
                         publicFos.write(buffer, 0, length);
                     }
                     fis.close();
-                    publicFos.close();
+                    if (publicFos != null) {
+                        publicFos.close();
+                    }
                     Toast.makeText(this, "PDF saved to Downloads/AquaTech folder", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this, "Could not save to Downloads, but file is saved internally", Toast.LENGTH_LONG).show();
@@ -495,12 +574,21 @@ public class MonthlyAnalyticsActivity extends AppCompatActivity {
     }
 
     private void resetStats() {
-        totalCount = 0; completedCount = 0; inProgressCount = 0; pendingCount = 0;
-        totalResponseTime = 0; totalResolutionTime = 0;
-        responseCount = 0; resolutionCount = 0;
-        totalRating = 0; ratingCount = 0;
+        totalCount = 0;
+        completedCount = 0;
+        inProgressCount = 0;
+        pendingCount = 0;
+        totalResponseTime = 0;
+        totalResolutionTime = 0;
+        responseCount = 0;
+        resolutionCount = 0;
+        totalRating = 0;
+        ratingCount = 0;
+
         logList.clear();
-        for (int i = 0; i < 4; i++) weeklyCounts[i] = 0;
+        for (int i = 0; i < 4; i++) {
+            weeklyCounts[i] = 0;
+        }
     }
 
     private void setupStatusBar() {
