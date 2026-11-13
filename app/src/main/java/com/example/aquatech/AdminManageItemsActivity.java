@@ -65,12 +65,18 @@ public class AdminManageItemsActivity extends AppCompatActivity {
 
         View btnAddHeader = findViewById(R.id.btnAddItemHeader);
         if (btnAddHeader != null) {
-            btnAddHeader.setOnClickListener(v -> startActivity(new Intent(this, AdminAddServiceItemActivity.class)));
+            btnAddHeader.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AdminAddProductActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnAdd = findViewById(R.id.btnAddServiceItem);
         if (btnAdd != null) {
-            btnAdd.setOnClickListener(v -> startActivity(new Intent(this, AdminAddServiceItemActivity.class)));
+            btnAdd.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AdminAddProductActivity.class);
+                startActivity(intent);
+            });
         }
 
         bindDeleteButton(R.id.btnDeleteItem1, "Filter 0064-CBC");
