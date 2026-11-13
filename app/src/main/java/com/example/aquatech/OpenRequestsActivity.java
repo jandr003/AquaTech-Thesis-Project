@@ -49,14 +49,11 @@ public class OpenRequestsActivity extends AppCompatActivity {
     private MapView mMap;
     private RecyclerView rvOpenRequests;
     private DatabaseReference dbRef;
-    private List<ServiceLogModel> openList = new ArrayList<>();
+    private final List<ServiceLogModel> openList = new ArrayList<>();
     private OpenRequestAdapter adapter;
     private TextView tvNoRequests;
-    private boolean isFirstLoad = true;
 
-
-
-    private Map<String, Marker> activeMarkers = new HashMap<>();
+    private final Map<String, Marker> activeMarkers = new HashMap<>();
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private ValueEventListener requestsListener;
 
@@ -71,36 +68,52 @@ public class OpenRequestsActivity extends AppCompatActivity {
         requestPermissionsIfNecessary();
 
         mMap = findViewById(R.id.mapOpen);
-        mMap.setTileSource(TileSourceFactory.MAPNIK);
-        mMap.setMultiTouchControls(true);
-        mMap.getController().setZoom(14.0);
+        if (mMap != null) {
+            mMap.setTileSource(TileSourceFactory.MAPNIK);
+            mMap.setMultiTouchControls(true);
+            mMap.getController().setZoom(14.0);
+        }
 
         rvOpenRequests = findViewById(R.id.rvOpenRequests);
         tvNoRequests = findViewById(R.id.tvNoRequests);
-        findViewById(R.id.btnBackOpen).setOnClickListener(v -> finish());
 
-        rvOpenRequests.setLayoutManager(new LinearLayoutManager(this));
+        View btnBack = findViewById(R.id.btnBackOpen);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        adapter = new OpenRequestAdapter(openList, this::showTechnicianDialog, ticket -> {
-            if (ticket.getLatitude() != 0.0 && ticket.getLongitude() != 0.0) {
-                GeoPoint target = new GeoPoint(ticket.getLatitude(), ticket.getLongitude());
-                mMap.getController().animateTo(target);
-                mMap.getController().setZoom(18.0);
-                Marker m = activeMarkers.get(ticket.getTicketId());
-                if (m != null) m.showInfoWindow();
-            }
-        });
+        if (rvOpenRequests != null) {
+            rvOpenRequests.setLayoutManager(new LinearLayoutManager(this));
 
-        rvOpenRequests.setAdapter(adapter);
+            adapter = new OpenRequestAdapter(openList, this::showTechnicianDialog, ticket -> {
+                if (ticket != null && ticket.getLatitude() != 0.0 && ticket.getLongitude() != 0.0) {
+                    GeoPoint target = new GeoPoint(ticket.getLatitude(), ticket.getLongitude());
+                    if (mMap != null) {
+                        mMap.getController().animateTo(target);
+                        mMap.getController().setZoom(18.0);
+                    }
+                    Marker m = activeMarkers.get(ticket.getTicketId());
+                    if (m != null) {
+                        m.showInfoWindow();
+                    }
+                }
+            });
+
+            rvOpenRequests.setAdapter(adapter);
+        }
+
         setupRealtimeTracking();
     }
 
     private void setupRealtimeTracking() {
         dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
-        dbRef.addValueEventListener(new ValueEventListener() {
+        requestsListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (isFinishing() || isDestroyed()) return;
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+
                 openList.clear();
                 Set<String> currentIds = new HashSet<>();
 
@@ -109,17 +122,24 @@ public class OpenRequestsActivity extends AppCompatActivity {
                     String assignedName = ds.child("assignedTechName").getValue(String.class);
 
                     if ("Open".equalsIgnoreCase(status) && (assignedName == null || assignedName.isEmpty())) {
-                        double lat = 0.0, lng = 0.0;
+                        double lat = 0.0;
+                        double lng = 0.0;
                         try {
                             Object latObj = ds.child("latitude").getValue();
                             Object lngObj = ds.child("longitude").getValue();
-                            if (latObj instanceof Number) lat = ((Number) latObj).doubleValue();
-                            if (lngObj instanceof Number) lng = ((Number) lngObj).doubleValue();
-                        } catch (Exception e) {}
+                            if (latObj instanceof Number) {
+                                lat = ((Number) latObj).doubleValue();
+                            }
+                            if (lngObj instanceof Number) {
+                                lng = ((Number) lngObj).doubleValue();
+                            }
+                        } catch (Exception ignored) {}
 
                         String ticketId = ds.child("ticketId").getValue(String.class);
                         String sro = ds.child("sroNumber").getValue(String.class);
-                        if (sro == null) sro = ds.child("referenceNo").getValue(String.class);
+                        if (sro == null) {
+                            sro = ds.child("referenceNo").getValue(String.class);
+                        }
 
                         String customer = ds.child("customerName").getValue(String.class);
                         String address = ds.child("address").getValue(String.class);
@@ -130,9 +150,15 @@ public class OpenRequestsActivity extends AppCompatActivity {
                         currentIds.add(id);
 
                         List<String> categories = new ArrayList<>();
-                        if (hasQty(ds, "qty_wayvalve")) categories.add("Installation Kit");
-                        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) categories.add("Other Parts");
-                        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) categories.add("Filter Preventive");
+                        if (hasQty(ds, "qty_wayvalve")) {
+                            categories.add("Installation Kit");
+                        }
+                        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
+                            categories.add("Other Parts");
+                        }
+                        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
+                            categories.add("Filter Preventive");
+                        }
 
                         String finalServiceType = "";
                         if (categories.size() == 1) {
@@ -143,14 +169,20 @@ public class OpenRequestsActivity extends AppCompatActivity {
                             finalServiceType = categories.get(0) + ", " + categories.get(1) + " and " + categories.get(2);
                         } else {
                             finalServiceType = ds.child("serviceType").getValue(String.class);
-                            if (finalServiceType == null) finalServiceType = "General Service";
+                            if (finalServiceType == null) {
+                                finalServiceType = "General Service";
+                            }
                         }
 
                         String custUserId = ds.child("userId").getValue(String.class);
-                        if (custUserId == null) custUserId = ds.child("customerId").getValue(String.class);
+                        if (custUserId == null) {
+                            custUserId = ds.child("customerId").getValue(String.class);
+                        }
 
                         String uName = ds.child("unitName").getValue(String.class);
-                        if (uName == null || uName.isEmpty()) uName = ds.child("unitModel").getValue(String.class);
+                        if (uName == null || uName.isEmpty()) {
+                            uName = ds.child("unitModel").getValue(String.class);
+                        }
 
                         Integer avatarResId = ds.child("avatarResId").getValue(Integer.class);
                         String profileImageUrl = ds.child("profileImageUrl").getValue(String.class);
@@ -161,18 +193,24 @@ public class OpenRequestsActivity extends AppCompatActivity {
                         model.setSroNumber(sro != null ? sro : "N/A");
                         model.setTechName(customer != null ? customer : "Unknown");
                         model.setTechRole(finalServiceType);
+
                         if (uName != null && !uName.isEmpty()) {
                             model.setUnitName(getFriendlyProductName(uName));
                         }
+
                         model.setDateTime(timeRange != null ? timeRange : "Not Set");
                         model.setAddress(address != null ? address : "N/A");
                         model.setCustomerPhone(mobile != null ? mobile : "N/A");
                         model.setLatitude(lat);
                         model.setLongitude(lng);
-                        if (avatarResId != null && avatarResId != 0) model.setAvatarResId(avatarResId);
-                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) model.setProfileImageUrl(profileImageUrl);
 
-                        // Query Users profile if avatar or registered unit is not attached to request snapshot
+                        if (avatarResId != null && avatarResId != 0) {
+                            model.setAvatarResId(avatarResId);
+                        }
+                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                            model.setProfileImageUrl(profileImageUrl);
+                        }
+
                         if (custUserId != null && !custUserId.isEmpty()) {
                             FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(custUserId)
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -182,15 +220,29 @@ public class OpenRequestsActivity extends AppCompatActivity {
                                                 Integer uAvatar = uSnap.child("avatarResId").getValue(Integer.class);
                                                 String uImg = uSnap.child("profileImageUrl").getValue(String.class);
                                                 String uUnit = uSnap.child("unitName").getValue(String.class);
-                                                if (uUnit == null || uUnit.isEmpty()) uUnit = uSnap.child("selectedUnit").getValue(String.class);
 
-                                                if (uAvatar != null && uAvatar != 0) model.setAvatarResId(uAvatar);
-                                                if (uImg != null && !uImg.isEmpty()) model.setProfileImageUrl(uImg);
-                                                if (uUnit != null && !uUnit.isEmpty()) model.setUnitName(getFriendlyProductName(uUnit));
-                                                adapter.notifyDataSetChanged();
+                                                if (uUnit == null || uUnit.isEmpty()) {
+                                                    uUnit = uSnap.child("selectedUnit").getValue(String.class);
+                                                }
+
+                                                if (uAvatar != null && uAvatar != 0) {
+                                                    model.setAvatarResId(uAvatar);
+                                                }
+                                                if (uImg != null && !uImg.isEmpty()) {
+                                                    model.setProfileImageUrl(uImg);
+                                                }
+                                                if (uUnit != null && !uUnit.isEmpty()) {
+                                                    model.setUnitName(getFriendlyProductName(uUnit));
+                                                }
+
+                                                if (adapter != null) {
+                                                    adapter.notifyDataSetChanged();
+                                                }
                                             }
                                         }
-                                        @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {}
                                     });
                         }
 
@@ -204,24 +256,44 @@ public class OpenRequestsActivity extends AppCompatActivity {
 
                 List<String> toRemove = new ArrayList<>();
                 for (String markerId : activeMarkers.keySet()) {
-                    if (!currentIds.contains(markerId)) toRemove.add(markerId);
+                    if (!currentIds.contains(markerId)) {
+                        toRemove.add(markerId);
+                    }
                 }
+
                 for (String id : toRemove) {
                     Marker m = activeMarkers.get(id);
-                    if (m != null) mMap.getOverlays().remove(m);
+                    if (m != null && mMap != null) {
+                        mMap.getOverlays().remove(m);
+                    }
                     activeMarkers.remove(id);
                 }
 
-                adapter.notifyDataSetChanged();
-                if (tvNoRequests != null) tvNoRequests.setVisibility(openList.isEmpty() ? View.VISIBLE : View.GONE);
-                mMap.invalidate();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
+
+                if (tvNoRequests != null) {
+                    tvNoRequests.setVisibility(openList.isEmpty() ? View.VISIBLE : View.GONE);
+                }
+
+                if (mMap != null) {
+                    mMap.invalidate();
+                }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
-        });
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        };
+
+        dbRef.addValueEventListener(requestsListener);
     }
 
     public static String getFriendlyProductName(String unitModel) {
-        if (unitModel == null || unitModel.trim().isEmpty()) return "WL CUBE FIREWALL";
+        if (unitModel == null || unitModel.trim().isEmpty()) {
+            return "WL CUBE FIREWALL";
+        }
+
         String upper = unitModel.toUpperCase();
         if (upper.contains("CUBE") || upper.contains("FXCU1")) {
             return "WL CUBE FIREWALL";
@@ -232,6 +304,7 @@ public class OpenRequestsActivity extends AppCompatActivity {
         } else if (upper.contains("STANDING") || upper.contains("ST-") || upper.contains("ST")) {
             return "STANDING WATER PURIFIER";
         }
+
         return unitModel;
     }
 
@@ -242,13 +315,16 @@ public class OpenRequestsActivity extends AppCompatActivity {
 
     private void updateMarkerOnMap(String id, GeoPoint pos, String name) {
         if (activeMarkers.containsKey(id)) {
-            activeMarkers.get(id).setPosition(pos);
-        } else {
+            Marker m = activeMarkers.get(id);
+            if (m != null) {
+                m.setPosition(pos);
+            }
+        } else if (mMap != null) {
             Marker marker = new Marker(mMap);
             marker.setPosition(pos);
             marker.setTitle(name);
             Drawable icon = ContextCompat.getDrawable(this, R.drawable.technician_pin_point_customer_loc_png);
-            if (icon != null && icon instanceof BitmapDrawable) {
+            if (icon instanceof BitmapDrawable) {
                 Bitmap bitmap = ((BitmapDrawable) icon).getBitmap();
                 int size = (int) (12 * getResources().getDisplayMetrics().density);
                 marker.setIcon(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, size, size, true)));
@@ -280,8 +356,10 @@ public class OpenRequestsActivity extends AppCompatActivity {
             dialog.dismiss();
         });
 
-        rvTechs.setAdapter(techAdapter);
-        rvTechs.setLayoutManager(new LinearLayoutManager(this));
+        if (rvTechs != null) {
+            rvTechs.setAdapter(techAdapter);
+            rvTechs.setLayoutManager(new LinearLayoutManager(this));
+        }
 
         String[] techNamesArr = getResources().getStringArray(R.array.technician_names);
 
@@ -312,7 +390,7 @@ public class OpenRequestsActivity extends AppCompatActivity {
                             String sName = techNamesArr[i];
                             boolean exists = false;
                             for (Map<String, String> m : techList) {
-                                if (m.get("name").equalsIgnoreCase(sName)) {
+                                if (m.get("name") != null && m.get("name").equalsIgnoreCase(sName)) {
                                     exists = true;
                                     break;
                                 }
@@ -343,6 +421,10 @@ public class OpenRequestsActivity extends AppCompatActivity {
     }
 
     private void assignTechnicianToTicket(ServiceLogModel ticket, String techName, String techId) {
+        if (ticket == null || ticket.getTicketId() == null) {
+            return;
+        }
+
         DatabaseReference requestRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticket.getTicketId());
         Map<String, Object> updates = new HashMap<>();
         updates.put("assignedTechName", techName);
@@ -364,8 +446,21 @@ public class OpenRequestsActivity extends AppCompatActivity {
         }
     }
 
-    @Override protected void onResume() { super.onResume(); if (mMap != null) mMap.onResume(); }
-    @Override protected void onPause() { super.onPause(); if (mMap != null) mMap.onPause(); }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mMap != null) {
+            mMap.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMap != null) {
+            mMap.onPause();
+        }
+    }
 
     @Override
     protected void onDestroy() {
