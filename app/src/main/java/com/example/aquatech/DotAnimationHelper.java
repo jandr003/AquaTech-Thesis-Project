@@ -14,13 +14,26 @@ public class DotAnimationHelper {
     private ObjectAnimator rotateAnim, scaleAnim;
 
     public void startPulseAnimation(TextView dot1, TextView dot2, TextView dot3) {
-        anim1 = createPulseAnimator(dot1, 0);
-        anim2 = createPulseAnimator(dot2, 200);
-        anim3 = createPulseAnimator(dot3, 400);
+        if (dot1 != null) {
+            anim1 = createPulseAnimator(dot1, 0);
+            if (anim1 != null) {
+                anim1.start();
+            }
+        }
 
-        anim1.start();
-        anim2.start();
-        anim3.start();
+        if (dot2 != null) {
+            anim2 = createPulseAnimator(dot2, 200);
+            if (anim2 != null) {
+                anim2.start();
+            }
+        }
+
+        if (dot3 != null) {
+            anim3 = createPulseAnimator(dot3, 400);
+            if (anim3 != null) {
+                anim3.start();
+            }
+        }
     }
 
     private ObjectAnimator createPulseAnimator(View target, int delay) {
@@ -38,9 +51,13 @@ public class DotAnimationHelper {
     }
 
     public void startMaintenanceAnimation(View icon) {
+        if (icon == null) {
+            return;
+        }
+
         rotateAnim = ObjectAnimator.ofFloat(icon, "rotation", 0f, 360f);
-        rotateAnim.setDuration(4000); 
-        rotateAnim.setInterpolator(new LinearInterpolator()); 
+        rotateAnim.setDuration(4000);
+        rotateAnim.setInterpolator(new LinearInterpolator());
         rotateAnim.setRepeatCount(ValueAnimator.INFINITE);
 
         scaleAnim = ObjectAnimator.ofPropertyValuesHolder(
@@ -48,7 +65,7 @@ public class DotAnimationHelper {
                 PropertyValuesHolder.ofFloat("scaleX", 1.0f, 1.08f),
                 PropertyValuesHolder.ofFloat("scaleY", 1.0f, 1.08f)
         );
-        scaleAnim.setDuration(3000); 
+        scaleAnim.setDuration(3000);
         scaleAnim.setInterpolator(new AccelerateDecelerateInterpolator());
         scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
         scaleAnim.setRepeatMode(ValueAnimator.REVERSE);
@@ -58,10 +75,24 @@ public class DotAnimationHelper {
     }
 
     public void stopAnimation() {
-        if (anim1 != null) anim1.cancel();
-        if (anim2 != null) anim2.cancel();
-        if (anim3 != null) anim3.cancel();
-        if (rotateAnim != null) rotateAnim.cancel();
-        if (scaleAnim != null) scaleAnim.cancel();
+        if (anim1 != null) {
+            anim1.cancel();
+        }
+
+        if (anim2 != null) {
+            anim2.cancel();
+        }
+
+        if (anim3 != null) {
+            anim3.cancel();
+        }
+
+        if (rotateAnim != null) {
+            rotateAnim.cancel();
+        }
+
+        if (scaleAnim != null) {
+            scaleAnim.cancel();
+        }
     }
 }
