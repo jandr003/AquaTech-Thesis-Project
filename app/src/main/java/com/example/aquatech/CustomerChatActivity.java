@@ -103,7 +103,9 @@ public class CustomerChatActivity extends AppCompatActivity {
             otherPartyName = intentCustName != null ? intentCustName : "Customer";
         }
 
-        if (customerId == null && authUid != null) customerId = authUid;
+        if (customerId == null && authUid != null) {
+            customerId = authUid;
+        }
 
         initializeViews();
         setupChat();
@@ -123,26 +125,40 @@ public class CustomerChatActivity extends AppCompatActivity {
     }
 
     private void fetchOtherPartyRealName() {
+        if (myId == null) {
+            return;
+        }
+
         String otherId = myId.equals(techId) ? customerId : techId;
-        if (otherId == null) return;
+        if (otherId == null) {
+            return;
+        }
 
         FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(otherId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String name = snapshot.child("fullName").getValue(String.class);
-                    if (name == null) name = snapshot.child("name").getValue(String.class);
-                    
-                    if (name != null && !name.isEmpty()) {
-                        otherPartyName = name;
-                        if (tvOtherPartyName != null) tvOtherPartyName.setText(otherPartyName);
-                        if (chatAdapter != null) chatAdapter.setOtherPartyName(otherPartyName);
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            String name = snapshot.child("fullName").getValue(String.class);
+                            if (name == null) {
+                                name = snapshot.child("name").getValue(String.class);
+                            }
+
+                            if (name != null && !name.isEmpty()) {
+                                otherPartyName = name;
+                                if (tvOtherPartyName != null) {
+                                    tvOtherPartyName.setText(otherPartyName);
+                                }
+                                if (chatAdapter != null) {
+                                    chatAdapter.setOtherPartyName(otherPartyName);
+                                }
+                            }
+                        }
                     }
-                }
-            }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
-        });
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
     }
 
     private void fetchMetaData() {
@@ -158,14 +174,22 @@ public class CustomerChatActivity extends AppCompatActivity {
                     if (myId != null && myId.equals(techId)) {
                         if (cName != null) {
                             otherPartyName = cName;
-                            tvOtherPartyName.setText(otherPartyName);
-                            chatAdapter.setOtherPartyName(otherPartyName);
+                            if (tvOtherPartyName != null) {
+                                tvOtherPartyName.setText(otherPartyName);
+                            }
+                            if (chatAdapter != null) {
+                                chatAdapter.setOtherPartyName(otherPartyName);
+                            }
                         }
                     } else {
                         if (tName != null && !tName.equalsIgnoreCase("Technician")) {
                             otherPartyName = tName;
-                            tvOtherPartyName.setText(otherPartyName);
-                            chatAdapter.setOtherPartyName(otherPartyName);
+                            if (tvOtherPartyName != null) {
+                                tvOtherPartyName.setText(otherPartyName);
+                            }
+                            if (chatAdapter != null) {
+                                chatAdapter.setOtherPartyName(otherPartyName);
+                            }
                         }
                     }
 
@@ -179,7 +203,9 @@ public class CustomerChatActivity extends AppCompatActivity {
                     findActiveRequestByUsers();
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
                 updateChatFunctionality(false);
             }
         });
@@ -194,7 +220,7 @@ public class CustomerChatActivity extends AppCompatActivity {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String assignedId = ds.child("assignedTechId").getValue(String.class);
                         String status = ds.child("status").getValue(String.class);
-                        if (techId.equals(assignedId) && !"Completed".equalsIgnoreCase(status) && !"Cancelled".equalsIgnoreCase(status)) {
+                        if (techId != null && techId.equals(assignedId) && !"Completed".equalsIgnoreCase(status) && !"Cancelled".equalsIgnoreCase(status)) {
                             setupTicketStatusListener(ds.child("ticketId").getValue(String.class));
                             return;
                         }
@@ -202,7 +228,11 @@ public class CustomerChatActivity extends AppCompatActivity {
                 }
                 updateChatFunctionality(false);
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) { updateChatFunctionality(false); }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                updateChatFunctionality(false);
+            }
         });
     }
 
@@ -223,39 +253,61 @@ public class CustomerChatActivity extends AppCompatActivity {
                     updateChatFunctionality(false);
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) { updateChatFunctionality(false); }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                updateChatFunctionality(false);
+            }
         });
     }
 
     private void updateChatFunctionality(boolean enabled) {
         isChatFunctionalityEnabled = enabled;
-        if (btnAttach == null) btnAttach = findViewById(R.id.btnAttach);
+        if (btnAttach == null) {
+            btnAttach = findViewById(R.id.btnAttach);
+        }
+
         if (btnAttach != null) {
             btnAttach.setEnabled(enabled);
             btnAttach.setAlpha(enabled ? 1.0f : 0.5f);
         }
-        if (enabled) {
-            etMessage.setEnabled(true);
-            btnSend.setEnabled(true);
-            btnCall.setEnabled(true);
-            btnCall.setAlpha(1.0f);
-            etMessage.setHint("Type a message");
-        } else {
-            etMessage.setEnabled(false);
-            btnSend.setEnabled(false);
-            btnCall.setEnabled(false);
-            btnCall.setAlpha(0.5f);
 
-            if (myId != null && myId.equals(techId)) {
-                etMessage.setHint("Accept the ticket to chat");
-            } else {
-                etMessage.setHint("Waiting for technician to accept...");
+        if (enabled) {
+            if (etMessage != null) {
+                etMessage.setEnabled(true);
+                etMessage.setHint("Type a message");
+            }
+            if (btnSend != null) {
+                btnSend.setEnabled(true);
+            }
+            if (btnCall != null) {
+                btnCall.setEnabled(true);
+                btnCall.setAlpha(1.0f);
+            }
+        } else {
+            if (etMessage != null) {
+                etMessage.setEnabled(false);
+                if (myId != null && myId.equals(techId)) {
+                    etMessage.setHint("Accept the ticket to chat");
+                } else {
+                    etMessage.setHint("Waiting for technician to accept...");
+                }
+            }
+            if (btnSend != null) {
+                btnSend.setEnabled(false);
+            }
+            if (btnCall != null) {
+                btnCall.setEnabled(false);
+                btnCall.setAlpha(0.5f);
             }
         }
     }
 
     private void markAsRead() {
-        if (techId == null || customerId == null) return;
+        if (techId == null || customerId == null) {
+            return;
+        }
+
         String chatId = techId + "_" + customerId;
         FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("lastSenderId").setValue(myId);
     }
@@ -270,12 +322,16 @@ public class CustomerChatActivity extends AppCompatActivity {
         tvOtherPartyName = findViewById(R.id.tvCustomerName);
         headerAvatar = findViewById(R.id.customerAvatar);
 
-        if (otherPartyName != null) tvOtherPartyName.setText(otherPartyName);
+        if (otherPartyName != null && tvOtherPartyName != null) {
+            tvOtherPartyName.setText(otherPartyName);
+        }
 
-        if (myId != null && techId != null && myId.equals(techId)) {
-            headerAvatar.setImageResource(R.drawable.man_customer_icon);
-        } else {
-            headerAvatar.setImageResource(R.drawable.new_technician);
+        if (headerAvatar != null) {
+            if (myId != null && techId != null && myId.equals(techId)) {
+                headerAvatar.setImageResource(R.drawable.man_customer_icon);
+            } else {
+                headerAvatar.setImageResource(R.drawable.new_technician);
+            }
         }
     }
 
@@ -287,8 +343,10 @@ public class CustomerChatActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
-        chatRecyclerView.setLayoutManager(layoutManager);
-        chatRecyclerView.setAdapter(chatAdapter);
+        if (chatRecyclerView != null) {
+            chatRecyclerView.setLayoutManager(layoutManager);
+            chatRecyclerView.setAdapter(chatAdapter);
+        }
     }
 
     private void setupFirebaseChatListener() {
@@ -299,31 +357,45 @@ public class CustomerChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ChatMessage msg = snapshot.getValue(ChatMessage.class);
-                if (msg != null) {
+                if (msg != null && messageList != null && chatAdapter != null) {
                     if (msg.getSenderId() != null) {
                         msg.setUser(msg.getSenderId().equals(myId));
                     } else {
                         msg.setUser(false);
                     }
+
                     messageList.add(msg);
                     int newPosition = messageList.size() - 1;
                     chatAdapter.notifyItemInserted(newPosition);
                     if (newPosition > 0) {
                         chatAdapter.notifyItemChanged(newPosition - 1);
                     }
-                    chatRecyclerView.scrollToPosition(newPosition);
+                    if (chatRecyclerView != null) {
+                        chatRecyclerView.scrollToPosition(newPosition);
+                    }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
         chatRef.addChildEventListener(chatListener);
     }
 
     private void setupNotificationMonitor() {
-        if (myId == null) return;
+        if (myId == null) {
+            return;
+        }
+
         notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("CustomerNotifications").child(myId);
         notifListener = new ChildEventListener() {
             @Override
@@ -336,63 +408,81 @@ public class CustomerChatActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
+
         notifRef.addChildEventListener(notifListener);
         notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot snapshot) { isInitialNotifLoad = false; }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                isInitialNotifLoad = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void showIncomingCallPopup(String message, String callerTechId, String callerName) {
         IncomingCallPopup popup = new IncomingCallPopup(
-            this,
-            callerName,
-            "AquaTech Technician",
-            callerTechId != null ? callerTechId : techId,
-            myId,
-            false,
-            new IncomingCallPopup.OnCallActionListener() {
-                @Override
-                public void onAnswer() {
-                    String chatId = (callerTechId != null ? callerTechId : techId) + "_" + customerId;
-                    DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
+                this,
+                callerName,
+                "AquaTech Technician",
+                callerTechId != null ? callerTechId : techId,
+                myId,
+                false,
+                new IncomingCallPopup.OnCallActionListener() {
+                    @Override
+                    public void onAnswer() {
+                        String chatId = (callerTechId != null ? callerTechId : techId) + "_" + customerId;
+                        DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
 
-                    Map<String, Object> updates = new HashMap<>();
-                    updates.put("callStatus", "active");
-                    updates.put("callStartTime", ServerValue.TIMESTAMP);
-                    chatRef.updateChildren(updates);
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("callStatus", "active");
+                        updates.put("callStartTime", ServerValue.TIMESTAMP);
+                        chatRef.updateChildren(updates);
 
-                    Intent intent = new Intent(CustomerChatActivity.this, CustomerVoiceCallActivity.class);
-                    intent.putExtra("NAME", otherPartyName);
-                    intent.putExtra("TECH_ID", callerTechId != null ? callerTechId : techId);
-                    intent.putExtra("CUSTOMER_ID", customerId);
-                    startActivity(intent);
+                        Intent intent = new Intent(CustomerChatActivity.this, CustomerVoiceCallActivity.class);
+                        intent.putExtra("NAME", otherPartyName);
+                        intent.putExtra("TECH_ID", callerTechId != null ? callerTechId : techId);
+                        intent.putExtra("CUSTOMER_ID", customerId);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onDecline() {
+                        String chatId = (callerTechId != null ? callerTechId : techId) + "_" + customerId;
+                        FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                    }
                 }
-
-                @Override
-                public void onDecline() {
-                    String chatId = (callerTechId != null ? callerTechId : techId) + "_" + customerId;
-                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
-                }
-            }
         );
         popup.show();
     }
 
     private void sendMessage(String text) {
-        if (customerId == null || techId == null) return;
+        if (customerId == null || techId == null) {
+            return;
+        }
 
         String chatId = techId + "_" + customerId;
         DatabaseReference rootChatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
         DatabaseReference messageRef = rootChatRef.child("messages");
 
         String msgId = messageRef.push().getKey();
-        if (msgId == null) return;
+        if (msgId == null) {
+            return;
+        }
 
         Map<String, Object> msgData = new HashMap<>();
         msgData.put("text", text);
@@ -415,7 +505,9 @@ public class CustomerChatActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         if (btnTechInfo != null) {
             btnTechInfo.setOnClickListener(v -> {
@@ -431,42 +523,55 @@ public class CustomerChatActivity extends AppCompatActivity {
             btnAttach.setOnClickListener(v -> openFilePicker());
         }
 
-        btnSend.setOnClickListener(v -> {
-            if (!isChatFunctionalityEnabled) {
-                String errorMsg = (myId != null && myId.equals(techId)) ? "Accept the ticket first." : "Waiting for technician to accept.";
-                Toast.makeText(CustomerChatActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String msg = etMessage.getText().toString().trim();
-            if (!msg.isEmpty()) {
-                sendMessage(msg);
-                etMessage.setText("");
-            }
-        });
-
-        btnCall.setOnClickListener(v -> {
-            if (!isChatFunctionalityEnabled) {
-                Toast.makeText(CustomerChatActivity.this, "Calling is disabled until the ticket is accepted.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Dialog d = new Dialog(this);
-            d.setContentView(R.layout.dialog_call_confirm);
-            if (d.getWindow() != null) d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-            TextView title = d.findViewById(R.id.tvRequestTitle);
-            if (title != null) title.setText("Call " + otherPartyName + "?");
-
-            View btnConfirm = d.findViewById(R.id.btnConfirmCall);
-            if (btnConfirm != null) btnConfirm.setOnClickListener(view -> {
-                initiateCall();
-                d.dismiss();
+        if (btnSend != null && etMessage != null) {
+            btnSend.setOnClickListener(v -> {
+                if (!isChatFunctionalityEnabled) {
+                    String errorMsg = (myId != null && myId.equals(techId)) ? "Accept the ticket first." : "Waiting for technician to accept.";
+                    Toast.makeText(CustomerChatActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String msg = etMessage.getText().toString().trim();
+                if (!msg.isEmpty()) {
+                    sendMessage(msg);
+                    etMessage.setText("");
+                }
             });
+        }
 
-            View btnClose = d.findViewById(R.id.btnCloseCallDialog);
-            if (btnClose != null) btnClose.setOnClickListener(view -> d.dismiss());
+        if (btnCall != null) {
+            btnCall.setOnClickListener(v -> {
+                if (!isChatFunctionalityEnabled) {
+                    Toast.makeText(CustomerChatActivity.this, "Calling is disabled until the ticket is accepted.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            d.show();
-        });
+                Dialog d = new Dialog(this);
+                d.setContentView(R.layout.dialog_call_confirm);
+                if (d.getWindow() != null) {
+                    d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                }
+
+                TextView title = d.findViewById(R.id.tvRequestTitle);
+                if (title != null) {
+                    title.setText("Call " + otherPartyName + "?");
+                }
+
+                View btnConfirm = d.findViewById(R.id.btnConfirmCall);
+                if (btnConfirm != null) {
+                    btnConfirm.setOnClickListener(view -> {
+                        initiateCall();
+                        d.dismiss();
+                    });
+                }
+
+                View btnClose = d.findViewById(R.id.btnCloseCallDialog);
+                if (btnClose != null) {
+                    btnClose.setOnClickListener(view -> d.dismiss());
+                }
+
+                d.show();
+            });
+        }
     }
 
     private static final int PICK_CHAT_FILE_REQUEST = 102;
@@ -477,6 +582,7 @@ public class CustomerChatActivity extends AppCompatActivity {
             Toast.makeText(CustomerChatActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
             return;
         }
+
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         String[] mimetypes = {"image/*", "application/pdf"};
@@ -490,11 +596,16 @@ public class CustomerChatActivity extends AppCompatActivity {
         if (requestCode == PICK_CHAT_FILE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri selectedUri = data.getData();
             String fileName = "Attachment_" + System.currentTimeMillis();
+
             try {
                 Cursor cursor = getContentResolver().query(selectedUri, null, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    if (nameIndex != -1) fileName = cursor.getString(nameIndex);
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                        if (nameIndex != -1) {
+                            fileName = cursor.getString(nameIndex);
+                        }
+                    }
                     cursor.close();
                 }
             } catch (Exception ignored) {}
@@ -504,14 +615,18 @@ public class CustomerChatActivity extends AppCompatActivity {
     }
 
     private void sendFileMessage(String fileName, String fileUri) {
-        if (customerId == null || techId == null) return;
+        if (customerId == null || techId == null) {
+            return;
+        }
 
         String chatId = techId + "_" + customerId;
         DatabaseReference rootChatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
         DatabaseReference messageRef = rootChatRef.child("messages");
 
         String msgId = messageRef.push().getKey();
-        if (msgId == null) return;
+        if (msgId == null) {
+            return;
+        }
 
         Map<String, Object> msgData = new HashMap<>();
         msgData.put("text", "Attached file: " + fileName);
@@ -537,16 +652,14 @@ public class CustomerChatActivity extends AppCompatActivity {
     }
 
     private void initiateCall() {
-        String callerId, receiverId, callerName;
+        String callerId, receiverId;
 
         if (myId.equals(techId)) {
             callerId = techId;
             receiverId = customerId;
-            callerName = "Technician";
         } else {
             callerId = customerId;
             receiverId = techId;
-            callerName = "Customer";
         }
 
         String chatId = techId + "_" + customerId;
@@ -560,16 +673,13 @@ public class CustomerChatActivity extends AppCompatActivity {
         String notifTarget = myId.equals(techId) ? "CustomerNotifications" : "Notifications";
         DatabaseReference notifPushRef = FirebaseDatabase.getInstance(DB_URL).getReference(notifTarget).child(receiverId).push();
 
-        // Use local variable for current user name if available, else generic
-        String myName = "User";
-        
         NotificationModel notification = new NotificationModel(
                 notifPushRef.getKey(),
                 notifMessage,
                 System.currentTimeMillis(),
                 "CALL",
                 callerId,
-                myId.equals(techId) ? "Technician" : "Customer" 
+                myId.equals(techId) ? "Technician" : "Customer"
         );
         notifPushRef.setValue(notification);
 
@@ -588,8 +698,12 @@ public class CustomerChatActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (chatRef != null && chatListener != null) chatRef.removeEventListener(chatListener);
-        if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
+        if (chatRef != null && chatListener != null) {
+            chatRef.removeEventListener(chatListener);
+        }
+        if (notifRef != null && notifListener != null) {
+            notifRef.removeEventListener(notifListener);
+        }
         if (serviceRequestRef != null && serviceRequestListener != null) {
             serviceRequestRef.removeEventListener(serviceRequestListener);
         }
