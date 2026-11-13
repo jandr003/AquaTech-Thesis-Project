@@ -110,7 +110,11 @@ public class GroupChatCustomiseActivity extends AppCompatActivity {
 
             ValueAnimator anim = ValueAnimator.ofObject(new ArgbEvaluator(), fromCardColor, targetCardColor);
             anim.setDuration(300);
-            anim.addUpdateListener(animation -> previewCard.setCardBackgroundColor((int) animation.getAnimatedValue()));
+            anim.addUpdateListener(animation -> {
+                if (previewCard != null) {
+                    previewCard.setCardBackgroundColor((int) animation.getAnimatedValue());
+                }
+            });
             anim.start();
         }
     }
@@ -132,7 +136,11 @@ public class GroupChatCustomiseActivity extends AppCompatActivity {
 
                     ValueAnimator anim = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, targetColor);
                     anim.setDuration(300);
-                    anim.addUpdateListener(animation -> previewOutgoingBubble.getBackground().setTint((int) animation.getAnimatedValue()));
+                    anim.addUpdateListener(animation -> {
+                        if (previewOutgoingBubble != null && previewOutgoingBubble.getBackground() != null) {
+                            previewOutgoingBubble.getBackground().setTint((int) animation.getAnimatedValue());
+                        }
+                    });
                     anim.start();
                 }
             });
