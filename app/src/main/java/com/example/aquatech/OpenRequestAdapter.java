@@ -44,8 +44,13 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServiceLogModel model = openList.get(position);
+        if (model == null) {
+            return;
+        }
 
-        holder.tvCustomerName.setText(model.getTechName());
+        if (holder.tvCustomerName != null) {
+            holder.tvCustomerName.setText(model.getTechName() != null ? model.getTechName() : "Guest Customer");
+        }
 
         if (holder.ivCustomerAvatar != null) {
             if (model.getProfileImageUrl() != null && !model.getProfileImageUrl().isEmpty()) {
@@ -61,13 +66,16 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
             }
         }
 
-        holder.tvTicketID.setText(model.getTicketId());
+        if (holder.tvTicketID != null) {
+            holder.tvTicketID.setText(model.getTicketId() != null ? model.getTicketId() : "");
+        }
+
         if (holder.tvSRONumber != null) {
-            holder.tvSRONumber.setText("#" + model.getSroNumber());
+            holder.tvSRONumber.setText("#" + (model.getSroNumber() != null ? model.getSroNumber() : ""));
         }
 
         if (holder.tvUnitName != null) {
-            holder.tvUnitName.setText(model.getUnitName());
+            holder.tvUnitName.setText(model.getUnitName() != null ? model.getUnitName() : "");
         }
 
         String serviceType = model.getRemarks();
@@ -77,16 +85,30 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
         if (serviceType == null || serviceType.trim().isEmpty()) {
             serviceType = "General Service Request";
         }
-        holder.tvServiceType.setText(serviceType);
-        holder.tvServiceTime.setText(model.getDateTime());
-        holder.tvLocation.setText(model.getAddress());
-        holder.tvContact.setText(model.getCustomerPhone());
 
-        holder.btnAssign.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onAssignClick(model);
-            }
-        });
+        if (holder.tvServiceType != null) {
+            holder.tvServiceType.setText(serviceType);
+        }
+
+        if (holder.tvServiceTime != null) {
+            holder.tvServiceTime.setText(model.getDateTime() != null ? model.getDateTime() : "");
+        }
+
+        if (holder.tvLocation != null) {
+            holder.tvLocation.setText(model.getAddress() != null ? model.getAddress() : "");
+        }
+
+        if (holder.tvContact != null) {
+            holder.tvContact.setText(model.getCustomerPhone() != null ? model.getCustomerPhone() : "");
+        }
+
+        if (holder.btnAssign != null) {
+            holder.btnAssign.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onAssignClick(model);
+                }
+            });
+        }
 
         holder.itemView.setOnClickListener(v -> {
             if (itemClickListener != null) {
@@ -95,10 +117,12 @@ public class OpenRequestAdapter extends RecyclerView.Adapter<OpenRequestAdapter.
         });
     }
 
-
     @Override
     public int getItemCount() {
-        return openList.size();
+        if (openList != null) {
+            return openList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
