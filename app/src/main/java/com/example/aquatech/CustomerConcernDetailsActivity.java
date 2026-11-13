@@ -65,7 +65,10 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackConcernDetails).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackConcernDetails);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         tvConcernID = findViewById(R.id.tvConcernIDDetails);
         tvConcernStatusPill = findViewById(R.id.tvConcernStatusPill);
@@ -103,60 +106,94 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String concernId = snapshot.child("ticketId").getValue(String.class);
-                    if (concernId == null) concernId = snapshot.getKey();
-                    tvConcernID.setText(concernId != null ? concernId : "ASC2026-0031");
+                    if (concernId == null) {
+                        concernId = snapshot.getKey();
+                    }
+                    if (tvConcernID != null) {
+                        tvConcernID.setText(concernId != null ? concernId : "ASC2026-0031");
+                    }
 
                     String custId = snapshot.child("customerId").getValue(String.class);
                     if (custId == null) {
                         String uid = snapshot.child("userId").getValue(String.class);
-                        if (uid != null && uid.length() > 5) custId = "ASC-C" + uid.substring(0, 4).toUpperCase();
-                        else custId = "ASC-C001";
+                        if (uid != null && uid.length() > 5) {
+                            custId = "ASC-C" + uid.substring(0, 4).toUpperCase();
+                        } else {
+                            custId = "ASC-C001";
+                        }
                     }
-                    tvCustomerID.setText(custId);
+                    if (tvCustomerID != null) {
+                        tvCustomerID.setText(custId);
+                    }
 
                     String dateStr = snapshot.child("date").getValue(String.class);
-                    tvSubmittedDate.setText(dateStr != null && !dateStr.isEmpty() ? dateStr : "Sep 30, 2025");
+                    if (tvSubmittedDate != null) {
+                        tvSubmittedDate.setText(dateStr != null && !dateStr.isEmpty() ? dateStr : "Sep 30, 2025");
+                    }
 
                     String status = snapshot.child("status").getValue(String.class);
-                    if (status == null || status.isEmpty()) status = "Submitted";
-                    tvConcernStatusPill.setText(status);
+                    if (status == null || status.isEmpty()) {
+                        status = "Submitted";
+                    }
+                    if (tvConcernStatusPill != null) {
+                        tvConcernStatusPill.setText(status);
 
-                    if ("Completed".equalsIgnoreCase(status) || "Resolved".equalsIgnoreCase(status)) {
-                        tvConcernStatusPill.setBackgroundResource(R.drawable.bg_solid_green_pill);
-                        tvConcernStatusPill.setTextColor(Color.WHITE);
-                    } else if ("Cancelled".equalsIgnoreCase(status)) {
-                        tvConcernStatusPill.setBackgroundResource(R.drawable.bg_solid_red_pill);
-                        tvConcernStatusPill.setTextColor(Color.WHITE);
-                    } else {
-                        tvConcernStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
-                        tvConcernStatusPill.setTextColor(Color.WHITE);
+                        if ("Completed".equalsIgnoreCase(status) || "Resolved".equalsIgnoreCase(status)) {
+                            tvConcernStatusPill.setBackgroundResource(R.drawable.bg_solid_green_pill);
+                            tvConcernStatusPill.setTextColor(Color.WHITE);
+                        } else if ("Cancelled".equalsIgnoreCase(status)) {
+                            tvConcernStatusPill.setBackgroundResource(R.drawable.bg_solid_red_pill);
+                            tvConcernStatusPill.setTextColor(Color.WHITE);
+                        } else {
+                            tvConcernStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
+                            tvConcernStatusPill.setTextColor(Color.WHITE);
+                        }
                     }
 
                     String itemUnit = snapshot.child("unitName").getValue(String.class);
-                    tvUnitItemName.setText(itemUnit != null && !itemUnit.isEmpty() ? itemUnit : "Registered Water Dispenser");
+                    if (tvUnitItemName != null) {
+                        tvUnitItemName.setText(itemUnit != null && !itemUnit.isEmpty() ? itemUnit : "Registered Water Dispenser");
+                    }
 
                     String itemCode = snapshot.child("unitCode").getValue(String.class);
-                    if (itemCode == null) itemCode = snapshot.child("unitModelCode").getValue(String.class);
-                    tvCustomerItemCode.setText(itemCode != null && !itemCode.isEmpty() ? itemCode : "F-FXCU1-M-HCA-TT-XX-XXX");
+                    if (itemCode == null) {
+                        itemCode = snapshot.child("unitModelCode").getValue(String.class);
+                    }
+                    if (tvCustomerItemCode != null) {
+                        tvCustomerItemCode.setText(itemCode != null && !itemCode.isEmpty() ? itemCode : "F-FXCU1-M-HCA-TT-XX-XXX");
+                    }
 
                     String category = snapshot.child("concernCategory").getValue(String.class);
-                    tvConcernCategory.setText(category != null && !category.isEmpty() ? category : "Equipment Issue");
+                    if (tvConcernCategory != null) {
+                        tvConcernCategory.setText(category != null && !category.isEmpty() ? category : "Equipment Issue");
+                    }
 
                     String concern = snapshot.child("customerConcern").getValue(String.class);
-                    if (concern == null) concern = snapshot.child("remarks").getValue(String.class);
-                    tvCustomerConcernText.setText(concern != null && !concern.isEmpty() ? concern : "Water dispenser is not dispensing cold water.");
+                    if (concern == null) {
+                        concern = snapshot.child("remarks").getValue(String.class);
+                    }
+                    if (tvCustomerConcernText != null) {
+                        tvCustomerConcernText.setText(concern != null && !concern.isEmpty() ? concern : "Water dispenser is not dispensing cold water.");
+                    }
 
                     String custName = snapshot.child("customerName").getValue(String.class);
-                    tvCustomerName.setText(custName != null && !custName.isEmpty() ? custName : "Registered Customer Name");
+                    if (tvCustomerName != null) {
+                        tvCustomerName.setText(custName != null && !custName.isEmpty() ? custName : "Registered Customer Name");
+                    }
 
                     String address = snapshot.child("address").getValue(String.class);
-                    tvServiceAddress.setText(address != null && !address.isEmpty() ? address : "Complete registered service address");
+                    if (tvServiceAddress != null) {
+                        tvServiceAddress.setText(address != null && !address.isEmpty() ? address : "Complete registered service address");
+                    }
 
                     String phone = snapshot.child("customerPhone").getValue(String.class);
-                    if (phone == null) phone = snapshot.child("userPhone").getValue(String.class);
-                    tvContactNumber.setText(phone != null && !phone.isEmpty() ? phone : "Registered mobile number");
+                    if (phone == null) {
+                        phone = snapshot.child("userPhone").getValue(String.class);
+                    }
+                    if (tvContactNumber != null) {
+                        tvContactNumber.setText(phone != null && !phone.isEmpty() ? phone : "Registered mobile number");
+                    }
 
-                    // SCHEDULE vs RESCHEDULE VISIBILITY LOGIC
                     Boolean isRescheduled = snapshot.child("isRescheduled").getValue(Boolean.class);
                     String scheduleStatus = snapshot.child("scheduleStatus").getValue(String.class);
 
@@ -165,60 +202,92 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                             snapshot.hasChild("rescheduleReason");
 
                     if (rescheduled) {
-                        layoutRequestedTime.setVisibility(View.GONE);
-                        layoutRescheduleInfo.setVisibility(View.VISIBLE);
+                        if (layoutRequestedTime != null) {
+                            layoutRequestedTime.setVisibility(View.GONE);
+                        }
+                        if (layoutRescheduleInfo != null) {
+                            layoutRescheduleInfo.setVisibility(View.VISIBLE);
+                        }
 
                         String origDate = snapshot.child("originalDate").getValue(String.class);
                         String origTime = snapshot.child("originalTimeRange").getValue(String.class);
-                        tvOriginalReschedText.setText("Original: " + (origDate != null ? origDate : "October 2, 2025") + " · " + (origTime != null ? origTime : "9:00–11:00 AM"));
+                        if (tvOriginalReschedText != null) {
+                            tvOriginalReschedText.setText("Original: " + (origDate != null ? origDate : "October 2, 2025") + " · " + (origTime != null ? origTime : "9:00–11:00 AM"));
+                        }
 
                         String newDate = snapshot.child("date").getValue(String.class);
                         String newTime = snapshot.child("timeRange").getValue(String.class);
-                        tvNewReschedText.setText("New Schedule: " + (newDate != null ? newDate : "October 3, 2025") + " · " + (newTime != null ? newTime : "1:00–3:00 PM"));
+                        if (tvNewReschedText != null) {
+                            tvNewReschedText.setText("New Schedule: " + (newDate != null ? newDate : "October 3, 2025") + " · " + (newTime != null ? newTime : "1:00–3:00 PM"));
+                        }
 
                         String reason = snapshot.child("rescheduleReason").getValue(String.class);
-                        tvReschedReasonText.setText("Reason: " + (reason != null && !reason.isEmpty() ? reason : "Previous schedule was not fulfilled."));
+                        if (tvReschedReasonText != null) {
+                            tvReschedReasonText.setText("Reason: " + (reason != null && !reason.isEmpty() ? reason : "Previous schedule was not fulfilled."));
+                        }
                     } else {
-                        layoutRequestedTime.setVisibility(View.VISIBLE);
-                        layoutRescheduleInfo.setVisibility(View.GONE);
+                        if (layoutRequestedTime != null) {
+                            layoutRequestedTime.setVisibility(View.VISIBLE);
+                        }
+                        if (layoutRescheduleInfo != null) {
+                            layoutRescheduleInfo.setVisibility(View.GONE);
+                        }
 
                         String reqDate = snapshot.child("date").getValue(String.class);
-                        tvOriginalReqDate.setText(reqDate != null && !reqDate.isEmpty() ? reqDate : "October 2, 2025");
+                        if (tvOriginalReqDate != null) {
+                            tvOriginalReqDate.setText(reqDate != null && !reqDate.isEmpty() ? reqDate : "October 2, 2025");
+                        }
 
                         String timeSlot = snapshot.child("timeRange").getValue(String.class);
-                        tvRequestedTime.setText(timeSlot != null && !timeSlot.isEmpty() ? timeSlot : "9:00 AM – 11:00 AM");
+                        if (tvRequestedTime != null) {
+                            tvRequestedTime.setText(timeSlot != null && !timeSlot.isEmpty() ? timeSlot : "9:00 AM – 11:00 AM");
+                        }
                     }
 
                     String govIdUrl = snapshot.child("govIdUrl").getValue(String.class);
-                    if (govIdUrl == null) govIdUrl = snapshot.child("idAttachmentUrl").getValue(String.class);
-                    if (govIdUrl == null) govIdUrl = snapshot.child("governmentIdUrl").getValue(String.class);
+                    if (govIdUrl == null) {
+                        govIdUrl = snapshot.child("idAttachmentUrl").getValue(String.class);
+                    }
+                    if (govIdUrl == null) {
+                        govIdUrl = snapshot.child("governmentIdUrl").getValue(String.class);
+                    }
 
                     Boolean govVerified = snapshot.child("govIdVerified").getValue(Boolean.class);
-                    if (govVerified == null) govVerified = snapshot.child("isVerified").getValue(Boolean.class);
+                    if (govVerified == null) {
+                        govVerified = snapshot.child("isVerified").getValue(Boolean.class);
+                    }
 
                     if (govIdUrl != null && !govIdUrl.isEmpty()) {
-                        ivGovIdAttachment.setVisibility(View.VISIBLE);
-                        ivGovIdAttachment.setPadding(0, 0, 0, 0);
-                        ivGovIdAttachment.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                        Glide.with(CustomerConcernDetailsActivity.this)
-                                .load(govIdUrl)
-                                .placeholder(R.drawable.img_place_holder)
-                                .into(ivGovIdAttachment);
+                        if (ivGovIdAttachment != null) {
+                            ivGovIdAttachment.setVisibility(View.VISIBLE);
+                            ivGovIdAttachment.setPadding(0, 0, 0, 0);
+                            ivGovIdAttachment.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            Glide.with(CustomerConcernDetailsActivity.this)
+                                    .load(govIdUrl)
+                                    .placeholder(R.drawable.img_place_holder)
+                                    .into(ivGovIdAttachment);
+                        }
 
-                        if (govVerified != null && govVerified) {
-                            tvGovIdStatusPill.setText("Verified");
-                            tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_green_pill);
-                            tvGovIdStatusPill.setTextColor(Color.WHITE);
-                        } else {
-                            tvGovIdStatusPill.setText("Pending Verification");
+                        if (tvGovIdStatusPill != null) {
+                            if (govVerified != null && govVerified) {
+                                tvGovIdStatusPill.setText("Verified");
+                                tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_green_pill);
+                                tvGovIdStatusPill.setTextColor(Color.WHITE);
+                            } else {
+                                tvGovIdStatusPill.setText("Pending Verification");
+                                tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
+                                tvGovIdStatusPill.setTextColor(Color.WHITE);
+                            }
+                        }
+                    } else {
+                        if (ivGovIdAttachment != null) {
+                            ivGovIdAttachment.setVisibility(View.GONE);
+                        }
+                        if (tvGovIdStatusPill != null) {
+                            tvGovIdStatusPill.setText("Not Submitted");
                             tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
                             tvGovIdStatusPill.setTextColor(Color.WHITE);
                         }
-                    } else {
-                        ivGovIdAttachment.setVisibility(View.GONE);
-                        tvGovIdStatusPill.setText("Not Submitted");
-                        tvGovIdStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
-                        tvGovIdStatusPill.setTextColor(Color.WHITE);
                     }
 
                     populateProfessionalItemsList(layoutRequestedItemsContainer, snapshot);
@@ -226,13 +295,14 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void populateProfessionalItemsList(LinearLayout container, DataSnapshot ds) {
-        if (container == null) return;
+        if (container == null) {
+            return;
+        }
         container.removeAllViews();
 
         boolean hasItems = false;
@@ -276,6 +346,10 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
     }
 
     private void addSingleRow(LinearLayout container, String label, int qty) {
+        if (container == null) {
+            return;
+        }
+
         if (container.getChildCount() > 0) {
             View divider = new View(this);
             LinearLayout.LayoutParams divParams = new LinearLayout.LayoutParams(
