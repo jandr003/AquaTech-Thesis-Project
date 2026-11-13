@@ -41,9 +41,7 @@ public class IncomingCallActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Turn screen on and show over lock screen
         setupLockscreenAndStatusBar();
-
         setContentView(R.layout.activity_incoming_call);
 
         parseIntentData();
@@ -58,9 +56,9 @@ public class IncomingCallActivity extends AppCompatActivity {
             setTurnScreenOn(true);
         } else {
             getWindow().addFlags(
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
-                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
-                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                            WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
             );
         }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -74,7 +72,9 @@ public class IncomingCallActivity extends AppCompatActivity {
 
     private void parseIntentData() {
         Intent intent = getIntent();
-        if (intent == null) return;
+        if (intent == null) {
+            return;
+        }
 
         callerName = intent.getStringExtra("CALLER_NAME");
         callerRole = intent.getStringExtra("CALLER_ROLE");
@@ -83,8 +83,13 @@ public class IncomingCallActivity extends AppCompatActivity {
         ticketId = intent.getStringExtra("TICKET_ID");
         isTech = intent.getBooleanExtra("IS_TECH", false);
 
-        if (callerName == null) callerName = "Service Partner";
-        if (callerRole == null) callerRole = isTech ? "Customer" : "AquaTech Technician";
+        if (callerName == null) {
+            callerName = "Service Partner";
+        }
+
+        if (callerRole == null) {
+            callerRole = isTech ? "Customer" : "AquaTech Technician";
+        }
     }
 
     private void initializeViews() {
@@ -97,8 +102,13 @@ public class IncomingCallActivity extends AppCompatActivity {
         btnQuickMessage = findViewById(R.id.btnQuickMessage);
         btnRemindMe = findViewById(R.id.btnRemindMe);
 
-        if (tvCallerName != null) tvCallerName.setText(callerName);
-        if (tvCallerRole != null) tvCallerRole.setText(callerRole);
+        if (tvCallerName != null) {
+            tvCallerName.setText(callerName);
+        }
+
+        if (tvCallerRole != null) {
+            tvCallerRole.setText(callerRole);
+        }
 
         int defaultIcon = "Customer".equalsIgnoreCase(callerRole) ? R.drawable.man_customer_icon : R.drawable.new_technician;
         if (ivCallerAvatar != null) {
@@ -107,22 +117,34 @@ public class IncomingCallActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnAnswerCall.setOnClickListener(v -> answerCall());
-        btnDeclineCall.setOnClickListener(v -> declineCall());
+        if (btnAnswerCall != null) {
+            btnAnswerCall.setOnClickListener(v -> answerCall());
+        }
 
-        btnQuickMessage.setOnClickListener(v -> {
-            declineCall();
-            Toast.makeText(this, "Quick message sent", Toast.LENGTH_SHORT).show();
-        });
+        if (btnDeclineCall != null) {
+            btnDeclineCall.setOnClickListener(v -> declineCall());
+        }
 
-        btnRemindMe.setOnClickListener(v -> {
-            declineCall();
-            Toast.makeText(this, "Call reminder set for 15 mins", Toast.LENGTH_SHORT).show();
-        });
+        if (btnQuickMessage != null) {
+            btnQuickMessage.setOnClickListener(v -> {
+                declineCall();
+                Toast.makeText(this, "Quick message sent", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        if (btnRemindMe != null) {
+            btnRemindMe.setOnClickListener(v -> {
+                declineCall();
+                Toast.makeText(this, "Call reminder set for 15 mins", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     private void setupCallStatusMonitor() {
-        if (callerId == null || myUid == null) return;
+        if (callerId == null || myUid == null) {
+            return;
+        }
+
         String chatId = isTech ? (myUid + "_" + callerId) : (callerId + "_" + myUid);
         callRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
 
@@ -136,7 +158,9 @@ public class IncomingCallActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
         callRef.addValueEventListener(callStatusListener);
     }
