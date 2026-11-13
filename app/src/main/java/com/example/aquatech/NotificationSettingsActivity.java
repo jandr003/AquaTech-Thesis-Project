@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -43,7 +44,9 @@ public class NotificationSettingsActivity extends AppCompatActivity {
 
     private void initializeViews() {
         ImageView btnBack = findViewById(R.id.btnBack);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         if (isTechnician) {
             setupTechnicianToggles();
@@ -58,21 +61,32 @@ public class NotificationSettingsActivity extends AppCompatActivity {
         SwitchCompat swSound = findViewById(R.id.switchTechSound);
         SwitchCompat swVibrate = findViewById(R.id.switchTechVibration);
 
-        if (swNewTasks != null) {
+        if (swNewTasks != null && prefs != null) {
             swNewTasks.setChecked(prefs.getBoolean("tech_new_tasks", true));
-            swNewTasks.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("tech_new_tasks", isChecked).apply());
+            swNewTasks.setOnCheckedChangeListener((v, isChecked) -> {
+                prefs.edit().putBoolean("tech_new_tasks", isChecked).apply();
+            });
         }
-        if (swChat != null) {
+
+        if (swChat != null && prefs != null) {
             swChat.setChecked(prefs.getBoolean("tech_chat_notif", true));
-            swChat.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("tech_chat_notif", isChecked).apply());
+            swChat.setOnCheckedChangeListener((v, isChecked) -> {
+                prefs.edit().putBoolean("tech_chat_notif", isChecked).apply();
+            });
         }
-        if (swSound != null) {
+
+        if (swSound != null && prefs != null) {
             swSound.setChecked(prefs.getBoolean("tech_notif_sound", true));
-            swSound.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("tech_notif_sound", isChecked).apply());
+            swSound.setOnCheckedChangeListener((v, isChecked) -> {
+                prefs.edit().putBoolean("tech_notif_sound", isChecked).apply();
+            });
         }
-        if (swVibrate != null) {
+
+        if (swVibrate != null && prefs != null) {
             swVibrate.setChecked(prefs.getBoolean("tech_notif_vibrate", true));
-            swVibrate.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("tech_notif_vibrate", isChecked).apply());
+            swVibrate.setOnCheckedChangeListener((v, isChecked) -> {
+                prefs.edit().putBoolean("tech_notif_vibrate", isChecked).apply();
+            });
         }
     }
 
@@ -82,21 +96,32 @@ public class NotificationSettingsActivity extends AppCompatActivity {
         SwitchCompat swSound = findViewById(R.id.switchNotifSound);
         SwitchCompat swVibrate = findViewById(R.id.switchVibration);
 
-        if (swStatus != null) {
+        if (swStatus != null && prefs != null) {
             swStatus.setChecked(prefs.getBoolean("cust_service_status", true));
-            swStatus.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("cust_service_status", isChecked).apply());
+            swStatus.setOnCheckedChangeListener((v, isChecked) -> {
+                prefs.edit().putBoolean("cust_service_status", isChecked).apply();
+            });
         }
-        if (swArrival != null) {
+
+        if (swArrival != null && prefs != null) {
             swArrival.setChecked(prefs.getBoolean("cust_tech_arrival", true));
-            swArrival.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("cust_tech_arrival", isChecked).apply());
+            swArrival.setOnCheckedChangeListener((v, isChecked) -> {
+                prefs.edit().putBoolean("cust_tech_arrival", isChecked).apply();
+            });
         }
-        if (swSound != null) {
+
+        if (swSound != null && prefs != null) {
             swSound.setChecked(prefs.getBoolean("cust_notif_sound", true));
-            swSound.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("cust_notif_sound", isChecked).apply());
+            swSound.setOnCheckedChangeListener((v, isChecked) -> {
+                prefs.edit().putBoolean("cust_notif_sound", isChecked).apply();
+            });
         }
-        if (swVibrate != null) {
+
+        if (swVibrate != null && prefs != null) {
             swVibrate.setChecked(prefs.getBoolean("cust_notif_vibrate", true));
-            swVibrate.setOnCheckedChangeListener((v, isChecked) -> prefs.edit().putBoolean("cust_notif_vibrate", isChecked).apply());
+            swVibrate.setOnCheckedChangeListener((v, isChecked) -> {
+                prefs.edit().putBoolean("cust_notif_vibrate", isChecked).apply();
+            });
         }
     }
 }
