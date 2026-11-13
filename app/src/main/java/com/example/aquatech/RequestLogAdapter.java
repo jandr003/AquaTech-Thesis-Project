@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,39 +33,66 @@ public class RequestLogAdapter extends RecyclerView.Adapter<RequestLogAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RequestLogModel item = logList.get(position);
+        if (item == null) {
+            return;
+        }
 
         String ticketId = item.getTicketId();
         if (ticketId != null && !ticketId.isEmpty()) {
             String upper = ticketId.toUpperCase().trim();
             if (upper.startsWith("SRO-")) {
-                holder.tvTicketID.setText(upper);
+                if (holder.tvTicketID != null) {
+                    holder.tvTicketID.setText(upper);
+                }
             } else if (upper.startsWith("SRO")) {
-                holder.tvTicketID.setText("SRO-" + upper.substring(3));
+                if (holder.tvTicketID != null) {
+                    holder.tvTicketID.setText("SRO-" + upper.substring(3));
+                }
             } else {
                 try {
                     long num = Long.parseLong(upper.replaceAll("[^0-9]", ""));
-                    holder.tvTicketID.setText(String.format(Locale.US, "SRO-%08d", num));
+                    if (holder.tvTicketID != null) {
+                        holder.tvTicketID.setText(String.format(Locale.US, "SRO-%08d", num));
+                    }
                 } catch (Exception e) {
-                    holder.tvTicketID.setText("SRO-" + upper);
+                    if (holder.tvTicketID != null) {
+                        holder.tvTicketID.setText("SRO-" + upper);
+                    }
                 }
             }
-        } else {
-            holder.tvTicketID.setText("SRO-00002346");
+        } else if (holder.tvTicketID != null) {
+            holder.tvTicketID.setText("SRO-00000001");
         }
 
-        holder.tvCustomerID.setText(item.getCustomerId() != null && !item.getCustomerId().isEmpty() ? item.getCustomerId() : "ASC-C001");
-        holder.tvSRO.setText(item.getTechName() != null && !item.getTechName().isEmpty() ? item.getTechName() : "Sep 30, 2025");
+        if (holder.tvCustomerID != null) {
+            holder.tvCustomerID.setText(item.getCustomerId() != null && !item.getCustomerId().isEmpty() ? item.getCustomerId() : "ASC-C001");
+        }
+
+        if (holder.tvSRO != null) {
+            String displayTech = item.getTechName();
+            if (displayTech != null && !displayTech.isEmpty() && !"Unassigned".equalsIgnoreCase(displayTech)) {
+                holder.tvSRO.setText(displayTech);
+            } else if (item.getTimestamp() != null && item.getTimestamp() > 0) {
+                String formattedDate = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date(item.getTimestamp()));
+                holder.tvSRO.setText(formattedDate);
+            } else {
+                holder.tvSRO.setText("Unassigned");
+            }
+        }
 
         String rawStatus = item.getStatus();
         final String status = (rawStatus != null && !rawStatus.isEmpty()) ? rawStatus : "Completed";
-        holder.tvStatus.setText(status.toUpperCase());
 
-        if ("Cancelled".equalsIgnoreCase(status)) {
-            holder.tvStatus.setTextColor(Color.WHITE);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
-        } else {
-            holder.tvStatus.setTextColor(Color.WHITE);
-            holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
+        if (holder.tvStatus != null) {
+            holder.tvStatus.setText(status.toUpperCase());
+
+            if ("Cancelled".equalsIgnoreCase(status)) {
+                holder.tvStatus.setTextColor(Color.WHITE);
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
+            } else {
+                holder.tvStatus.setTextColor(Color.WHITE);
+                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
+            }
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -80,7 +109,10 @@ public class RequestLogAdapter extends RecyclerView.Adapter<RequestLogAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return logList.size();
+        if (logList != null) {
+            return logList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
