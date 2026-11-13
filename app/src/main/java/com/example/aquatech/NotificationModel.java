@@ -1,6 +1,7 @@
 package com.example.aquatech;
 
 public class NotificationModel {
+
     private String id;
     private String message;
     private long timestamp;
@@ -30,42 +31,94 @@ public class NotificationModel {
         this.senderName = senderName;
     }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getId() {
+        return id;
+    }
 
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public long getTimestamp() { return timestamp; }
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+    public String getMessage() {
+        return message;
+    }
 
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-    public String getTicketId() { return ticketId; }
-    public void setTicketId(String ticketId) { this.ticketId = ticketId; }
+    public long getTimestamp() {
+        return timestamp;
+    }
 
-    public String getSenderName() { return senderName; }
-    public void setSenderName(String senderName) { this.senderName = senderName; }
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 
-    public boolean isRead() { return read; }
-    public void setRead(boolean read) { this.read = read; }
+    public String getType() {
+        return type;
+    }
 
-    public void setIconResId(int iconResId) { this.iconResId = iconResId; }
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(String ticketId) {
+        this.ticketId = ticketId;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
+    }
+
+    public void setIconResId(int iconResId) {
+        this.iconResId = iconResId;
+    }
 
     public String getTimeAgo() {
         long now = System.currentTimeMillis();
         long diff = now - timestamp;
-        if (diff < 60000) return "Just now";
-        if (diff < 3600000) return (diff / 60000) + "m ago";
-        if (diff < 86400000) return (diff / 3600000) + "h ago";
+
+        if (diff < 60000) {
+            return "Just now";
+        }
+
+        if (diff < 3600000) {
+            return (diff / 60000) + "m ago";
+        }
+
+        if (diff < 86400000) {
+            return (diff / 3600000) + "h ago";
+        }
+
         return (diff / 86400000) + "d ago";
     }
 
     public int getIconResId() {
-        if (iconResId != -1) return iconResId;
+        if (iconResId != -1) {
+            return iconResId;
+        }
 
-        if (type == null) return R.drawable.ic_bell_notification;
+        if (type == null) {
+            return R.drawable.ic_bell_notification;
+        }
+
         switch (type.toUpperCase()) {
             case "AQUABUDDY":
             case "AI":
