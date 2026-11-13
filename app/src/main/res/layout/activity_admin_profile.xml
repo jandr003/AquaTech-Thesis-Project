@@ -294,7 +294,8 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:contentDescription="Manage Products"
-                            android:src="@drawable/titled_design1" />
+                            android:src="@drawable/ic_admin_dashboard_icon"
+                            app:tint="#2196F3" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
