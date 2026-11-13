@@ -1,6 +1,5 @@
 package com.example.aquatech;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -66,12 +65,18 @@ public class AdminManageItemsActivity extends AppCompatActivity {
 
         View btnAddHeader = findViewById(R.id.btnAddItemHeader);
         if (btnAddHeader != null) {
-            btnAddHeader.setOnClickListener(v -> showAddOptionsDialog());
+            btnAddHeader.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AdminAddServiceItemActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnAdd = findViewById(R.id.btnAddServiceItem);
         if (btnAdd != null) {
-            btnAdd.setOnClickListener(v -> showAddOptionsDialog());
+            btnAdd.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AdminAddServiceItemActivity.class);
+                startActivity(intent);
+            });
         }
 
         bindDeleteButton(R.id.btnDeleteItem1, "Filter 0064-CBC");
@@ -84,22 +89,6 @@ public class AdminManageItemsActivity extends AppCompatActivity {
         bindDeleteButton(R.id.btnDeleteItem8, "UV Lamp Assembly");
         bindDeleteButton(R.id.btnDeleteItem9, "Touch Panel Board");
         bindDeleteButton(R.id.btnDeleteItem10, "PBC / PCB Main Control Board");
-    }
-
-    private void showAddOptionsDialog() {
-        String[] options = {"Add Service Item / Spare Part", "Add Water Dispenser Product"};
-        new AlertDialog.Builder(this)
-                .setTitle("Select Catalog Addition")
-                .setItems(options, (dialog, which) -> {
-                    if (which == 0) {
-                        Intent intent = new Intent(this, AdminAddServiceItemActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(this, AdminAddProductActivity.class);
-                        startActivity(intent);
-                    }
-                })
-                .show();
     }
 
     private void setupFirebaseItemListener() {
