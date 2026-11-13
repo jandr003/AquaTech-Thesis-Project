@@ -37,14 +37,26 @@ public class NotificationHistoryAdapter extends RecyclerView.Adapter<Notificatio
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotificationModel model = list.get(position);
-        holder.tvMessage.setText(Html.fromHtml(model.getMessage()));
-        holder.tvTime.setText(model.getTimeAgo());
+        if (model == null) {
+            return;
+        }
+
+        if (holder.tvMessage != null && model.getMessage() != null) {
+            holder.tvMessage.setText(Html.fromHtml(model.getMessage(), Html.FROM_HTML_MODE_LEGACY));
+        }
+
+        if (holder.tvTime != null) {
+            holder.tvTime.setText(model.getTimeAgo() != null ? model.getTimeAgo() : "");
+        }
+
         int resId = model.getIconResId();
-        holder.ivIcon.setImageResource(resId);
-        if (resId == R.drawable.ic_bell_notification) {
-            holder.ivIcon.setColorFilter(ContextCompat.getColor(context, R.color.aqua_primary));
-        } else {
-            holder.ivIcon.clearColorFilter();
+        if (holder.ivIcon != null) {
+            holder.ivIcon.setImageResource(resId);
+            if (resId == R.drawable.ic_bell_notification && context != null) {
+                holder.ivIcon.setColorFilter(ContextCompat.getColor(context, R.color.aqua_primary));
+            } else {
+                holder.ivIcon.clearColorFilter();
+            }
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -59,36 +71,51 @@ public class NotificationHistoryAdapter extends RecyclerView.Adapter<Notificatio
             }
 
             if ("CHAT".equalsIgnoreCase(type) || "MESSAGE".equalsIgnoreCase(type)) {
-                Intent intent = new Intent(context, CustomerChatActivity.class);
-                intent.putExtra("TICKET_ID", model.getTicketId());
-                context.startActivity(intent);
+                if (context != null) {
+                    Intent intent = new Intent(context, CustomerChatActivity.class);
+                    intent.putExtra("TICKET_ID", model.getTicketId());
+                    context.startActivity(intent);
+                }
             } else if ("AQUABUDDY".equalsIgnoreCase(type) || "AI".equalsIgnoreCase(type)) {
-                Intent intent = new Intent(context, AquaBuddyActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                if (context != null) {
+                    Intent intent = new Intent(context, AquaBuddyActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             } else if ("CALL".equalsIgnoreCase(type)) {
-                Intent intent = new Intent(context, CustomerVoiceCallActivity.class);
-                intent.putExtra("TICKET_ID", model.getTicketId());
-                context.startActivity(intent);
+                if (context != null) {
+                    Intent intent = new Intent(context, CustomerVoiceCallActivity.class);
+                    intent.putExtra("TICKET_ID", model.getTicketId());
+                    context.startActivity(intent);
+                }
             } else if ("COMPLETED".equalsIgnoreCase(type) || "PDF".equalsIgnoreCase(type)) {
-                Intent intent = new Intent(context, ServiceReceiptActivity.class);
-                intent.putExtra("TICKET_ID", model.getTicketId());
-                context.startActivity(intent);
+                if (context != null) {
+                    Intent intent = new Intent(context, ServiceReceiptActivity.class);
+                    intent.putExtra("TICKET_ID", model.getTicketId());
+                    context.startActivity(intent);
+                }
             } else if ("ASSIGNED".equalsIgnoreCase(type) || "IN_PROGRESS".equalsIgnoreCase(type) || "PENDING".equalsIgnoreCase(type) || "RESCHEDULED".equalsIgnoreCase(type) || "SCHEDULE".equalsIgnoreCase(type)) {
-                Intent intent = new Intent(context, TrackServiceActivity.class);
-                intent.putExtra("TICKET_ID", model.getTicketId());
-                context.startActivity(intent);
+                if (context != null) {
+                    Intent intent = new Intent(context, TrackServiceActivity.class);
+                    intent.putExtra("TICKET_ID", model.getTicketId());
+                    context.startActivity(intent);
+                }
             } else if (model.getTicketId() != null && !model.getTicketId().isEmpty()) {
-                Intent intent = new Intent(context, TrackServiceActivity.class);
-                intent.putExtra("TICKET_ID", model.getTicketId());
-                context.startActivity(intent);
+                if (context != null) {
+                    Intent intent = new Intent(context, TrackServiceActivity.class);
+                    intent.putExtra("TICKET_ID", model.getTicketId());
+                    context.startActivity(intent);
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list != null) {
+            return list.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
