@@ -60,12 +60,16 @@ public class ResubmitReportActivity extends AppCompatActivity {
 
     private final ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicture(), success -> {
-                if (success) displayPreview();
+                if (success) {
+                    displayPreview();
+                }
             });
 
     private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) launchCamera();
+                if (isGranted) {
+                    launchCamera();
+                }
             });
 
     @Override
@@ -98,10 +102,25 @@ public class ResubmitReportActivity extends AppCompatActivity {
         ivPreview = findViewById(R.id.ivResubmitPreview);
         etRemarks = findViewById(R.id.etResubmitRemarks);
 
-        findViewById(R.id.btnBackResubmit).setOnClickListener(v -> finish());
-        findViewById(R.id.btnResubmitCamera).setOnClickListener(v -> checkCameraPermission());
-        findViewById(R.id.btnResubmitGallery).setOnClickListener(v -> galleryLauncher.launch("image/*"));
-        findViewById(R.id.btnSubmitResubmission).setOnClickListener(v -> performResubmit());
+        View btnBack = findViewById(R.id.btnBackResubmit);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        View btnCamera = findViewById(R.id.btnResubmitCamera);
+        if (btnCamera != null) {
+            btnCamera.setOnClickListener(v -> checkCameraPermission());
+        }
+
+        View btnGallery = findViewById(R.id.btnResubmitGallery);
+        if (btnGallery != null) {
+            btnGallery.setOnClickListener(v -> galleryLauncher.launch("image/*"));
+        }
+
+        View btnSubmit = findViewById(R.id.btnSubmitResubmission);
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> performResubmit());
+        }
     }
 
     private void displayPreview() {
@@ -121,8 +140,7 @@ public class ResubmitReportActivity extends AppCompatActivity {
             File tempFile = File.createTempFile("RESUBMIT_PROOF_" + System.currentTimeMillis(), ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
             proofUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", tempFile);
             cameraLauncher.launch(proofUri);
-        } catch (IOException ignored) {
-        }
+        } catch (IOException ignored) {}
     }
 
     private void checkCameraPermission() {
@@ -139,7 +157,7 @@ public class ResubmitReportActivity extends AppCompatActivity {
             return;
         }
 
-        String remarks = etRemarks.getText().toString().trim();
+        String remarks = etRemarks != null ? etRemarks.getText().toString().trim() : "";
         if (remarks.isEmpty()) {
             Toast.makeText(this, "Please enter service remarks", Toast.LENGTH_SHORT).show();
             return;
@@ -158,7 +176,9 @@ public class ResubmitReportActivity extends AppCompatActivity {
                     saveResubmittedReport(uri.toString(), remarks, pd);
                 }))
                 .addOnFailureListener(e -> {
-                    try { pd.dismiss(); } catch (Exception ignored) {}
+                    try {
+                        pd.dismiss();
+                    } catch (Exception ignored) {}
                     Toast.makeText(ResubmitReportActivity.this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
@@ -181,7 +201,9 @@ public class ResubmitReportActivity extends AppCompatActivity {
             updates.put("resubmissionTimestamp", ServerValue.TIMESTAMP);
 
             mDatabase.child("ServiceRequests").child(ticketId).updateChildren(updates).addOnCompleteListener(t -> {
-                try { pd.dismiss(); } catch (Exception ignored) {}
+                try {
+                    pd.dismiss();
+                } catch (Exception ignored) {}
                 AdminDashboardActivity.addAdminLog("Technician " + currentTechName + " resubmitted report for ticket #" + ticketId);
                 Toast.makeText(ResubmitReportActivity.this, "Report Resubmitted Successfully!", Toast.LENGTH_LONG).show();
 
