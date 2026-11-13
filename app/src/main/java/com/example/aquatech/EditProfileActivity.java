@@ -2,7 +2,6 @@ package com.example.aquatech;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -29,7 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +69,10 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserData() {
+        if (currentUid == null) {
+            return;
+        }
+
         DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(currentUid);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -78,7 +80,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String role = snapshot.child("role").getValue(String.class);
                     isTechnician = "Technician".equalsIgnoreCase(role);
-                    
+
                     String username = snapshot.child("username").getValue(String.class);
                     String fullName = snapshot.child("fullName").getValue(String.class);
                     String email = snapshot.child("email").getValue(String.class);
@@ -90,18 +92,32 @@ public class EditProfileActivity extends AppCompatActivity {
                     String bgColor = snapshot.child("profileBgColor").getValue(String.class);
                     Integer avatarId = snapshot.child("avatarResId").getValue(Integer.class);
 
-                    if (username != null) etUsername.setText(username);
-                    if (fullName != null) etFullName.setText(fullName);
-                    if (email != null) etEmail.setText(email);
-                    if (mobile != null) etNumber.setText(mobile);
-                    if (address != null) etAddress.setText(address);
-                    
-                    if (bgColor != null) {
+                    if (username != null && etUsername != null) {
+                        etUsername.setText(username);
+                    }
+
+                    if (fullName != null && etFullName != null) {
+                        etFullName.setText(fullName);
+                    }
+
+                    if (email != null && etEmail != null) {
+                        etEmail.setText(email);
+                    }
+
+                    if (mobile != null && etNumber != null) {
+                        etNumber.setText(mobile);
+                    }
+
+                    if (address != null && etAddress != null) {
+                        etAddress.setText(address);
+                    }
+
+                    if (bgColor != null && cvProfileImage != null) {
                         selectedColorHex = bgColor;
                         cvProfileImage.setCardBackgroundColor(Color.parseColor(bgColor));
                     }
-                    
-                    if (avatarId != null && avatarId != 0) {
+
+                    if (avatarId != null && avatarId != 0 && ivProfilePic != null) {
                         selectedAvatarResId = avatarId;
                         ivProfilePic.setImageResource(selectedAvatarResId);
                     }
@@ -109,7 +125,9 @@ public class EditProfileActivity extends AppCompatActivity {
                     setupBottomNav();
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -127,11 +145,13 @@ public class EditProfileActivity extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (id == R.id.nav_tech_performance) {
-                    startActivity(new Intent(this, WorkPerformanceActivity.class));
+                    Intent intent = new Intent(this, WorkPerformanceActivity.class);
+                    startActivity(intent);
                     finish();
                     return true;
                 } else if (id == R.id.nav_tech_messages) {
-                    startActivity(new Intent(this, CustomerChatListActivity.class));
+                    Intent intent = new Intent(this, CustomerChatListActivity.class);
+                    startActivity(intent);
                     finish();
                     return true;
                 }
@@ -143,10 +163,10 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void saveProfileToFirebase() {
-        String username = etUsername.getText().toString().trim();
-        String fullName = etFullName.getText().toString().trim();
-        String mobile = etNumber.getText().toString().trim();
-        String address = etAddress.getText().toString().trim();
+        String username = etUsername != null ? etUsername.getText().toString().trim() : "";
+        String fullName = etFullName != null ? etFullName.getText().toString().trim() : "";
+        String mobile = etNumber != null ? etNumber.getText().toString().trim() : "";
+        String address = etAddress != null ? etAddress.getText().toString().trim() : "";
 
         if (fullName.isEmpty() || mobile.isEmpty()) {
             Toast.makeText(this, "Name and mobile are required", Toast.LENGTH_SHORT).show();
@@ -200,19 +220,29 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        btnBack.setOnClickListener(v -> finish());
-        btnChangePic.setOnClickListener(v -> showAvatarSelectionDialog());
-        btnUpdate.setOnClickListener(v -> saveProfileToFirebase());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        if (btnChangePic != null) {
+            btnChangePic.setOnClickListener(v -> showAvatarSelectionDialog());
+        }
+
+        if (btnUpdate != null) {
+            btnUpdate.setOnClickListener(v -> saveProfileToFirebase());
+        }
+
         if (btnChangePassword != null) {
             btnChangePassword.setOnClickListener(v -> sendPasswordReset());
         }
     }
 
     private void sendPasswordReset() {
-        String email = etEmail.getText().toString().trim();
+        String email = etEmail != null ? etEmail.getText().toString().trim() : "";
         if (email.isEmpty() && mAuth.getCurrentUser() != null) {
             email = mAuth.getCurrentUser().getEmail();
         }
+
         if (email != null && !email.isEmpty()) {
             final String finalEmail = email;
             mAuth.sendPasswordResetEmail(finalEmail)
@@ -226,22 +256,35 @@ public class EditProfileActivity extends AppCompatActivity {
     private void showAvatarSelectionDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_select_avatar);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
         RecyclerView rvAvatars = dialog.findViewById(R.id.rvAvatars);
         List<AvatarModel> avatarList = isTechnician ? AvatarDataProvider.getTechnicianAvatars() : AvatarDataProvider.getCustomerAvatars();
         AvatarAdapter adapter = new AvatarAdapter(avatarList, avatar -> {
             if (avatar.getImageUrl() != null && !avatar.getImageUrl().isEmpty()) {
                 selectedAvatarUrl = avatar.getImageUrl();
-                Glide.with(this).load(selectedAvatarUrl).circleCrop().into(ivProfilePic);
-            } else {
+                if (ivProfilePic != null) {
+                    Glide.with(this).load(selectedAvatarUrl).circleCrop().into(ivProfilePic);
+                }
+            } else if (ivProfilePic != null) {
                 selectedAvatarResId = avatar.getImageResId();
                 ivProfilePic.setImageResource(selectedAvatarResId);
             }
             dialog.dismiss();
         });
-        rvAvatars.setLayoutManager(new GridLayoutManager(this, isTechnician ? 2 : 3));
-        rvAvatars.setAdapter(adapter);
-        dialog.findViewById(R.id.btnCancelAvatar).setOnClickListener(v -> dialog.dismiss());
+
+        if (rvAvatars != null) {
+            rvAvatars.setLayoutManager(new GridLayoutManager(this, isTechnician ? 2 : 3));
+            rvAvatars.setAdapter(adapter);
+        }
+
+        View btnCancel = dialog.findViewById(R.id.btnCancelAvatar);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
+
         dialog.show();
     }
 }
