@@ -43,13 +43,17 @@ public class NotificationActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         recyclerView = findViewById(R.id.notificationsRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        notificationList = new ArrayList<>();
-        adapter = new NotificationHistoryAdapter(this, notificationList);
-        recyclerView.setAdapter(adapter);
+        if (recyclerView != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            notificationList = new ArrayList<>();
+            adapter = new NotificationHistoryAdapter(this, notificationList);
+            recyclerView.setAdapter(adapter);
+        }
 
         ImageView btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         if (mAuth.getCurrentUser() != null) {
             dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("CustomerNotifications")
@@ -67,18 +71,27 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void loadNotifications() {
+        if (dbRef == null) {
+            return;
+        }
+
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                notificationList.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    NotificationModel model = ds.getValue(NotificationModel.class);
-                    if (model != null) {
-                        notificationList.add(model);
+                if (notificationList != null) {
+                    notificationList.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        NotificationModel model = ds.getValue(NotificationModel.class);
+                        if (model != null) {
+                            notificationList.add(model);
+                        }
                     }
+                    Collections.sort(notificationList, (o1, o2) -> Long.compare(o2.getTimestamp(), o1.getTimestamp()));
                 }
-                Collections.sort(notificationList, (o1, o2) -> Long.compare(o2.getTimestamp(), o1.getTimestamp()));
-                adapter.notifyDataSetChanged();
+
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -88,11 +101,11 @@ public class NotificationActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Helper method to add a notification to Firebase.
-     * Can be called from anywhere in the app.
-     */
     public static void addNotification(String userId, String message, String type, String ticketId) {
+        if (userId == null) {
+            return;
+        }
+
         DatabaseReference ref = FirebaseDatabase.getInstance(DB_URL).getReference("CustomerNotifications").child(userId);
         String id = ref.push().getKey();
         if (id != null) {
