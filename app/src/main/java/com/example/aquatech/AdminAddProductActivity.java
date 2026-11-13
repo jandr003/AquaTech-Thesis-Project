@@ -40,11 +40,12 @@ public class AdminAddProductActivity extends AppCompatActivity {
                     selectedImageUri = result.getData().getData();
                     if (ivPhotoPreview != null) {
                         ivPhotoPreview.setPadding(0, 0, 0, 0);
+                        ivPhotoPreview.clearColorFilter();
                         ivPhotoPreview.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         ivPhotoPreview.setImageURI(selectedImageUri);
                     }
                     if (tvPhotoHint != null) {
-                        tvPhotoHint.setText("Product Image attached!");
+                        tvPhotoHint.setText("Photo attached!");
                     }
                 }
             }
