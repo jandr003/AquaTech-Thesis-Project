@@ -36,21 +36,32 @@ public class PinnedMessagesAdapter extends RecyclerView.Adapter<PinnedMessagesAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ChatMessage msg = pinnedList.get(position);
+        if (msg == null) {
+            return;
+        }
 
         boolean isMe = currentUid != null && currentUid.equals(msg.getSenderId());
         String senderDisplayName = isMe ? "You" : (msg.getSenderName() != null ? msg.getSenderName() : "Technician");
-        holder.tvSender.setText(senderDisplayName);
-
-        holder.tvMessage.setText(msg.getText() != null ? msg.getText() : "");
-
-        if (msg.getTimestamp() > 0) {
-            String timeStr = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date(msg.getTimestamp()));
-            holder.tvTime.setText(timeStr);
-        } else {
-            holder.tvTime.setText("");
+        if (holder.tvSender != null) {
+            holder.tvSender.setText(senderDisplayName);
         }
 
-        holder.tvStatus.setText("Delivered");
+        if (holder.tvMessage != null) {
+            holder.tvMessage.setText(msg.getText() != null ? msg.getText() : "");
+        }
+
+        if (holder.tvTime != null) {
+            if (msg.getTimestamp() > 0) {
+                String timeStr = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date(msg.getTimestamp()));
+                holder.tvTime.setText(timeStr);
+            } else {
+                holder.tvTime.setText("");
+            }
+        }
+
+        if (holder.tvStatus != null) {
+            holder.tvStatus.setText("Delivered");
+        }
 
         int[] techAvatars = {
                 R.drawable.technician_avatar1,
@@ -79,7 +90,10 @@ public class PinnedMessagesAdapter extends RecyclerView.Adapter<PinnedMessagesAd
 
     @Override
     public int getItemCount() {
-        return pinnedList != null ? pinnedList.size() : 0;
+        if (pinnedList != null) {
+            return pinnedList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
