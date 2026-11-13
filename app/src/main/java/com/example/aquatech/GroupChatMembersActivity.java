@@ -73,12 +73,18 @@ public class GroupChatMembersActivity extends AppCompatActivity {
                 techList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String name = ds.child("fullName").getValue(String.class);
-                    if (name == null) name = ds.child("name").getValue(String.class);
-                    if (name == null) name = "Technician Member";
+                    if (name == null) {
+                        name = ds.child("name").getValue(String.class);
+                    }
+                    if (name == null) {
+                        name = "Technician Member";
+                    }
 
                     String uid = ds.getKey();
                     String techIdCode = ds.child("techId").getValue(String.class);
-                    if (techIdCode == null) techIdCode = "ID: ASC-T00" + (techList.size() + 1);
+                    if (techIdCode == null) {
+                        techIdCode = "ID: ASC-T00" + (techList.size() + 1);
+                    }
 
                     String avatarUrl = ds.child("profileImageUrl").getValue(String.class);
 
@@ -87,7 +93,9 @@ public class GroupChatMembersActivity extends AppCompatActivity {
                     map.put("uid", uid);
                     map.put("techId", techIdCode);
                     map.put("status", "Available");
-                    if (avatarUrl != null) map.put("avatarUrl", avatarUrl);
+                    if (avatarUrl != null) {
+                        map.put("avatarUrl", avatarUrl);
+                    }
 
                     techList.add(map);
                 }
@@ -95,6 +103,7 @@ public class GroupChatMembersActivity extends AppCompatActivity {
                 if (tvFullMembersCount != null) {
                     tvFullMembersCount.setText(techList.size() + " ACTIVE MEMBERS");
                 }
+
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
                 }
