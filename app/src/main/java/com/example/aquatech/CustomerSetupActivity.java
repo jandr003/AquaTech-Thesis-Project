@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -120,7 +119,6 @@ public class CustomerSetupActivity extends AppCompatActivity {
                         }
                     }
                 }
-                Log.d("SETUP_ITEMS", "Total dynamic Water Purifiers loaded for Customer Setup: " + dynamicUnitsList.size());
             }
 
             @Override
