@@ -2,17 +2,11 @@ package com.example.aquatech;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.app.Dialog;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,9 +15,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,9 +32,9 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
 
     private RecyclerView rvManageTechs;
     private ManageTechniciansAdapter adapter;
-    private List<TechnicianModel> allTechs = new ArrayList<>();
-    private List<TechnicianModel> filteredList = new ArrayList<>();
-    private Map<String, String> techToUidMap = new HashMap<>();
+    private final List<TechnicianModel> allTechs = new ArrayList<>();
+    private final List<TechnicianModel> filteredList = new ArrayList<>();
+    private final Map<String, String> techToUidMap = new HashMap<>();
     private DatabaseReference techsRef, usersRef;
     private TabLayout tabLayout;
     private String currentFilter = "Active";
@@ -64,39 +56,60 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackManage).setOnClickListener(v -> finish());
-        
+        View btnBack = findViewById(R.id.btnBackManage);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         rvManageTechs = findViewById(R.id.rvManageTechs);
-        rvManageTechs.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ManageTechniciansAdapter(this, filteredList, this);
-        rvManageTechs.setAdapter(adapter);
+        if (rvManageTechs != null) {
+            rvManageTechs.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new ManageTechniciansAdapter(this, filteredList, this);
+            rvManageTechs.setAdapter(adapter);
+        }
 
         tabLayout = findViewById(R.id.tabLayoutTechs);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                currentFilter = tab.getText().toString();
-                applyFilters();
-            }
-            @Override public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override public void onTabReselected(TabLayout.Tab tab) {}
-        });
+        if (tabLayout != null) {
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    if (tab != null && tab.getText() != null) {
+                        currentFilter = tab.getText().toString();
+                        applyFilters();
+                    }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {}
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {}
+            });
+        }
 
         SearchView searchView = findViewById(R.id.searchViewTechs);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) { return false; }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                searchQuery = newText.toLowerCase();
-                applyFilters();
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    searchQuery = newText != null ? newText.toLowerCase() : "";
+                    applyFilters();
                     return true;
-            }
-        });
+                }
+            });
+        }
 
         View btnAddTech = findViewById(R.id.btnAddTech);
         if (btnAddTech != null) {
-            btnAddTech.setOnClickListener(v -> startActivity(new Intent(this, AdminAddTechnicianActivity.class)));
+            btnAddTech.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AdminAddTechnicianActivity.class);
+                startActivity(intent);
+            });
         }
     }
 
@@ -124,25 +137,34 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
     }
 
     private void setupFirebase() {
+        if (techsRef == null) {
+            return;
+        }
+
         techsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 allTechs.clear();
                 techToUidMap.clear();
+
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     TechnicianModel tech = ds.getValue(TechnicianModel.class);
                     if (tech != null) {
                         String uid = ds.getKey();
                         techToUidMap.put(tech.email != null ? tech.email : uid, uid);
+
                         if (tech.techId == null || tech.techId.isEmpty() || tech.techId.length() > 15) {
-                             tech.techId = uid; 
+                            tech.techId = uid;
                         }
+
                         allTechs.add(tech);
                     }
                 }
                 applyFilters();
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
@@ -150,7 +172,9 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
         filteredList.clear();
         for (TechnicianModel tech : allTechs) {
             String name = tech.fullName != null ? tech.fullName.toLowerCase() : "";
-            if (!name.contains(searchQuery)) continue;
+            if (!name.contains(searchQuery)) {
+                continue;
+            }
 
             String status = "Pending";
             if ("disabled".equalsIgnoreCase(tech.accountStatus)) {
@@ -165,7 +189,10 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
                 filteredList.add(tech);
             }
         }
-        adapter.notifyDataSetChanged();
+
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -177,8 +204,14 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
 
     @Override
     public void onDeleteTech(TechnicianModel tech) {
+        if (tech == null) {
+            return;
+        }
+
         String uidToDelete = techToUidMap.get(tech.email);
-        if (uidToDelete == null) uidToDelete = tech.techId;
+        if (uidToDelete == null) {
+            uidToDelete = tech.techId;
+        }
 
         final String finalUid = uidToDelete;
 
@@ -191,12 +224,13 @@ public class ManageTechniciansActivity extends AppCompatActivity implements Mana
                     Map<String, Object> updates = new HashMap<>();
                     updates.put("/Users/" + finalUid, null);
                     updates.put("/Technicians/" + finalUid, null);
-                    
+
                     rootRef.updateChildren(updates).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(this, "Technician deleted from system", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(this, "Failed to delete: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            String err = task.getException() != null ? task.getException().getMessage() : "Unknown error";
+                            Toast.makeText(this, "Failed to delete: " + err, Toast.LENGTH_SHORT).show();
                         }
                     });
                 })
