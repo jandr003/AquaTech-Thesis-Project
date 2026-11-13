@@ -63,7 +63,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         createNotificationChannel();
 
-        btnResetPassword.setOnClickListener(v -> handleReset());
+        if (btnResetPassword != null) {
+            btnResetPassword.setOnClickListener(v -> handleReset());
+        }
     }
 
     private void setupStatusBar() {
@@ -79,8 +81,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
     private void handlePermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
             }
         }
@@ -99,22 +100,40 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         btnResetPassword = findViewById(R.id.btnResetPassword);
         cbRememberMe = findViewById(R.id.cbRememberMe);
 
-        tvForgotHeader.setText("Forgot Your Password?");
-        tvForgotPassword.setText("Please enter your registered mobile number");
+        if (tvForgotHeader != null) {
+            tvForgotHeader.setText("Forgot Your Password?");
+        }
+
+        if (tvForgotPassword != null) {
+            tvForgotPassword.setText("Please enter your registered mobile number");
+        }
     }
 
     private void loadPrefs() {
         SharedPreferences prefs = getSharedPreferences("aquatech_prefs", MODE_PRIVATE);
+        if (prefs == null) {
+            return;
+        }
+
         boolean remembered = prefs.getBoolean("remember_me", false);
         String savedMobile = prefs.getString("saved_mobile", "");
 
-        cbRememberMe.setChecked(remembered);
-        if (remembered && !savedMobile.isEmpty()) {
-            etMobileNumber.setText(savedMobile);
+        if (cbRememberMe != null) {
+            cbRememberMe.setChecked(remembered);
+        }
+
+        if (remembered && savedMobile != null && !savedMobile.isEmpty()) {
+            if (etMobileNumber != null) {
+                etMobileNumber.setText(savedMobile);
+            }
         }
     }
 
     private void handleReset() {
+        if (etMobileNumber == null) {
+            return;
+        }
+
         String rawInput = etMobileNumber.getText().toString().trim();
 
         if (rawInput.matches("^09\\d{9}$")) {
@@ -128,40 +147,51 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         }
 
         String mobileToSearch = rawInput.matches("^09\\d{9}$") ? rawInput : "0" + rawInput.substring(3);
-        
-        btnResetPassword.setEnabled(false);
-        Toast.makeText(this, "Verifying number...", Toast.LENGTH_SHORT).show();
-        
-        usersRef.orderByChild("mobile").equalTo(mobileToSearch).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    processOtp(mobileToSearch, rawInput);
-                } else {
-                    btnResetPassword.setEnabled(true);
-                    Toast.makeText(ForgetPasswordActivity.this, "Mobile number not registered.", Toast.LENGTH_LONG).show();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                btnResetPassword.setEnabled(true);
-                Toast.makeText(ForgetPasswordActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (btnResetPassword != null) {
+            btnResetPassword.setEnabled(false);
+        }
+
+        Toast.makeText(this, "Verifying number...", Toast.LENGTH_SHORT).show();
+
+        if (usersRef != null) {
+            usersRef.orderByChild("mobile").equalTo(mobileToSearch).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        processOtp(mobileToSearch, rawInput);
+                    } else {
+                        if (btnResetPassword != null) {
+                            btnResetPassword.setEnabled(true);
+                        }
+                        Toast.makeText(ForgetPasswordActivity.this, "Mobile number not registered.", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    if (btnResetPassword != null) {
+                        btnResetPassword.setEnabled(true);
+                    }
+                    Toast.makeText(ForgetPasswordActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void processOtp(String mobileToSearch, String rawInput) {
         SharedPreferences prefs = getSharedPreferences("aquatech_prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        if (cbRememberMe.isChecked()) {
-            editor.putBoolean("remember_me", true);
-            editor.putString("saved_mobile", rawInput);
-        } else {
-            editor.putBoolean("remember_me", false);
-            editor.remove("saved_mobile");
+        if (prefs != null) {
+            SharedPreferences.Editor editor = prefs.edit();
+            if (cbRememberMe != null && cbRememberMe.isChecked()) {
+                editor.putBoolean("remember_me", true);
+                editor.putString("saved_mobile", rawInput);
+            } else {
+                editor.putBoolean("remember_me", false);
+                editor.remove("saved_mobile");
+            }
+            editor.apply();
         }
-        editor.apply();
 
         String otpCode = generateOtp();
 
@@ -169,22 +199,29 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         otpData.put("otp", otpCode);
         otpData.put("timestamp", ServerValue.TIMESTAMP);
 
-        resetsRef.child(mobileToSearch).setValue(otpData).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                getSharedPreferences("otp_prefs", MODE_PRIVATE).edit().putString("last_otp", otpCode).apply();
+        if (resetsRef != null) {
+            resetsRef.child(mobileToSearch).setValue(otpData).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    getSharedPreferences("otp_prefs", MODE_PRIVATE).edit().putString("last_otp", otpCode).apply();
 
-                showOtpNotification(otpCode);
+                    showOtpNotification(otpCode);
 
-                Intent intent = new Intent(this, VerificationCodeActivity.class);
-                intent.putExtra("phoneNumber", phoneNumber);
-                intent.putExtra("mobile", mobileToSearch);
-                startActivity(intent);
-                btnResetPassword.setEnabled(true);
-            } else {
-                btnResetPassword.setEnabled(true);
-                Toast.makeText(this, "Failed to send OTP. Try again.", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    Intent intent = new Intent(this, VerificationCodeActivity.class);
+                    intent.putExtra("phoneNumber", phoneNumber);
+                    intent.putExtra("mobile", mobileToSearch);
+                    startActivity(intent);
+
+                    if (btnResetPassword != null) {
+                        btnResetPassword.setEnabled(true);
+                    }
+                } else {
+                    if (btnResetPassword != null) {
+                        btnResetPassword.setEnabled(true);
+                    }
+                    Toast.makeText(this, "Failed to send OTP. Try again.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void showOtpNotification(String otpCode) {
@@ -214,7 +251,10 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel("otp_channel", name, importance);
             channel.setDescription(description);
-            getSystemService(NotificationManager.class).createNotificationChannel(channel);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
         }
     }
 }
