@@ -60,14 +60,14 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardUploadProductPhoto"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="104dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="#F8FAFC"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#CBD5E1"
+                app:cardElevation="0dp"
+                app:strokeColor="#E2E8F0"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -75,24 +75,25 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="12dp">
 
                     <ImageView
                         android:id="@+id/ivProductPhotoPreview"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:contentDescription="Product Image"
-                        android:src="@drawable/img_place_holder" />
+                        android:src="@drawable/ic_camera_vector"
+                        app:tint="#2196F3" />
 
                     <TextView
                         android:id="@+id/tvUploadProductHint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="6dp"
                         android:fontFamily="@font/poppins"
                         android:text="Tap to upload Purifier Photo"
                         android:textColor="#2196F3"
-                        android:textSize="13sp"
+                        android:textSize="12.5sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
