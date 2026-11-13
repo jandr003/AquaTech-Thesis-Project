@@ -15,9 +15,23 @@ public class HistoryItem {
         this.status = status;
     }
 
-    public String getTicketId() { return ticketId; }
-    public String getDate() { return date; }
-    public String getItemsSummary() { return itemsSummary; }
-    public String getTotalPrice() { return totalPrice; }
-    public String getStatus() { return status; }
+    public String getTicketId() {
+        return ticketId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getItemsSummary() {
+        return itemsSummary;
+    }
+
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }
