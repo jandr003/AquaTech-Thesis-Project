@@ -22,6 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CustomerSetupActivity extends AppCompatActivity {
 
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -29,6 +34,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
     private TextView setUpAccountTitle;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
+    private final List<Map<String, String>> dynamicUnitsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,15 +98,25 @@ public class CustomerSetupActivity extends AppCompatActivity {
         itemsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dynamicUnitsList.clear();
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String itemName = ds.child("itemName").getValue(String.class);
                         String category = ds.child("category").getValue(String.class);
-                        if (itemName != null && !itemName.isEmpty() && category != null && category.contains("Dispenser")) {
-                            Log.d("SETUP_ITEMS", "Dynamic item added from Admin: " + itemName);
+                        String photoUri = ds.child("photoUri").getValue(String.class);
+
+                        if (itemName != null && !itemName.isEmpty()) {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("unitName", itemName);
+                            map.put("category", category != null ? category : "Certified Dispenser Unit");
+                            if (photoUri != null) {
+                                map.put("photoUri", photoUri);
+                            }
+                            dynamicUnitsList.add(map);
                         }
                     }
                 }
+                Log.d("SETUP_ITEMS", "Total dynamic products loaded for Customer Setup: " + dynamicUnitsList.size());
             }
 
             @Override
