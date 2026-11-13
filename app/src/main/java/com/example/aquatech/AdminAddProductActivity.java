@@ -99,10 +99,25 @@ public class AdminAddProductActivity extends AppCompatActivity {
     }
 
     private void handleSaveProduct() {
-        String name = etProductName != null && etProductName.getText() != null ? etProductName.getText().toString().trim() : "";
-        String modelCode = etProductModelCode != null && etProductModelCode.getText() != null ? etProductModelCode.getText().toString().trim() : "";
-        String category = etProductCategory != null && etProductCategory.getText() != null ? etProductCategory.getText().toString().trim() : "";
-        String description = etProductDescription != null && etProductDescription.getText() != null ? etProductDescription.getText().toString().trim() : "";
+        String name = "";
+        if (etProductName != null && etProductName.getText() != null) {
+            name = etProductName.getText().toString().trim();
+        }
+
+        String modelCode = "";
+        if (etProductModelCode != null && etProductModelCode.getText() != null) {
+            modelCode = etProductModelCode.getText().toString().trim();
+        }
+
+        String category = "";
+        if (etProductCategory != null && etProductCategory.getText() != null) {
+            category = etProductCategory.getText().toString().trim();
+        }
+
+        String description = "";
+        if (etProductDescription != null && etProductDescription.getText() != null) {
+            description = etProductDescription.getText().toString().trim();
+        }
 
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, "Please enter product name", Toast.LENGTH_SHORT).show();
@@ -125,7 +140,7 @@ public class AdminAddProductActivity extends AppCompatActivity {
         productData.put("unitName", name);
         productData.put("itemName", name);
         productData.put("modelCode", modelCode != null ? modelCode : "");
-        productData.put("category", category != null && !category.isEmpty() ? category : "Certified Water Dispenser");
+        productData.put("category", (category != null && !category.isEmpty()) ? category : "Certified Water Dispenser");
         productData.put("description", description != null ? description : "");
         productData.put("status", "Active");
         productData.put("photoUri", selectedImageUri != null ? selectedImageUri.toString() : "");
