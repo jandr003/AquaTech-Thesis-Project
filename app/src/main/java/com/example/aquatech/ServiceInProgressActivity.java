@@ -42,7 +42,11 @@ public class ServiceInProgressActivity extends AppCompatActivity {
 
         setupStatusBar();
         initializeDataSync();
-        findViewById(R.id.ipLogoImg).setOnClickListener(v -> finish());
+
+        View btnLogo = findViewById(R.id.ipLogoImg);
+        if (btnLogo != null) {
+            btnLogo.setOnClickListener(v -> finish());
+        }
     }
 
     private void setupStatusBar() {
@@ -62,15 +66,22 @@ public class ServiceInProgressActivity extends AppCompatActivity {
                     updateUI(snapshot);
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void updateUI(DataSnapshot snapshot) {
+        if (snapshot == null) {
+            return;
+        }
+
         String sro = snapshot.child("referenceNo").getValue(String.class);
         if (sro == null) {
             sro = snapshot.child("sroNumber").getValue(String.class);
         }
+
         TextView tvTicket = findViewById(R.id.ipTicketId);
         if (tvTicket != null) {
             tvTicket.setText(sro != null ? sro : ticketId);
@@ -81,10 +92,16 @@ public class ServiceInProgressActivity extends AppCompatActivity {
             Date subDate = new Date(subTs);
             String d = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(subDate);
             String t = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(subDate);
+
             TextView tvSubDate = findViewById(R.id.ipSubDate);
+            if (tvSubDate != null) {
+                tvSubDate.setText(d);
+            }
+
             TextView tvSubTime = findViewById(R.id.ipSubTime);
-            if (tvSubDate != null) tvSubDate.setText(d);
-            if (tvSubTime != null) tvSubTime.setText(t);
+            if (tvSubTime != null) {
+                tvSubTime.setText(t);
+            }
         }
 
         Long accTs = snapshot.child("assignedTimestamp").getValue(Long.class);
@@ -92,19 +109,36 @@ public class ServiceInProgressActivity extends AppCompatActivity {
             Date accDate = new Date(accTs);
             String d = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(accDate);
             String t = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(accDate);
+
             TextView tvAccDate = findViewById(R.id.ipAccDate);
+            if (tvAccDate != null) {
+                tvAccDate.setText(d);
+            }
+
             TextView tvAccTime = findViewById(R.id.ipAccTime);
+            if (tvAccTime != null) {
+                tvAccTime.setText(t);
+            }
+
             TextView tvAssigned = findViewById(R.id.ipAssignedOn);
-            if (tvAccDate != null) tvAccDate.setText(d);
-            if (tvAccTime != null) tvAccTime.setText(t);
-            if (tvAssigned != null) tvAssigned.setText(d + " • " + t);
+            if (tvAssigned != null) {
+                tvAssigned.setText(d + " • " + t);
+            }
         } else {
             TextView tvAccDate = findViewById(R.id.ipAccDate);
+            if (tvAccDate != null) {
+                tvAccDate.setText("Awaiting Tech...");
+            }
+
             TextView tvAccTime = findViewById(R.id.ipAccTime);
+            if (tvAccTime != null) {
+                tvAccTime.setText("");
+            }
+
             TextView tvAssigned = findViewById(R.id.ipAssignedOn);
-            if (tvAccDate != null) tvAccDate.setText("Awaiting Tech...");
-            if (tvAccTime != null) tvAccTime.setText("");
-            if (tvAssigned != null) tvAssigned.setText("Pending");
+            if (tvAssigned != null) {
+                tvAssigned.setText("Pending");
+            }
         }
 
         TextView statusBadge = findViewById(R.id.ipStatusBadge);
@@ -116,13 +150,22 @@ public class ServiceInProgressActivity extends AppCompatActivity {
         }
 
         TextView tvCust = findViewById(R.id.ipCustomerName);
-        if (tvCust != null) tvCust.setText(snapshot.child("customerName").getValue(String.class));
+        if (tvCust != null) {
+            String custName = snapshot.child("customerName").getValue(String.class);
+            tvCust.setText(custName != null ? custName : "");
+        }
 
         TextView tvContact = findViewById(R.id.ipContact);
-        if (tvContact != null) tvContact.setText(snapshot.child("contactNumber").getValue(String.class));
+        if (tvContact != null) {
+            String contact = snapshot.child("contactNumber").getValue(String.class);
+            tvContact.setText(contact != null ? contact : "");
+        }
 
         TextView tvAddress = findViewById(R.id.ipAddress);
-        if (tvAddress != null) tvAddress.setText(snapshot.child("address").getValue(String.class));
+        if (tvAddress != null) {
+            String addr = snapshot.child("address").getValue(String.class);
+            tvAddress.setText(addr != null ? addr : "");
+        }
 
         String unitModel = snapshot.child("unitName").getValue(String.class);
         if (unitModel == null) {
@@ -155,18 +198,26 @@ public class ServiceInProgressActivity extends AppCompatActivity {
         }
 
         TextView tvUnitName = findViewById(R.id.ipUnitName);
-        if (tvUnitName != null) tvUnitName.setText(product);
+        if (tvUnitName != null) {
+            tvUnitName.setText(product);
+        }
 
         TextView tvUnitCode = findViewById(R.id.ipUnitCode);
-        if (tvUnitCode != null) tvUnitCode.setText(template.replace("**-***", unitNumber));
+        if (tvUnitCode != null) {
+            tvUnitCode.setText(template.replace("**-***", unitNumber));
+        }
 
         String pType = snapshot.child("purchaseType").getValue(String.class);
         TextView tvLocation = findViewById(R.id.ipLocation);
-        if (tvLocation != null) tvLocation.setText(pType != null ? pType.toUpperCase() : "SUBSCRIPTION");
+        if (tvLocation != null) {
+            tvLocation.setText(pType != null ? pType.toUpperCase() : "SUBSCRIPTION");
+        }
 
         String type = snapshot.child("serviceType").getValue(String.class);
         TextView tvService = findViewById(R.id.ipServiceType);
-        if (tvService != null) tvService.setText(type != null ? type : "General Service");
+        if (tvService != null) {
+            tvService.setText(type != null ? type : "General Service");
+        }
 
         String rawRemarks = snapshot.child("remarks").getValue(String.class);
         String p = (rawRemarks != null ? rawRemarks.toLowerCase() : "");
@@ -177,14 +228,21 @@ public class ServiceInProgressActivity extends AppCompatActivity {
         } else if (p.contains("maintenance") || p.contains("filter")) {
             smartDesc = "Scheduled preventive maintenance and health check.";
         }
+
         TextView tvDesc = findViewById(R.id.ipDescription);
-        if (tvDesc != null) tvDesc.setText(smartDesc);
+        if (tvDesc != null) {
+            tvDesc.setText(smartDesc);
+        }
 
         TextView tvConcern = findViewById(R.id.ipConcern);
-        if (tvConcern != null) tvConcern.setText(rawRemarks != null ? rawRemarks : "N/A");
+        if (tvConcern != null) {
+            tvConcern.setText(rawRemarks != null ? rawRemarks : "N/A");
+        }
 
         TextView tvRemarks = findViewById(R.id.ipRemarks);
-        if (tvRemarks != null) tvRemarks.setText(rawRemarks != null ? rawRemarks : "N/A");
+        if (tvRemarks != null) {
+            tvRemarks.setText(rawRemarks != null ? rawRemarks : "N/A");
+        }
 
         StringBuilder itemsList = new StringBuilder();
         int totalQty = 0;
@@ -193,8 +251,12 @@ public class ServiceInProgressActivity extends AppCompatActivity {
             if (key != null && key.startsWith("qty_")) {
                 int q = 0;
                 try {
-                    q = child.getValue(Integer.class);
+                    Integer qVal = child.getValue(Integer.class);
+                    if (qVal != null) {
+                        q = qVal;
+                    }
                 } catch (Exception ignored) {}
+
                 if (q > 0) {
                     itemsList.append(getItemName(key)).append(" x ").append(q).append("\n");
                     totalQty += q;
@@ -245,14 +307,18 @@ public class ServiceInProgressActivity extends AppCompatActivity {
         if (pm != null && !pm.equalsIgnoreCase("COD")) {
             String pRef = snapshot.child("paymentReference").getValue(String.class);
             if (pRef != null && !pRef.isEmpty()) {
-                if (layoutIpRef != null) layoutIpRef.setVisibility(View.VISIBLE);
+                if (layoutIpRef != null) {
+                    layoutIpRef.setVisibility(View.VISIBLE);
+                }
                 TextView tvRef = findViewById(R.id.ipPaymentRef);
-                if (tvRef != null) tvRef.setText(pRef);
-            } else {
-                if (layoutIpRef != null) layoutIpRef.setVisibility(View.GONE);
+                if (tvRef != null) {
+                    tvRef.setText(pRef);
+                }
+            } else if (layoutIpRef != null) {
+                layoutIpRef.setVisibility(View.GONE);
             }
-        } else {
-            if (layoutIpRef != null) layoutIpRef.setVisibility(View.GONE);
+        } else if (layoutIpRef != null) {
+            layoutIpRef.setVisibility(View.GONE);
         }
 
         String techName = snapshot.child("assignedTechName").getValue(String.class);
@@ -277,18 +343,33 @@ public class ServiceInProgressActivity extends AppCompatActivity {
     }
 
     private String getItemName(String key) {
+        if (key == null) {
+            return "Service Item";
+        }
+
         switch (key) {
-            case "qty_wayvalve": return "3-Way Valve";
-            case "qty_cbc": return "Filter 0064-CBC";
-            case "qty_sediment": return "Filter 0055-SEDIMENT";
-            case "qty_aquatal": return "Aquatal Replacement";
-            case "qty_inline": return "Inline Filter";
-            case "qty_uvlamp": return "UV Lamp";
-            case "qty_touchpanel": return "Touch Panel";
-            case "qty_pbcboard": return "PBC Board";
-            case "qty_smsf1": return "SMSF 1u CBC";
-            case "qty_smsf10": return "SMSF 10u SED";
-            default: return "Service Item";
+            case "qty_wayvalve":
+                return "3-Way Valve";
+            case "qty_cbc":
+                return "Filter 0064-CBC";
+            case "qty_sediment":
+                return "Filter 0055-SEDIMENT";
+            case "qty_aquatal":
+                return "Aquatal Replacement";
+            case "qty_inline":
+                return "Inline Filter";
+            case "qty_uvlamp":
+                return "UV Lamp";
+            case "qty_touchpanel":
+                return "Touch Panel";
+            case "qty_pbcboard":
+                return "PBC Board";
+            case "qty_smsf1":
+                return "SMSF 1u CBC";
+            case "qty_smsf10":
+                return "SMSF 10u SED";
+            default:
+                return "Service Item";
         }
     }
 }
