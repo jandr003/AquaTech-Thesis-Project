@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("AquaTechPrefs", MODE_PRIVATE);
         mAuth = FirebaseAuth.getInstance();
-        
+
         setupStatusBar();
         initializeViews();
     }
@@ -49,7 +49,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         setupClick(R.id.yourAccSec, R.id.arrowUp, this::showAccountSecurityDialog);
 
@@ -79,30 +82,48 @@ public class SettingsActivity extends AppCompatActivity {
         TextView tvUID = dialog.findViewById(R.id.tvUserUID);
         TextView tvPhone = dialog.findViewById(R.id.tvUserPhone);
         TextView tvMemberSince = dialog.findViewById(R.id.tvMemberSince);
-        
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            String uid = user.getUid();
-            String numericPart = uid.replaceAll("[^0-9]", "");
-            if (numericPart.length() < 4) numericPart = (uid.hashCode() + "0000").substring(0, 4);
-            tvUID.setText("ASC-C" + numericPart.substring(0, 4));
-            
-            String phone = user.getPhoneNumber();
-            tvPhone.setText(phone != null && !phone.isEmpty() ? phone : "No phone linked");
 
-            long creationTimestamp = user.getMetadata().getCreationTimestamp();
-            if (creationTimestamp > 0) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
-                tvMemberSince.setText(sdf.format(new Date(creationTimestamp)));
+        if (mAuth != null) {
+            FirebaseUser user = mAuth.getCurrentUser();
+            if (user != null) {
+                String uid = user.getUid();
+                String numericPart = uid.replaceAll("[^0-9]", "");
+                if (numericPart.length() < 4) {
+                    numericPart = (uid.hashCode() + "0000").substring(0, 4);
+                }
+
+                if (tvUID != null) {
+                    tvUID.setText("ASC-C" + numericPart.substring(0, 4));
+                }
+
+                String phone = user.getPhoneNumber();
+                if (tvPhone != null) {
+                    tvPhone.setText(phone != null && !phone.isEmpty() ? phone : "No phone linked");
+                }
+
+                if (user.getMetadata() != null) {
+                    long creationTimestamp = user.getMetadata().getCreationTimestamp();
+                    if (creationTimestamp > 0 && tvMemberSince != null) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+                        tvMemberSince.setText(sdf.format(new Date(creationTimestamp)));
+                    }
+                }
             }
         }
 
-        dialog.findViewById(R.id.layoutChangePasswordInSec).setOnClickListener(v -> {
-            dialog.dismiss();
-            startActivity(new Intent(this, ConfirmPasswordActivity.class));
-        });
+        View layoutPass = dialog.findViewById(R.id.layoutChangePasswordInSec);
+        if (layoutPass != null) {
+            layoutPass.setOnClickListener(v -> {
+                dialog.dismiss();
+                startActivity(new Intent(this, ConfirmPasswordActivity.class));
+            });
+        }
 
-        dialog.findViewById(R.id.btnDoneSecurity).setOnClickListener(v -> dialog.dismiss());
+        View btnDone = dialog.findViewById(R.id.btnDoneSecurity);
+        if (btnDone != null) {
+            btnDone.setOnClickListener(v -> dialog.dismiss());
+        }
+
         dialog.show();
     }
 
@@ -120,20 +141,33 @@ public class SettingsActivity extends AppCompatActivity {
         SwitchMaterial swTicket = dialog.findViewById(R.id.switchTicketID);
         SwitchMaterial swDistance = dialog.findViewById(R.id.switchTechDistance);
 
-        if (sliderFont != null) sliderFont.setValue(prefs.getFloat("display_font_size", 1.0f));
-        if (swSerial != null) swSerial.setChecked(prefs.getBoolean("display_show_serial", true));
-        if (swTicket != null) swTicket.setChecked(prefs.getBoolean("display_show_ticket", true));
-        if (swDistance != null) swDistance.setChecked(prefs.getBoolean("display_show_distance", true));
+        if (sliderFont != null && prefs != null) {
+            sliderFont.setValue(prefs.getFloat("display_font_size", 1.0f));
+        }
+
+        if (swSerial != null && prefs != null) {
+            swSerial.setChecked(prefs.getBoolean("display_show_serial", true));
+        }
+
+        if (swTicket != null && prefs != null) {
+            swTicket.setChecked(prefs.getBoolean("display_show_ticket", true));
+        }
+
+        if (swDistance != null && prefs != null) {
+            swDistance.setChecked(prefs.getBoolean("display_show_distance", true));
+        }
 
         View btnDone = dialog.findViewById(R.id.btnDoneDisplay);
         if (btnDone != null) {
             btnDone.setOnClickListener(v -> {
-                prefs.edit()
-                    .putFloat("display_font_size", sliderFont != null ? sliderFont.getValue() : 1.0f)
-                    .putBoolean("display_show_serial", swSerial != null && swSerial.isChecked())
-                    .putBoolean("display_show_ticket", swTicket != null && swTicket.isChecked())
-                    .putBoolean("display_show_distance", swDistance != null && swDistance.isChecked())
-                    .apply();
+                if (prefs != null) {
+                    prefs.edit()
+                            .putFloat("display_font_size", sliderFont != null ? sliderFont.getValue() : 1.0f)
+                            .putBoolean("display_show_serial", swSerial != null && swSerial.isChecked())
+                            .putBoolean("display_show_ticket", swTicket != null && swTicket.isChecked())
+                            .putBoolean("display_show_distance", swDistance != null && swDistance.isChecked())
+                            .apply();
+                }
 
                 Toast.makeText(this, "Display settings saved!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
@@ -155,18 +189,28 @@ public class SettingsActivity extends AppCompatActivity {
         SwitchMaterial swAnalytics = dialog.findViewById(R.id.switchAnalytics);
         SwitchMaterial swMarketing = dialog.findViewById(R.id.switchMarketing);
 
-        swAnalytics.setChecked(prefs.getBoolean("privacy_analytics", true));
-        swMarketing.setChecked(prefs.getBoolean("privacy_marketing", false));
+        if (swAnalytics != null && prefs != null) {
+            swAnalytics.setChecked(prefs.getBoolean("privacy_analytics", true));
+        }
 
-        dialog.findViewById(R.id.btnDonePrivacy).setOnClickListener(v -> {
-            prefs.edit()
-                .putBoolean("privacy_analytics", swAnalytics.isChecked())
-                .putBoolean("privacy_marketing", swMarketing.isChecked())
-                .apply();
+        if (swMarketing != null && prefs != null) {
+            swMarketing.setChecked(prefs.getBoolean("privacy_marketing", false));
+        }
 
-            Toast.makeText(this, "Privacy settings saved!", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-        });
+        View btnDone = dialog.findViewById(R.id.btnDonePrivacy);
+        if (btnDone != null) {
+            btnDone.setOnClickListener(v -> {
+                if (prefs != null) {
+                    prefs.edit()
+                            .putBoolean("privacy_analytics", swAnalytics != null && swAnalytics.isChecked())
+                            .putBoolean("privacy_marketing", swMarketing != null && swMarketing.isChecked())
+                            .apply();
+                }
+
+                Toast.makeText(this, "Privacy settings saved!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            });
+        }
 
         dialog.show();
     }
@@ -180,21 +224,41 @@ public class SettingsActivity extends AppCompatActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
-        dialog.findViewById(R.id.btnLangEnglish).setOnClickListener(v -> {
-            prefs.edit().putString("app_language", "en").apply();
-            dialog.dismiss();
-        });
+        View btnEnglish = dialog.findViewById(R.id.btnLangEnglish);
+        if (btnEnglish != null) {
+            btnEnglish.setOnClickListener(v -> {
+                if (prefs != null) {
+                    prefs.edit().putString("app_language", "en").apply();
+                }
+                dialog.dismiss();
+            });
+        }
 
-        dialog.findViewById(R.id.btnCancelLang).setOnClickListener(v -> dialog.dismiss());
+        View btnCancel = dialog.findViewById(R.id.btnCancelLang);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
+
         dialog.show();
     }
 
     private void setupClick(int labelId, int arrowId, Runnable action) {
         View label = findViewById(labelId);
         View arrow = findViewById(arrowId);
-        View.OnClickListener listener = v -> action.run();
-        if (label != null) label.setOnClickListener(listener);
-        if (arrow != null) arrow.setOnClickListener(listener);
+
+        View.OnClickListener listener = v -> {
+            if (action != null) {
+                action.run();
+            }
+        };
+
+        if (label != null) {
+            label.setOnClickListener(listener);
+        }
+
+        if (arrow != null) {
+            arrow.setOnClickListener(listener);
+        }
     }
 
     private void showToast(String msg) {
