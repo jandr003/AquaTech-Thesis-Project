@@ -21,11 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class CustomerSetupActivity extends AppCompatActivity {
 
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -33,7 +28,6 @@ public class CustomerSetupActivity extends AppCompatActivity {
     private TextView setUpAccountTitle;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
-    private final List<Map<String, String>> dynamicUnitsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +39,6 @@ public class CustomerSetupActivity extends AppCompatActivity {
         initializeViews();
         fetchUserData();
         setupClickListeners();
-        loadDynamicAdminItems();
     }
 
     private void initializeViews() {
@@ -90,40 +83,6 @@ public class CustomerSetupActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {}
             });
         }
-    }
-
-    private void loadDynamicAdminItems() {
-        DatabaseReference productsRef = FirebaseDatabase.getInstance(DB_URL).getReference("Products");
-        productsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dynamicUnitsList.clear();
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        String unitName = ds.child("unitName").getValue(String.class);
-                        if (unitName == null) {
-                            unitName = ds.child("itemName").getValue(String.class);
-                        }
-
-                        String category = ds.child("category").getValue(String.class);
-                        String photoUri = ds.child("photoUri").getValue(String.class);
-
-                        if (unitName != null && !unitName.isEmpty()) {
-                            Map<String, String> map = new HashMap<>();
-                            map.put("unitName", unitName);
-                            map.put("category", category != null ? category : "Certified Water Purifier");
-                            if (photoUri != null) {
-                                map.put("photoUri", photoUri);
-                            }
-                            dynamicUnitsList.add(map);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
     }
 
     private void setupClickListeners() {
