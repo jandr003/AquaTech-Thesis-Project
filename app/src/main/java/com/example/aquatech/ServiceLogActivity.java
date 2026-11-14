@@ -1,6 +1,5 @@
 package com.example.aquatech;
 
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -49,7 +49,7 @@ public class ServiceLogActivity extends AppCompatActivity {
     private String currentStatus = null;
     private String currentTicketId = null;
     private boolean hasRated = false;
-    private List<OrderItem> orderList = new ArrayList<>();
+    private final List<OrderItem> orderList = new ArrayList<>();
     private OrderAdapter orderAdapter;
 
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -76,16 +76,25 @@ public class ServiceLogActivity extends AppCompatActivity {
         mapTrackCard = findViewById(R.id.mapTrackCard);
         rvOrders = findViewById(R.id.rvOrders);
 
-        rvOrders.setLayoutManager(new LinearLayoutManager(this));
-        orderAdapter = new OrderAdapter(orderList);
-        rvOrders.setAdapter(orderAdapter);
+        if (rvOrders != null) {
+            rvOrders.setLayoutManager(new LinearLayoutManager(this));
+            orderAdapter = new OrderAdapter(orderList);
+            rvOrders.setAdapter(orderAdapter);
+        }
 
-        if (tvTechName != null) tvTechName.setText("Loading...");
-        if (SroNumber != null) SroNumber.setText("Fetching SRO...");
+        if (tvTechName != null) {
+            tvTechName.setText("Loading...");
+        }
+
+        if (SroNumber != null) {
+            SroNumber.setText("Fetching SRO...");
+        }
     }
 
     private void setupFirebaseRequestListener() {
-        if (currentUid == null) return;
+        if (currentUid == null) {
+            return;
+        }
 
         DatabaseReference requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
         Query query = requestsRef.orderByChild("userId").equalTo(currentUid).limitToLast(1);
@@ -97,8 +106,8 @@ public class ServiceLogActivity extends AppCompatActivity {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         displayRequestData(ds);
                     }
-                } else {
-                    if (tvTechName != null) tvTechName.setText("No active request");
+                } else if (tvTechName != null) {
+                    tvTechName.setText("No active request");
                 }
             }
 
@@ -110,10 +119,18 @@ public class ServiceLogActivity extends AppCompatActivity {
     }
 
     private void displayRequestData(DataSnapshot ds) {
+        if (ds == null) {
+            return;
+        }
+
         currentTicketId = ds.getKey();
         String sro = ds.child("referenceNo").getValue(String.class);
-        if (sro == null) sro = ds.child("sroNumber").getValue(String.class);
-        if (sro == null) sro = ds.child("refNo").getValue(String.class);
+        if (sro == null) {
+            sro = ds.child("sroNumber").getValue(String.class);
+        }
+        if (sro == null) {
+            sro = ds.child("refNo").getValue(String.class);
+        }
 
         if (SroNumber != null && sro != null) {
             SroNumber.setText(sro);
@@ -123,9 +140,9 @@ public class ServiceLogActivity extends AppCompatActivity {
         assignedTechId = ds.child("assignedTechId").getValue(String.class);
         String assignedTechName = ds.child("assignedTechName").getValue(String.class);
         String avatarUrl = ds.child("techAvatarUrl").getValue(String.class);
-        boolean isFinished = "Completed".equalsIgnoreCase(currentStatus) || 
-                            "Submission".equalsIgnoreCase(currentStatus) ||
-                            "Cancelled".equalsIgnoreCase(currentStatus);
+        boolean isFinished = "Completed".equalsIgnoreCase(currentStatus) ||
+                "Submission".equalsIgnoreCase(currentStatus) ||
+                "Cancelled".equalsIgnoreCase(currentStatus);
 
         if (tvTechName != null) {
             if (isFinished) {
@@ -158,7 +175,7 @@ public class ServiceLogActivity extends AppCompatActivity {
         }
 
         updateOrdersList(ds);
-        
+
         if (mapTrackCard != null) {
             boolean canTrack = assignedTechId != null && !isFinished;
             mapTrackCard.setAlpha(canTrack ? 1.0f : 0.4f);
@@ -166,7 +183,9 @@ public class ServiceLogActivity extends AppCompatActivity {
     }
 
     private void showRatingDialog(String ticketId, String techName, String techId) {
-        if (hasRated || isFinishing()) return;
+        if (hasRated || isFinishing()) {
+            return;
+        }
         hasRated = true;
 
         Dialog dialog = new Dialog(this);
@@ -180,52 +199,70 @@ public class ServiceLogActivity extends AppCompatActivity {
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
         Button btnSubmit = dialog.findViewById(R.id.btnSubmitRating);
 
-        tvName.setText(techName != null ? techName : "Technician");
+        if (tvName != null) {
+            tvName.setText(techName != null ? techName : "Technician");
+        }
 
         if (techId != null) {
             FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(techId)
-                .child("profileImageUrl").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String url = snapshot.getValue(String.class);
-                        if (url != null && !url.isEmpty() && !isFinishing()) {
-                            Glide.with(ServiceLogActivity.this).load(url).circleCrop().into(ivTechProfile);
+                    .child("profileImageUrl").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String url = snapshot.getValue(String.class);
+                            if (url != null && !url.isEmpty() && !isFinishing() && ivTechProfile != null) {
+                                Glide.with(ServiceLogActivity.this).load(url).circleCrop().into(ivTechProfile);
+                            }
                         }
-                    }
-                    @Override public void onCancelled(@NonNull DatabaseError error) {}
-                });
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {}
+                    });
         }
 
-        btnSubmit.setOnClickListener(v -> {
-            float rating = ratingBar.getRating();
-            if (rating < 1) {
-                Toast.makeText(this, "Please rate at least 1 star", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> {
+                if (ratingBar == null) {
+                    return;
+                }
 
-            Map<String, Object> update = new HashMap<>();
-            update.put("rating", rating);
-            update.put("rated", true);
+                float rating = ratingBar.getRating();
+                if (rating < 1) {
+                    Toast.makeText(this, "Please rate at least 1 star", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId)
-                .updateChildren(update).addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Thank you for your rating!", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                });
-        });
+                Map<String, Object> update = new HashMap<>();
+                update.put("rating", rating);
+                update.put("rated", true);
+
+                if (ticketId != null) {
+                    FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId)
+                            .updateChildren(update).addOnSuccessListener(aVoid -> {
+                                Toast.makeText(this, "Thank you for your rating!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            });
+                }
+            });
+        }
 
         dialog.setOnDismissListener(d -> hasRated = false);
         dialog.show();
     }
 
     private void updateOrdersList(DataSnapshot ds) {
+        if (ds == null) {
+            return;
+        }
+
         orderList.clear();
         for (DataSnapshot child : ds.getChildren()) {
             String key = child.getKey();
             if (key != null && key.startsWith("qty_")) {
                 Object val = child.getValue();
                 int qty = 0;
-                if (val instanceof Number) qty = ((Number) val).intValue();
+                if (val instanceof Number) {
+                    qty = ((Number) val).intValue();
+                }
 
                 if (qty > 0) {
                     orderList.add(new OrderItem(
@@ -237,50 +274,96 @@ public class ServiceLogActivity extends AppCompatActivity {
                 }
             }
         }
-        orderAdapter.notifyDataSetChanged();
+
+        if (orderAdapter != null) {
+            orderAdapter.notifyDataSetChanged();
+        }
     }
 
     private String getItemNameFromKey(String key) {
+        if (key == null) {
+            return "Service Item";
+        }
+
         switch (key) {
-            case "qty_cbc": return "Filter 0064-CBC";
-            case "qty_sediment": return "Filter 0055-SEDIMENT";
-            case "qty_uvlamp": return "UV Lamp";
-            case "qty_aquatal": return "Aquatal Filter";
-            case "qty_inline": return "Inline Filter";
-            case "qty_touchpanel": return "Touch Panel";
-            case "qty_pbcboard": return "PBC Board";
-            case "qty_smsf1": return "SMSF 1u CBC";
-            case "qty_smsf10": return "SMSF 10u SED";
-            case "qty_wayvalve": return "3-Way Valve";
-            default: return "Service Item";
+            case "qty_cbc":
+                return "Filter 0064-CBC";
+            case "qty_sediment":
+                return "Filter 0055-SEDIMENT";
+            case "qty_uvlamp":
+                return "UV Lamp";
+            case "qty_aquatal":
+                return "Aquatal Filter";
+            case "qty_inline":
+                return "Inline Filter";
+            case "qty_touchpanel":
+                return "Touch Panel";
+            case "qty_pbcboard":
+                return "PBC Board";
+            case "qty_smsf1":
+                return "SMSF 1u CBC";
+            case "qty_smsf10":
+                return "SMSF 10u SED";
+            case "qty_wayvalve":
+                return "3-Way Valve";
+            default:
+                return "Service Item";
         }
     }
 
     private String getItemSubFromKey(String key) {
-        if (key.equals("qty_wayvalve")) return "Installation Kit";
-        if (key.contains("smsf")) return "Filter Part";
+        if (key == null) {
+            return "Replacement Part";
+        }
+
+        if (key.equals("qty_wayvalve")) {
+            return "Installation Kit";
+        }
+
+        if (key.contains("smsf")) {
+            return "Filter Part";
+        }
+
         return "Replacement Part";
     }
 
     private int getItemImageFromKey(String key) {
+        if (key == null) {
+            return R.drawable.cbc0064_carbon_black_filter;
+        }
+
         switch (key) {
-            case "qty_cbc": return R.drawable.cbc0064_carbon_black_filter;
-            case "qty_sediment": return R.drawable.sediment0055_sediment_filter;
-            case "qty_uvlamp": return R.drawable.uv_lamp;
-            case "qty_aquatal": return R.drawable.aquatal_png;
-            case "qty_inline": return R.drawable.inline_filter;
-            case "qty_touchpanel": return R.drawable.touch_panel;
-            case "qty_pbcboard": return R.drawable.pbc_board;
-            case "qty_smsf1": return R.drawable.cbc0064_carbon_black_filter;
-            case "qty_smsf10": return R.drawable.sediment0055_sediment_filter;
-            case "qty_wayvalve": return R.drawable._3_way_valve;
-            default: return R.drawable.cbc0064_carbon_black_filter;
+            case "qty_cbc":
+                return R.drawable.cbc0064_carbon_black_filter;
+            case "qty_sediment":
+                return R.drawable.sediment0055_sediment_filter;
+            case "qty_uvlamp":
+                return R.drawable.uv_lamp;
+            case "qty_aquatal":
+                return R.drawable.aquatal_png;
+            case "qty_inline":
+                return R.drawable.inline_filter;
+            case "qty_touchpanel":
+                return R.drawable.touch_panel;
+            case "qty_pbcboard":
+                return R.drawable.pbc_board;
+            case "qty_smsf1":
+                return R.drawable.cbc0064_carbon_black_filter;
+            case "qty_smsf10":
+                return R.drawable.sediment0055_sediment_filter;
+            case "qty_wayvalve":
+                return R.drawable._3_way_valve;
+            default:
+                return R.drawable.cbc0064_carbon_black_filter;
         }
     }
 
     private class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
-        private List<OrderItem> items;
-        OrderAdapter(List<OrderItem> items) { this.items = items; }
+        private final List<OrderItem> items;
+
+        OrderAdapter(List<OrderItem> items) {
+            this.items = items;
+        }
 
         @NonNull
         @Override
@@ -291,19 +374,44 @@ public class ServiceLogActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            if (items == null) {
+                return;
+            }
+
             OrderItem item = items.get(position);
-            holder.tvName.setText(item.name);
-            holder.tvSub.setText(item.subName);
-            holder.tvQty.setText("x" + item.quantity);
-            holder.ivImage.setImageResource(item.imgRes);
+            if (item == null) {
+                return;
+            }
+
+            if (holder.tvName != null) {
+                holder.tvName.setText(item.name != null ? item.name : "");
+            }
+
+            if (holder.tvSub != null) {
+                holder.tvSub.setText(item.subName != null ? item.subName : "");
+            }
+
+            if (holder.tvQty != null) {
+                holder.tvQty.setText("x" + item.quantity);
+            }
+
+            if (holder.ivImage != null) {
+                holder.ivImage.setImageResource(item.imgRes);
+            }
         }
 
         @Override
-        public int getItemCount() { return items.size(); }
+        public int getItemCount() {
+            if (items != null) {
+                return items.size();
+            }
+            return 0;
+        }
 
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView tvName, tvSub, tvQty;
             ImageView ivImage;
+
             ViewHolder(View v) {
                 super(v);
                 tvName = v.findViewById(R.id.tvItemName);
@@ -317,22 +425,29 @@ public class ServiceLogActivity extends AppCompatActivity {
     private static class OrderItem {
         String name, subName;
         int quantity, imgRes;
+
         OrderItem(String n, String s, int q, int img) {
-            this.name = n; this.subName = s; this.quantity = q; this.imgRes = img;
+            this.name = n;
+            this.subName = s;
+            this.quantity = q;
+            this.imgRes = img;
         }
     }
 
     private void setupListeners() {
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         View.OnClickListener trackClick = v -> {
             if (assignedTechId == null) {
                 Toast.makeText(this, "Technician not yet assigned.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            
-            boolean isFinished = "Completed".equalsIgnoreCase(currentStatus) || 
-                                "Submission".equalsIgnoreCase(currentStatus) ||
-                                "Cancelled".equalsIgnoreCase(currentStatus);
+
+            boolean isFinished = "Completed".equalsIgnoreCase(currentStatus) ||
+                    "Submission".equalsIgnoreCase(currentStatus) ||
+                    "Cancelled".equalsIgnoreCase(currentStatus);
 
             if (isFinished) {
                 Toast.makeText(this, "Ticket finished. Tracking is no longer available.", Toast.LENGTH_LONG).show();
@@ -343,8 +458,14 @@ public class ServiceLogActivity extends AppCompatActivity {
             intent.putExtra("TECH_ID", assignedTechId);
             startActivity(intent);
         };
-        if (mapTrackCard != null) mapTrackCard.setOnClickListener(trackClick);
-        if (greaterThanIcon != null) greaterThanIcon.setOnClickListener(trackClick);
+
+        if (mapTrackCard != null) {
+            mapTrackCard.setOnClickListener(trackClick);
+        }
+
+        if (greaterThanIcon != null) {
+            greaterThanIcon.setOnClickListener(trackClick);
+        }
     }
 
     private void setupStatusBar() {
