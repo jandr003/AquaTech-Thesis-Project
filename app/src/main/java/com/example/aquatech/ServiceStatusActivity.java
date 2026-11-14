@@ -72,35 +72,44 @@ public class ServiceStatusActivity extends AppCompatActivity {
         dotHelper = new DotAnimationHelper();
 
         ImageView btnBack = findViewById(R.id.btnBack);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         if (tvTicketId != null) {
             tvTicketId.setText("Ticket #: " + ticketId);
         }
 
-        btnStatusAction.setOnClickListener(v -> {
-            if (!isMaintenanceStarted) {
-                startMaintenance();
-            } else {
-                showConfirmationDialog();
-            }
-        });
+        if (btnStatusAction != null) {
+            btnStatusAction.setOnClickListener(v -> {
+                if (!isMaintenanceStarted) {
+                    startMaintenance();
+                } else {
+                    showConfirmationDialog();
+                }
+            });
+        }
     }
 
     private void setupStatusListener() {
+        if (requestsRef == null) {
+            return;
+        }
+
         statusListener = requestsRef.child("status").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String status = snapshot.getValue(String.class);
-                if (status == null) return;
+                if (status == null) {
+                    return;
+                }
 
                 if ("Arrived".equals(status)) {
                     showArrivedScreen();
                 } else if ("Ongoing".equals(status)) {
                     showOngoingScreen();
                 } else if ("Completed".equals(status) || "Submission".equals(status)) {
-                    if (isMaintenanceStarted && "Submission".equals(status)) {
-                    } else {
+                    if (!isMaintenanceStarted || !"Submission".equals(status)) {
                         finish();
                     }
                 }
@@ -115,22 +124,47 @@ public class ServiceStatusActivity extends AppCompatActivity {
 
     private void showArrivedScreen() {
         isMaintenanceStarted = false;
-        layoutArrived.setVisibility(View.VISIBLE);
-        layoutOngoing.setVisibility(View.GONE);
-        btnStatusAction.setText("START");
-        if (locationMarker != null) locationMarker.setVisibility(View.VISIBLE);
+        if (layoutArrived != null) {
+            layoutArrived.setVisibility(View.VISIBLE);
+        }
+
+        if (layoutOngoing != null) {
+            layoutOngoing.setVisibility(View.GONE);
+        }
+
+        if (btnStatusAction != null) {
+            btnStatusAction.setText("START");
+        }
+
+        if (locationMarker != null) {
+            locationMarker.setVisibility(View.VISIBLE);
+        }
     }
 
     private void showOngoingScreen() {
         isMaintenanceStarted = true;
-        layoutArrived.setVisibility(View.GONE);
-        layoutOngoing.setVisibility(View.VISIBLE);
-        btnStatusAction.setText("NEXT");
-        if (locationMarker != null) locationMarker.setVisibility(View.GONE);
+        if (layoutArrived != null) {
+            layoutArrived.setVisibility(View.GONE);
+        }
 
-        dotHelper.startPulseAnimation(dot1, dot2, dot3);
+        if (layoutOngoing != null) {
+            layoutOngoing.setVisibility(View.VISIBLE);
+        }
+
+        if (btnStatusAction != null) {
+            btnStatusAction.setText("NEXT");
+        }
+
+        if (locationMarker != null) {
+            locationMarker.setVisibility(View.GONE);
+        }
+
+        if (dotHelper != null) {
+            dotHelper.startPulseAnimation(dot1, dot2, dot3);
+        }
+
         ImageView maintenanceIcon = findViewById(R.id.MaintenanceIcon);
-        if (maintenanceIcon != null) {
+        if (maintenanceIcon != null && dotHelper != null) {
             dotHelper.startMaintenanceAnimation(maintenanceIcon);
         }
     }
@@ -145,14 +179,19 @@ public class ServiceStatusActivity extends AppCompatActivity {
         updates.put("status", "Ongoing");
         updates.put("maintenanceStartTime", ServerValue.TIMESTAMP);
 
-        requestsRef.updateChildren(updates).addOnCompleteListener(task -> {
-            pd.dismiss();
-            if (task.isSuccessful()) {
-                AdminDashboardActivity.addAdminLog("Technician started maintenance for ticket #" + ticketId);
-            } else {
-                Toast.makeText(this, "Network Error: Failed to start service", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (requestsRef != null) {
+            requestsRef.updateChildren(updates).addOnCompleteListener(task -> {
+                try {
+                    pd.dismiss();
+                } catch (Exception ignored) {}
+
+                if (task.isSuccessful()) {
+                    AdminDashboardActivity.addAdminLog("Technician started maintenance for ticket #" + ticketId);
+                } else {
+                    Toast.makeText(this, "Network Error: Failed to start service", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void completeMaintenance() {
@@ -165,41 +204,56 @@ public class ServiceStatusActivity extends AppCompatActivity {
         updates.put("status", "Submission");
         updates.put("maintenanceEndTime", ServerValue.TIMESTAMP);
 
-        requestsRef.updateChildren(updates).addOnCompleteListener(task -> {
-            if (isFinishing() || isDestroyed()) {
-                try { pd.dismiss(); } catch (Exception ignored) {}
-                return;
-            }
-            pd.dismiss();
-            if (task.isSuccessful()) {
-                AdminDashboardActivity.addAdminLog("Technician finished maintenance for ticket #" + ticketId);
+        if (requestsRef != null) {
+            requestsRef.updateChildren(updates).addOnCompleteListener(task -> {
+                if (isFinishing() || isDestroyed()) {
+                    try {
+                        pd.dismiss();
+                    } catch (Exception ignored) {}
+                    return;
+                }
 
-                Intent intent = new Intent(ServiceStatusActivity.this, TechnicianDashboardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);;
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(this, "Network Error: Failed to complete service", Toast.LENGTH_SHORT).show();
-            }
-        });
+                try {
+                    pd.dismiss();
+                } catch (Exception ignored) {}
+
+                if (task.isSuccessful()) {
+                    AdminDashboardActivity.addAdminLog("Technician finished maintenance for ticket #" + ticketId);
+
+                    Intent intent = new Intent(ServiceStatusActivity.this, TechnicianDashboardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(this, "Network Error: Failed to complete service", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void showConfirmationDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_maintenance_complete);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
 
         Button btnConfirm = dialog.findViewById(R.id.btnConfirmDialog);
         Button btnCancel = dialog.findViewById(R.id.btnCancelDialog);
 
-        if (btnCancel != null) btnCancel.setOnClickListener(v -> dialog.dismiss());
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
+
         if (btnConfirm != null) {
             btnConfirm.setOnClickListener(v -> {
                 dialog.dismiss();
                 completeMaintenance();
             });
         }
+
         dialog.show();
     }
 
@@ -209,6 +263,9 @@ public class ServiceStatusActivity extends AppCompatActivity {
         if (requestsRef != null && statusListener != null) {
             requestsRef.child("status").removeEventListener(statusListener);
         }
-        if (dotHelper != null) dotHelper.stopAnimation();
+
+        if (dotHelper != null) {
+            dotHelper.stopAnimation();
+        }
     }
 }
