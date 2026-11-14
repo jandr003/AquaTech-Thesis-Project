@@ -123,24 +123,45 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
 
     private void loadIntentData() {
         Intent intent = getIntent();
-        if (intent == null) return;
+        if (intent == null) {
+            return;
+        }
 
         String ticketId = intent.getStringExtra("TICKET_ID");
-        if (ticketId != null && displayTicketID != null) displayTicketID.setText("#" + ticketId);
+        if (ticketId != null && displayTicketID != null) {
+            displayTicketID.setText("#" + ticketId);
+        }
 
-        if (displayCustomerName != null) displayCustomerName.setText(intent.getStringExtra("CUSTOMER_NAME"));
-        if (displayContactNumber != null) displayContactNumber.setText(intent.getStringExtra("CONTACT_NUMBER"));
-        if (displayAddress != null) displayAddress.setText(intent.getStringExtra("ADDRESS"));
-        if (displayRefNo != null) displayRefNo.setText(intent.getStringExtra("REF_NO"));
+        if (displayCustomerName != null) {
+            displayCustomerName.setText(intent.getStringExtra("CUSTOMER_NAME"));
+        }
+
+        if (displayContactNumber != null) {
+            displayContactNumber.setText(intent.getStringExtra("CONTACT_NUMBER"));
+        }
+
+        if (displayAddress != null) {
+            displayAddress.setText(intent.getStringExtra("ADDRESS"));
+        }
+
+        if (displayRefNo != null) {
+            displayRefNo.setText(intent.getStringExtra("REF_NO"));
+        }
 
         String remarks = intent.getStringExtra("REMARKS");
-        if (displayRemarks != null) displayRemarks.setText((remarks == null || remarks.trim().isEmpty()) ? "N/A" : remarks);
+        if (displayRemarks != null) {
+            displayRemarks.setText((remarks == null || remarks.trim().isEmpty()) ? "N/A" : remarks);
+        }
 
         String paymentMethod = intent.getStringExtra("PAYMENT_METHOD");
-        if (displayPaymentMethod != null) displayPaymentMethod.setText(paymentMethod != null ? paymentMethod : "COD");
+        if (displayPaymentMethod != null) {
+            displayPaymentMethod.setText(paymentMethod != null ? paymentMethod : "COD");
+        }
 
         String date = intent.getStringExtra("DATE");
-        if (date != null && timeDateReq != null) timeDateReq.setText(date.toUpperCase());
+        if (date != null && timeDateReq != null) {
+            timeDateReq.setText(date.toUpperCase());
+        }
 
         if (ordersListContainer != null) {
             ordersListContainer.removeAllViews();
@@ -158,8 +179,13 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         }
 
         double total = intent.getDoubleExtra("TOTAL_AMOUNT", 0.0);
-        if (total <= 0) total = runningIntentTotal;
-        if (displayTotalAmount != null) displayTotalAmount.setText(String.format("₱%,.2f", total));
+        if (total <= 0) {
+            total = runningIntentTotal;
+        }
+
+        if (displayTotalAmount != null) {
+            displayTotalAmount.setText(String.format("₱%,.2f", total));
+        }
 
         String fbUrl = intent.getStringExtra("VALID_ID_URL");
         String localUri = intent.getStringExtra("SELECTED_ID_URI");
@@ -169,23 +195,38 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         } else if (isValidUrl(localUri)) {
             currentIdUrl = localUri;
         }
+
         updateIdStatusUI(currentIdUrl);
     }
 
     private int getItemUnitPrice(String key) {
-        if (key == null) return 0;
+        if (key == null) {
+            return 0;
+        }
+
         switch (key.toLowerCase()) {
-            case "qty_wayvalve": return 350;
-            case "qty_cbc": return 2000;
-            case "qty_sediment": return 1000;
-            case "qty_aquatal": return 2000;
-            case "qty_inline": return 3000;
-            case "qty_uvlamp": return 1500;
-            case "qty_touchpanel": return 1200;
-            case "qty_pbcboard": return 1500;
-            case "qty_smsf1": return 2000;
-            case "qty_smsf10": return 1000;
-            default: return 0;
+            case "qty_wayvalve":
+                return 350;
+            case "qty_cbc":
+                return 2000;
+            case "qty_sediment":
+                return 1000;
+            case "qty_aquatal":
+                return 2000;
+            case "qty_inline":
+                return 3000;
+            case "qty_uvlamp":
+                return 1500;
+            case "qty_touchpanel":
+                return 1200;
+            case "qty_pbcboard":
+                return 1500;
+            case "qty_smsf1":
+                return 2000;
+            case "qty_smsf10":
+                return 1000;
+            default:
+                return 0;
         }
     }
 
@@ -199,19 +240,32 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             runningIntentTotal += subtotal;
 
             View itemView = LayoutInflater.from(this).inflate(R.layout.item_order_summary, ordersListContainer, false);
-            TextView name = itemView.findViewById(R.id.orderItemName);
-            TextView q = itemView.findViewById(R.id.orderItemQty);
-            TextView p = itemView.findViewById(R.id.orderItemPrice);
-            if (name != null) name.setText(label);
-            if (q != null) q.setText("x" + qty);
-            if (p != null) p.setText(String.format("₱%,d.00", (long) subtotal));
-            ordersListContainer.addView(itemView);
+            if (itemView != null) {
+                TextView name = itemView.findViewById(R.id.orderItemName);
+                if (name != null) {
+                    name.setText(label);
+                }
+
+                TextView q = itemView.findViewById(R.id.orderItemQty);
+                if (q != null) {
+                    q.setText("x" + qty);
+                }
+
+                TextView p = itemView.findViewById(R.id.orderItemPrice);
+                if (p != null) {
+                    p.setText(String.format("₱%,d.00", (long) subtotal));
+                }
+
+                ordersListContainer.addView(itemView);
+            }
         }
     }
 
     private void setupRealtimeData() {
         String ticketId = getIntent().getStringExtra("TICKET_ID");
-        if (ticketId == null) return;
+        if (ticketId == null) {
+            return;
+        }
 
         statusRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId);
         statusListener = new ValueEventListener() {
@@ -222,7 +276,9 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
                     updateUIWithLatestData(snapshot);
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
         statusRef.addValueEventListener(statusListener);
     }
@@ -230,16 +286,27 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
     private double runningRealtimeTotal = 0;
 
     private void updateUIWithLatestData(DataSnapshot snapshot) {
-        if (displayCustomerName != null) displayCustomerName.setText(snapshot.child("customerName").getValue(String.class));
-        if (displayAddress != null) displayAddress.setText(snapshot.child("address").getValue(String.class));
+        if (snapshot == null) {
+            return;
+        }
+
+        if (displayCustomerName != null) {
+            displayCustomerName.setText(snapshot.child("customerName").getValue(String.class));
+        }
+
+        if (displayAddress != null) {
+            displayAddress.setText(snapshot.child("address").getValue(String.class));
+        }
 
         String unitName = snapshot.child("unitName").getValue(String.class);
-        if (unitName == null) unitName = snapshot.child("unitModel").getValue(String.class);
+        if (unitName == null) {
+            unitName = snapshot.child("unitModel").getValue(String.class);
+        }
 
         if (unitName != null && displayUnit != null) {
             String unitCode = unitName.toUpperCase().contains("CUBE") ? "F-FXCU1-M-HCA-TT" :
-                             unitName.toUpperCase().contains("SLIM") ? "S-FXCU1-M-HCA-AA" :
-                             unitName.toUpperCase().contains("COUNTER") ? "CT-FXCU1-M-HCA-WT" : "ST-FXCU1-M-HCA-WT";
+                    unitName.toUpperCase().contains("SLIM") ? "S-FXCU1-M-HCA-AA" :
+                            unitName.toUpperCase().contains("COUNTER") ? "CT-FXCU1-M-HCA-WT" : "ST-FXCU1-M-HCA-WT";
             String tId = snapshot.child("ticketId").getValue(String.class);
             String suffix = (tId != null && tId.length() >= 3) ? tId.substring(tId.length() - 3) : "000";
             displayUnit.setText(unitCode + "-T1-" + suffix);
@@ -250,10 +317,14 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         updateIdStatusUI(currentIdUrl);
 
         String remarksFromDb = snapshot.child("remarks").getValue(String.class);
-        if (displayRemarks != null) displayRemarks.setText((remarksFromDb == null || remarksFromDb.trim().isEmpty()) ? "N/A" : remarksFromDb);
+        if (displayRemarks != null) {
+            displayRemarks.setText((remarksFromDb == null || remarksFromDb.trim().isEmpty()) ? "N/A" : remarksFromDb);
+        }
 
         String pm = snapshot.child("paymentMethod").getValue(String.class);
-        if (displayPaymentMethod != null) displayPaymentMethod.setText(pm != null ? pm : "COD");
+        if (displayPaymentMethod != null) {
+            displayPaymentMethod.setText(pm != null ? pm : "COD");
+        }
 
         if (ordersListContainer != null) {
             ordersListContainer.removeAllViews();
@@ -272,15 +343,29 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
 
         Object totalObj = snapshot.child("totalAmount").getValue();
         double totalVal = 0;
-        if (totalObj instanceof Number) totalVal = ((Number) totalObj).doubleValue();
-        if (totalVal <= 0) totalVal = runningRealtimeTotal;
-        if (displayTotalAmount != null) displayTotalAmount.setText(String.format("₱%,.2f", totalVal));
+        if (totalObj instanceof Number) {
+            totalVal = ((Number) totalObj).doubleValue();
+        }
+
+        if (totalVal <= 0) {
+            totalVal = runningRealtimeTotal;
+        }
+
+        if (displayTotalAmount != null) {
+            displayTotalAmount.setText(String.format("₱%,.2f", totalVal));
+        }
 
         String date = snapshot.child("date").getValue(String.class);
-        if (date != null && timeDateReq != null) timeDateReq.setText(date.toUpperCase());
+        if (date != null && timeDateReq != null) {
+            timeDateReq.setText(date.toUpperCase());
+        }
     }
 
     private void addOrderItem(DataSnapshot snapshot, String key, String label) {
+        if (snapshot == null) {
+            return;
+        }
+
         Object qtyObj = snapshot.child(key).getValue();
         if (qtyObj instanceof Number) {
             long qty = ((Number) qtyObj).longValue();
@@ -290,31 +375,49 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
                 runningRealtimeTotal += subtotal;
 
                 View itemView = LayoutInflater.from(this).inflate(R.layout.item_order_summary, ordersListContainer, false);
-                TextView name = itemView.findViewById(R.id.orderItemName);
-                TextView q = itemView.findViewById(R.id.orderItemQty);
-                TextView p = itemView.findViewById(R.id.orderItemPrice);
-                if (name != null) name.setText(label);
-                if (q != null) q.setText("x" + qty);
-                if (p != null) p.setText(String.format("₱%,d.00", (long) subtotal));
-                ordersListContainer.addView(itemView);
+                if (itemView != null) {
+                    TextView name = itemView.findViewById(R.id.orderItemName);
+                    if (name != null) {
+                        name.setText(label);
+                    }
+
+                    TextView q = itemView.findViewById(R.id.orderItemQty);
+                    if (q != null) {
+                        q.setText("x" + qty);
+                    }
+
+                    TextView p = itemView.findViewById(R.id.orderItemPrice);
+                    if (p != null) {
+                        p.setText(String.format("₱%,d.00", (long) subtotal));
+                    }
+
+                    ordersListContainer.addView(itemView);
+                }
             }
         }
     }
 
     private boolean isValidUrl(String url) {
-        if (url == null || url.trim().isEmpty()) return false;
+        if (url == null || url.trim().isEmpty()) {
+            return false;
+        }
+
         String u = url.trim().toLowerCase();
         return !u.equals("none provided") && !u.equals("upload failed") && (u.startsWith("http") || u.startsWith("content:"));
     }
 
     private void updateIdStatusUI(String url) {
         boolean valid = isValidUrl(url);
+
         if (displayValidIDStatus != null) {
             displayValidIDStatus.setText(valid ? "ATTACHED" : "NOT PROVIDED");
             displayValidIDStatus.setTextColor(valid ? Color.parseColor("#2196F3") : Color.parseColor("#EF4444"));
         }
 
-        if (cardValidID != null) cardValidID.setVisibility(valid ? View.VISIBLE : View.GONE);
+        if (cardValidID != null) {
+            cardValidID.setVisibility(valid ? View.VISIBLE : View.GONE);
+        }
+
         if (ivValidID != null) {
             if (valid) {
                 ivValidID.setVisibility(View.VISIBLE);
@@ -331,8 +434,6 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void setupClickListeners() {
         if (btnDownload != null) {
             btnDownload.setOnClickListener(v -> {
@@ -345,15 +446,29 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
         }
 
         View.OnClickListener viewIdListener = v -> {
-            if (isValidUrl(currentIdUrl)) showFullScreenID(currentIdUrl);
+            if (isValidUrl(currentIdUrl)) {
+                showFullScreenID(currentIdUrl);
+            }
         };
-        if (displayValidIDStatus != null) displayValidIDStatus.setOnClickListener(viewIdListener);
-        if (ivValidID != null) ivValidID.setOnClickListener(viewIdListener);
 
-        if (btnReturnDashboard != null) btnReturnDashboard.setOnClickListener(v -> returnToDashboard());
+        if (displayValidIDStatus != null) {
+            displayValidIDStatus.setOnClickListener(viewIdListener);
+        }
+
+        if (ivValidID != null) {
+            ivValidID.setOnClickListener(viewIdListener);
+        }
+
+        if (btnReturnDashboard != null) {
+            btnReturnDashboard.setOnClickListener(v -> returnToDashboard());
+        }
     }
 
     private void showFullScreenID(String url) {
+        if (url == null) {
+            return;
+        }
+
         Dialog dialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         ImageView iv = new ImageView(this);
         iv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -373,18 +488,29 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
 
         try {
             View pdfView = LayoutInflater.from(this).inflate(R.layout.layout_receipt_pdf_template, null);
-            
+            if (pdfView == null) {
+                return;
+            }
+
             TextView tvPdfCust = pdfView.findViewById(R.id.pdfCustomerName);
-            if (tvPdfCust != null) tvPdfCust.setText(displayCustomerName.getText());
+            if (tvPdfCust != null && displayCustomerName != null) {
+                tvPdfCust.setText(displayCustomerName.getText());
+            }
 
             TextView tvPdfAddr = pdfView.findViewById(R.id.pdfAddress);
-            if (tvPdfAddr != null) tvPdfAddr.setText(displayAddress.getText());
+            if (tvPdfAddr != null && displayAddress != null) {
+                tvPdfAddr.setText(displayAddress.getText());
+            }
 
             TextView tvPdfTicket = pdfView.findViewById(R.id.pdfTicketId);
-            if (tvPdfTicket != null) tvPdfTicket.setText(displayTicketID.getText());
+            if (tvPdfTicket != null && displayTicketID != null) {
+                tvPdfTicket.setText(displayTicketID.getText());
+            }
 
             TextView tvPdfDate = pdfView.findViewById(R.id.pdfSubmittedDate);
-            if (tvPdfDate != null) tvPdfDate.setText(timeDateReq.getText());
+            if (tvPdfDate != null && timeDateReq != null) {
+                tvPdfDate.setText(timeDateReq.getText());
+            }
 
             String startTime = currentSnapshot.child("startTime").getValue(String.class);
             String endTime = currentSnapshot.child("endTime").getValue(String.class);
@@ -400,34 +526,41 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             }
 
             TextView tvPdfUnit = pdfView.findViewById(R.id.pdfUnit);
-            if (tvPdfUnit != null) tvPdfUnit.setText(displayUnit.getText());
+            if (tvPdfUnit != null && displayUnit != null) {
+                tvPdfUnit.setText(displayUnit.getText());
+            }
 
             TextView tvPdfTotal = pdfView.findViewById(R.id.pdfTotalAmount);
-            if (tvPdfTotal != null) tvPdfTotal.setText(displayTotalAmount.getText());
+            if (tvPdfTotal != null && displayTotalAmount != null) {
+                tvPdfTotal.setText(displayTotalAmount.getText());
+            }
 
             TextView tvPdfStatus = pdfView.findViewById(R.id.pdfStatusBadge);
-            if (tvPdfStatus != null) tvPdfStatus.setText(displayStatus.getText());
+            if (tvPdfStatus != null && displayStatus != null) {
+                tvPdfStatus.setText(displayStatus.getText());
+            }
 
             LinearLayout pdfOrdersContainer = pdfView.findViewById(R.id.pdfOrdersContainer);
-            pdfOrdersContainer.removeAllViews();
-            
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_cbc", "Filter 0064-CBC", 2000);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_sediment", "Filter 0055-SEDIMENT", 1000);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_aquatal", "Aquatal Replacement", 2000);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_inline", "Inline Filter", 3000);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_uvlamp", "UV Lamp", 1500);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_touchpanel", "Touch Panel", 750);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_pbcboard", "PBC Board", 3000);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_smsf1", "SMSF 1µ CBC", 2000);
-            addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_smsf10", "SMSF 10µ SED", 1000);
+            if (pdfOrdersContainer != null) {
+                pdfOrdersContainer.removeAllViews();
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_cbc", "Filter 0064-CBC", 2000);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_sediment", "Filter 0055-SEDIMENT", 1000);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_aquatal", "Aquatal Replacement", 2000);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_inline", "Inline Filter", 3000);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_uvlamp", "UV Lamp", 1500);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_touchpanel", "Touch Panel", 750);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_pbcboard", "PBC Board", 3000);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_smsf1", "SMSF 1µ CBC", 2000);
+                addPdfItem(currentSnapshot, pdfOrdersContainer, "qty_smsf10", "SMSF 10µ SED", 1000);
+            }
 
             pdfView.measure(View.MeasureSpec.makeMeasureSpec(1200, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
             pdfView.layout(0, 0, pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight());
 
             Bitmap bitmap = Bitmap.createBitmap(pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
-            
+
             canvas.drawColor(Color.WHITE);
             pdfView.draw(canvas);
 
@@ -436,7 +569,7 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             page.getCanvas().drawBitmap(bitmap, 0, 0, new Paint());
             document.finishPage(page);
 
-            String tId = displayTicketID.getText().toString().replace("#", "").trim();
+            String tId = displayTicketID != null ? displayTicketID.getText().toString().replace("#", "").trim() : "00000000";
             String fName = "AquaTech_Receipt_" + tId + ".pdf";
 
             ContentValues cv = new ContentValues();
@@ -450,6 +583,7 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
             } else {
                 downloadUri = MediaStore.Files.getContentUri("external");
             }
+
             Uri uri = getContentResolver().insert(downloadUri, cv);
             if (uri != null) {
                 try (OutputStream os = getContentResolver().openOutputStream(uri)) {
@@ -465,22 +599,45 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
     }
 
     private void addPdfItem(DataSnapshot snapshot, LinearLayout container, String key, String name, int price) {
+        if (snapshot == null || container == null) {
+            return;
+        }
+
         Object val = snapshot.child(key).getValue();
         int q = 0;
-        if (val instanceof Number) q = ((Number) val).intValue();
-        
+        if (val instanceof Number) {
+            q = ((Number) val).intValue();
+        }
+
         if (q > 0) {
             View row = getLayoutInflater().inflate(R.layout.item_pdf_billing_row, container, false);
-            ((TextView)row.findViewById(R.id.pdfItemName)).setText(name);
-            ((TextView)row.findViewById(R.id.pdfItemQty)).setText(String.valueOf(q));
-            container.addView(row);
+            if (row != null) {
+                TextView tvName = row.findViewById(R.id.pdfItemName);
+                if (tvName != null) {
+                    tvName.setText(name);
+                }
+
+                TextView tvQty = row.findViewById(R.id.pdfItemQty);
+                if (tvQty != null) {
+                    tvQty.setText(String.valueOf(q));
+                }
+
+                container.addView(row);
+            }
         }
     }
 
     private void showTopNotification(String fileName, Uri pdfUri, String ticketId) {
         runOnUiThread(() -> {
-            if (rootLayout == null) return;
+            if (rootLayout == null) {
+                return;
+            }
+
             final View notifView = LayoutInflater.from(this).inflate(R.layout.item_notification, rootLayout, false);
+            if (notifView == null) {
+                return;
+            }
+
             ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
             int marginSide = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
             int marginTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
@@ -499,17 +656,20 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, AquaBuddyActivity.class);
                 intent.putExtra("SEND_FILE_MESSAGE", true);
                 intent.putExtra("FILE_NAME", fileName);
-                intent.putExtra("FILE_URI", pdfUri.toString());
+                if (pdfUri != null) {
+                    intent.putExtra("FILE_URI", pdfUri.toString());
+                }
                 intent.putExtra("TICKET_ID", ticketId);
                 startActivity(intent);
                 removeNotif(notifView);
             });
+
             new Handler(Looper.getMainLooper()).postDelayed(() -> removeNotif(notifView), 6000);
         });
     }
 
     private void removeNotif(View v) {
-        if (v != null && v.getParent() != null) {
+        if (v != null && v.getParent() != null && rootLayout != null) {
             runOnUiThread(() -> v.animate().translationY(-500f).setDuration(500).withEndAction(() -> rootLayout.removeView(v)).start());
         }
     }
@@ -525,7 +685,9 @@ public class ServiceRequestSuccessActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (statusRef != null && statusListener != null) statusRef.removeEventListener(statusListener);
+        if (statusRef != null && statusListener != null) {
+            statusRef.removeEventListener(statusListener);
+        }
     }
 
     @Override
