@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +22,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CustomerSetupActivity extends AppCompatActivity {
 
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private CardView card1, card2, card3, card4;
-    private TextView setUpAccountTitle;
+    private TextView setUpAccountTitle, tvPageIndicator;
+    private Button btnPrevPage, btnNextPage;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
+
+    private final List<Map<String, String>> allProductsList = new ArrayList<>();
+    private static final int ITEMS_PER_PAGE = 5;
+    private int currentPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +50,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
         initializeViews();
         fetchUserData();
         setupClickListeners();
+        loadAllProductsFromFirebase();
     }
 
     private void initializeViews() {
@@ -52,6 +64,29 @@ public class CustomerSetupActivity extends AppCompatActivity {
         card2 = findViewById(R.id.whiteCardItem2);
         card3 = findViewById(R.id.whiteCardItem3);
         card4 = findViewById(R.id.whiteCardItem4);
+
+        btnPrevPage = findViewById(R.id.btnPrevPage);
+        btnNextPage = findViewById(R.id.btnNextPage);
+        tvPageIndicator = findViewById(R.id.tvPageIndicator);
+
+        if (btnPrevPage != null) {
+            btnPrevPage.setOnClickListener(v -> {
+                if (currentPage > 0) {
+                    currentPage--;
+                    updatePaginationUI();
+                }
+            });
+        }
+
+        if (btnNextPage != null) {
+            btnNextPage.setOnClickListener(v -> {
+                int totalPages = getTotalPages();
+                if (currentPage < totalPages - 1) {
+                    currentPage++;
+                    updatePaginationUI();
+                }
+            });
+        }
     }
 
     private void fetchUserData() {
@@ -82,6 +117,94 @@ public class CustomerSetupActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {}
             });
+        }
+    }
+
+    private void loadAllProductsFromFirebase() {
+        DatabaseReference productsRef = FirebaseDatabase.getInstance(DB_URL).getReference("Products");
+        productsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                allProductsList.clear();
+
+                addDefaultProduct("WL CUBE FIREWALL", "F-FXCU1-M-HCA-TT-0001", "Patented UVC Firewall™ Technology");
+                addDefaultProduct("SMART SLIM", "S-FXCU1-M-HCA-AA-0002", "Sleek, Space-Saving Pure Hydration");
+                addDefaultProduct("COUNTER TOP WATER PURIFIER", "CT-FXCU1-M-HCA-WT-0003", "Ideal for Kitchen & Home Countertops");
+                addDefaultProduct("STANDING WATER PURIFIER", "ST-FXCU1-M-HCA-WT-0004", "High-Capacity Commercial & Office Purifier");
+
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String name = ds.child("unitName").getValue(String.class);
+                        if (name == null) {
+                            name = ds.child("itemName").getValue(String.class);
+                        }
+
+                        String modelCode = ds.child("modelCode").getValue(String.class);
+                        String description = ds.child("description").getValue(String.class);
+
+                        if (name != null && !name.isEmpty() && !isAlreadyInList(name)) {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("unitName", name);
+                            map.put("modelCode", modelCode != null ? modelCode : "ASC-U00" + (allProductsList.size() + 1));
+                            map.put("description", description != null && !description.isEmpty() ? description : "Certified Water Purifier Unit");
+                            allProductsList.add(map);
+                        }
+                    }
+                }
+
+                updatePaginationUI();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+    }
+
+    private boolean isAlreadyInList(String name) {
+        for (Map<String, String> m : allProductsList) {
+            if (m.get("unitName") != null && m.get("unitName").equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void addDefaultProduct(String name, String code, String desc) {
+        Map<String, String> map = new HashMap<>();
+        map.put("unitName", name);
+        map.put("modelCode", code);
+        map.put("description", desc);
+        allProductsList.add(map);
+    }
+
+    private int getTotalPages() {
+        if (allProductsList.isEmpty()) {
+            return 1;
+        }
+        return (int) Math.ceil((double) allProductsList.size() / ITEMS_PER_PAGE);
+    }
+
+    private void updatePaginationUI() {
+        int totalPages = getTotalPages();
+        if (currentPage >= totalPages) {
+            currentPage = totalPages - 1;
+        }
+        if (currentPage < 0) {
+            currentPage = 0;
+        }
+
+        if (tvPageIndicator != null) {
+            tvPageIndicator.setText("Page " + (currentPage + 1) + " of " + totalPages);
+        }
+
+        if (btnPrevPage != null) {
+            btnPrevPage.setEnabled(currentPage > 0);
+            btnPrevPage.setAlpha(currentPage > 0 ? 1.0f : 0.5f);
+        }
+
+        if (btnNextPage != null) {
+            btnNextPage.setEnabled(currentPage < totalPages - 1);
+            btnNextPage.setAlpha(currentPage < totalPages - 1 ? 1.0f : 0.5f);
         }
     }
 

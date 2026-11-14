@@ -81,326 +81,333 @@
                 android:layout_marginVertical="16dp"
                 android:background="#E2E8F0" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/whiteCardItem1"
+            <!-- Dynamic 5 Items Per Page Section Container -->
+            <LinearLayout
+                android:id="@+id/layoutDynamicCardsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+                android:orientation="vertical">
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/whiteCardItem1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_margin="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
 
-                    <FrameLayout
-                        android:id="@+id/unitFrame1"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_unit_backdrop"
-                        android:padding="4dp">
-
-                        <ImageView
-                            android:id="@+id/ItemOrder1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/titled_design1" />
-
-                    </FrameLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow1"
-                        android:layout_toEndOf="@id/unitFrame1"
-                        android:orientation="vertical">
+                        android:padding="16dp">
 
-                        <TextView
-                            android:id="@+id/itemWlCubeFirewall"
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:id="@+id/unitFrame1"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bg_unit_backdrop"
+                            android:padding="4dp">
+
+                            <ImageView
+                                android:id="@+id/ItemOrder1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/titled_design1" />
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="WL CUBE FIREWALL"
-                            android:textColor="#1E293B"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_toStartOf="@id/arrow1"
+                            android:layout_toEndOf="@id/unitFrame1"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/ItemSubName1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="F-FXCU1-M-HCA-TT-0001"
-                            android:textColor="#2196F3"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/itemWlCubeFirewall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="WL CUBE FIREWALL"
+                                android:textColor="#1E293B"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Patented UVC Firewall™ Technology"
-                            android:textColor="#64748B"
-                            android:textSize="11.5sp" />
+                            <TextView
+                                android:id="@+id/ItemSubName1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="F-FXCU1-M-HCA-TT-0001"
+                                android:textColor="#2196F3"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Patented UVC Firewall™ Technology"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
 
-                    <ImageView
-                        android:id="@+id/arrow1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/arrow_forward"
-                        app:tint="#94A3B8" />
+                        </LinearLayout>
 
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/arrow1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/whiteCardItem2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/whiteCardItem2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_margin="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
 
-                    <FrameLayout
-                        android:id="@+id/unitFrame2"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_unit_backdrop"
-                        android:padding="4dp">
-
-                        <ImageView
-                            android:id="@+id/ItemOrder2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/titled_design2" />
-
-                    </FrameLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow2"
-                        android:layout_toEndOf="@id/unitFrame2"
-                        android:orientation="vertical">
+                        android:padding="16dp">
 
-                        <TextView
-                            android:id="@+id/itemSmartSlim"
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:id="@+id/unitFrame2"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bg_unit_backdrop"
+                            android:padding="4dp">
+
+                            <ImageView
+                                android:id="@+id/ItemOrder2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/titled_design2" />
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="SMART SLIM"
-                            android:textColor="#1E293B"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_toStartOf="@id/arrow2"
+                            android:layout_toEndOf="@id/unitFrame2"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/ItemSubName2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="S-FXCU1-M-HCA-AA-0002"
-                            android:textColor="#2196F3"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/itemSmartSlim"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SMART SLIM"
+                                android:textColor="#1E293B"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Sleek, Space-Saving Pure Hydration"
-                            android:textColor="#64748B"
-                            android:textSize="11.5sp" />
+                            <TextView
+                                android:id="@+id/ItemSubName2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="S-FXCU1-M-HCA-AA-0002"
+                                android:textColor="#2196F3"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Sleek, Space-Saving Pure Hydration"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
 
-                    <ImageView
-                        android:id="@+id/arrow2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/arrow_forward"
-                        app:tint="#94A3B8" />
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/whiteCardItem3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+                        <ImageView
+                            android:id="@+id/arrow2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/whiteCardItem3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_margin="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
 
-                    <FrameLayout
-                        android:id="@+id/unitFrame3"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_unit_backdrop"
-                        android:padding="4dp">
-
-                        <ImageView
-                            android:id="@+id/ItemOrder3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/titled_design3" />
-
-                    </FrameLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow3"
-                        android:layout_toEndOf="@id/unitFrame3"
-                        android:orientation="vertical">
+                        android:padding="16dp">
 
-                        <TextView
-                            android:id="@+id/itemCounterTopWaterPurifier"
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:id="@+id/unitFrame3"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bg_unit_backdrop"
+                            android:padding="4dp">
+
+                            <ImageView
+                                android:id="@+id/ItemOrder3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/titled_design3" />
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="COUNTER TOP PURIFIER"
-                            android:textColor="#1E293B"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_toStartOf="@id/arrow3"
+                            android:layout_toEndOf="@id/unitFrame3"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/ItemSubName3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="CT-FXCU1-M-HCA-WT-0003"
-                            android:textColor="#2196F3"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/itemCounterTopWaterPurifier"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="COUNTER TOP PURIFIER"
+                                android:textColor="#1E293B"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Ideal for Kitchen &amp; Home Countertops"
-                            android:textColor="#64748B"
-                            android:textSize="11.5sp" />
+                            <TextView
+                                android:id="@+id/ItemSubName3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="CT-FXCU1-M-HCA-WT-0003"
+                                android:textColor="#2196F3"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
 
-                    </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Ideal for Kitchen &amp; Home Countertops"
+                                android:textColor="#64748B"
+                                android:textSize="11.5sp" />
 
-                    <ImageView
-                        android:id="@+id/arrow3"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/arrow_forward"
-                        app:tint="#94A3B8" />
+                        </LinearLayout>
 
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/arrow3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/whiteCardItem4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/whiteCardItem4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_margin="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
 
-                    <FrameLayout
-                        android:id="@+id/unitFrame4"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_unit_backdrop"
-                        android:padding="4dp">
-
-                        <ImageView
-                            android:id="@+id/ItemOrder4"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/titled_design4" />
-
-                    </FrameLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_toStartOf="@id/arrow4"
-                        android:layout_toEndOf="@id/unitFrame4"
-                        android:orientation="vertical">
+                        android:padding="16dp">
 
-                        <TextView
-                            android:id="@+id/itemStandingWaterPurifier"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="STANDING PURIFIER"
-                            android:textColor="#1E293B"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                        <FrameLayout
+                            android:id="@+id/unitFrame4"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bg_unit_backdrop"
+                            android:padding="4dp">
 
-                        <TextView
-                            android:id="@+id/ItemSubName4"
-                            android:layout_width="wrap_content"
+                            <ImageView
+                                android:id="@+id/ItemOrder4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/titled_design4" />
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="ST-FXCU1-M-HCA-WT-0004"
-                            android:textColor="#2196F3"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_toStartOf="@id/arrow4"
+                            android:layout_toEndOf="@id/unitFrame4"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/itemStandingWaterPurifier"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="STANDING PURIFIER"
+                                android:textColor="#1E293B"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/ItemSubName4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="ST-FXCU1-M-HCA-WT-0004"
+                                android:textColor="#2196F3"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -410,19 +417,71 @@
                             android:textColor="#64748B"
                             android:textSize="11.5sp" />
 
-                    </LinearLayout>
+                        </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/arrow4"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/arrow_forward"
-                        app:tint="#94A3B8" />
+                        <ImageView
+                            android:id="@+id/arrow4"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/arrow_forward"
+                            app:tint="#94A3B8" />
 
-                </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- 5-Items Per Page Pagination Bar Controls -->
+            <LinearLayout
+                android:id="@+id/layoutPaginationBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPrevPage"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="← Prev"
+                    android:textColor="#2196F3"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="#2196F3"
+                    app:strokeWidth="1dp" />
+
+                <TextView
+                    android:id="@+id/tvPageIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Page 1 of 1"
+                    android:textColor="#1E293B"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNextPage"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="Next →"
+                    android:textColor="#2196F3"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="#2196F3"
+                    app:strokeWidth="1dp" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
