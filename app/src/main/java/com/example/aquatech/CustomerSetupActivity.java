@@ -231,7 +231,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
 
                 if (btnPrevPage != null) {
                     if (currentPage == 0) {
-                        btnPrevPage.setVisibility(View.INVISIBLE);
+                        btnPrevPage.setVisibility(View.GONE);
                     } else {
                         btnPrevPage.setVisibility(View.VISIBLE);
                         btnPrevPage.setEnabled(true);
@@ -240,7 +240,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
 
                 if (btnNextPage != null) {
                     if (currentPage >= totalPages - 1) {
-                        btnNextPage.setVisibility(View.INVISIBLE);
+                        btnNextPage.setVisibility(View.GONE);
                     } else {
                         btnNextPage.setVisibility(View.VISIBLE);
                         btnNextPage.setEnabled(true);
