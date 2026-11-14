@@ -132,12 +132,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 allProductsList.clear();
 
-                addDefaultProduct("WL CUBE FIREWALL", "F-FXCU1-M-HCA-TT-0001", "Patented UVC Firewall™ Technology", "");
-                addDefaultProduct("SMART SLIM", "S-FXCU1-M-HCA-AA-0002", "Sleek, Space-Saving Pure Hydration", "");
-                addDefaultProduct("COUNTER TOP WATER PURIFIER", "CT-FXCU1-M-HCA-WT-0003", "Ideal for Kitchen & Home Countertops", "");
-                addDefaultProduct("STANDING WATER PURIFIER", "ST-FXCU1-M-HCA-WT-0004", "High-Capacity Commercial & Office Purifier", "");
-
-                if (snapshot.exists()) {
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String name = ds.child("unitName").getValue(String.class);
                         if (name == null) {
@@ -148,7 +143,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
                         String description = ds.child("description").getValue(String.class);
                         String photoUri = ds.child("photoUri").getValue(String.class);
 
-                        if (name != null && !name.isEmpty() && !isAlreadyInList(name)) {
+                        if (name != null && !name.isEmpty()) {
                             Map<String, String> map = new HashMap<>();
                             map.put("unitName", name);
                             map.put("modelCode", modelCode != null && !modelCode.isEmpty() ? modelCode : "ASC-U00" + (allProductsList.size() + 1));
@@ -157,6 +152,8 @@ public class CustomerSetupActivity extends AppCompatActivity {
                             allProductsList.add(map);
                         }
                     }
+                } else {
+                    seedDefaultProductsToFirebase(productsRef);
                 }
 
                 renderCurrentPageCards();
@@ -167,22 +164,36 @@ public class CustomerSetupActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isAlreadyInList(String name) {
-        for (Map<String, String> m : allProductsList) {
-            if (m.get("unitName") != null && m.get("unitName").equalsIgnoreCase(name)) {
-                return true;
-            }
+    private void seedDefaultProductsToFirebase(DatabaseReference productsRef) {
+        if (productsRef == null) {
+            return;
         }
-        return false;
+
+        saveSingleDefaultProduct(productsRef, "PROD_001", "WL CUBE FIREWALL", "F-FXCU1-M-HCA-TT-0001", "Patented UVC Firewall™ Technology");
+        saveSingleDefaultProduct(productsRef, "PROD_002", "SMART SLIM", "S-FXCU1-M-HCA-AA-0002", "Sleek, Space-Saving Pure Hydration");
+        saveSingleDefaultProduct(productsRef, "PROD_003", "COUNTER TOP WATER PURIFIER", "CT-FXCU1-M-HCA-WT-0003", "Ideal for Kitchen & Home Countertops");
+        saveSingleDefaultProduct(productsRef, "PROD_004", "STANDING WATER PURIFIER", "ST-FXCU1-M-HCA-WT-0004", "High-Capacity Commercial & Office Purifier");
     }
 
-    private void addDefaultProduct(String name, String code, String desc, String photo) {
-        Map<String, String> map = new HashMap<>();
+    private void saveSingleDefaultProduct(DatabaseReference productsRef, String id, String name, String code, String desc) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", id);
         map.put("unitName", name);
+        map.put("itemName", name);
         map.put("modelCode", code);
+        map.put("category", "Certified Water Purifier");
         map.put("description", desc);
-        map.put("photoUri", photo);
-        allProductsList.add(map);
+        map.put("status", "Active");
+        map.put("photoUri", "");
+
+        productsRef.child(id).setValue(map);
+
+        Map<String, String> localMap = new HashMap<>();
+        localMap.put("unitName", name);
+        localMap.put("modelCode", code);
+        localMap.put("description", desc);
+        localMap.put("photoUri", "");
+        allProductsList.add(localMap);
     }
 
     private int getTotalPages() {
