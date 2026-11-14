@@ -44,24 +44,38 @@ public class SharedMediaAdapter extends RecyclerView.Adapter<SharedMediaAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ChatMessage msg = mediaList.get(position);
+        if (msg == null) {
+            return;
+        }
+
         String uriStr = msg.getFileUri();
         String name = msg.getFileName();
 
         boolean isDoc = name != null && name.toLowerCase().endsWith(".pdf");
 
         if (isDoc) {
-            holder.ivThumb.setVisibility(View.GONE);
-            holder.docOverlay.setVisibility(View.VISIBLE);
-            holder.tvName.setText(name != null ? name : "Document.pdf");
+            if (holder.ivThumb != null) {
+                holder.ivThumb.setVisibility(View.GONE);
+            }
+            if (holder.docOverlay != null) {
+                holder.docOverlay.setVisibility(View.VISIBLE);
+            }
+            if (holder.tvName != null) {
+                holder.tvName.setText(name != null ? name : "Document.pdf");
+            }
         } else {
-            holder.docOverlay.setVisibility(View.GONE);
-            holder.ivThumb.setVisibility(View.VISIBLE);
-            if (uriStr != null && !uriStr.isEmpty()) {
-                Glide.with(context)
-                        .load(uriStr)
-                        .centerCrop()
-                        .placeholder(R.drawable.maintenance_technician1)
-                        .into(holder.ivThumb);
+            if (holder.docOverlay != null) {
+                holder.docOverlay.setVisibility(View.GONE);
+            }
+            if (holder.ivThumb != null) {
+                holder.ivThumb.setVisibility(View.VISIBLE);
+                if (uriStr != null && !uriStr.isEmpty() && context != null) {
+                    Glide.with(context)
+                            .load(uriStr)
+                            .centerCrop()
+                            .placeholder(R.drawable.maintenance_technician1)
+                            .into(holder.ivThumb);
+                }
             }
         }
 
@@ -69,12 +83,16 @@ public class SharedMediaAdapter extends RecyclerView.Adapter<SharedMediaAdapter.
             if (uriStr != null && !uriStr.isEmpty()) {
                 if (isDoc) {
                     try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriStr));
-                        context.startActivity(intent);
+                        if (context != null) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriStr));
+                            context.startActivity(intent);
+                        }
                     } catch (Exception e) {
-                        Toast.makeText(context, "Opening document...", Toast.LENGTH_SHORT).show();
+                        if (context != null) {
+                            Toast.makeText(context, "Opening document...", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                } else {
+                } else if (context != null) {
                     showFullScreenImageDialog(context, uriStr);
                 }
             }
@@ -82,6 +100,10 @@ public class SharedMediaAdapter extends RecyclerView.Adapter<SharedMediaAdapter.
     }
 
     private void showFullScreenImageDialog(Context ctx, String imageUrl) {
+        if (ctx == null) {
+            return;
+        }
+
         Dialog dialog = new Dialog(ctx, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -126,7 +148,10 @@ public class SharedMediaAdapter extends RecyclerView.Adapter<SharedMediaAdapter.
 
     @Override
     public int getItemCount() {
-        return mediaList != null ? mediaList.size() : 0;
+        if (mediaList != null) {
+            return mediaList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
