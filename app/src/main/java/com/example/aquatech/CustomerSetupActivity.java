@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,7 +39,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private TextView setUpAccountTitle, tvPageIndicator;
     private Button btnPrevPage, btnNextPage;
-    private LinearLayout layoutDynamicCardsContainer;
+    private LinearLayout layoutDynamicCardsContainer, layoutPaginationBar;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
 
@@ -69,6 +68,7 @@ public class CustomerSetupActivity extends AppCompatActivity {
 
         setUpAccountTitle = findViewById(R.id.setUpAccount);
         layoutDynamicCardsContainer = findViewById(R.id.layoutDynamicCardsContainer);
+        layoutPaginationBar = findViewById(R.id.layoutPaginationBar);
 
         btnPrevPage = findViewById(R.id.btnPrevPage);
         btnNextPage = findViewById(R.id.btnNextPage);
@@ -219,18 +219,34 @@ public class CustomerSetupActivity extends AppCompatActivity {
             }
         }
 
-        if (tvPageIndicator != null) {
-            tvPageIndicator.setText("Page " + (currentPage + 1) + " of " + totalPages);
-        }
+        if (layoutPaginationBar != null) {
+            if (totalPages <= 1) {
+                layoutPaginationBar.setVisibility(View.GONE);
+            } else {
+                layoutPaginationBar.setVisibility(View.VISIBLE);
 
-        if (btnPrevPage != null) {
-            btnPrevPage.setEnabled(currentPage > 0);
-            btnPrevPage.setAlpha(currentPage > 0 ? 1.0f : 0.5f);
-        }
+                if (tvPageIndicator != null) {
+                    tvPageIndicator.setText("Page " + (currentPage + 1) + " of " + totalPages);
+                }
 
-        if (btnNextPage != null) {
-            btnNextPage.setEnabled(currentPage < totalPages - 1);
-            btnNextPage.setAlpha(currentPage < totalPages - 1 ? 1.0f : 0.5f);
+                if (btnPrevPage != null) {
+                    if (currentPage == 0) {
+                        btnPrevPage.setVisibility(View.INVISIBLE);
+                    } else {
+                        btnPrevPage.setVisibility(View.VISIBLE);
+                        btnPrevPage.setEnabled(true);
+                    }
+                }
+
+                if (btnNextPage != null) {
+                    if (currentPage >= totalPages - 1) {
+                        btnNextPage.setVisibility(View.INVISIBLE);
+                    } else {
+                        btnNextPage.setVisibility(View.VISIBLE);
+                        btnNextPage.setEnabled(true);
+                    }
+                }
+            }
         }
     }
 
