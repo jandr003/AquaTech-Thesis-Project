@@ -28,7 +28,7 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
 
     private ImageView ivProof;
     private TextView tvTicketID, tvCustomerName, tvCustomerPhone, tvUnitSro, tvAddress, tvTechName, tvServiceType, tvRemarks, tvStatusPill,
-                     tvPaymentMethod, tvBankName, tvBankRef;
+            tvPaymentMethod, tvBankName, tvBankRef;
     private LinearLayout layoutBankDetails;
     private RatingBar rbRating;
     private String ticketId;
@@ -50,7 +50,10 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        tvTicketID.setText("#" + ticketId);
+        if (tvTicketID != null) {
+            tvTicketID.setText("#" + ticketId);
+        }
+
         setupFirebase();
     }
 
@@ -65,17 +68,24 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
         tvServiceType = findViewById(R.id.tvServiceTypeDetails);
         tvRemarks = findViewById(R.id.tvTechRemarks);
         rbRating = findViewById(R.id.rbCustomerRating);
-        tvStatusPill = findViewById(R.id.tvReportStatusPill); 
+        tvStatusPill = findViewById(R.id.tvReportStatusPill);
 
         tvPaymentMethod = findViewById(R.id.tvPaymentMethodDetails);
         tvBankName = findViewById(R.id.tvBankNameDetails);
         tvBankRef = findViewById(R.id.tvBankRefDetails);
         layoutBankDetails = findViewById(R.id.layoutBankDetailsDetails);
 
-        findViewById(R.id.btnBackDetails).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackDetails);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
     }
 
     private void setupFirebase() {
+        if (ticketId == null) {
+            return;
+        }
+
         dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -83,49 +93,84 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String customer = snapshot.child("customerName").getValue(String.class);
                     String phone = snapshot.child("customerPhone").getValue(String.class);
-                    if (phone == null) phone = snapshot.child("userPhone").getValue(String.class);
-                    
-                    String unitSro = snapshot.child("referenceNo").getValue(String.class);
-                    if (unitSro == null) unitSro = snapshot.child("sroNumber").getValue(String.class);
-                    
-                    String address = snapshot.child("address").getValue(String.class);
+                    if (phone == null) {
+                        phone = snapshot.child("userPhone").getValue(String.class);
+                    }
 
+                    String unitSro = snapshot.child("referenceNo").getValue(String.class);
+                    if (unitSro == null) {
+                        unitSro = snapshot.child("sroNumber").getValue(String.class);
+                    }
+
+                    String address = snapshot.child("address").getValue(String.class);
                     String tech = snapshot.child("assignedTechName").getValue(String.class);
                     String remarks = snapshot.child("technicianRemarks").getValue(String.class);
                     String imageUrl = snapshot.child("proofImageUrl").getValue(String.class);
 
                     String service = getServiceTypeLabel(snapshot);
                     String status = snapshot.child("status").getValue(String.class);
-
                     Float rating = snapshot.child("rating").getValue(Float.class);
 
                     if (tvStatusPill != null) {
                         tvStatusPill.setText("● " + (status != null ? status.toUpperCase() : "COMPLETED"));
                     }
 
-                    tvCustomerName.setText(customer != null ? customer : "N/A");
-                    tvCustomerPhone.setText(phone != null ? phone : "Not Provided");
-                    tvUnitSro.setText(unitSro != null ? unitSro : "N/A");
-                    tvAddress.setText(address != null ? address : "N/A");
-                    tvTechName.setText(tech != null ? tech : "Aqua Technician");
-                    tvServiceType.setText(service);
-                    tvRemarks.setText((remarks != null && !remarks.isEmpty()) ? remarks : "No technician remarks provided.");
-                    
-                    String pm = snapshot.child("paymentMethod").getValue(String.class);
-                    tvPaymentMethod.setText(pm != null ? pm : "COD");
-
-                    if (pm != null && pm.equals("Bank Transfer")) {
-                        layoutBankDetails.setVisibility(View.VISIBLE);
-                        tvBankName.setText(snapshot.child("bankName").getValue(String.class));
-                        tvBankRef.setText(snapshot.child("bankReference").getValue(String.class));
-                    } else {
-                        layoutBankDetails.setVisibility(View.GONE);
+                    if (tvCustomerName != null) {
+                        tvCustomerName.setText(customer != null ? customer : "N/A");
                     }
 
-                    if (rating != null) rbRating.setRating(rating);
-                    else rbRating.setRating(0f);
+                    if (tvCustomerPhone != null) {
+                        tvCustomerPhone.setText(phone != null ? phone : "Not Provided");
+                    }
 
-                    if (imageUrl != null && !imageUrl.isEmpty()) {
+                    if (tvUnitSro != null) {
+                        tvUnitSro.setText(unitSro != null ? unitSro : "N/A");
+                    }
+
+                    if (tvAddress != null) {
+                        tvAddress.setText(address != null ? address : "N/A");
+                    }
+
+                    if (tvTechName != null) {
+                        tvTechName.setText(tech != null ? tech : "Aqua Technician");
+                    }
+
+                    if (tvServiceType != null) {
+                        tvServiceType.setText(service);
+                    }
+
+                    if (tvRemarks != null) {
+                        tvRemarks.setText((remarks != null && !remarks.isEmpty()) ? remarks : "No technician remarks provided.");
+                    }
+
+                    String pm = snapshot.child("paymentMethod").getValue(String.class);
+                    if (tvPaymentMethod != null) {
+                        tvPaymentMethod.setText(pm != null ? pm : "COD");
+                    }
+
+                    if (layoutBankDetails != null) {
+                        if (pm != null && pm.equals("Bank Transfer")) {
+                            layoutBankDetails.setVisibility(View.VISIBLE);
+                            if (tvBankName != null) {
+                                tvBankName.setText(snapshot.child("bankName").getValue(String.class));
+                            }
+                            if (tvBankRef != null) {
+                                tvBankRef.setText(snapshot.child("bankReference").getValue(String.class));
+                            }
+                        } else {
+                            layoutBankDetails.setVisibility(View.GONE);
+                        }
+                    }
+
+                    if (rbRating != null) {
+                        if (rating != null) {
+                            rbRating.setRating(rating);
+                        } else {
+                            rbRating.setRating(0f);
+                        }
+                    }
+
+                    if (imageUrl != null && !imageUrl.isEmpty() && ivProof != null) {
                         ivProof.setPadding(0, 0, 0, 0);
                         ivProof.clearColorFilter();
                         Glide.with(ServiceReportDetailsActivity.this)
@@ -145,22 +190,42 @@ public class ServiceReportDetailsActivity extends AppCompatActivity {
     }
 
     private String getServiceTypeLabel(DataSnapshot ds) {
-        List<String> types = new ArrayList<>();
-        if (hasQty(ds, "qty_wayvalve")) types.add("Installation Kit");
-        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) types.add("Filter Preventive");
-        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) types.add("Other Parts");
+        if (ds == null) {
+            return "General Maintenance";
+        }
 
-        if (types.isEmpty()) return "General Maintenance";
-        
+        List<String> types = new ArrayList<>();
+        if (hasQty(ds, "qty_wayvalve")) {
+            types.add("Installation Kit");
+        }
+
+        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
+            types.add("Filter Preventive");
+        }
+
+        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
+            types.add("Other Parts");
+        }
+
+        if (types.isEmpty()) {
+            return "General Maintenance";
+        }
+
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < types.size(); i++) {
             sb.append(types.get(i));
-            if (i < types.size() - 1) sb.append(", ");
+            if (i < types.size() - 1) {
+                sb.append(", ");
+            }
         }
         return sb.toString();
     }
 
     private boolean hasQty(DataSnapshot ds, String key) {
+        if (ds == null || key == null) {
+            return false;
+        }
+
         Object val = ds.child(key).getValue();
         return val instanceof Number && ((Number) val).intValue() > 0;
     }
