@@ -23,12 +23,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.core.widget.TextViewCompat;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,12 +42,12 @@ import java.util.Locale;
 public class ServiceReceiptActivity extends AppCompatActivity {
 
     private ImageView btnBackReceipt;
-    private TextView tvTicketId, tvReceiptCustomerName, tvReceiptAddress, 
-                     tvReceiptServiceType, tvReceiptSchedule, tvReceiptRequestDate,
-                     tvReceiptUnitName, tvReceiptStatus, tvReceiptTotalAmount, 
-                     tvReceiptPaymentMethod, tvReceiptBankRef;
+    private TextView tvTicketId, tvReceiptCustomerName, tvReceiptAddress,
+            tvReceiptServiceType, tvReceiptSchedule, tvReceiptRequestDate,
+            tvReceiptUnitName, tvReceiptStatus, tvReceiptTotalAmount,
+            tvReceiptPaymentMethod, tvReceiptBankRef;
     private LinearLayout containerReceiptItems, layoutReceiptBankRef;
-    
+
     private DataSnapshot currentSnapshot;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
@@ -86,7 +83,7 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         tvReceiptTotalAmount = findViewById(R.id.tvReceiptTotalAmount);
         tvReceiptPaymentMethod = findViewById(R.id.tvReceiptPaymentMethod);
         tvReceiptBankRef = findViewById(R.id.tvReceiptBankRef);
-        
+
         containerReceiptItems = findViewById(R.id.containerReceiptItems);
         layoutReceiptBankRef = findViewById(R.id.layoutReceiptBankRef);
     }
@@ -104,8 +101,11 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         }
 
         View pdfView = LayoutInflater.from(this).inflate(R.layout.layout_receipt_pdf_template, null);
-        
-        String dateStr = tvReceiptRequestDate.getText().toString();
+        if (pdfView == null) {
+            return;
+        }
+
+        String dateStr = tvReceiptRequestDate != null ? tvReceiptRequestDate.getText().toString() : "";
         String timeStr = "09:15 AM";
 
         Long ts = currentSnapshot.child("timestamp").getValue(Long.class);
@@ -116,54 +116,67 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         } else {
             timeStr = new SimpleDateFormat("hh:mm A", Locale.getDefault()).format(new Date());
         }
-        
-        ((TextView)pdfView.findViewById(R.id.pdfSubmittedDate)).setText(dateStr);
-        ((TextView)pdfView.findViewById(R.id.pdfSubmittedTime)).setText(timeStr);
+
+        TextView tvSubDate = pdfView.findViewById(R.id.pdfSubmittedDate);
+        if (tvSubDate != null) {
+            tvSubDate.setText(dateStr);
+        }
+
+        TextView tvSubTime = pdfView.findViewById(R.id.pdfSubmittedTime);
+        if (tvSubTime != null) {
+            tvSubTime.setText(timeStr);
+        }
+
         String startTimeVal = currentSnapshot.child("startTime").getValue(String.class);
         String schedDate = currentSnapshot.child("date").getValue(String.class);
-        
-        if (startTimeVal != null && !startTimeVal.equalsIgnoreCase("To be confirmed")) {
-            String timeOnly = startTimeVal.toUpperCase();
-            String sessionTag = timeOnly.contains("AM") ? "MORNING" : "AFTERNOON";
-            
-            String finalSchedText = (schedDate != null ? schedDate : "TBC") + " • " + timeOnly + " (" + sessionTag + ")";
-            ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(finalSchedText);
-        } else {
-            String waitText = (schedDate != null ? schedDate : "Pending") + " • TBC (PENDING CONFIRMATION)";
-            ((TextView)pdfView.findViewById(R.id.pdfScheduleSummary)).setText(waitText);
-        }
-        
-        TextView pdfStatusBadge = pdfView.findViewById(R.id.pdfStatusBadge);
-        String currentStatus = tvReceiptStatus.getText().toString().toUpperCase();
 
-        if (currentStatus.equalsIgnoreCase("OPEN")) {
-            pdfStatusBadge.setText("PENDING");
-            pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
-            pdfStatusBadge.setTextColor(Color.parseColor("#D97706"));
-            TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#D97706")));
-        } else if (currentStatus.contains("COMPLETED")) {
-            pdfStatusBadge.setText("COMPLETED");
-            pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-            pdfStatusBadge.setTextColor(Color.parseColor("#166534"));
-            TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
-        } else {
-            pdfStatusBadge.setText(currentStatus);
-            pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
-            pdfStatusBadge.setTextColor(Color.parseColor("#2563EB"));
-            TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+        TextView tvSchedSummary = pdfView.findViewById(R.id.pdfScheduleSummary);
+        if (tvSchedSummary != null) {
+            if (startTimeVal != null && !startTimeVal.equalsIgnoreCase("To be confirmed")) {
+                String timeOnly = startTimeVal.toUpperCase();
+                String sessionTag = timeOnly.contains("AM") ? "MORNING" : "AFTERNOON";
+                String finalSchedText = (schedDate != null ? schedDate : "TBC") + " • " + timeOnly + " (" + sessionTag + ")";
+                tvSchedSummary.setText(finalSchedText);
+            } else {
+                String waitText = (schedDate != null ? schedDate : "Pending") + " • TBC (PENDING CONFIRMATION)";
+                tvSchedSummary.setText(waitText);
+            }
+        }
+
+        TextView pdfStatusBadge = pdfView.findViewById(R.id.pdfStatusBadge);
+        String currentStatus = tvReceiptStatus != null ? tvReceiptStatus.getText().toString().toUpperCase() : "";
+
+        if (pdfStatusBadge != null) {
+            if (currentStatus.equalsIgnoreCase("OPEN")) {
+                pdfStatusBadge.setText("PENDING");
+                pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
+                pdfStatusBadge.setTextColor(Color.parseColor("#D97706"));
+                TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#D97706")));
+            } else if (currentStatus.contains("COMPLETED")) {
+                pdfStatusBadge.setText("COMPLETED");
+                pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+                pdfStatusBadge.setTextColor(Color.parseColor("#166534"));
+                TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#166534")));
+            } else {
+                pdfStatusBadge.setText(currentStatus);
+                pdfStatusBadge.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
+                pdfStatusBadge.setTextColor(Color.parseColor("#2563EB"));
+                TextViewCompat.setCompoundDrawableTintList(pdfStatusBadge, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+            }
         }
 
         String sroAtTop = currentSnapshot.child("referenceNo").getValue(String.class);
         if (sroAtTop == null) {
             sroAtTop = currentSnapshot.child("sroNumber").getValue(String.class);
         }
+
         TextView tvTicket = pdfView.findViewById(R.id.pdfTicketId);
         if (tvTicket != null) {
             tvTicket.setText(sroAtTop != null ? sroAtTop : "SRO-00000000");
         }
 
         TextView tvCustName = pdfView.findViewById(R.id.pdfCustomerName);
-        if (tvCustName != null) {
+        if (tvCustName != null && tvReceiptCustomerName != null) {
             tvCustName.setText(tvReceiptCustomerName.getText());
         }
 
@@ -171,13 +184,14 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         if (phone == null) {
             phone = currentSnapshot.child("userPhone").getValue(String.class);
         }
+
         TextView tvContact = pdfView.findViewById(R.id.pdfContact);
         if (tvContact != null) {
             tvContact.setText(phone != null ? phone : "Not Provided");
         }
 
         TextView tvAddress = pdfView.findViewById(R.id.pdfAddress);
-        if (tvAddress != null) {
+        if (tvAddress != null && tvReceiptAddress != null) {
             tvAddress.setText(tvReceiptAddress.getText());
         }
 
@@ -216,18 +230,28 @@ public class ServiceReceiptActivity extends AppCompatActivity {
 
         String finalUnitCode = baseUnitTemplate.replace("**-***", unitNumber);
 
-        ((TextView)pdfView.findViewById(R.id.pdfUnit)).setText(friendlyProductName);
-        ((TextView)pdfView.findViewById(R.id.pdfUnitCode)).setText(finalUnitCode);
-        
-        String pt = currentSnapshot.child("purchaseType").getValue(String.class);
-        ((TextView)pdfView.findViewById(R.id.pdfLocation)).setText(pt != null ? pt : "SUBSCRIPTION");
+        TextView tvPdfUnit = pdfView.findViewById(R.id.pdfUnit);
+        if (tvPdfUnit != null) {
+            tvPdfUnit.setText(friendlyProductName);
+        }
+
+        TextView tvPdfUnitCode = pdfView.findViewById(R.id.pdfUnitCode);
+        if (tvPdfUnitCode != null) {
+            tvPdfUnitCode.setText(finalUnitCode);
+        }
+
         String loc = currentSnapshot.child("installationLocation").getValue(String.class);
-        ((TextView)pdfView.findViewById(R.id.pdfLocation)).setText(loc != null ? loc : "Kitchen Area");
+        TextView tvPdfLocation = pdfView.findViewById(R.id.pdfLocation);
+        if (tvPdfLocation != null) {
+            tvPdfLocation.setText(loc != null ? loc : "Kitchen Area");
+        }
 
         String rawInput = currentSnapshot.child("remarks").getValue(String.class);
-        if (rawInput == null) rawInput = "";
-        String p = rawInput.toLowerCase();
+        if (rawInput == null) {
+            rawInput = "";
+        }
 
+        String p = rawInput.toLowerCase();
         String serviceCategory = "General Service";
         String serviceDesc = "Technical system inspection and evaluation.";
         String concernSummary = "General System Check";
@@ -254,14 +278,36 @@ public class ServiceReceiptActivity extends AppCompatActivity {
             concernSummary = "Professional Unit Setup";
         }
 
-        ((TextView)pdfView.findViewById(R.id.pdfServiceType)).setText(serviceCategory);
-        ((TextView)pdfView.findViewById(R.id.pdfDescription)).setText(serviceDesc);
-        ((TextView)pdfView.findViewById(R.id.pdfConcern)).setText(concernSummary);
-        ((TextView)pdfView.findViewById(R.id.pdfRemarks)).setText(rawInput.isEmpty() ? "Standard maintenance request." : rawInput);
+        TextView tvPdfServiceType = pdfView.findViewById(R.id.pdfServiceType);
+        if (tvPdfServiceType != null) {
+            tvPdfServiceType.setText(serviceCategory);
+        }
 
-        String pm = tvReceiptPaymentMethod.getText().toString();
-        ((TextView)pdfView.findViewById(R.id.pdfPaymentMethod)).setText(pm);
-        ((TextView)pdfView.findViewById(R.id.pdfTotalAmount)).setText(tvReceiptTotalAmount.getText());
+        TextView tvPdfDescription = pdfView.findViewById(R.id.pdfDescription);
+        if (tvPdfDescription != null) {
+            tvPdfDescription.setText(serviceDesc);
+        }
+
+        TextView tvPdfConcern = pdfView.findViewById(R.id.pdfConcern);
+        if (tvPdfConcern != null) {
+            tvPdfConcern.setText(concernSummary);
+        }
+
+        TextView tvPdfRemarks = pdfView.findViewById(R.id.pdfRemarks);
+        if (tvPdfRemarks != null) {
+            tvPdfRemarks.setText(rawInput.isEmpty() ? "Standard maintenance request." : rawInput);
+        }
+
+        String pm = tvReceiptPaymentMethod != null ? tvReceiptPaymentMethod.getText().toString() : "COD";
+        TextView tvPdfPaymentMethod = pdfView.findViewById(R.id.pdfPaymentMethod);
+        if (tvPdfPaymentMethod != null) {
+            tvPdfPaymentMethod.setText(pm);
+        }
+
+        TextView tvPdfTotalAmount = pdfView.findViewById(R.id.pdfTotalAmount);
+        if (tvPdfTotalAmount != null && tvReceiptTotalAmount != null) {
+            tvPdfTotalAmount.setText(tvReceiptTotalAmount.getText());
+        }
 
         TextView pdfPaymentStatus = pdfView.findViewById(R.id.pdfPaymentStatus);
         View layoutPdfReference = pdfView.findViewById(R.id.layoutPdfReference);
@@ -271,64 +317,79 @@ public class ServiceReceiptActivity extends AppCompatActivity {
         String statusStr = currentSnapshot.child("paymentStatus").getValue(String.class);
         boolean isPaid = "PAID".equalsIgnoreCase(statusStr);
 
-        if (pm.equalsIgnoreCase("GCash") || pm.equalsIgnoreCase("Maya") || pm.equalsIgnoreCase("Bank Transfer")) {
-            if (isPaid) {
-                pdfPaymentStatus.setText("PAID");
-                pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-                pdfPaymentStatus.setTextColor(Color.parseColor("#166534"));
-                TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#166534")));
-            } else {
-                pdfPaymentStatus.setText("FOR VERIFICATION");
-                pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
-                pdfPaymentStatus.setTextColor(Color.parseColor("#2563EB"));
-                TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+        if (pdfPaymentStatus != null) {
+            if (pm.equalsIgnoreCase("GCash") || pm.equalsIgnoreCase("Maya") || pm.equalsIgnoreCase("Bank Transfer")) {
+                if (isPaid) {
+                    pdfPaymentStatus.setText("PAID");
+                    pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+                    pdfPaymentStatus.setTextColor(Color.parseColor("#166534"));
+                    TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#166534")));
+                } else {
+                    pdfPaymentStatus.setText("FOR VERIFICATION");
+                    pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_blue_pill);
+                    pdfPaymentStatus.setTextColor(Color.parseColor("#2563EB"));
+                    TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#2563EB")));
+                }
+
+                if (refNo != null && !refNo.isEmpty()) {
+                    if (layoutPdfReference != null) {
+                        layoutPdfReference.setVisibility(View.VISIBLE);
+                    }
+                    if (pdfReferenceNo != null) {
+                        pdfReferenceNo.setText(refNo);
+                    }
+                }
+            } else if (pm.equalsIgnoreCase("COD")) {
+                if (isPaid) {
+                    pdfPaymentStatus.setText("PAID");
+                    pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
+                    pdfPaymentStatus.setTextColor(Color.parseColor("#166534"));
+                    TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#166534")));
+                } else {
+                    pdfPaymentStatus.setText("PAYMENT DUE");
+                    pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
+                    pdfPaymentStatus.setTextColor(Color.parseColor("#D97706"));
+                    TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#D97706")));
+                }
+                if (layoutPdfReference != null) {
+                    layoutPdfReference.setVisibility(View.GONE);
+                }
             }
-            
-            if (refNo != null && !refNo.isEmpty()) {
-                layoutPdfReference.setVisibility(View.VISIBLE);
-                pdfReferenceNo.setText(refNo);
-            }
-        } else if (pm.equalsIgnoreCase("COD")) {
-            if (isPaid) {
-                pdfPaymentStatus.setText("PAID");
-                pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_green_pill);
-                pdfPaymentStatus.setTextColor(Color.parseColor("#166534"));
-                TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#166534")));
-            } else {
-                pdfPaymentStatus.setText("PAYMENT DUE");
-                pdfPaymentStatus.setBackgroundResource(R.drawable.bg_pdf_status_pending_pill);
-                pdfPaymentStatus.setTextColor(Color.parseColor("#D97706"));
-                TextViewCompat.setCompoundDrawableTintList(pdfPaymentStatus, ColorStateList.valueOf(Color.parseColor("#D97706")));
-            }
-            layoutPdfReference.setVisibility(View.GONE);
         }
 
         String techNameText = currentSnapshot.child("assignedTechName").getValue(String.class);
-        if (techNameText == null) techNameText = "Aqua Technician";
+        if (techNameText == null) {
+            techNameText = "Aqua Technician";
+        }
+
         TextView pdfTechNameView = pdfView.findViewById(R.id.pdfTechName);
-        if (pdfTechNameView != null) pdfTechNameView.setText(techNameText);
+        if (pdfTechNameView != null) {
+            pdfTechNameView.setText(techNameText);
+        }
 
         LinearLayout pdfOrdersContainer = pdfView.findViewById(R.id.pdfOrdersContainer);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_cbc", "Filter 0064-CBC", 2000);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_sediment", "Filter 0055-SEDIMENT", 1000);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_aquatal", "Aquatal Replacement", 2000);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_inline", "Inline Filter", 3000);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_uvlamp", "UV Lamp", 1500);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_touchpanel", "Touch Panel", 750);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_pbcboard", "PBC Board", 3000);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_smsf1", "SMSF 1µ CBC", 2000);
-        addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_smsf10", "SMSF 10µ SED", 1000);
+        if (pdfOrdersContainer != null) {
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_cbc", "Filter 0064-CBC", 2000);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_sediment", "Filter 0055-SEDIMENT", 1000);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_aquatal", "Aquatal Replacement", 2000);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_inline", "Inline Filter", 3000);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_uvlamp", "UV Lamp", 1500);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_touchpanel", "Touch Panel", 750);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_pbcboard", "PBC Board", 3000);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_smsf1", "SMSF 1µ CBC", 2000);
+            addPdfOrder(currentSnapshot, pdfOrdersContainer, "qty_smsf10", "SMSF 10µ SED", 1000);
+        }
 
         try {
             int width = 1200;
-            pdfView.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY), 
-                          View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            pdfView.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
             pdfView.layout(0, 0, pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight());
 
             Bitmap bitmap = Bitmap.createBitmap(pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
-            
+
             canvas.drawColor(Color.WHITE);
             pdfView.draw(canvas);
 
@@ -338,29 +399,35 @@ public class ServiceReceiptActivity extends AppCompatActivity {
             page.getCanvas().drawBitmap(bitmap, 0, 0, new Paint());
             document.finishPage(page);
 
-            String tIdText = tvTicketId.getText().toString().replace("#", "").trim();
+            String tIdText = tvTicketId != null ? tvTicketId.getText().toString().replace("#", "").trim() : "00000000";
             String fileName = "AquaTech_Official_Receipt_" + tIdText + ".pdf";
 
-            OutputStream fos;
+            OutputStream fos = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
                 contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf");
                 contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/AquaTech");
                 Uri uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues);
-                fos = getContentResolver().openOutputStream(uri);
+                if (uri != null) {
+                    fos = getContentResolver().openOutputStream(uri);
+                }
             } else {
                 File downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                 File folder = new File(downloadDir, "AquaTech");
-                if (!folder.exists()) folder.mkdirs();
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }
                 File file = new File(folder, fileName);
                 fos = new FileOutputStream(file);
             }
 
-            document.writeTo(fos);
-            document.close();
-            if (fos != null) fos.close();
+            if (fos != null) {
+                document.writeTo(fos);
+                fos.close();
+            }
 
+            document.close();
             Toast.makeText(this, "Professional Receipt saved to Downloads/AquaTech", Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
@@ -369,121 +436,213 @@ public class ServiceReceiptActivity extends AppCompatActivity {
     }
 
     private void addPdfOrder(DataSnapshot snapshot, LinearLayout container, String key, String name, int price) {
+        if (snapshot == null || container == null) {
+            return;
+        }
+
         Object val = snapshot.child(key).getValue();
         int q = 0;
-        if (val instanceof Number) q = ((Number) val).intValue();
-        
+        if (val instanceof Number) {
+            q = ((Number) val).intValue();
+        }
+
         if (q > 0) {
             View row = getLayoutInflater().inflate(R.layout.item_pdf_billing_row, container, false);
-            ((TextView)row.findViewById(R.id.pdfItemName)).setText(name);
-            ((TextView)row.findViewById(R.id.pdfItemQty)).setText(String.valueOf(q));
-            ((TextView)row.findViewById(R.id.pdfItemPrice)).setText("₱ " + String.format("%,d", q * price) + ".00");
-            container.addView(row);
+            if (row != null) {
+                TextView tvItemName = row.findViewById(R.id.pdfItemName);
+                if (tvItemName != null) {
+                    tvItemName.setText(name);
+                }
+
+                TextView tvItemQty = row.findViewById(R.id.pdfItemQty);
+                if (tvItemQty != null) {
+                    tvItemQty.setText(String.valueOf(q));
+                }
+
+                TextView tvItemPrice = row.findViewById(R.id.pdfItemPrice);
+                if (tvItemPrice != null) {
+                    tvItemPrice.setText("₱ " + String.format(Locale.getDefault(), "%,d", q * price) + ".00");
+                }
+
+                container.addView(row);
+            }
         }
     }
 
     private void loadReceiptDataFromFirebase() {
         String ticketId = getIntent().getStringExtra("TICKET_ID");
-        if (ticketId == null) return;
-        tvTicketId.setText("#" + ticketId);
+        if (ticketId == null) {
+            return;
+        }
+
+        if (tvTicketId != null) {
+            tvTicketId.setText("#" + ticketId);
+        }
 
         DatabaseReference ref = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    currentSnapshot = snapshot; 
-                    tvReceiptCustomerName.setText(snapshot.child("customerName").getValue(String.class));
-                    tvReceiptAddress.setText(snapshot.child("address").getValue(String.class));
-                    tvReceiptRequestDate.setText(snapshot.child("date").getValue(String.class));
-                    
+                    currentSnapshot = snapshot;
+
+                    if (tvReceiptCustomerName != null) {
+                        tvReceiptCustomerName.setText(snapshot.child("customerName").getValue(String.class));
+                    }
+
+                    if (tvReceiptAddress != null) {
+                        tvReceiptAddress.setText(snapshot.child("address").getValue(String.class));
+                    }
+
+                    if (tvReceiptRequestDate != null) {
+                        tvReceiptRequestDate.setText(snapshot.child("date").getValue(String.class));
+                    }
+
                     String unitModel = snapshot.child("unitName").getValue(String.class);
-                    if (unitModel == null) unitModel = snapshot.child("unitModel").getValue(String.class);
+                    if (unitModel == null) {
+                        unitModel = snapshot.child("unitModel").getValue(String.class);
+                    }
+
                     if (unitModel != null) {
                         String unitCode = unitModel.toUpperCase().contains("CUBE") ? "F-FXCU1-M-HCA-TT" :
-                                         unitModel.toUpperCase().contains("SLIM") ? "S-FXCU1-M-HCA-AA" :
-                                         unitModel.toUpperCase().contains("COUNTER") ? "CT-FXCU1-M-HCA-WT" : "ST-FXCU1-M-HCA-WT";
+                                unitModel.toUpperCase().contains("SLIM") ? "S-FXCU1-M-HCA-AA" :
+                                        unitModel.toUpperCase().contains("COUNTER") ? "CT-FXCU1-M-HCA-WT" : "ST-FXCU1-M-HCA-WT";
                         String suffix = ticketId.length() >= 3 ? ticketId.substring(ticketId.length() - 3) : "000";
-                        tvReceiptUnitName.setText(unitCode + "-T1-" + suffix);
+
+                        if (tvReceiptUnitName != null) {
+                            tvReceiptUnitName.setText(unitCode + "-T1-" + suffix);
+                        }
                     }
 
                     String startTime = snapshot.child("startTime").getValue(String.class);
                     String endTime = snapshot.child("endTime").getValue(String.class);
-                    if (startTime != null && endTime != null) {
+
+                    if (startTime != null && endTime != null && tvReceiptSchedule != null) {
                         tvReceiptSchedule.setText(startTime.toUpperCase() + " TO " + endTime.toUpperCase());
                     }
 
                     String serviceType = snapshot.child("serviceType").getValue(String.class);
-                    if (serviceType == null) serviceType = snapshot.child("purchaseType").getValue(String.class);
-                    if (serviceType != null) {
+                    if (serviceType == null) {
+                        serviceType = snapshot.child("purchaseType").getValue(String.class);
+                    }
+
+                    if (serviceType != null && tvReceiptServiceType != null) {
                         tvReceiptServiceType.setText(serviceType);
                     }
 
                     String pm = snapshot.child("paymentMethod").getValue(String.class);
-                    if (pm != null) tvReceiptPaymentMethod.setText(pm);
-                    
+                    if (pm != null && tvReceiptPaymentMethod != null) {
+                        tvReceiptPaymentMethod.setText(pm);
+                    }
+
                     String bankRef = snapshot.child("bankReference").getValue(String.class);
                     if (bankRef != null && !bankRef.isEmpty()) {
-                        layoutReceiptBankRef.setVisibility(View.VISIBLE);
-                        tvReceiptBankRef.setText(bankRef);
-                    } else {
+                        if (layoutReceiptBankRef != null) {
+                            layoutReceiptBankRef.setVisibility(View.VISIBLE);
+                        }
+
+                        if (tvReceiptBankRef != null) {
+                            tvReceiptBankRef.setText(bankRef);
+                        }
+                    } else if (layoutReceiptBankRef != null) {
                         layoutReceiptBankRef.setVisibility(View.GONE);
                     }
 
                     String status = snapshot.child("status").getValue(String.class);
-                    if (status == null) status = "OPEN";
-                    updateStatusUI(status);
-                    String techId = snapshot.child("assignedTechId").getValue(String.class);
-                    if (techId == null || techId.isEmpty()) techId = snapshot.child("technicianId").getValue(String.class);
+                    if (status == null) {
+                        status = "OPEN";
+                    }
 
-                    containerReceiptItems.removeAllViews();
-                    addOrder(snapshot, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
-                    addOrder(snapshot, "qty_cbc", "Filter 0064-CBC", 2000);
-                    addOrder(snapshot, "qty_sediment", "Filter 0055-SEDIMENT", 1000);
-                    addOrder(snapshot, "qty_aquatal", "Aquatal Replacement", 2000);
-                    addOrder(snapshot, "qty_inline", "Inline Filter", 3000);
-                    addOrder(snapshot, "qty_uvlamp", "UV Lamp", 1500);
-                    addOrder(snapshot, "qty_touchpanel", "Touch Panel", 750);
-                    addOrder(snapshot, "qty_pbcboard", "PBC Board", 3000);
-                    addOrder(snapshot, "qty_smsf1", "SMSF 1u CBC", 2000);
-                    addOrder(snapshot, "qty_smsf10", "SMSF 1u SED", 1000);
+                    updateStatusUI(status);
+
+                    String techId = snapshot.child("assignedTechId").getValue(String.class);
+                    if (techId == null || techId.isEmpty()) {
+                        techId = snapshot.child("technicianId").getValue(String.class);
+                    }
+
+                    if (containerReceiptItems != null) {
+                        containerReceiptItems.removeAllViews();
+                        addOrder(snapshot, "qty_wayvalve", "Installation Kit (3-Way Valve)", 350);
+                        addOrder(snapshot, "qty_cbc", "Filter 0064-CBC", 2000);
+                        addOrder(snapshot, "qty_sediment", "Filter 0055-SEDIMENT", 1000);
+                        addOrder(snapshot, "qty_aquatal", "Aquatal Replacement", 2000);
+                        addOrder(snapshot, "qty_inline", "Inline Filter", 3000);
+                        addOrder(snapshot, "qty_uvlamp", "UV Lamp", 1500);
+                        addOrder(snapshot, "qty_touchpanel", "Touch Panel", 750);
+                        addOrder(snapshot, "qty_pbcboard", "PBC Board", 3000);
+                        addOrder(snapshot, "qty_smsf1", "SMSF 1u CBC", 2000);
+                        addOrder(snapshot, "qty_smsf10", "SMSF 1u SED", 1000);
+                    }
 
                     Double total = snapshot.child("totalAmount").getValue(Double.class);
-                    tvReceiptTotalAmount.setText("₱ " + String.format("%,.2f", total != null ? total : 0.0));
+                    if (tvReceiptTotalAmount != null) {
+                        tvReceiptTotalAmount.setText("₱ " + String.format(Locale.getDefault(), "%,.2f", total != null ? total : 0.0));
+                    }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void updateStatusUI(String status) {
-        tvReceiptStatus.setText(status.toUpperCase());
-        if (status.equalsIgnoreCase("COMPLETED") || status.equalsIgnoreCase("APPROVED") || status.equalsIgnoreCase("ACCEPTED") || status.equalsIgnoreCase("In Progress") || status.equalsIgnoreCase("Submission")) {
-            tvReceiptStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.status_completed_green));
-        } else if (status.equalsIgnoreCase("CANCELLED")) {
-            tvReceiptStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.status_cancelled_red));
-        } else {
-            tvReceiptStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.status_open_blue));
+        if (status == null) {
+            return;
+        }
+
+        if (tvReceiptStatus != null) {
+            tvReceiptStatus.setText(status.toUpperCase());
+            if (status.equalsIgnoreCase("COMPLETED") || status.equalsIgnoreCase("APPROVED") || status.equalsIgnoreCase("ACCEPTED") || status.equalsIgnoreCase("In Progress") || status.equalsIgnoreCase("Submission")) {
+                tvReceiptStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.status_completed_green));
+            } else if (status.equalsIgnoreCase("CANCELLED")) {
+                tvReceiptStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.status_cancelled_red));
+            } else {
+                tvReceiptStatus.setBackground(ContextCompat.getDrawable(this, R.drawable.status_open_blue));
+            }
         }
     }
 
     private void addOrder(DataSnapshot snapshot, String key, String name, int price) {
+        if (snapshot == null || containerReceiptItems == null) {
+            return;
+        }
+
         Object val = snapshot.child(key).getValue();
         int q = 0;
-        if (val instanceof Number) q = ((Number) val).intValue();
+        if (val instanceof Number) {
+            q = ((Number) val).intValue();
+        }
 
         if (q > 0) {
             View row = getLayoutInflater().inflate(R.layout.item_billing_row, containerReceiptItems, false);
-            ((TextView)row.findViewById(R.id.tvItemName)).setText(name + " x" + q);
-            ((TextView)row.findViewById(R.id.tvItemPrice)).setText("₱ " + String.format("%,d", q * price) + ".00");
-            containerReceiptItems.addView(row);
+            if (row != null) {
+                TextView tvItemName = row.findViewById(R.id.tvItemName);
+                if (tvItemName != null) {
+                    tvItemName.setText(name + " x" + q);
+                }
+
+                TextView tvItemPrice = row.findViewById(R.id.tvItemPrice);
+                if (tvItemPrice != null) {
+                    tvItemPrice.setText("₱ " + String.format(Locale.getDefault(), "%,d", q * price) + ".00");
+                }
+
+                containerReceiptItems.addView(row);
+            }
         }
     }
 
     private boolean matchKeywords(String input, String... keywords) {
-        for (String k : keywords) {
-            if (input.contains(k)) return true;
+        if (input == null || keywords == null) {
+            return false;
         }
+
+        for (String k : keywords) {
+            if (k != null && input.contains(k)) {
+                return true;
+            }
+        }
+
         return false;
     }
 
