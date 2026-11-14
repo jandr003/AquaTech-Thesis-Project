@@ -51,6 +51,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ import java.io.File;
 
 public class ServiceRequestActivity extends AppCompatActivity {
 
-    private int currentStep = 1; 
+    private int currentStep = 1;
     private boolean adminWillSchedule = false;
     private ImageView imgPreview, imgPlaceHolder, exitIcon;
     private TextView customerLabel, customerRefNum, customerValidIdLabel, tvCustomerNameValue, takePhotoOrUpload;
@@ -98,16 +99,35 @@ public class ServiceRequestActivity extends AppCompatActivity {
     private AppCompatButton btnSubscription, btnOutright, btnOccular, btnBackNav;
     private TextView tvServiceFee;
 
-    private int currentQtyCBC = 0, currentQtySEDIMENT = 0, currentQtyAquatal = 0, currentQtyInlineFilter = 0, currentQtyUvLamp = 0, currentQtyTouchPanel = 0, currentQtyPbcBoard = 0, currentQtySmsf1Cbc = 0, currentQtySmsf10Sed = 0, currentQtyWayValve = 0;
+    private int currentQtyCBC = 0;
+    private int currentQtySEDIMENT = 0;
+    private int currentQtyAquatal = 0;
+    private int currentQtyInlineFilter = 0;
+    private int currentQtyUvLamp = 0;
+    private int currentQtyTouchPanel = 0;
+    private int currentQtyPbcBoard = 0;
+    private int currentQtySmsf1Cbc = 0;
+    private int currentQtySmsf10Sed = 0;
+    private int currentQtyWayValve = 0;
 
-    private final int PRICE_3WAY_VALVE = 350, PRICE_0064_CBC = 2000, PRICE_0055_SED = 1000, PRICE_AQUATAL = 2000, PRICE_INLINE = 3000, PRICE_UV_LAMP = 1500, PRICE_TOUCH_PANEL = 750, PRICE_PBC_BOARD = 3000, PRICE_SMSF_1_CBC = 2000, PRICE_SMSF_10_SED = 1000;
+    private final int PRICE_3WAY_VALVE = 350;
+    private final int PRICE_0064_CBC = 2000;
+    private final int PRICE_0055_SED = 1000;
+    private final int PRICE_AQUATAL = 2000;
+    private final int PRICE_INLINE = 3000;
+    private final int PRICE_UV_LAMP = 1500;
+    private final int PRICE_TOUCH_PANEL = 750;
+    private final int PRICE_PBC_BOARD = 3000;
+    private final int PRICE_SMSF_1_CBC = 2000;
+    private final int PRICE_SMSF_10_SED = 1000;
 
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
     private FirebaseAuth mAuth;
     private Button buttonSubmit;
 
     private FusedLocationProviderClient fusedLocationClient;
-    private double currentLat = 0.0, currentLng = 0.0;
+    private double currentLat = 0.0;
+    private double currentLng = 0.0;
     private String originalProfileAddress = "";
 
     @Override
@@ -116,8 +136,10 @@ public class ServiceRequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_request);
 
         String userSro = getIntent().getStringExtra("UNIT_SRO");
-        if (userSro != null && etCustomerRef != null) etCustomerRef.setText(userSro);
-        
+        if (userSro != null && etCustomerRef != null) {
+            etCustomerRef.setText(userSro);
+        }
+
         mAuth = FirebaseAuth.getInstance();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -136,8 +158,14 @@ public class ServiceRequestActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
 
-        displayDate.setText(new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(new Date()));
-        buttonSubmit.setOnClickListener(v -> checkExistingRequestBeforeSubmission());
+        if (displayDate != null) {
+            displayDate.setText(new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(new Date()));
+        }
+
+        if (buttonSubmit != null) {
+            buttonSubmit.setOnClickListener(v -> checkExistingRequestBeforeSubmission());
+        }
+
         updateStepUI();
     }
 
@@ -148,8 +176,14 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void checkExistingRequestBeforeSubmission() {
+        if (mAuth == null) {
+            return;
+        }
+
         String uid = mAuth.getUid();
-        if (uid == null) return;
+        if (uid == null) {
+            return;
+        }
 
         ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Verifying active service records...");
@@ -161,17 +195,20 @@ public class ServiceRequestActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        pd.dismiss();
+                        try {
+                            pd.dismiss();
+                        } catch (Exception ignored) {}
+
                         boolean hasActiveRequest = false;
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             String status = ds.child("status").getValue(String.class);
-                            if (status != null && (status.equalsIgnoreCase("Open") || 
-                                status.equalsIgnoreCase("Assigned") || 
-                                status.equalsIgnoreCase("In Progress") || 
-                                status.equalsIgnoreCase("Arrived") || 
-                                status.equalsIgnoreCase("Ongoing") || 
-                                status.equalsIgnoreCase("Submission") || 
-                                status.equalsIgnoreCase("Submitted"))) {
+                            if (status != null && (status.equalsIgnoreCase("Open") ||
+                                    status.equalsIgnoreCase("Assigned") ||
+                                    status.equalsIgnoreCase("In Progress") ||
+                                    status.equalsIgnoreCase("Arrived") ||
+                                    status.equalsIgnoreCase("Ongoing") ||
+                                    status.equalsIgnoreCase("Submission") ||
+                                    status.equalsIgnoreCase("Submitted"))) {
                                 hasActiveRequest = true;
                                 break;
                             }
@@ -191,20 +228,22 @@ public class ServiceRequestActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        pd.dismiss();
+                        try {
+                            pd.dismiss();
+                        } catch (Exception ignored) {}
                         handleSubmission();
                     }
                 });
     }
 
     private void handleSubmission() {
-        String inputAddress = etCustomerAddress.getText().toString().trim();
-        String inputMobile = etCustomerNumber.getText().toString().trim();
+        String inputAddress = etCustomerAddress != null ? etCustomerAddress.getText().toString().trim() : "";
+        String inputMobile = etCustomerNumber != null ? etCustomerNumber.getText().toString().trim() : "";
 
         if (!adminWillSchedule) {
             validateAndColorTime();
-            String sTime = startTimeText.getText().toString();
-            String eTime = endTimeText.getText().toString();
+            String sTime = startTimeText != null ? startTimeText.getText().toString() : "";
+            String eTime = endTimeText != null ? endTimeText.getText().toString() : "";
 
             if (sTime.equals("---") || eTime.equals("---") || isOutsideOfficeHours(sTime) || isOutsideOfficeHours(eTime)) {
                 showTimeWarning();
@@ -212,7 +251,7 @@ public class ServiceRequestActivity extends AppCompatActivity {
             }
         }
 
-            if (inputAddress.isEmpty() || inputMobile.isEmpty()) {
+        if (inputAddress.isEmpty() || inputMobile.isEmpty()) {
             Toast.makeText(this, "Please ensure all contact details are complete.", Toast.LENGTH_SHORT).show();
             currentStep = 1;
             updateStepUI();
@@ -237,14 +276,24 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private boolean isOutsideOfficeHours(String timeStr) {
-        if (timeStr == null || timeStr.isEmpty()) return true;
-        if (timeStr.equalsIgnoreCase("To be confirmed")) return false;
-        if (timeStr.equals("---")) return true;
+        if (timeStr == null || timeStr.isEmpty()) {
+            return true;
+        }
+
+        if (timeStr.equalsIgnoreCase("To be confirmed")) {
+            return false;
+        }
+
+        if (timeStr.equals("---")) {
+            return true;
+        }
 
         Calendar cal = Calendar.getInstance();
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        if (dayOfWeek == Calendar.SUNDAY) return true;
-        
+        if (dayOfWeek == Calendar.SUNDAY) {
+            return true;
+        }
+
         try {
             String[] parts = timeStr.split("[: ]");
             int hour = Integer.parseInt(parts[0]);
@@ -252,20 +301,34 @@ public class ServiceRequestActivity extends AppCompatActivity {
             String amPm = parts[2];
 
             int militaryHour = hour;
-            if (amPm.equalsIgnoreCase("PM") && hour != 12) militaryHour += 12;
-            if (amPm.equalsIgnoreCase("AM") && hour == 12) militaryHour = 0;
+            if (amPm.equalsIgnoreCase("PM") && hour != 12) {
+                militaryHour += 12;
+            }
+            if (amPm.equalsIgnoreCase("AM") && hour == 12) {
+                militaryHour = 0;
+            }
 
-            if (militaryHour < 8 || militaryHour > 17) return true;
-            if (militaryHour == 17 && min > 0) return true;
-            
+            if (militaryHour < 8 || militaryHour > 17) {
+                return true;
+            }
+
+            if (militaryHour == 17 && min > 0) {
+                return true;
+            }
+
             return false;
-        } catch (Exception e) { return true; }
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     private void validateAndColorTime() {
-        if (adminWillSchedule) return;
-        String sTime = startTimeText.getText().toString();
-        String eTime = endTimeText.getText().toString();
+        if (adminWillSchedule) {
+            return;
+        }
+
+        String sTime = startTimeText != null ? startTimeText.getText().toString() : "";
+        String eTime = endTimeText != null ? endTimeText.getText().toString() : "";
 
         boolean sInvalid = isOutsideOfficeHours(sTime);
         boolean eInvalid = isOutsideOfficeHours(eTime);
@@ -273,27 +336,33 @@ public class ServiceRequestActivity extends AppCompatActivity {
         View sUnderline = findViewById(R.id.startTimeUnderline);
         TextView serviceTimeLabel = findViewById(R.id.serviceTimeLabel);
 
-        if (sInvalid) {
-            startTimeText.setTextColor(Color.RED);
-            if (sUnderline != null) sUnderline.setBackgroundColor(Color.RED);
-        } else {
-            startTimeText.setTextColor(Color.parseColor("#333333"));
-            if (sUnderline != null) sUnderline.setBackgroundColor(Color.parseColor("#000000"));
+        if (startTimeText != null) {
+            if (sInvalid) {
+                startTimeText.setTextColor(Color.RED);
+                if (sUnderline != null) {
+                    sUnderline.setBackgroundColor(Color.RED);
+                }
+            } else {
+                startTimeText.setTextColor(Color.parseColor("#333333"));
+                if (sUnderline != null) {
+                    sUnderline.setBackgroundColor(Color.parseColor("#000000"));
+                }
+            }
         }
 
-        if (eInvalid) {
-            endTimeText.setTextColor(Color.RED);
-        } else {
-            endTimeText.setTextColor(Color.parseColor("#333333"));
+        if (endTimeText != null) {
+            if (eInvalid) {
+                endTimeText.setTextColor(Color.RED);
+            } else {
+                endTimeText.setTextColor(Color.parseColor("#333333"));
+            }
         }
 
-        if (sInvalid || eInvalid) {
-            if (serviceTimeLabel != null) {
+        if (serviceTimeLabel != null) {
+            if (sInvalid || eInvalid) {
                 serviceTimeLabel.setText("Preferred Service Time (8:00 AM – 5:00 PM Only)");
                 serviceTimeLabel.setTextColor(Color.RED);
-            }
-        } else {
-            if (serviceTimeLabel != null) {
+            } else {
                 serviceTimeLabel.setText("SERVICE TIME");
                 serviceTimeLabel.setTextColor(Color.parseColor("#5B5B5B"));
             }
@@ -311,7 +380,10 @@ public class ServiceRequestActivity extends AppCompatActivity {
 
     private void initializeViews() {
         exitIcon = findViewById(R.id.ExitIcon);
-        exitIcon.setOnClickListener(v -> finish());
+        if (exitIcon != null) {
+            exitIcon.setOnClickListener(v -> finish());
+        }
+
         customerLabel = findViewById(R.id.customerLabel);
         tvCustomerNameValue = findViewById(R.id.tvCustomerNameValue);
         customerRefNum = findViewById(R.id.customerRefNum);
@@ -329,19 +401,22 @@ public class ServiceRequestActivity extends AppCompatActivity {
         endTimeText = findViewById(R.id.endTimeText);
         purchaseTypeDropdown = findViewById(R.id.purchaseTypeDropdown);
         customerValidIdLabel = findViewById(R.id.customerValidIdLabel);
+
         btnNeedHelp = findViewById(R.id.btnNeedHelp);
-        btnNeedHelp.setOnClickListener(v -> showHelpDialog());
+        if (btnNeedHelp != null) {
+            btnNeedHelp.setOnClickListener(v -> showHelpDialog());
+        }
 
         rbCOD = findViewById(R.id.rbCOD);
         rbGCash = findViewById(R.id.rbGCash);
         rbMaya = findViewById(R.id.rbMaya);
         rbBank = findViewById(R.id.rbBank);
-        
+
         cardGCash = findViewById(R.id.cardGCash);
         cardMaya = findViewById(R.id.cardMaya);
         cardBank = findViewById(R.id.cardBank);
         cardCOD = findViewById(R.id.cardCOD);
-        
+
         tvPaymentTotal = findViewById(R.id.tvPaymentTotal);
         tvServiceFee = findViewById(R.id.tvServiceFee);
 
@@ -353,111 +428,181 @@ public class ServiceRequestActivity extends AppCompatActivity {
         imgReceiptPreview = findViewById(R.id.imgReceiptPreview);
         bankSpinner = findViewById(R.id.bankSpinner);
 
-        ArrayAdapter<CharSequence> bankAdapter = ArrayAdapter.createFromResource(this, R.array.bank_options, android.R.layout.simple_spinner_item);
-        bankAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bankSpinner.setAdapter(bankAdapter);
+        if (bankSpinner != null) {
+            ArrayAdapter<CharSequence> bankAdapter = ArrayAdapter.createFromResource(this, R.array.bank_options, android.R.layout.simple_spinner_item);
+            bankAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            bankSpinner.setAdapter(bankAdapter);
 
-        bankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedBank = parent.getItemAtPosition(position).toString();
-                if (selectedBank.contains("BPI")) tvBankAccNum.setText("1234 5678 90");
-                else if (selectedBank.contains("BDO")) tvBankAccNum.setText("0012 3456 7890");
-                else if (selectedBank.contains("Metrobank")) tvBankAccNum.setText("987 654 321");
-                else if (selectedBank.contains("Unionbank")) tvBankAccNum.setText("1094 1234 5678");
-                else tvBankAccNum.setText("0000 0000 0000");
-            }
-            @Override public void onNothingSelected(AdapterView<?> parent) {}
-        });
+            bankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (tvBankAccNum == null) {
+                        return;
+                    }
+
+                    String selectedBank = parent.getItemAtPosition(position).toString();
+                    if (selectedBank.contains("BPI")) {
+                        tvBankAccNum.setText("1234 5678 90");
+                    } else if (selectedBank.contains("BDO")) {
+                        tvBankAccNum.setText("0012 3456 7890");
+                    } else if (selectedBank.contains("Metrobank")) {
+                        tvBankAccNum.setText("987 654 321");
+                    } else if (selectedBank.contains("Unionbank")) {
+                        tvBankAccNum.setText("1094 1234 5678");
+                    } else {
+                        tvBankAccNum.setText("0000 0000 0000");
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });
+        }
 
         btnSubscription = findViewById(R.id.btnSubscription);
         btnOutright = findViewById(R.id.btnOutright);
         btnOccular = findViewById(R.id.btnOccular);
         btnBackNav = findViewById(R.id.btnBackNav);
-        btnBackNav.setOnClickListener(v -> handleBackNavigation());
 
-        findViewById(R.id.EditPen1).setOnClickListener(v -> {
-            etCustomerNumber.requestFocus(); InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(etCustomerNumber, 0);
-        });
+        if (btnBackNav != null) {
+            btnBackNav.setOnClickListener(v -> handleBackNavigation());
+        }
 
-        findViewById(R.id.EditPen2).setOnClickListener(v -> {
-            Intent intent = new Intent(this, MapPickerActivity.class);
-            mapLauncher.launch(intent);
-        });
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.purchase_type_options, android.R.layout.simple_spinner_item);
-        purchaseTypeDropdown.setAdapter(adapter);
-
-        findViewById(R.id.startTimeArrow).setOnClickListener(v -> {
-            AquaTimePickerDialog.showStart(getSupportFragmentManager(), (startTime, endTime) -> {
-                startTimeText.setText(startTime);
-                endTimeText.setText(endTime);
-                validateAndColorTime();
+        View pen1 = findViewById(R.id.EditPen1);
+        if (pen1 != null) {
+            pen1.setOnClickListener(v -> {
+                if (etCustomerNumber != null) {
+                    etCustomerNumber.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.showSoftInput(etCustomerNumber, 0);
+                    }
+                }
             });
-        });
+        }
+
+        View pen2 = findViewById(R.id.EditPen2);
+        if (pen2 != null) {
+            pen2.setOnClickListener(v -> {
+                Intent intent = new Intent(this, MapPickerActivity.class);
+                if (mapLauncher != null) {
+                    mapLauncher.launch(intent);
+                }
+            });
+        }
+
+        if (purchaseTypeDropdown != null) {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.purchase_type_options, android.R.layout.simple_spinner_item);
+            purchaseTypeDropdown.setAdapter(adapter);
+        }
+
+        View timeArrow = findViewById(R.id.startTimeArrow);
+        if (timeArrow != null) {
+            timeArrow.setOnClickListener(v -> {
+                AquaTimePickerDialog.showStart(getSupportFragmentManager(), (startTime, endTime) -> {
+                    if (startTimeText != null) {
+                        startTimeText.setText(startTime);
+                    }
+                    if (endTimeText != null) {
+                        endTimeText.setText(endTime);
+                    }
+                    validateAndColorTime();
+                });
+            });
+        }
 
         View.OnClickListener paymentClickListener = v -> {
-            rbGCash.setChecked(v.getId() == R.id.cardGCash);
-            rbMaya.setChecked(v.getId() == R.id.cardMaya);
-            rbBank.setChecked(v.getId() == R.id.cardBank);
-            rbCOD.setChecked(v.getId() == R.id.cardCOD);
+            if (rbGCash != null) {
+                rbGCash.setChecked(v.getId() == R.id.cardGCash);
+            }
+            if (rbMaya != null) {
+                rbMaya.setChecked(v.getId() == R.id.cardMaya);
+            }
+            if (rbBank != null) {
+                rbBank.setChecked(v.getId() == R.id.cardBank);
+            }
+            if (rbCOD != null) {
+                rbCOD.setChecked(v.getId() == R.id.cardCOD);
+            }
 
             int blue = Color.parseColor("#2196F3");
             int gray = Color.parseColor("#E2E8F0");
 
-            if (v.getId() == R.id.cardGCash) {
-                cardGCash.setStrokeColor(blue);
-            } else {
-                cardGCash.setStrokeColor(gray);
+            if (cardGCash != null) {
+                cardGCash.setStrokeColor(v.getId() == R.id.cardGCash ? blue : gray);
             }
 
-            if (v.getId() == R.id.cardMaya) {
-                cardMaya.setStrokeColor(blue);
-            } else {
-                cardMaya.setStrokeColor(gray);
+            if (cardMaya != null) {
+                cardMaya.setStrokeColor(v.getId() == R.id.cardMaya ? blue : gray);
             }
 
-            if (v.getId() == R.id.cardBank) {
-                cardBank.setStrokeColor(blue);
-            } else {
-                cardBank.setStrokeColor(gray);
+            if (cardBank != null) {
+                cardBank.setStrokeColor(v.getId() == R.id.cardBank ? blue : gray);
             }
 
-            if (v.getId() == R.id.cardCOD) {
-                cardCOD.setStrokeColor(blue);
-            } else {
-                cardCOD.setStrokeColor(gray);
+            if (cardCOD != null) {
+                cardCOD.setStrokeColor(v.getId() == R.id.cardCOD ? blue : gray);
             }
 
-            if (v.getId() == R.id.cardBank) {
-                bankDetailsContainer.setVisibility(View.VISIBLE);
-                refreshTotal();
-            } else {
-                bankDetailsContainer.setVisibility(View.GONE);
+            if (bankDetailsContainer != null) {
+                if (v.getId() == R.id.cardBank) {
+                    bankDetailsContainer.setVisibility(View.VISIBLE);
+                    refreshTotal();
+                } else {
+                    bankDetailsContainer.setVisibility(View.GONE);
+                }
             }
         };
 
-        cardGCash.setOnClickListener(paymentClickListener);
-        cardMaya.setOnClickListener(paymentClickListener);
-        cardBank.setOnClickListener(paymentClickListener);
-        cardCOD.setOnClickListener(paymentClickListener);
+        if (cardGCash != null) {
+            cardGCash.setOnClickListener(paymentClickListener);
+        }
 
-        rbCOD.setChecked(true);
-        cardCOD.setStrokeColor(Color.parseColor("#2196F3"));
+        if (cardMaya != null) {
+            cardMaya.setOnClickListener(paymentClickListener);
+        }
 
-        findViewById(R.id.btnUploadReceipt).setOnClickListener(v -> {
-            isUploadingReceipt = true;
-            showUploadDialog();
-        });
+        if (cardBank != null) {
+            cardBank.setOnClickListener(paymentClickListener);
+        }
+
+        if (cardCOD != null) {
+            cardCOD.setOnClickListener(paymentClickListener);
+        }
+
+        if (rbCOD != null) {
+            rbCOD.setChecked(true);
+        }
+
+        if (cardCOD != null) {
+            cardCOD.setStrokeColor(Color.parseColor("#2196F3"));
+        }
+
+        View btnUploadReceipt = findViewById(R.id.btnUploadReceipt);
+        if (btnUploadReceipt != null) {
+            btnUploadReceipt.setOnClickListener(v -> {
+                isUploadingReceipt = true;
+                showUploadDialog();
+            });
+        }
 
         View.OnClickListener idUploadTrigger = v -> {
             isUploadingReceipt = false;
             showUploadDialog();
         };
-        customerCard.setOnClickListener(idUploadTrigger);
-        findViewById(R.id.idPlaceholder).setOnClickListener(idUploadTrigger);
-        takePhotoOrUpload.setOnClickListener(idUploadTrigger);
+
+        if (customerCard != null) {
+            customerCard.setOnClickListener(idUploadTrigger);
+        }
+
+        View idPlaceholder = findViewById(R.id.idPlaceholder);
+        if (idPlaceholder != null) {
+            idPlaceholder.setOnClickListener(idUploadTrigger);
+        }
+
+        if (takePhotoOrUpload != null) {
+            takePhotoOrUpload.setOnClickListener(idUploadTrigger);
+        }
 
         setupPurchaseTypeHandlers();
     }
@@ -471,15 +616,35 @@ public class ServiceRequestActivity extends AppCompatActivity {
 
     private void setupPurchaseTypeHandlers() {
         View.OnClickListener listener = v -> {
-            btnSubscription.setSelected(false);
-            btnOutright.setSelected(false);
-            btnOccular.setSelected(false);
-            v.setSelected(true);
+            if (btnSubscription != null) {
+                btnSubscription.setSelected(false);
+            }
+
+            if (btnOutright != null) {
+                btnOutright.setSelected(false);
+            }
+
+            if (btnOccular != null) {
+                btnOccular.setSelected(false);
+            }
+
+            if (v != null) {
+                v.setSelected(true);
+            }
         };
-        btnSubscription.setOnClickListener(listener);
-        btnOutright.setOnClickListener(listener);
-        btnOccular.setOnClickListener(listener);
-        btnSubscription.setSelected(true);
+
+        if (btnSubscription != null) {
+            btnSubscription.setOnClickListener(listener);
+            btnSubscription.setSelected(true);
+        }
+
+        if (btnOutright != null) {
+            btnOutright.setOnClickListener(listener);
+        }
+
+        if (btnOccular != null) {
+            btnOccular.setOnClickListener(listener);
+        }
     }
 
     private void showFAQs() {
@@ -495,12 +660,27 @@ public class ServiceRequestActivity extends AppCompatActivity {
 
     private void showHelpDialog() {
         String[] options = {"Call Support", "Message Support", "FAQ Guide", "Our Office"};
-        new AlertDialog.Builder(this).setTitle("Support Center").setItems(options, (dialog, which) -> {
-            if (which == 0) { Intent i = new Intent(Intent.ACTION_DIAL); i.setData(Uri.parse("tel:09171234567")); startActivity(i); }
-            else if (which == 1) Toast.makeText(this, "Support chat opening...", Toast.LENGTH_SHORT).show();
-            else if (which == 2) showFAQs();
-            else if (which == 3) { new AlertDialog.Builder(this).setTitle("Office").setMessage("GF, Makati City, 1209 Metro Manila").setPositiveButton("OK", null).show(); }
-        }).setNegativeButton("Close", null).show();
+        new AlertDialog.Builder(this)
+                .setTitle("Support Center")
+                .setItems(options, (dialog, which) -> {
+                    if (which == 0) {
+                        Intent i = new Intent(Intent.ACTION_DIAL);
+                        i.setData(Uri.parse("tel:09171234567"));
+                        startActivity(i);
+                    } else if (which == 1) {
+                        Toast.makeText(this, "Support chat opening...", Toast.LENGTH_SHORT).show();
+                    } else if (which == 2) {
+                        showFAQs();
+                    } else if (which == 3) {
+                        new AlertDialog.Builder(this)
+                                .setTitle("Office")
+                                .setMessage("GF, Makati City, 1209 Metro Manila")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    }
+                })
+                .setNegativeButton("Close", null)
+                .show();
     }
 
     private void setupLaunchers() {
@@ -544,9 +724,10 @@ public class ServiceRequestActivity extends AppCompatActivity {
         mapLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 String addr = result.getData().getStringExtra("ADDRESS");
-                if (addr != null) {
+                if (addr != null && etCustomerAddress != null) {
                     etCustomerAddress.setText(addr);
                 }
+
                 currentLat = result.getData().getDoubleExtra("LAT", 0);
                 currentLng = result.getData().getDoubleExtra("LNG", 0);
             }
@@ -554,9 +735,18 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void showReceiptPreview(Uri uri) {
-        imgReceiptPreview.setVisibility(View.VISIBLE);
-        findViewById(R.id.receiptPlaceholder).setVisibility(View.GONE);
-        Glide.with(this).load(uri).centerCrop().into(imgReceiptPreview);
+        if (imgReceiptPreview != null) {
+            imgReceiptPreview.setVisibility(View.VISIBLE);
+        }
+
+        View receiptPlaceholder = findViewById(R.id.receiptPlaceholder);
+        if (receiptPlaceholder != null) {
+            receiptPlaceholder.setVisibility(View.GONE);
+        }
+
+        if (imgReceiptPreview != null && uri != null) {
+            Glide.with(this).load(uri).centerCrop().into(imgReceiptPreview);
+        }
     }
 
     private void showUploadDialog() {
@@ -571,14 +761,18 @@ public class ServiceRequestActivity extends AppCompatActivity {
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);
                         }
                     } else if (w == 1) {
-                        galleryLauncher.launch(new PickVisualMediaRequest.Builder()
-                                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                                .build());
+                        if (galleryLauncher != null) {
+                            galleryLauncher.launch(new PickVisualMediaRequest.Builder()
+                                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                                    .build());
+                        }
                     } else {
                         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
                         intent.setType("image/*");
-                        fileLauncher.launch(intent);
+                        if (fileLauncher != null) {
+                            fileLauncher.launch(intent);
+                        }
                     }
                 }).show();
     }
@@ -590,7 +784,9 @@ public class ServiceRequestActivity extends AppCompatActivity {
             photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName);
             photoUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", photoFile);
 
-            cameraLauncher.launch(photoUri);
+            if (cameraLauncher != null) {
+                cameraLauncher.launch(photoUri);
+            }
         } catch (Exception e) {
             Toast.makeText(this, "Failed to open camera: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -606,40 +802,79 @@ public class ServiceRequestActivity extends AppCompatActivity {
             placeholder.setVisibility(View.GONE);
         }
 
-        Glide.with(this)
-                .load(uri)
-                .fitCenter()
-                .into(imgPreview);
+        if (imgPreview != null && uri != null) {
+            Glide.with(this)
+                    .load(uri)
+                    .fitCenter()
+                    .into(imgPreview);
+        }
     }
 
     private void proceedToAnimation() {
         Intent intent = new Intent(this, WaterDropFillAnimationActivity.class);
         intent.putExtra("TICKET_ID", "ASC2026-" + String.format(Locale.getDefault(), "%04d", new Random().nextInt(9000) + 1));
-        intent.putExtra("CUSTOMER_NAME", tvCustomerNameValue.getText().toString());
-        intent.putExtra("CONTACT_NUMBER", etCustomerNumber.getText().toString());
+
+        if (tvCustomerNameValue != null) {
+            intent.putExtra("CUSTOMER_NAME", tvCustomerNameValue.getText().toString());
+        }
+
+        if (etCustomerNumber != null) {
+            intent.putExtra("CONTACT_NUMBER", etCustomerNumber.getText().toString());
+        }
+
         intent.putExtra("ADMIN_WILL_SCHEDULE", adminWillSchedule);
-        intent.putExtra("ADDRESS", etCustomerAddress.getText().toString());
-        intent.putExtra("REF_NO", etCustomerRef.getText().toString());
-        intent.putExtra("DATE", displayDate.getText().toString());
-        intent.putExtra("START_TIME", startTimeText.getText().toString());
-        intent.putExtra("END_TIME", endTimeText.getText().toString());
-        intent.putExtra("REMARKS", remarksInput.getText().toString());
-        
+
+        if (etCustomerAddress != null) {
+            intent.putExtra("ADDRESS", etCustomerAddress.getText().toString());
+        }
+
+        if (etCustomerRef != null) {
+            intent.putExtra("REF_NO", etCustomerRef.getText().toString());
+        }
+
+        if (displayDate != null) {
+            intent.putExtra("DATE", displayDate.getText().toString());
+        }
+
+        if (startTimeText != null) {
+            intent.putExtra("START_TIME", startTimeText.getText().toString());
+        }
+
+        if (endTimeText != null) {
+            intent.putExtra("END_TIME", endTimeText.getText().toString());
+        }
+
+        if (remarksInput != null) {
+            intent.putExtra("REMARKS", remarksInput.getText().toString());
+        }
+
         int itemsTotal = calculateTotalAmount();
         int serviceFee = 0;
-        intent.putExtra("TOTAL_AMOUNT", (double)(itemsTotal + serviceFee));
-        intent.putExtra("SERVICE_FEE", (double)serviceFee);
+        intent.putExtra("TOTAL_AMOUNT", (double) (itemsTotal + serviceFee));
+        intent.putExtra("SERVICE_FEE", (double) serviceFee);
 
         String method = "COD";
-        if (rbGCash.isChecked()) method = "GCash";
-        else if (rbMaya.isChecked()) method = "Maya";
-        else if (rbBank.isChecked()) method = "Bank Transfer";
-        
+        if (rbGCash != null && rbGCash.isChecked()) {
+            method = "GCash";
+        } else if (rbMaya != null && rbMaya.isChecked()) {
+            method = "Maya";
+        } else if (rbBank != null && rbBank.isChecked()) {
+            method = "Bank Transfer";
+        }
+
         intent.putExtra("PAYMENT_METHOD", method);
         if (method.equals("Bank Transfer")) {
-            intent.putExtra("BANK_NAME", bankSpinner.getSelectedItem().toString());
-            intent.putExtra("BANK_REF", etBankRef.getText().toString());
-            if (receiptUri != null) intent.putExtra("RECEIPT_URI", receiptUri.toString());
+            if (bankSpinner != null && bankSpinner.getSelectedItem() != null) {
+                intent.putExtra("BANK_NAME", bankSpinner.getSelectedItem().toString());
+            }
+
+            if (etBankRef != null) {
+                intent.putExtra("BANK_REF", etBankRef.getText().toString());
+            }
+
+            if (receiptUri != null) {
+                intent.putExtra("RECEIPT_URI", receiptUri.toString());
+            }
         }
 
         intent.putExtra("UNIT_MODEL", unitModel);
@@ -661,8 +896,9 @@ public class ServiceRequestActivity extends AppCompatActivity {
         intent.putExtra("QTY_SMSF_1_CBC", currentQtySmsf1Cbc);
         intent.putExtra("QTY_SMSF_10_SED", currentQtySmsf10Sed);
         intent.putExtra("QTY_WAY_VALVE", currentQtyWayValve);
-        
-        startActivity(intent); finish();
+
+        startActivity(intent);
+        finish();
     }
 
     private int calculateTotalAmount() {
@@ -681,22 +917,61 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void fetchCustomerDetails() {
-        String uid = mAuth.getUid(); if (uid == null) return;
+        if (mAuth == null) {
+            return;
+        }
+
+        String uid = mAuth.getUid();
+        if (uid == null) {
+            return;
+        }
+
         FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot s) {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot s) {
                 if (s.exists()) {
-                    tvCustomerNameValue.setText(s.child("fullName").getValue(String.class));
-                    etCustomerNumber.setText(s.child("mobile").getValue(String.class));
-                    String addr = s.child("address").getValue(String.class); etCustomerAddress.setText(addr);
+                    if (tvCustomerNameValue != null) {
+                        tvCustomerNameValue.setText(s.child("fullName").getValue(String.class));
+                    }
+
+                    if (etCustomerNumber != null) {
+                        etCustomerNumber.setText(s.child("mobile").getValue(String.class));
+                    }
+
+                    String addr = s.child("address").getValue(String.class);
+                    if (etCustomerAddress != null) {
+                        etCustomerAddress.setText(addr);
+                    }
+
                     originalProfileAddress = addr != null ? addr : "";
                     String refNo = s.child("referenceNo").getValue(String.class);
-                    if (refNo != null && etCustomerRef != null) etCustomerRef.setText(refNo);
-                    if (s.hasChild("latitude")) currentLat = s.child("latitude").getValue(Double.class);
-                    if (s.hasChild("longitude")) currentLng = s.child("longitude").getValue(Double.class);
-                    if (unitModel == null || unitModel.isEmpty()) unitModel = s.child("unitModel").getValue(String.class);
+
+                    if (refNo != null && etCustomerRef != null) {
+                        etCustomerRef.setText(refNo);
+                    }
+
+                    if (s.hasChild("latitude")) {
+                        Double latVal = s.child("latitude").getValue(Double.class);
+                        if (latVal != null) {
+                            currentLat = latVal;
+                        }
+                    }
+
+                    if (s.hasChild("longitude")) {
+                        Double lngVal = s.child("longitude").getValue(Double.class);
+                        if (lngVal != null) {
+                            currentLng = lngVal;
+                        }
+                    }
+
+                    if (unitModel == null || unitModel.isEmpty()) {
+                        unitModel = s.child("unitModel").getValue(String.class);
+                    }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         });
     }
 
@@ -704,30 +979,39 @@ public class ServiceRequestActivity extends AppCompatActivity {
         qtyCBC = findViewById(R.id.qtyCBC);
         incrementCBC = findViewById(R.id.incrementCBC);
         decrementCBC = findViewById(R.id.decrementCBC);
+
         qtySEDIMENT = findViewById(R.id.qtySEDIMENT);
         incrementSEDIMENT = findViewById(R.id.incrementSEDIMENT);
         decrementSEDIMENT = findViewById(R.id.decrementSEDIMENT);
+
         qtyAquatal = findViewById(R.id.qtyAquatal);
         incrementAquaTal = findViewById(R.id.incrementAquaTal);
         decrementAquatal = findViewById(R.id.decrementAquatal);
+
         qtyInlineFilter = findViewById(R.id.qtyInlineFilter);
         incrementInlineFilter = findViewById(R.id.incrementInlineFilter);
         decrementInlineFilter = findViewById(R.id.decrementInlineFilter);
+
         qtyUvLampLabel = findViewById(R.id.qtyUvLampLabel);
         incrementUvLampLabel = findViewById(R.id.incrementUvLampLabel);
         decrementUvLampLabel = findViewById(R.id.decrementUvLampLabel);
+
         qtyTouchPanel = findViewById(R.id.qtyTouchPanel);
         incrementTouchPanel = findViewById(R.id.incrementTouchPanel);
         decrementTouchPanel = findViewById(R.id.decrementTouchPanel);
+
         qtyPbcBoard = findViewById(R.id.qtyPbcBoard);
         incrementPbcBoard = findViewById(R.id.incrementPbcBoard);
         decrementPbcBoard = findViewById(R.id.decrementPbcBoard);
+
         qtySMSF1uCBC2 = findViewById(R.id.qtySMSF1uCBC2);
         incrementSMSF1uCBC = findViewById(R.id.incrementSMSF1uCBC);
         decrementSMSF1uCBC1 = findViewById(R.id.decrementSMSF1uCBC1);
+
         qtySMSF10uSED2 = findViewById(R.id.qtySMSF10uSED2);
         incrementSMSF10uSED = findViewById(R.id.incrementSMSF10uSED);
         decrementSMSF10uSED_1 = findViewById(R.id.decrementSMSF10uSED_1);
+
         qtyWayvalve2 = findViewById(R.id.qtyWayvalve2);
         incrementWayvalve = findViewById(R.id.incrementWayvalve);
         decrementWayvalve1 = findViewById(R.id.decrementWayvalve1);
@@ -745,102 +1029,132 @@ public class ServiceRequestActivity extends AppCompatActivity {
     }
 
     private void bindQuantity(AppCompatButton inc, AppCompatButton dec, TextView display, String key) {
-        inc.setOnClickListener(v -> updateQuantityValue(key, true, display));
-        dec.setOnClickListener(v -> updateQuantityValue(key, false, display));
+        if (inc != null) {
+            inc.setOnClickListener(v -> updateQuantityValue(key, true, display));
+        }
+
+        if (dec != null) {
+            dec.setOnClickListener(v -> updateQuantityValue(key, false, display));
+        }
     }
 
     private void updateQuantityValue(String key, boolean increment, TextView display) {
+        if (display == null || key == null) {
+            return;
+        }
+
         switch (key) {
             case "WAYVALVE":
                 if (increment) {
-                    if (currentQtyWayValve < 8) currentQtyWayValve++;
-                } else {
-                    if (currentQtyWayValve > 0) currentQtyWayValve--;
+                    if (currentQtyWayValve < 8) {
+                        currentQtyWayValve++;
+                    }
+                } else if (currentQtyWayValve > 0) {
+                    currentQtyWayValve--;
                 }
                 display.setText(String.valueOf(currentQtyWayValve));
                 break;
 
             case "CBC":
                 if (increment) {
-                    if (currentQtyCBC < 8) currentQtyCBC++;
-                } else {
-                    if (currentQtyCBC > 0) currentQtyCBC--;
+                    if (currentQtyCBC < 8) {
+                        currentQtyCBC++;
+                    }
+                } else if (currentQtyCBC > 0) {
+                    currentQtyCBC--;
                 }
                 display.setText(String.valueOf(currentQtyCBC));
                 break;
 
             case "SEDIMENT":
                 if (increment) {
-                    if (currentQtySEDIMENT < 8) currentQtySEDIMENT++;
-                } else {
-                    if (currentQtySEDIMENT > 0) currentQtySEDIMENT--;
+                    if (currentQtySEDIMENT < 8) {
+                        currentQtySEDIMENT++;
+                    }
+                } else if (currentQtySEDIMENT > 0) {
+                    currentQtySEDIMENT--;
                 }
                 display.setText(String.valueOf(currentQtySEDIMENT));
                 break;
 
             case "AQUATAL":
                 if (increment) {
-                    if (currentQtyAquatal < 8) currentQtyAquatal++;
-                } else {
-                    if (currentQtyAquatal > 0) currentQtyAquatal--;
+                    if (currentQtyAquatal < 8) {
+                        currentQtyAquatal++;
+                    }
+                } else if (currentQtyAquatal > 0) {
+                    currentQtyAquatal--;
                 }
                 display.setText(String.valueOf(currentQtyAquatal));
                 break;
 
             case "INLINE":
                 if (increment) {
-                    if (currentQtyInlineFilter < 8) currentQtyInlineFilter++;
-                } else {
-                    if (currentQtyInlineFilter > 0) currentQtyInlineFilter--;
+                    if (currentQtyInlineFilter < 8) {
+                        currentQtyInlineFilter++;
+                    }
+                } else if (currentQtyInlineFilter > 0) {
+                    currentQtyInlineFilter--;
                 }
                 display.setText(String.valueOf(currentQtyInlineFilter));
                 break;
 
             case "UV":
                 if (increment) {
-                    if (currentQtyUvLamp < 8) currentQtyUvLamp++;
-                } else {
-                    if (currentQtyUvLamp > 0) currentQtyUvLamp--;
+                    if (currentQtyUvLamp < 8) {
+                        currentQtyUvLamp++;
+                    }
+                } else if (currentQtyUvLamp > 0) {
+                    currentQtyUvLamp--;
                 }
                 display.setText(String.valueOf(currentQtyUvLamp));
                 break;
 
             case "TOUCH":
                 if (increment) {
-                    if (currentQtyTouchPanel < 8) currentQtyTouchPanel++;
-                } else {
-                    if (currentQtyTouchPanel > 0) currentQtyTouchPanel--;
+                    if (currentQtyTouchPanel < 8) {
+                        currentQtyTouchPanel++;
+                    }
+                } else if (currentQtyTouchPanel > 0) {
+                    currentQtyTouchPanel--;
                 }
                 display.setText(String.valueOf(currentQtyTouchPanel));
                 break;
 
             case "PBC":
                 if (increment) {
-                    if (currentQtyPbcBoard < 8) currentQtyPbcBoard++;
-                } else {
-                    if (currentQtyPbcBoard > 0) currentQtyPbcBoard--;
+                    if (currentQtyPbcBoard < 8) {
+                        currentQtyPbcBoard++;
+                    }
+                } else if (currentQtyPbcBoard > 0) {
+                    currentQtyPbcBoard--;
                 }
                 display.setText(String.valueOf(currentQtyPbcBoard));
                 break;
 
             case "SMSF1":
                 if (increment) {
-                    if (currentQtySmsf1Cbc < 8) currentQtySmsf1Cbc++;
-                } else {
-                    if (currentQtySmsf1Cbc > 0) currentQtySmsf1Cbc--;
+                    if (currentQtySmsf1Cbc < 8) {
+                        currentQtySmsf1Cbc++;
+                    }
+                } else if (currentQtySmsf1Cbc > 0) {
+                    currentQtySmsf1Cbc--;
                 }
                 display.setText(String.valueOf(currentQtySmsf1Cbc));
                 break;
 
             case "SMSF10":
                 if (increment) {
-                    if (currentQtySmsf10Sed < 8) currentQtySmsf10Sed++;
-                } else {
-                    if (currentQtySmsf10Sed > 0) currentQtySmsf10Sed--;
+                    if (currentQtySmsf10Sed < 8) {
+                        currentQtySmsf10Sed++;
+                    }
+                } else if (currentQtySmsf10Sed > 0) {
+                    currentQtySmsf10Sed--;
                 }
                 display.setText(String.valueOf(currentQtySmsf10Sed));
                 break;
         }
+
         refreshTotal();
     }
 
@@ -848,79 +1162,110 @@ public class ServiceRequestActivity extends AppCompatActivity {
         int itemsTotal = calculateTotalAmount();
         int serviceFee = 0;
         int grandTotal = itemsTotal + serviceFee;
+
         String formattedFee = String.format(Locale.getDefault(), "PHP %,d.00", serviceFee);
         String formattedGrand = String.format(Locale.getDefault(), "PHP %,d.00", grandTotal);
-        if (tvServiceFee != null) tvServiceFee.setText(formattedFee);
-        if (tvPaymentTotal != null) tvPaymentTotal.setText(formattedGrand);
-        if (tvBankAmount != null) tvBankAmount.setText(formattedGrand);
+
+        if (tvServiceFee != null) {
+            tvServiceFee.setText(formattedFee);
+        }
+
+        if (tvPaymentTotal != null) {
+            tvPaymentTotal.setText(formattedGrand);
+        }
+
+        if (tvBankAmount != null) {
+            tvBankAmount.setText(formattedGrand);
+        }
     }
 
     private void setupNavigation() {
-        findViewById(R.id.buttonNext).setOnClickListener(v -> {
-            String problem = remarksInput.getText().toString().trim();
-            if (problem.isEmpty() || problem.length() < 5) {
-                remarksInput.setError("Detailing your concern is required for a better service assessment.");
-                Toast.makeText(this, "Please provide a brief description of the issue to proceed.", Toast.LENGTH_SHORT).show();
-                remarksInput.requestFocus();
-                return;
-            }
+        View btnNext = findViewById(R.id.buttonNext);
+        if (btnNext != null) {
+            btnNext.setOnClickListener(v -> {
+                String problem = remarksInput != null ? remarksInput.getText().toString().trim() : "";
+                if (problem.isEmpty() || problem.length() < 5) {
+                    if (remarksInput != null) {
+                        remarksInput.setError("Detailing your concern is required for a better service assessment.");
+                        remarksInput.requestFocus();
+                    }
+                    Toast.makeText(this, "Please provide a brief description of the issue to proceed.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            Calendar now = Calendar.getInstance();
-            int hour = now.get(Calendar.HOUR_OF_DAY);
-            int dayOfWeek = now.get(Calendar.DAY_OF_WEEK);
+                Calendar now = Calendar.getInstance();
+                int hour = now.get(Calendar.HOUR_OF_DAY);
+                int dayOfWeek = now.get(Calendar.DAY_OF_WEEK);
 
-            adminWillSchedule = (dayOfWeek == Calendar.SUNDAY || hour >= 17 || hour < 8);
+                adminWillSchedule = (dayOfWeek == Calendar.SUNDAY || hour >= 17 || hour < 8);
 
-            if (adminWillSchedule) {
-                startTimeText.setText("To be confirmed");
-                endTimeText.setText("To be confirmed");
-            }
+                if (adminWillSchedule) {
+                    if (startTimeText != null) {
+                        startTimeText.setText("To be confirmed");
+                    }
 
-            analyzeProblemAndSuggest(problem);
-            currentStep = 2;
-            updateStepUI();
-        });
-        findViewById(R.id.buttonNext2).setOnClickListener(v -> {
-            if (adminWillSchedule) {
+                    if (endTimeText != null) {
+                        endTimeText.setText("To be confirmed");
+                    }
+                }
+
+                analyzeProblemAndSuggest(problem);
+                currentStep = 2;
+                updateStepUI();
+            });
+        }
+
+        View btnNext2 = findViewById(R.id.buttonNext2);
+        if (btnNext2 != null) {
+            btnNext2.setOnClickListener(v -> {
+                if (adminWillSchedule) {
+                    currentStep = 3;
+                    updateStepUI();
+                    return;
+                }
+
+                String start = startTimeText != null ? startTimeText.getText().toString() : "";
+                String end = endTimeText != null ? endTimeText.getText().toString() : "";
+
+                if (isOutsideOfficeHours(start) || isOutsideOfficeHours(end)) {
+                    showTimeWarning();
+                    return;
+                }
+
                 currentStep = 3;
                 updateStepUI();
-                return;
-            }
+            });
+        }
 
-            String start = startTimeText.getText().toString();
-            String end = endTimeText.getText().toString();
+        View btnNext3 = findViewById(R.id.buttonNext3);
+        if (btnNext3 != null) {
+            btnNext3.setOnClickListener(v -> {
+                boolean noItemsSelected = (currentQtyCBC == 0 && currentQtySEDIMENT == 0 &&
+                        currentQtyAquatal == 0 && currentQtyInlineFilter == 0 &&
+                        currentQtyUvLamp == 0 && currentQtyTouchPanel == 0 &&
+                        currentQtyPbcBoard == 0 && currentQtySmsf1Cbc == 0 &&
+                        currentQtySmsf10Sed == 0 && currentQtyWayValve == 0);
 
-            if (isOutsideOfficeHours(start) || isOutsideOfficeHours(end)) {
-                showTimeWarning();
-                return;
-            }
+                if (noItemsSelected) {
+                    new AlertDialog.Builder(this)
+                            .setTitle("No Items Selected")
+                            .setMessage("Please select at least one item to proceed.")
+                            .setPositiveButton("OK", null)
+                            .show();
+                    return;
+                }
 
-            currentStep = 3;
-            updateStepUI();
-        });
-
-        findViewById(R.id.buttonNext3).setOnClickListener(v -> {
-            boolean noItemsSelected = (currentQtyCBC == 0 && currentQtySEDIMENT == 0 &&
-                    currentQtyAquatal == 0 && currentQtyInlineFilter == 0 &&
-                    currentQtyUvLamp == 0 && currentQtyTouchPanel == 0 &&
-                    currentQtyPbcBoard == 0 && currentQtySmsf1Cbc == 0 &&
-                    currentQtySmsf10Sed == 0 && currentQtyWayValve == 0);
-
-            if (noItemsSelected) {
-                new AlertDialog.Builder(this)
-                        .setTitle("No Items Selected")
-                        .setMessage("Please select at least one item to proceed.")
-                        .setPositiveButton("OK", null)
-                        .show();
-                return;
-            }
-
-            currentStep = 4;
-            updateStepUI();
-        });
+                currentStep = 4;
+                updateStepUI();
+            });
+        }
     }
-    
+
     private void analyzeProblemAndSuggest(String problem) {
+        if (problem == null) {
+            return;
+        }
+
         String p = problem.toLowerCase();
         currentQtyWayValve = 0;
         currentQtyCBC = 0;
@@ -975,35 +1320,80 @@ public class ServiceRequestActivity extends AppCompatActivity {
             currentQtySmsf10Sed = 1;
         }
 
-        if (qtyWayvalve2 != null) qtyWayvalve2.setText(String.valueOf(currentQtyWayValve));
-        if (qtyCBC != null) qtyCBC.setText(String.valueOf(currentQtyCBC));
-        if (qtySEDIMENT != null) qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT));
-        if (qtyAquatal != null) qtyAquatal.setText(String.valueOf(currentQtyAquatal));
-        if (qtyInlineFilter != null) qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter));
-        if (qtyUvLampLabel != null) qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp));
-        if (qtyTouchPanel != null) qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel));
-        if (qtyPbcBoard != null) qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard));
-        if (qtySMSF1uCBC2 != null) qtySMSF1uCBC2.setText(String.valueOf(currentQtySmsf1Cbc));
-        if (qtySMSF10uSED2 != null) qtySMSF10uSED2.setText(String.valueOf(currentQtySmsf10Sed));
+        if (qtyWayvalve2 != null) {
+            qtyWayvalve2.setText(String.valueOf(currentQtyWayValve));
+        }
+
+        if (qtyCBC != null) {
+            qtyCBC.setText(String.valueOf(currentQtyCBC));
+        }
+
+        if (qtySEDIMENT != null) {
+            qtySEDIMENT.setText(String.valueOf(currentQtySEDIMENT));
+        }
+
+        if (qtyAquatal != null) {
+            qtyAquatal.setText(String.valueOf(currentQtyAquatal));
+        }
+
+        if (qtyInlineFilter != null) {
+            qtyInlineFilter.setText(String.valueOf(currentQtyInlineFilter));
+        }
+
+        if (qtyUvLampLabel != null) {
+            qtyUvLampLabel.setText(String.valueOf(currentQtyUvLamp));
+        }
+
+        if (qtyTouchPanel != null) {
+            qtyTouchPanel.setText(String.valueOf(currentQtyTouchPanel));
+        }
+
+        if (qtyPbcBoard != null) {
+            qtyPbcBoard.setText(String.valueOf(currentQtyPbcBoard));
+        }
+
+        if (qtySMSF1uCBC2 != null) {
+            qtySMSF1uCBC2.setText(String.valueOf(currentQtySmsf1Cbc));
+        }
+
+        if (qtySMSF10uSED2 != null) {
+            qtySMSF10uSED2.setText(String.valueOf(currentQtySmsf10Sed));
+        }
+
         refreshTotal();
     }
 
     private void setActive(TextView tv, CardView bg, String num) {
-        tv.setText(num);
-        tv.setTextColor(Color.WHITE);
-        bg.setCardBackgroundColor(Color.parseColor("#2196F3"));
+        if (tv != null) {
+            tv.setText(num);
+            tv.setTextColor(Color.WHITE);
+        }
+
+        if (bg != null) {
+            bg.setCardBackgroundColor(Color.parseColor("#2196F3"));
+        }
     }
 
     private void setCompleted(TextView tv, CardView bg) {
-        tv.setText("\u2713");
-        tv.setTextColor(Color.WHITE);
-        bg.setCardBackgroundColor(Color.parseColor("#2196F3"));
+        if (tv != null) {
+            tv.setText("\u2713");
+            tv.setTextColor(Color.WHITE);
+        }
+
+        if (bg != null) {
+            bg.setCardBackgroundColor(Color.parseColor("#2196F3"));
+        }
     }
 
     private void resetCircle(TextView tv, CardView bg, String num) {
-        tv.setText(num);
-        tv.setTextColor(Color.parseColor("#94A3B8"));
-        bg.setCardBackgroundColor(Color.parseColor("#E2E8F0"));
+        if (tv != null) {
+            tv.setText(num);
+            tv.setTextColor(Color.parseColor("#94A3B8"));
+        }
+
+        if (bg != null) {
+            bg.setCardBackgroundColor(Color.parseColor("#E2E8F0"));
+        }
     }
 
     private void updateStepUI() {
@@ -1031,45 +1421,111 @@ public class ServiceRequestActivity extends AppCompatActivity {
         resetCircle(tv3, c3, "3");
         resetCircle(tv4, c4, "4");
 
-        lb1.setTextColor(Color.parseColor("#94A3B8"));
-        lb2.setTextColor(Color.parseColor("#94A3B8"));
-        lb3.setTextColor(Color.parseColor("#94A3B8"));
-        lb4.setTextColor(Color.parseColor("#94A3B8"));
+        if (lb1 != null) {
+            lb1.setTextColor(Color.parseColor("#94A3B8"));
+        }
 
-        l1.setBackgroundColor(Color.parseColor("#E2E8F0"));
-        l2.setBackgroundColor(Color.parseColor("#E2E8F0"));
-        l3.setBackgroundColor(Color.parseColor("#E2E8F0"));
+        if (lb2 != null) {
+            lb2.setTextColor(Color.parseColor("#94A3B8"));
+        }
+
+        if (lb3 != null) {
+            lb3.setTextColor(Color.parseColor("#94A3B8"));
+        }
+
+        if (lb4 != null) {
+            lb4.setTextColor(Color.parseColor("#94A3B8"));
+        }
+
+        if (l1 != null) {
+            l1.setBackgroundColor(Color.parseColor("#E2E8F0"));
+        }
+
+        if (l2 != null) {
+            l2.setBackgroundColor(Color.parseColor("#E2E8F0"));
+        }
+
+        if (l3 != null) {
+            l3.setBackgroundColor(Color.parseColor("#E2E8F0"));
+        }
 
         if (currentStep == 1) {
             setActive(tv1, c1, "1");
-            lb1.setTextColor(Color.parseColor("#2196F3"));
+            if (lb1 != null) {
+                lb1.setTextColor(Color.parseColor("#2196F3"));
+            }
         } else if (currentStep == 2) {
             setCompleted(tv1, c1);
             setActive(tv2, c2, "2");
-            lb1.setTextColor(Color.parseColor("#2196F3"));
-            lb2.setTextColor(Color.parseColor("#2196F3"));
-            l1.setBackgroundColor(Color.parseColor("#2196F3"));
+
+            if (lb1 != null) {
+                lb1.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (lb2 != null) {
+                lb2.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (l1 != null) {
+                l1.setBackgroundColor(Color.parseColor("#2196F3"));
+            }
         } else if (currentStep == 3) {
             setCompleted(tv1, c1);
             setCompleted(tv2, c2);
             setActive(tv3, c3, "3");
-            lb1.setTextColor(Color.parseColor("#2196F3"));
-            lb2.setTextColor(Color.parseColor("#2196F3"));
-            lb3.setTextColor(Color.parseColor("#2196F3"));
-            l1.setBackgroundColor(Color.parseColor("#2196F3"));
-            l2.setBackgroundColor(Color.parseColor("#2196F3"));
+
+            if (lb1 != null) {
+                lb1.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (lb2 != null) {
+                lb2.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (lb3 != null) {
+                lb3.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (l1 != null) {
+                l1.setBackgroundColor(Color.parseColor("#2196F3"));
+            }
+
+            if (l2 != null) {
+                l2.setBackgroundColor(Color.parseColor("#2196F3"));
+            }
         } else if (currentStep == 4) {
             setCompleted(tv1, c1);
             setCompleted(tv2, c2);
             setCompleted(tv3, c3);
             setActive(tv4, c4, "4");
-            lb1.setTextColor(Color.parseColor("#2196F3"));
-            lb2.setTextColor(Color.parseColor("#2196F3"));
-            lb3.setTextColor(Color.parseColor("#2196F3"));
-            lb4.setTextColor(Color.parseColor("#2196F3"));
-            l1.setBackgroundColor(Color.parseColor("#2196F3"));
-            l2.setBackgroundColor(Color.parseColor("#2196F3"));
-            l3.setBackgroundColor(Color.parseColor("#2196F3"));
+
+            if (lb1 != null) {
+                lb1.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (lb2 != null) {
+                lb2.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (lb3 != null) {
+                lb3.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (lb4 != null) {
+                lb4.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (l1 != null) {
+                l1.setBackgroundColor(Color.parseColor("#2196F3"));
+            }
+
+            if (l2 != null) {
+                l2.setBackgroundColor(Color.parseColor("#2196F3"));
+            }
+
+            if (l3 != null) {
+                l3.setBackgroundColor(Color.parseColor("#2196F3"));
+            }
         }
 
         int s1 = (currentStep == 1) ? View.VISIBLE : View.GONE;
@@ -1077,17 +1533,60 @@ public class ServiceRequestActivity extends AppCompatActivity {
         int s3 = (currentStep == 3) ? View.VISIBLE : View.GONE;
         int s4 = (currentStep == 4) ? View.VISIBLE : View.GONE;
 
-        findViewById(R.id.step1MainContainer).setVisibility(s1);
-        findViewById(R.id.step2MainContainer).setVisibility(s2);
-        findViewById(R.id.step3MainContainer).setVisibility(s3);
-        findViewById(R.id.step4MainContainer).setVisibility(s4);
+        View container1 = findViewById(R.id.step1MainContainer);
+        if (container1 != null) {
+            container1.setVisibility(s1);
+        }
 
-        findViewById(R.id.buttonNext).setVisibility(s1);
-        findViewById(R.id.buttonNext2).setVisibility(s2);
-        findViewById(R.id.buttonNext3).setVisibility(s3);
-        findViewById(R.id.buttonSubmit).setVisibility(s4);
+        View container2 = findViewById(R.id.step2MainContainer);
+        if (container2 != null) {
+            container2.setVisibility(s2);
+        }
 
-        if (currentStep == 4) refreshTotal();
-        if (btnBackNav != null) btnBackNav.setVisibility(currentStep > 1 ? View.VISIBLE : View.GONE);
+        View container3 = findViewById(R.id.step3MainContainer);
+        if (container3 != null) {
+            container3.setVisibility(s3);
+        }
+
+        View container4 = findViewById(R.id.step4MainContainer);
+        if (container4 != null) {
+            container4.setVisibility(s4);
+        }
+
+        View stepBtn1 = findViewById(R.id.buttonNext);
+        if (stepBtn1 != null) {
+            stepBtn1.setVisibility(s1);
+        }
+
+        View stepBtn2 = findViewById(R.id.buttonNext2);
+        if (stepBtn2 != null) {
+            stepBtn2.setVisibility(s2);
+        }
+
+        View stepBtn3 = findViewById(R.id.buttonNext3);
+        if (stepBtn3 != null) {
+            stepBtn3.setVisibility(s3);
+        }
+
+        View stepBtnSubmit = findViewById(R.id.buttonSubmit);
+        if (stepBtnSubmit != null) {
+            stepBtnSubmit.setVisibility(s4);
+        }
+
+        if (currentStep == 4) {
+            refreshTotal();
+        }
+
+        if (btnBackNav != null) {
+            btnBackNav.setVisibility(currentStep > 1 ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private void setupStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 }
