@@ -1,6 +1,7 @@
 package com.example.aquatech;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -44,33 +45,39 @@ public class SubmissionsActivity extends AppCompatActivity {
 
         rvSubmissions = findViewById(R.id.rvSubmissions);
         tvEmpty = findViewById(R.id.tvEmptySubmission);
-        findViewById(R.id.btnBackSubmission).setOnClickListener(v -> finish());
 
-        rvSubmissions.setLayoutManager(new LinearLayoutManager(this));
-        submissionList = new ArrayList<>();
+        View btnBack = findViewById(R.id.btnBackSubmission);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        if (rvSubmissions != null) {
+            rvSubmissions.setLayoutManager(new LinearLayoutManager(this));
+            submissionList = new ArrayList<>();
+
+            adapter = new SubmissionAdapter(submissionList, new SubmissionAdapter.OnActionClickListener() {
+                @Override
+                public void onApprove(String ticketId) {
+                    updateTicketStatus(ticketId, "Completed");
+                }
+
+                @Override
+                public void onReject(String ticketId, String techUid, String techName) {
+                    rejectTicket(ticketId, techUid, techName);
+                }
+
+                @Override
+                public void onEdit(String ticketId) {
+                    Intent intent = new Intent(SubmissionsActivity.this, ServiceReportDetailsActivity.class);
+                    intent.putExtra("TICKET_ID", ticketId);
+                    startActivity(intent);
+                }
+            });
+
+            rvSubmissions.setAdapter(adapter);
+        }
 
         dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
-
-        adapter = new SubmissionAdapter(submissionList, new SubmissionAdapter.OnActionClickListener() {
-            @Override
-            public void onApprove(String ticketId) {
-                updateTicketStatus(ticketId, "Completed");
-            }
-
-            @Override
-            public void onReject(String ticketId, String techUid, String techName) {
-                rejectTicket(ticketId, techUid, techName);
-            }
-
-            @Override
-            public void onEdit(String ticketId) {
-                Intent intent = new Intent(SubmissionsActivity.this, ServiceReportDetailsActivity.class);
-                intent.putExtra("TICKET_ID", ticketId);
-                startActivity(intent);
-            }
-        });
-
-        rvSubmissions.setAdapter(adapter);
         setupFirebaseListener();
     }
 
@@ -83,14 +90,20 @@ public class SubmissionsActivity extends AppCompatActivity {
                     String status = ds.child("status").getValue(String.class);
                     if ("Submission".equalsIgnoreCase(status) || "Submitted".equalsIgnoreCase(status)) {
                         String ticketId = ds.child("ticketId").getValue(String.class);
-                        if (ticketId == null) ticketId = ds.getKey();
+                        if (ticketId == null) {
+                            ticketId = ds.getKey();
+                        }
 
                         String techUid = ds.child("assignedTechId").getValue(String.class);
                         String techName = ds.child("assignedTechName").getValue(String.class);
-                        if (techName == null) techName = "Unknown Technician";
+                        if (techName == null) {
+                            techName = "Unknown Technician";
+                        }
 
                         String customerName = ds.child("customerName").getValue(String.class);
-                        if (customerName == null) customerName = "Guest";
+                        if (customerName == null) {
+                            customerName = "Guest";
+                        }
 
                         String serviceType = getServiceTypeFromSnapshot(ds);
 
@@ -106,8 +119,13 @@ public class SubmissionsActivity extends AppCompatActivity {
                     }
                 }
 
-                tvEmpty.setVisibility(submissionList.isEmpty() ? View.VISIBLE : View.GONE);
-                adapter.notifyDataSetChanged();
+                if (tvEmpty != null) {
+                    tvEmpty.setVisibility(submissionList.isEmpty() ? View.VISIBLE : View.GONE);
+                }
+
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -115,20 +133,36 @@ public class SubmissionsActivity extends AppCompatActivity {
                 Toast.makeText(SubmissionsActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         };
+
         dbRef.addValueEventListener(submissionsListener);
     }
 
     private String getServiceTypeFromSnapshot(DataSnapshot ds) {
         List<String> categories = new ArrayList<>();
-        if (hasQty(ds, "qty_wayvalve")) categories.add("Installation Kit");
-        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard"))
-            categories.add("Other Parts");
-        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10"))
-            categories.add("Filter Preventive");
+        if (hasQty(ds, "qty_wayvalve")) {
+            categories.add("Installation Kit");
+        }
 
-        if (categories.isEmpty()) return "General Service";
-        if (categories.size() == 1) return categories.get(0);
-        if (categories.size() == 2) return categories.get(0) + " & " + categories.get(1);
+        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
+            categories.add("Other Parts");
+        }
+
+        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
+            categories.add("Filter Preventive");
+        }
+
+        if (categories.isEmpty()) {
+            return "General Service";
+        }
+
+        if (categories.size() == 1) {
+            return categories.get(0);
+        }
+
+        if (categories.size() == 2) {
+            return categories.get(0) + " & " + categories.get(1);
+        }
+
         return categories.get(0) + ", " + categories.get(1) + " and " + categories.get(2);
     }
 
@@ -138,14 +172,16 @@ public class SubmissionsActivity extends AppCompatActivity {
     }
 
     private void updateTicketStatus(String ticketId, String newStatus) {
+        if (dbRef == null) {
+            return;
+        }
+
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String tid = ds.child("ticketId").getValue(String.class);
-                    if (ticketId.equals(tid) || ticketId.equals(ds.getKey())) {
-
-                        // Kunin ang techUid bago i-update
+                    if (ticketId != null && (ticketId.equals(tid) || ticketId.equals(ds.getKey()))) {
                         String techUid = ds.child("assignedTechId").getValue(String.class);
                         String techName = ds.child("assignedTechName").getValue(String.class);
 
@@ -154,7 +190,6 @@ public class SubmissionsActivity extends AppCompatActivity {
                                     AdminDashboardActivity.addAdminLog("Admin " + newStatus + " ticket #" + ticketId);
                                     Toast.makeText(SubmissionsActivity.this, "Ticket " + newStatus, Toast.LENGTH_SHORT).show();
 
-                                    // ✅ IDAGDAG ITO — notify technician na approved na
                                     if (techUid != null && !techUid.isEmpty()) {
                                         String message = "<b>Report Approved!</b><br>Your submission for ticket #"
                                                 + ticketId + " has been approved. Great job!";
@@ -165,11 +200,17 @@ public class SubmissionsActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void rejectTicket(String ticketId, String techUid, String techName) {
+        if (dbRef == null) {
+            return;
+        }
+
         Map<String, Object> updates = new HashMap<>();
         updates.put("status", "Rejected");
         updates.put("rejectedAt", ServerValue.TIMESTAMP);
@@ -179,7 +220,7 @@ public class SubmissionsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String tid = ds.child("ticketId").getValue(String.class);
-                    if (ticketId.equals(tid) || ticketId.equals(ds.getKey())) {
+                    if (ticketId != null && (ticketId.equals(tid) || ticketId.equals(ds.getKey()))) {
                         ds.getRef().updateChildren(updates).addOnSuccessListener(aVoid -> {
                             String message = "<b>Report Rejected</b><br>Your submission for ticket #" + ticketId + " was rejected. Tap to resubmit.";
                             sendNotificationToTechnician(techUid, techName, message, ticketId);
@@ -189,12 +230,17 @@ public class SubmissionsActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void sendNotificationToTechnician(String techUid, String techName, String message, String ticketId) {
-        if (techUid == null || techUid.isEmpty()) return;
+        if (techUid == null || techUid.isEmpty()) {
+            return;
+        }
+
         DatabaseReference notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("Notifications").child(techUid);
         String id = notifRef.push().getKey();
         if (id != null) {
@@ -214,7 +260,7 @@ public class SubmissionsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.setStatusBarColor(android.graphics.Color.TRANSPARENT);
+            window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
 
