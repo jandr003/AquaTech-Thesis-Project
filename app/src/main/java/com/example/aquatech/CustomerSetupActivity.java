@@ -211,8 +211,12 @@ public class CustomerSetupActivity extends AppCompatActivity {
 
         for (int i = startIndex; i < endIndex; i++) {
             Map<String, String> productMap = allProductsList.get(i);
-            View cardView = createProductCardView(productMap);
-            layoutDynamicCardsContainer.addView(cardView);
+            if (productMap != null) {
+                View cardView = createProductCardView(productMap);
+                if (cardView != null) {
+                    layoutDynamicCardsContainer.addView(cardView);
+                }
+            }
         }
 
         if (tvPageIndicator != null) {
