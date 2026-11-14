@@ -1,6 +1,7 @@
 package com.example.aquatech;
 
 public class ServiceLogModel {
+
     private String sroNumber;
     private String ticketId;
     private String techName;
@@ -29,7 +30,9 @@ public class ServiceLogModel {
     private int avatarResId = -1;
     private String profileImageUrl;
     private String unitName;
-    public ServiceLogModel() {}
+
+    public ServiceLogModel() {
+    }
 
     public ServiceLogModel(String sroNumber, String techName, String techRole, String status, String customerPhone) {
         this.sroNumber = sroNumber;
@@ -49,84 +52,219 @@ public class ServiceLogModel {
         this.longitude = longitude;
     }
 
-    public String getTicketId() { return ticketId != null ? ticketId : sroNumber; }
-    public void setTicketId(String ticketId) { this.ticketId = ticketId; }
+    public String getTicketId() {
+        return ticketId != null ? ticketId : sroNumber;
+    }
 
-    public String getSroNumber() { return sroNumber; }
-    public void setSroNumber(String sroNumber) { this.sroNumber = sroNumber; }
+    public void setTicketId(String ticketId) {
+        this.ticketId = ticketId;
+    }
 
-    public String getTechName() { return techName; }
-    public void setTechName(String techName) { this.techName = techName; }
+    public String getSroNumber() {
+        return sroNumber;
+    }
 
-    public String getTechUid() { return techUid; }
-    public void setTechUid(String techUid) { this.techUid = techUid; }
+    public void setSroNumber(String sroNumber) {
+        this.sroNumber = sroNumber;
+    }
 
-    public String getTechRole() { return techRole; }
-    public void setTechRole(String techRole) { this.techRole = techRole; }
+    public String getTechName() {
+        return techName;
+    }
 
-    public String getDateTime() { return dateTime; }
-    public void setDateTime(String dateTime) { this.dateTime = dateTime; }
+    public void setTechName(String techName) {
+        this.techName = techName;
+    }
 
-    public String getTechPhone() { return techPhone; }
-    public void setTechPhone(String techPhone) { this.techPhone = techPhone; }
+    public String getTechUid() {
+        return techUid;
+    }
 
-    public String getCustomerName() { return customerName; }
-    public void setCustomerName(String customerName) { this.customerName = customerName; }
+    public void setTechUid(String techUid) {
+        this.techUid = techUid;
+    }
 
-    public String getCustomerPhone() { return customerPhone; }
-    public void setCustomerPhone(String customerPhone) { this.customerPhone = customerPhone; }
+    public String getTechRole() {
+        return techRole;
+    }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public void setTechRole(String techRole) {
+        this.techRole = techRole;
+    }
 
-    public String getTechId() { return techId; }
-    public void setTechId(String techId) { this.techId = techId; }
+    public String getDateTime() {
+        return dateTime;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
 
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
+    public String getTechPhone() {
+        return techPhone;
+    }
 
-    public double getLatitude() { return latitude; }
-    public void setLatitude(double latitude) { this.latitude = latitude; }
+    public void setTechPhone(String techPhone) {
+        this.techPhone = techPhone;
+    }
 
-    public double getLongitude() { return longitude; }
-    public void setLongitude(double longitude) { this.longitude = longitude; }
+    public String getCustomerName() {
+        return customerName;
+    }
 
-    public double getTechLat() { return techLat; }
-    public void setTechLat(double techLat) { this.techLat = techLat; }
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
-    public double getTechLng() { return techLng; }
-    public void setTechLng(double techLng) { this.techLng = techLng; }
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
 
-    public double getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
 
-    public String getRemarks() { return remarks; }
-    public void setRemarks(String remarks) { this.remarks = remarks; }
+    public String getAddress() {
+        return address;
+    }
 
-    public String getProofUrl() { return proofUrl; }
-    public void setProofUrl(String proofUrl) { this.proofUrl = proofUrl; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public String getFeedback() { return feedback; }
-    public void setFeedback(String feedback) { this.feedback = feedback; }
+    public String getTechId() {
+        return techId;
+    }
 
-    public String getPreferredTime() { return preferredTime; }
-    public void setPreferredTime(String preferredTime) { this.preferredTime = preferredTime; }
+    public void setTechId(String techId) {
+        this.techId = techId;
+    }
 
-    public String getPurchaseType() { return purchaseType != null ? purchaseType : "SUBSCRIPTION"; }
-    public void setPurchaseType(String purchaseType) { this.purchaseType = purchaseType; }
+    public String getStatus() {
+        return status;
+    }
 
-    public String getCompletionTime() { return completionTime != null ? completionTime : dateTime; }
-    public void setCompletionTime(String completionTime) { this.completionTime = completionTime; }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-    public int getAvatarResId() { return avatarResId; }
-    public void setAvatarResId(int avatarResId) { this.avatarResId = avatarResId; }
+    public String getUserId() {
+        return userId;
+    }
 
-    public String getProfileImageUrl() { return profileImageUrl; }
-    public void setProfileImageUrl(String profileImageUrl) { this.profileImageUrl = profileImageUrl; }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-    public String getUnitName() { return unitName != null && !unitName.isEmpty() ? unitName : "WL CUBE FIREWALL"; }
-    public void setUnitName(String unitName) { this.unitName = unitName; }
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getTechLat() {
+        return techLat;
+    }
+
+    public void setTechLat(double techLat) {
+        this.techLat = techLat;
+    }
+
+    public double getTechLng() {
+        return techLng;
+    }
+
+    public void setTechLng(double techLng) {
+        this.techLng = techLng;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getProofUrl() {
+        return proofUrl;
+    }
+
+    public void setProofUrl(String proofUrl) {
+        this.proofUrl = proofUrl;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public String getPreferredTime() {
+        return preferredTime;
+    }
+
+    public void setPreferredTime(String preferredTime) {
+        this.preferredTime = preferredTime;
+    }
+
+    public String getPurchaseType() {
+        return purchaseType != null ? purchaseType : "SUBSCRIPTION";
+    }
+
+    public void setPurchaseType(String purchaseType) {
+        this.purchaseType = purchaseType;
+    }
+
+    public String getCompletionTime() {
+        return completionTime != null ? completionTime : dateTime;
+    }
+
+    public void setCompletionTime(String completionTime) {
+        this.completionTime = completionTime;
+    }
+
+    public int getAvatarResId() {
+        return avatarResId;
+    }
+
+    public void setAvatarResId(int avatarResId) {
+        this.avatarResId = avatarResId;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getUnitName() {
+        return unitName != null && !unitName.isEmpty() ? unitName : "WL CUBE FIREWALL";
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 }
