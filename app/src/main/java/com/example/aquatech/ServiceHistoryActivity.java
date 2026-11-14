@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,10 +34,10 @@ public class ServiceHistoryActivity extends AppCompatActivity {
     private RecyclerView rvCalendar, rvServiceHistory;
     private TextView tvCurrentMonth, tvSelectedDateLabel;
     private ImageView btnBack;
-    
+
     private CalendarAdapter calendarAdapter;
     private List<CalendarItem> calendarList;
-    private Calendar currentCalendar = Calendar.getInstance();
+    private final Calendar currentCalendar = Calendar.getInstance();
 
     private DatabaseReference dbRef;
     private FirebaseAuth mAuth;
@@ -60,14 +61,17 @@ public class ServiceHistoryActivity extends AppCompatActivity {
         setupCalendar(currentCalendar);
 
         String today = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(new Date());
-        tvSelectedDateLabel.setText("Today, " + today);
+        if (tvSelectedDateLabel != null) {
+            tvSelectedDateLabel.setText("Today, " + today);
+        }
         loadHistoryFromFirebase(today);
     }
 
     private void setupStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            Window window = getWindow();
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
 
@@ -78,31 +82,47 @@ public class ServiceHistoryActivity extends AppCompatActivity {
         tvSelectedDateLabel = findViewById(R.id.tvSelectedDateLabel);
         btnBack = findViewById(R.id.btnBack);
 
-        btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        findViewById(R.id.tvPrevMonth).setOnClickListener(v -> {
-            currentCalendar.add(Calendar.MONTH, -1);
-            setupCalendar(currentCalendar);
-        });
+        View btnPrev = findViewById(R.id.tvPrevMonth);
+        if (btnPrev != null) {
+            btnPrev.setOnClickListener(v -> {
+                currentCalendar.add(Calendar.MONTH, -1);
+                setupCalendar(currentCalendar);
+            });
+        }
 
-        findViewById(R.id.tvNextMonth).setOnClickListener(v -> {
-            currentCalendar.add(Calendar.MONTH, 1);
-            setupCalendar(currentCalendar);
-        });
+        View btnNext = findViewById(R.id.tvNextMonth);
+        if (btnNext != null) {
+            btnNext.setOnClickListener(v -> {
+                currentCalendar.add(Calendar.MONTH, 1);
+                setupCalendar(currentCalendar);
+            });
+        }
 
         historyList = new ArrayList<>();
         historyAdapter = new HistoryAdapter(historyList);
-        rvServiceHistory.setLayoutManager(new LinearLayoutManager(this));
-        rvServiceHistory.setAdapter(historyAdapter);
+        if (rvServiceHistory != null) {
+            rvServiceHistory.setLayoutManager(new LinearLayoutManager(this));
+            rvServiceHistory.setAdapter(historyAdapter);
+        }
     }
 
     private void setupCalendar(Calendar cal) {
-        tvCurrentMonth.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(cal.getTime()));
-        
+        if (cal == null) {
+            return;
+        }
+
+        if (tvCurrentMonth != null) {
+            tvCurrentMonth.setText(new SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(cal.getTime()));
+        }
+
         calendarList = new ArrayList<>();
         Calendar tempCal = (Calendar) cal.clone();
         tempCal.set(Calendar.DAY_OF_MONTH, 1);
-        
+
         int maxDay = tempCal.getActualMaximum(Calendar.DAY_OF_MONTH);
         for (int i = 1; i <= maxDay; i++) {
             tempCal.set(Calendar.DAY_OF_MONTH, i);
@@ -110,23 +130,42 @@ public class ServiceHistoryActivity extends AppCompatActivity {
         }
 
         calendarAdapter = new CalendarAdapter(calendarList, (item, position) -> {
-            for (CalendarItem ci : calendarList) ci.setSelected(false);
-            item.setSelected(true);
-            calendarAdapter.notifyDataSetChanged();
-            
-            String selectedDate = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(item.getDate());
-            tvSelectedDateLabel.setText(selectedDate);
-            
-            loadHistoryFromFirebase(selectedDate);
+            if (calendarList != null) {
+                for (CalendarItem ci : calendarList) {
+                    if (ci != null) {
+                        ci.setSelected(false);
+                    }
+                }
+            }
+
+            if (item != null) {
+                item.setSelected(true);
+            }
+
+            if (calendarAdapter != null) {
+                calendarAdapter.notifyDataSetChanged();
+            }
+
+            if (item != null) {
+                String selectedDate = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(item.getDate());
+                if (tvSelectedDateLabel != null) {
+                    tvSelectedDateLabel.setText(selectedDate);
+                }
+                loadHistoryFromFirebase(selectedDate);
+            }
         });
 
-        rvCalendar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvCalendar.setAdapter(calendarAdapter);
-        rvCalendar.scrollToPosition(cal.get(Calendar.DAY_OF_MONTH) - 1);
+        if (rvCalendar != null) {
+            rvCalendar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            rvCalendar.setAdapter(calendarAdapter);
+            rvCalendar.scrollToPosition(cal.get(Calendar.DAY_OF_MONTH) - 1);
+        }
     }
 
     private void loadHistoryFromFirebase(String dateFilter) {
-        if (currentUid == null || dbRef == null) return;
+        if (currentUid == null || dbRef == null || dateFilter == null) {
+            return;
+        }
 
         dbRef.orderByChild("userId").equalTo(currentUid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -134,22 +173,33 @@ public class ServiceHistoryActivity extends AppCompatActivity {
                 historyList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String dbDate = ds.child("date").getValue(String.class);
-                    
+
                     if (dateFilter.equals(dbDate)) {
                         String ticketId = ds.child("ticketId").getValue(String.class);
                         String status = ds.child("status").getValue(String.class);
                         Double total = ds.child("totalAmount").getValue(Double.class);
 
                         StringBuilder summaryBuilder = new StringBuilder();
-                        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment")) summaryBuilder.append("Filter PM, ");
-                        if (hasQty(ds, "qty_wayvalve")) summaryBuilder.append("Install Kit, ");
-                        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp")) summaryBuilder.append("Parts Replacement, ");
-                        
+                        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment")) {
+                            summaryBuilder.append("Filter PM, ");
+                        }
+
+                        if (hasQty(ds, "qty_wayvalve")) {
+                            summaryBuilder.append("Install Kit, ");
+                        }
+
+                        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp")) {
+                            summaryBuilder.append("Parts Replacement, ");
+                        }
+
                         String finalSummary = summaryBuilder.toString();
                         if (finalSummary.endsWith(", ")) {
                             finalSummary = finalSummary.substring(0, finalSummary.length() - 2);
                         }
-                        if (finalSummary.isEmpty()) finalSummary = "General Service";
+
+                        if (finalSummary.isEmpty()) {
+                            finalSummary = "General Service";
+                        }
 
                         historyList.add(new HistoryItem(
                                 ticketId != null ? "#" + ticketId : "#N/A",
@@ -160,7 +210,10 @@ public class ServiceHistoryActivity extends AppCompatActivity {
                         ));
                     }
                 }
-                historyAdapter.notifyDataSetChanged();
+
+                if (historyAdapter != null) {
+                    historyAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
