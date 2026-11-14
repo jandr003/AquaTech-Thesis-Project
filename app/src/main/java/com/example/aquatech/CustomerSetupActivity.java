@@ -152,6 +152,8 @@ public class CustomerSetupActivity extends AppCompatActivity {
                             allProductsList.add(map);
                         }
                     }
+                } else {
+                    seedDefaultProductsToFirebase(productsRef);
                 }
 
                 renderCurrentPageCards();
@@ -160,6 +162,38 @@ public class CustomerSetupActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
+    }
+
+    private void seedDefaultProductsToFirebase(DatabaseReference productsRef) {
+        if (productsRef == null) {
+            return;
+        }
+
+        saveSingleDefaultProduct(productsRef, "PROD_001", "WL CUBE FIREWALL", "F-FXCU1-M-HCA-TT-0001", "Patented UVC Firewall™ Technology");
+        saveSingleDefaultProduct(productsRef, "PROD_002", "SMART SLIM", "S-FXCU1-M-HCA-AA-0002", "Sleek, Space-Saving Pure Hydration");
+        saveSingleDefaultProduct(productsRef, "PROD_003", "COUNTER TOP WATER PURIFIER", "CT-FXCU1-M-HCA-WT-0003", "Ideal for Kitchen & Home Countertops");
+        saveSingleDefaultProduct(productsRef, "PROD_004", "STANDING WATER PURIFIER", "ST-FXCU1-M-HCA-WT-0004", "High-Capacity Commercial & Office Purifier");
+    }
+
+    private void saveSingleDefaultProduct(DatabaseReference productsRef, String id, String name, String code, String desc) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", id);
+        map.put("unitName", name);
+        map.put("itemName", name);
+        map.put("modelCode", code);
+        map.put("category", "Certified Water Purifier");
+        map.put("description", desc);
+        map.put("status", "Active");
+        map.put("photoUri", "");
+
+        productsRef.child(id).setValue(map);
+
+        Map<String, String> localMap = new HashMap<>();
+        localMap.put("unitName", name);
+        localMap.put("modelCode", code);
+        localMap.put("description", desc);
+        localMap.put("photoUri", "");
+        allProductsList.add(localMap);
     }
 
     private int getTotalPages() {
