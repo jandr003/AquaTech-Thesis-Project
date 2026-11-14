@@ -51,11 +51,11 @@ public class CustomerSetupAdapter extends RecyclerView.Adapter<CustomerSetupAdap
         String photoUri = unitMap.get("photoUri");
 
         if (holder.tvUnitName != null) {
-            holder.tvUnitName.setText(unitName != null ? unitName : "Water Dispenser");
+            holder.tvUnitName.setText(unitName != null ? unitName : "Water Purifier");
         }
 
         if (holder.tvUnitCategory != null) {
-            holder.tvUnitCategory.setText(category != null ? category : "Certified Dispenser Unit");
+            holder.tvUnitCategory.setText(category != null ? category : "Certified Water Purifier");
         }
 
         int defaultImg = getImageForUnit(unitName);
