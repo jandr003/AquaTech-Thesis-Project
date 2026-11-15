@@ -31,16 +31,24 @@ public class TechnicianAccountSupportActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackAccountSupport);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View btnIdVerif = findViewById(R.id.btnSupportIdVerification);
         if (btnIdVerif != null) {
-            btnIdVerif.setOnClickListener(v -> startActivity(new Intent(this, TechnicianVerificationActivity.class)));
+            btnIdVerif.setOnClickListener(v -> {
+                Intent intent = new Intent(this, TechnicianVerificationActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnLoginPass = findViewById(R.id.btnSupportLoginPassword);
         if (btnLoginPass != null) {
-            btnLoginPass.setOnClickListener(v -> startActivity(new Intent(this, ForgetPasswordActivity.class)));
+            btnLoginPass.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ForgetPasswordActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnMobileUpdate = findViewById(R.id.btnSupportMobileUpdate);
