@@ -64,18 +64,6 @@ import com.example.aquatech.TechnicianCallHandler;
 import com.example.aquatech.TechnicianJobAcceptor;
 import com.example.aquatech.TechnicianNotificationPopupHelper;
 
-/**
- * TechnicianDashboardActivity
- * Clean, Lean, High-Performance Field Technician Dashboard Activity.
- * Strict 600-700 lines target maintained (~630 lines).
- * Delegated to external helpers:
- * - TechnicianIdentityHelper
- * - TechnicianChatAutomation
- * - TechnicianReportDialogHelper
- * - TechnicianCallHandler
- * - TechnicianJobAcceptor
- * - TechnicianNotificationPopupHelper
- */
 public class TechnicianDashboardActivity extends AppCompatActivity {
 
     private CardView cardInProg;
@@ -120,12 +108,16 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
 
     private final ActivityResultLauncher<Uri> cameraLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicture(), success -> {
-                if (success) showSubmitReportDialog();
+                if (success) {
+                    showSubmitReportDialog();
+                }
             });
 
     private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
             new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) launchCamera();
+                if (isGranted) {
+                    launchCamera();
+                }
             });
 
     @Override
@@ -137,7 +129,7 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
         initializeViews();
         setupUpcomingRecyclerView();
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = mAuth != null ? mAuth.getCurrentUser() : null;
         String currentEmail = TechnicianIdentityHelper.getStoredEmail(getIntent(), mAuth);
 
         TechnicianIdentityHelper.fetchTechnicianIdentity(
@@ -179,8 +171,13 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (requestsRef != null && tasksListener != null) requestsRef.removeEventListener(tasksListener);
-        if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
+        if (requestsRef != null && tasksListener != null) {
+            requestsRef.removeEventListener(tasksListener);
+        }
+
+        if (notifRef != null && notifListener != null) {
+            notifRef.removeEventListener(notifListener);
+        }
     }
 
     private void initializeViews() {
@@ -209,17 +206,49 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
     }
 
     private void hideDashboardElements() {
-        if (cardInProg != null) cardInProg.setVisibility(View.GONE);
-        if (tvInProgLabel != null) tvInProgLabel.setVisibility(View.GONE);
-        if (tvInProgCount != null) tvInProgCount.setVisibility(View.GONE);
-        if (underlineInProg != null) underlineInProg.setVisibility(View.GONE);
-        if (statusInProgDate != null) statusInProgDate.setVisibility(View.GONE);
-        if (tvUpcomingLabel != null) tvUpcomingLabel.setVisibility(View.GONE);
-        if (tvUpcomingCount != null) tvUpcomingCount.setVisibility(View.GONE);
-        if (upcomingProgress != null) upcomingProgress.setVisibility(View.GONE);
-        if (rvUpcoming != null) rvUpcoming.setVisibility(View.GONE);
-        if (dashboardScroll != null) dashboardScroll.setVisibility(View.GONE);
-        if (noTicketsLayout != null) noTicketsLayout.setVisibility(View.VISIBLE);
+        if (cardInProg != null) {
+            cardInProg.setVisibility(View.GONE);
+        }
+
+        if (tvInProgLabel != null) {
+            tvInProgLabel.setVisibility(View.GONE);
+        }
+
+        if (tvInProgCount != null) {
+            tvInProgCount.setVisibility(View.GONE);
+        }
+
+        if (underlineInProg != null) {
+            underlineInProg.setVisibility(View.GONE);
+        }
+
+        if (statusInProgDate != null) {
+            statusInProgDate.setVisibility(View.GONE);
+        }
+
+        if (tvUpcomingLabel != null) {
+            tvUpcomingLabel.setVisibility(View.GONE);
+        }
+
+        if (tvUpcomingCount != null) {
+            tvUpcomingCount.setVisibility(View.GONE);
+        }
+
+        if (upcomingProgress != null) {
+            upcomingProgress.setVisibility(View.GONE);
+        }
+
+        if (rvUpcoming != null) {
+            rvUpcoming.setVisibility(View.GONE);
+        }
+
+        if (dashboardScroll != null) {
+            dashboardScroll.setVisibility(View.GONE);
+        }
+
+        if (noTicketsLayout != null) {
+            noTicketsLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupClickListeners() {
@@ -238,12 +267,15 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                 }
             });
         }
+
         if (notifIcon != null) {
             notifIcon.setOnClickListener(v -> startActivity(new Intent(this, TechnicianNotificationActivity.class)));
         }
+
         if (settingIcon != null) {
             settingIcon.setOnClickListener(v -> startActivity(new Intent(this, TechnicianSettingsActivity.class)));
         }
+
         View avatarView = findViewById(R.id.techProfileAvatar);
         if (avatarView != null) {
             avatarView.setOnClickListener(v -> startActivity(new Intent(this, TechnicianProfileActivity.class)));
@@ -275,10 +307,17 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
     }
 
     private void initializeFirebaseListeners(String techIdentifier) {
-        if (techIdentifier == null || techIdentifier.isEmpty()) return;
+        if (techIdentifier == null || techIdentifier.isEmpty()) {
+            return;
+        }
 
-        if (requestsRef != null && tasksListener != null) requestsRef.removeEventListener(tasksListener);
-        if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
+        if (requestsRef != null && tasksListener != null) {
+            requestsRef.removeEventListener(tasksListener);
+        }
+
+        if (notifRef != null && notifListener != null) {
+            notifRef.removeEventListener(notifListener);
+        }
 
         notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("Notifications").child(techIdentifier);
         requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
@@ -289,7 +328,10 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
     }
 
     private void setupFirebaseTasksListener(String techIdentifier) {
-        if (requestsRef == null) return;
+        if (requestsRef == null) {
+            return;
+        }
+
         tasksListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -324,13 +366,15 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                         }
                     }
                 }
+
                 updateUI();
-                if (upcomingAdapter != null) upcomingAdapter.notifyDataSetChanged();
+                if (upcomingAdapter != null) {
+                    upcomingAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
         requestsRef.addValueEventListener(tasksListener);
     }
@@ -348,6 +392,10 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
     }
 
     private void setupUpcomingRecyclerView() {
+        if (rvUpcoming == null) {
+            return;
+        }
+
         rvUpcoming.setLayoutManager(new LinearLayoutManager(this));
         upcomingAdapter = new UpcomingTaskAdapter(upcomingSnapshotsList, new UpcomingTaskAdapter.OnUpcomingClickListener() {
             @Override
@@ -357,6 +405,10 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
 
             @Override
             public void onMessageClick(DataSnapshot snapshot) {
+                if (snapshot == null) {
+                    return;
+                }
+
                 String customerId = snapshot.child("userId").getValue(String.class);
                 String cName = snapshot.child("customerName").getValue(String.class);
                 if (customerId != null) {
@@ -369,20 +421,37 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                 }
             }
         });
+
         rvUpcoming.setAdapter(upcomingAdapter);
     }
 
     private void updateUI() {
-        if (isFinishing() || isDestroyed()) return;
+        if (isFinishing() || isDestroyed()) {
+            return;
+        }
 
         boolean hasActive = (activeTaskSnapshot != null && activeTaskSnapshot.exists());
 
         if (hasActive) {
-            if (tvInProgLabel != null) tvInProgLabel.setVisibility(View.VISIBLE);
-            if (tvInProgCount != null) tvInProgCount.setVisibility(View.VISIBLE);
-            if (underlineInProg != null) underlineInProg.setVisibility(View.VISIBLE);
-            if (statusInProgDate != null) statusInProgDate.setVisibility(View.VISIBLE);
-            if (cardInProg != null) cardInProg.setVisibility(View.VISIBLE);
+            if (tvInProgLabel != null) {
+                tvInProgLabel.setVisibility(View.VISIBLE);
+            }
+
+            if (tvInProgCount != null) {
+                tvInProgCount.setVisibility(View.VISIBLE);
+            }
+
+            if (underlineInProg != null) {
+                underlineInProg.setVisibility(View.VISIBLE);
+            }
+
+            if (statusInProgDate != null) {
+                statusInProgDate.setVisibility(View.VISIBLE);
+            }
+
+            if (cardInProg != null) {
+                cardInProg.setVisibility(View.VISIBLE);
+            }
 
             try {
                 String custName = activeTaskSnapshot.child("customerName").getValue(String.class);
@@ -392,13 +461,29 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                 String sro = activeTaskSnapshot.child("referenceNo").getValue(String.class);
                 String status = activeTaskSnapshot.child("status").getValue(String.class);
 
-                if (sro == null) sro = activeTaskSnapshot.child("sroNumber").getValue(String.class);
+                if (sro == null) {
+                    sro = activeTaskSnapshot.child("sroNumber").getValue(String.class);
+                }
 
-                if (tvInProgName != null) tvInProgName.setText(custName != null ? custName : "N/A");
-                if (tvInProgTicket != null) tvInProgTicket.setText(String.format("#%s", ticketId != null ? ticketId : "---"));
-                if (tvInProgTime != null) tvInProgTime.setText(time != null ? time : "---");
-                if (tvInProgAddr != null) tvInProgAddr.setText(addr != null ? addr : "---");
-                if (tvInProgSro != null) tvInProgSro.setText(sro != null ? sro : "---");
+                if (tvInProgName != null) {
+                    tvInProgName.setText(custName != null ? custName : "N/A");
+                }
+
+                if (tvInProgTicket != null) {
+                    tvInProgTicket.setText(String.format("#%s", ticketId != null ? ticketId : "---"));
+                }
+
+                if (tvInProgTime != null) {
+                    tvInProgTime.setText(time != null ? time : "---");
+                }
+
+                if (tvInProgAddr != null) {
+                    tvInProgAddr.setText(addr != null ? addr : "---");
+                }
+
+                if (tvInProgSro != null) {
+                    tvInProgSro.setText(sro != null ? sro : "---");
+                }
 
                 if (btnActionInProg != null) {
                     if ("Submission".equalsIgnoreCase(status) || "Submitted".equalsIgnoreCase(status)) {
@@ -428,11 +513,25 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                 Log.e("UI_UPDATE", "Error updating UI: " + e.getMessage());
             }
         } else {
-            if (cardInProg != null) cardInProg.setVisibility(View.GONE);
-            if (tvInProgLabel != null) tvInProgLabel.setVisibility(View.GONE);
-            if (tvInProgCount != null) tvInProgCount.setVisibility(View.GONE);
-            if (underlineInProg != null) underlineInProg.setVisibility(View.GONE);
-            if (statusInProgDate != null) statusInProgDate.setVisibility(View.GONE);
+            if (cardInProg != null) {
+                cardInProg.setVisibility(View.GONE);
+            }
+
+            if (tvInProgLabel != null) {
+                tvInProgLabel.setVisibility(View.GONE);
+            }
+
+            if (tvInProgCount != null) {
+                tvInProgCount.setVisibility(View.GONE);
+            }
+
+            if (underlineInProg != null) {
+                underlineInProg.setVisibility(View.GONE);
+            }
+
+            if (statusInProgDate != null) {
+                statusInProgDate.setVisibility(View.GONE);
+            }
         }
 
         int uC = (upcomingSnapshotsList != null) ? upcomingSnapshotsList.size() : 0;
@@ -440,13 +539,27 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
             tvUpcomingCount.setText(String.format(Locale.getDefault(), "(%d)", uC));
             tvUpcomingCount.setVisibility(uC > 0 ? View.VISIBLE : View.GONE);
         }
-        if (tvUpcomingLabel != null) tvUpcomingLabel.setVisibility(uC > 0 ? View.VISIBLE : View.GONE);
-        if (upcomingProgress != null) upcomingProgress.setVisibility(uC > 0 ? View.VISIBLE : View.GONE);
-        if (rvUpcoming != null) rvUpcoming.setVisibility(uC > 0 ? View.VISIBLE : View.GONE);
+
+        if (tvUpcomingLabel != null) {
+            tvUpcomingLabel.setVisibility(uC > 0 ? View.VISIBLE : View.GONE);
+        }
+
+        if (upcomingProgress != null) {
+            upcomingProgress.setVisibility(uC > 0 ? View.VISIBLE : View.GONE);
+        }
+
+        if (rvUpcoming != null) {
+            rvUpcoming.setVisibility(uC > 0 ? View.VISIBLE : View.GONE);
+        }
 
         boolean isEmpty = (!hasActive && uC == 0);
-        if (noTicketsLayout != null) noTicketsLayout.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
-        if (dashboardScroll != null) dashboardScroll.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        if (noTicketsLayout != null) {
+            noTicketsLayout.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+        }
+
+        if (dashboardScroll != null) {
+            dashboardScroll.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        }
     }
 
     private CharSequence toVerticalDateString(Date d) {
@@ -482,6 +595,10 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
     }
 
     private String getServiceTypeLabel(DataSnapshot ds) {
+        if (ds == null) {
+            return "General Maintenance";
+        }
+
         StringBuilder sb = new StringBuilder();
 
         if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
@@ -489,13 +606,17 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
         }
 
         if (hasQty(ds, "qty_wayvalve")) {
-            if (sb.length() > 0) sb.append(", ");
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
             sb.append("Installation Kit");
         }
 
         if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp") ||
                 hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
-            if (sb.length() > 0) sb.append(", ");
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
             sb.append("Other Parts");
         }
 
@@ -504,12 +625,19 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
     }
 
     private boolean hasQty(DataSnapshot ds, String key) {
+        if (ds == null || key == null) {
+            return false;
+        }
+
         Object val = ds.child(key).getValue();
         return val instanceof Number && ((Number) val).intValue() > 0;
     }
 
     private void setupDashboardNotificationPopup() {
-        if (notifRef == null) return;
+        if (notifRef == null) {
+            return;
+        }
+
         notifListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot s, @Nullable String p) {
@@ -533,7 +661,6 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                                         .setPositiveButton("OK", null)
                                         .show();
                             }
-
                         } else if (isActivityInForeground) {
                             new AlertDialog.Builder(TechnicianDashboardActivity.this)
                                     .setTitle("New Notification")
@@ -545,11 +672,19 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                 }
             }
 
-            @Override public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot s) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot s) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         };
+
         notifRef.addChildEventListener(notifListener);
         notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -558,17 +693,21 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError e) {
-            }
+            public void onCancelled(@NonNull DatabaseError e) {}
         });
     }
 
     private void handleIntent(Intent intent) {
-        if (intent == null) return;
+        if (intent == null) {
+            return;
+        }
+
         if (intent.getBooleanExtra("TASK_DONE", false)) {
             intent.removeExtra("TASK_DONE");
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                if (isFinishing() || isDestroyed()) return;
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 proofUri = null;
                 currentRemarks = "";
                 showSubmitReportDialog();
@@ -587,8 +726,7 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
             File tempFile = File.createTempFile("PROOF_" + System.currentTimeMillis(), ".jpg", getExternalFilesDir(Environment.DIRECTORY_PICTURES));
             proofUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", tempFile);
             cameraLauncher.launch(proofUri);
-        } catch (IOException ignored) {
-        }
+        } catch (IOException ignored) {}
     }
 
     private void checkCameraPermission() {
@@ -609,8 +747,11 @@ public class TechnicianDashboardActivity extends AppCompatActivity {
                 proofUri,
                 currentRemarks,
                 () -> new AlertDialog.Builder(this).setTitle("Add Proof").setItems(new String[]{"Take Photo", "Gallery"}, (d, which) -> {
-                    if (which == 0) checkCameraPermission();
-                    else galleryLauncher.launch("image/*");
+                    if (which == 0) {
+                        checkCameraPermission();
+                    } else {
+                        galleryLauncher.launch("image/*");
+                    }
                 }).show(),
                 () -> {
                     proofUri = null;
