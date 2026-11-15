@@ -40,49 +40,51 @@ public class TechnicianDisplayActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackTechDisplay);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         sliderFontSize = findViewById(R.id.sliderFontSize);
         switchSerialNumbers = findViewById(R.id.switchSerialNumbers);
         switchLastServiceDate = findViewById(R.id.switchLastServiceDate);
         switchDistanceToJobSite = findViewById(R.id.switchDistanceToJobSite);
 
-        // Load saved preferences
-        if (sliderFontSize != null) {
+        if (sliderFontSize != null && prefs != null) {
             float savedSize = prefs.getFloat("tech_font_size", 14.0f);
             sliderFontSize.setValue(savedSize);
         }
 
-        if (switchSerialNumbers != null) {
+        if (switchSerialNumbers != null && prefs != null) {
             switchSerialNumbers.setChecked(prefs.getBoolean("tech_show_serials", true));
         }
 
-        if (switchLastServiceDate != null) {
+        if (switchLastServiceDate != null && prefs != null) {
             switchLastServiceDate.setChecked(prefs.getBoolean("tech_show_service_date", true));
         }
 
-        if (switchDistanceToJobSite != null) {
+        if (switchDistanceToJobSite != null && prefs != null) {
             switchDistanceToJobSite.setChecked(prefs.getBoolean("tech_show_distance", true));
         }
 
-        // Save Preferences Button
         View btnSave = findViewById(R.id.btnSaveDisplayPreferences);
         if (btnSave != null) {
             btnSave.setOnClickListener(v -> {
-                SharedPreferences.Editor editor = prefs.edit();
-                if (sliderFontSize != null) {
-                    editor.putFloat("tech_font_size", sliderFontSize.getValue());
+                if (prefs != null) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    if (sliderFontSize != null) {
+                        editor.putFloat("tech_font_size", sliderFontSize.getValue());
+                    }
+                    if (switchSerialNumbers != null) {
+                        editor.putBoolean("tech_show_serials", switchSerialNumbers.isChecked());
+                    }
+                    if (switchLastServiceDate != null) {
+                        editor.putBoolean("tech_show_service_date", switchLastServiceDate.isChecked());
+                    }
+                    if (switchDistanceToJobSite != null) {
+                        editor.putBoolean("tech_show_distance", switchDistanceToJobSite.isChecked());
+                    }
+                    editor.apply();
                 }
-                if (switchSerialNumbers != null) {
-                    editor.putBoolean("tech_show_serials", switchSerialNumbers.isChecked());
-                }
-                if (switchLastServiceDate != null) {
-                    editor.putBoolean("tech_show_service_date", switchLastServiceDate.isChecked());
-                }
-                if (switchDistanceToJobSite != null) {
-                    editor.putBoolean("tech_show_distance", switchDistanceToJobSite.isChecked());
-                }
-                editor.apply();
 
                 Toast.makeText(this, "Display preferences saved successfully!", Toast.LENGTH_SHORT).show();
                 finish();
