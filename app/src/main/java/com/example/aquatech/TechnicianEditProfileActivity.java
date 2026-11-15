@@ -35,7 +35,7 @@ public class TechnicianEditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_technician_edit_profile);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = mAuth != null ? mAuth.getCurrentUser() : null;
         if (user != null) {
             userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(user.getUid());
             techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(user.getUid());
@@ -56,7 +56,9 @@ public class TechnicianEditProfileActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackTechEditProfile);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         etFullName = findViewById(R.id.etTechEditFullName);
         etPhone = findViewById(R.id.etTechEditPhone);
@@ -73,9 +75,15 @@ public class TechnicianEditProfileActivity extends AppCompatActivity {
     }
 
     private void loadTechnicianData() {
+        if (mAuth == null) {
+            return;
+        }
+
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            if (etEmail != null) etEmail.setText(user.getEmail());
+            if (etEmail != null && user.getEmail() != null) {
+                etEmail.setText(user.getEmail());
+            }
 
             if (tvTechEditUID != null) {
                 String email = user.getEmail() != null ? user.getEmail().toLowerCase() : "";
@@ -88,12 +96,22 @@ public class TechnicianEditProfileActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String name = snapshot.child("fullName").getValue(String.class);
-                    if (name == null || name.isEmpty()) name = snapshot.child("name").getValue(String.class);
-                    if (etFullName != null && name != null) etFullName.setText(name);
+                    if (name == null || name.isEmpty()) {
+                        name = snapshot.child("name").getValue(String.class);
+                    }
+
+                    if (etFullName != null && name != null) {
+                        etFullName.setText(name);
+                    }
 
                     String mobile = snapshot.child("mobileNumber").getValue(String.class);
-                    if (mobile == null || mobile.isEmpty()) mobile = snapshot.child("phone").getValue(String.class);
-                    if (etPhone != null && mobile != null) etPhone.setText(mobile);
+                    if (mobile == null || mobile.isEmpty()) {
+                        mobile = snapshot.child("phone").getValue(String.class);
+                    }
+
+                    if (etPhone != null && mobile != null) {
+                        etPhone.setText(mobile);
+                    }
 
                     String spec = snapshot.child("specialization").getValue(String.class);
                     if (tvTechEditSpecialization != null && spec != null && !spec.isEmpty()) {
@@ -117,7 +135,9 @@ public class TechnicianEditProfileActivity extends AppCompatActivity {
         String phone = etPhone != null ? etPhone.getText().toString().trim() : "";
 
         if (name.isEmpty()) {
-            if (etFullName != null) etFullName.setError("Full name required");
+            if (etFullName != null) {
+                etFullName.setError("Full name required");
+            }
             return;
         }
 
@@ -139,15 +159,46 @@ public class TechnicianEditProfileActivity extends AppCompatActivity {
     }
 
     private String getTechIdFromEmail(String email) {
-        if (email.contains("john@")) return "TECH-0001";
-        if (email.contains("jhonny@")) return "TECH-0002";
-        if (email.contains("ricky@")) return "TECH-0003";
-        if (email.contains("ruel@")) return "TECH-0004";
-        if (email.contains("glenda@")) return "TECH-0005";
-        if (email.contains("jerry@")) return "TECH-0006";
-        if (email.contains("jonnifer@")) return "TECH-0007";
-        if (email.contains("marlon@")) return "TECH-0008";
-        if (email.contains("selvino@")) return "TECH-0009";
+        if (email == null) {
+            return "TECH-0001";
+        }
+
+        if (email.contains("john@")) {
+            return "TECH-0001";
+        }
+
+        if (email.contains("jhonny@")) {
+            return "TECH-0002";
+        }
+
+        if (email.contains("ricky@")) {
+            return "TECH-0003";
+        }
+
+        if (email.contains("ruel@")) {
+            return "TECH-0004";
+        }
+
+        if (email.contains("glenda@")) {
+            return "TECH-0005";
+        }
+
+        if (email.contains("jerry@")) {
+            return "TECH-0006";
+        }
+
+        if (email.contains("jonnifer@")) {
+            return "TECH-0007";
+        }
+
+        if (email.contains("marlon@")) {
+            return "TECH-0008";
+        }
+
+        if (email.contains("selvino@")) {
+            return "TECH-0009";
+        }
+
         return "TECH-0001";
     }
 }
