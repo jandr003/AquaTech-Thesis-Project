@@ -54,7 +54,10 @@ public class TechnicianDetailActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBackTechDetail).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackTechDetail);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         ivTechDetailAvatar = findViewById(R.id.ivTechDetailAvatar);
         ivTechCert = findViewById(R.id.ivTechCert);
@@ -68,14 +71,16 @@ public class TechnicianDetailActivity extends AppCompatActivity {
         tvTechDetailStatus = findViewById(R.id.tvTechDetailStatus);
 
         String intentName = getIntent().getStringExtra("TECH_NAME");
-        if (intentName != null && !intentName.isEmpty()) {
+        if (intentName != null && !intentName.isEmpty() && tvTechDetailName != null) {
             tvTechDetailName.setText(intentName);
         }
     }
 
     private void loadTechnicianData() {
         String techId = getIntent().getStringExtra("TECH_ID");
-        if (techId == null || techId.isEmpty()) return;
+        if (techId == null || techId.isEmpty()) {
+            return;
+        }
 
         dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(techId);
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,12 +88,22 @@ public class TechnicianDetailActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String name = snapshot.child("fullName").getValue(String.class);
-                    if (name == null) name = snapshot.child("name").getValue(String.class);
-                    if (name != null) tvTechDetailName.setText(name);
+                    if (name == null) {
+                        name = snapshot.child("name").getValue(String.class);
+                    }
+
+                    if (name != null && tvTechDetailName != null) {
+                        tvTechDetailName.setText(name);
+                    }
 
                     String phone = snapshot.child("phone").getValue(String.class);
-                    if (phone == null) phone = snapshot.child("phoneNumber").getValue(String.class);
-                    if (phone != null) tvTechDetailPhone.setText(phone);
+                    if (phone == null) {
+                        phone = snapshot.child("phoneNumber").getValue(String.class);
+                    }
+
+                    if (phone != null && tvTechDetailPhone != null) {
+                        tvTechDetailPhone.setText(phone);
+                    }
 
                     int[] techAvatars = {
                             R.drawable.technician_avatar1,
@@ -103,14 +118,14 @@ public class TechnicianDetailActivity extends AppCompatActivity {
                     int defaultAvatar = techAvatars[Math.abs(techId.hashCode()) % techAvatars.length];
 
                     String avatarUrl = snapshot.child("profileImageUrl").getValue(String.class);
-                    if (avatarUrl != null && !avatarUrl.isEmpty()) {
+                    if (avatarUrl != null && !avatarUrl.isEmpty() && ivTechDetailAvatar != null) {
                         Glide.with(TechnicianDetailActivity.this).load(avatarUrl).placeholder(defaultAvatar).into(ivTechDetailAvatar);
-                    } else {
+                    } else if (ivTechDetailAvatar != null) {
                         ivTechDetailAvatar.setImageResource(defaultAvatar);
                     }
 
                     String certUrl = snapshot.child("verification").child("certUrl").getValue(String.class);
-                    if (certUrl != null && !certUrl.isEmpty()) {
+                    if (certUrl != null && !certUrl.isEmpty() && ivTechCert != null) {
                         Glide.with(TechnicianDetailActivity.this).load(certUrl).into(ivTechCert);
                     }
                 }
@@ -140,7 +155,9 @@ public class TechnicianDetailActivity extends AppCompatActivity {
     private void loadSharedMediaData() {
         String techId = getIntent().getStringExtra("TECH_ID");
         String myUid = FirebaseAuth.getInstance().getUid();
-        if (techId == null || myUid == null) return;
+        if (techId == null || myUid == null) {
+            return;
+        }
 
         String chatId1 = techId + "_" + myUid;
         DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId1).child("messages");
@@ -148,23 +165,31 @@ public class TechnicianDetailActivity extends AppCompatActivity {
         chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sharedMediaList.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    ChatMessage msg = ds.getValue(ChatMessage.class);
-                    if (msg != null && (msg.getFileUri() != null || msg.getFileUrl() != null)) {
-                        sharedMediaList.add(msg);
+                if (sharedMediaList != null) {
+                    sharedMediaList.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        ChatMessage msg = ds.getValue(ChatMessage.class);
+                        if (msg != null && (msg.getFileUri() != null || msg.getFileUrl() != null)) {
+                            sharedMediaList.add(msg);
+                        }
                     }
                 }
-                if (tvEmptySharedMedia != null) {
+
+                if (tvEmptySharedMedia != null && sharedMediaList != null) {
                     tvEmptySharedMedia.setVisibility(sharedMediaList.isEmpty() ? View.VISIBLE : View.GONE);
                 }
-                if (rvSharedMedia != null) {
+
+                if (rvSharedMedia != null && sharedMediaList != null) {
                     rvSharedMedia.setVisibility(sharedMediaList.isEmpty() ? View.GONE : View.VISIBLE);
                 }
-                sharedMediaAdapter.notifyDataSetChanged();
+
+                if (sharedMediaAdapter != null) {
+                    sharedMediaAdapter.notifyDataSetChanged();
+                }
             }
 
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 }
