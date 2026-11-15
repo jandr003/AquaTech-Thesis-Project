@@ -18,7 +18,9 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
 
     public interface OnActionClickListener {
         void onApprove(String ticketId);
+
         void onReject(String ticketId, String techUid, String techName);
+
         void onEdit(String ticketId);
     }
 
@@ -37,30 +39,69 @@ public class SubmissionAdapter extends RecyclerView.Adapter<SubmissionAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServiceLogModel item = list.get(position);
+        if (item == null) {
+            return;
+        }
 
-        holder.tvTicketID.setText(item.getSroNumber());
-        holder.tvTechName.setText("Submitted by: " + item.getTechName());
-        holder.tvCustomer.setText("Customer: " + item.getCustomerName());
-        holder.tvServiceType.setText(item.getTechRole());
+        if (holder.tvTicketID != null) {
+            holder.tvTicketID.setText(item.getSroNumber() != null ? item.getSroNumber() : "");
+        }
 
-        holder.btnApprove.setOnClickListener(v -> listener.onApprove(item.getSroNumber()));
-        holder.btnReject.setOnClickListener(v -> {
-            if (item.getTechUid() != null) {
-                listener.onReject(item.getSroNumber(), item.getTechUid(), item.getTechName());
-            } else {
-                listener.onReject(item.getSroNumber(), "", item.getTechName());
-            }
-        });
+        if (holder.tvTechName != null) {
+            String name = item.getTechName();
+            holder.tvTechName.setText("Submitted by: " + (name != null ? name : "Unknown"));
+        }
+
+        if (holder.tvCustomer != null) {
+            String cust = item.getCustomerName();
+            holder.tvCustomer.setText("Customer: " + (cust != null ? cust : "Guest"));
+        }
+
+        if (holder.tvServiceType != null) {
+            holder.tvServiceType.setText(item.getTechRole() != null ? item.getTechRole() : "General Service");
+        }
+
+        if (holder.btnApprove != null) {
+            holder.btnApprove.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onApprove(item.getSroNumber());
+                }
+            });
+        }
+
+        if (holder.btnReject != null) {
+            holder.btnReject.setOnClickListener(v -> {
+                if (listener != null) {
+                    if (item.getTechUid() != null) {
+                        listener.onReject(item.getSroNumber(), item.getTechUid(), item.getTechName());
+                    } else {
+                        listener.onReject(item.getSroNumber(), "", item.getTechName());
+                    }
+                }
+            });
+        }
 
         if (holder.btnViewReport != null) {
-            holder.btnViewReport.setOnClickListener(v -> listener.onEdit(item.getSroNumber()));
+            holder.btnViewReport.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onEdit(item.getSroNumber());
+                }
+            });
         }
-        holder.itemView.setOnClickListener(v -> listener.onEdit(item.getSroNumber()));
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onEdit(item.getSroNumber());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list != null) {
+            return list.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
