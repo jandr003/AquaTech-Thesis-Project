@@ -10,7 +10,9 @@ import java.util.Map;
 public class TechnicianChatAutomation {
 
     public static void sendAcceptanceChatMessage(String dbUrl, String currentTechUid, String currentTechName, String customerId, String ticketId, String customerName, String htmlMsg) {
-        if (currentTechUid == null || currentTechUid.isEmpty() || customerId == null || customerId.isEmpty()) return;
+        if (currentTechUid == null || currentTechUid.isEmpty() || customerId == null || customerId.isEmpty()) {
+            return;
+        }
 
         String chatId = currentTechUid + "_" + customerId;
         DatabaseReference chatRef = FirebaseDatabase.getInstance(dbUrl).getReference("UserChats").child(chatId);
@@ -48,7 +50,10 @@ public class TechnicianChatAutomation {
     }
 
     public static void sendNotificationToUser(String dbUrl, String userId, String message, String type, String ticketId, String senderName, boolean isToCustomer) {
-        if (userId == null || userId.isEmpty()) return;
+        if (userId == null || userId.isEmpty()) {
+            return;
+        }
+
         String target = isToCustomer ? "CustomerNotifications" : "Notifications";
         DatabaseReference ref = FirebaseDatabase.getInstance(dbUrl).getReference(target).child(userId).push();
 
