@@ -30,7 +30,9 @@ public class TechnicianAccountGuideActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackAccountGuide);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View btnUnableToLogin = findViewById(R.id.btnGuideUnableToLogin);
         if (btnUnableToLogin != null) {
