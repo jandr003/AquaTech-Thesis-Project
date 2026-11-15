@@ -73,16 +73,20 @@ public class TechChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tech_chat);
 
         View rootView = findViewById(android.R.id.content);
-        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
-            int keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
-            v.setPadding(0, 0, 0, keyboardHeight);
-            return insets;
-        });
+        if (rootView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
+                int keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+                v.setPadding(0, 0, 0, keyboardHeight);
+                return insets;
+            });
+        }
 
         techId = getIntent().getStringExtra("TECH_ID");
         if (techId == null || techId.isEmpty()) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) techId = user.getUid();
+            if (user != null) {
+                techId = user.getUid();
+            }
         }
 
         myRealName = resolveTechNameFromEmail();
@@ -111,13 +115,18 @@ public class TechChatActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String name = snapshot.child("fullName").getValue(String.class);
-                        if (name == null) name = snapshot.child("name").getValue(String.class);
+                        if (name == null) {
+                            name = snapshot.child("name").getValue(String.class);
+                        }
+
                         if (name != null && !name.isEmpty()) {
                             myRealName = name;
                         }
                     }
                 }
-                @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
             };
             myProfileRef.addValueEventListener(profileListener);
         }
@@ -125,20 +134,55 @@ public class TechChatActivity extends AppCompatActivity {
 
     private String resolveTechNameFromEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null || user.getEmail() == null) return "";
+        if (user == null || user.getEmail() == null) {
+            return "";
+        }
+
         String email = user.getEmail().toLowerCase().trim();
 
-        if (email.equals("admin@aquasmartguard.ph")) return "John Andrew";
-        if (email.equals("management@aquasmartguard.ph")) return "Glenn Jean";
-        if (email.equals("john1@aquasmartguard.ph")) return "John";
-        if (email.equals("jhonny.s@aquasmartguard.ph")) return "Jhonny Sinder";
-        if (email.equals("rarcilla@aquasmartguard.ph")) return "Ricky Arcilla";
-        if (email.equals("r.trinidad@aquasmartguard.ph")) return "Ruel Trinidad";
-        if (email.equals("gdelantar@aquasmartguard.ph")) return "Glenda Delantar";
-        if (email.equals("duena@aquasmartguard.ph")) return "Jerry Duena";
-        if (email.equals("ji@aquasmartguard.ph")) return "Jonnifer Iglesias";
-        if (email.equals("marlon.salvador@aquasmartguard.ph")) return "Marlon Salvador";
-        if (email.equals("smjr@aquasmartguard.ph")) return "Selvino Magora Jr.";
+        if (email.equals("admin@aquasmartguard.ph")) {
+            return "John Andrew";
+        }
+
+        if (email.equals("management@aquasmartguard.ph")) {
+            return "Glenn Jean";
+        }
+
+        if (email.equals("john1@aquasmartguard.ph")) {
+            return "John";
+        }
+
+        if (email.equals("jhonny.s@aquasmartguard.ph")) {
+            return "Jhonny Sinder";
+        }
+
+        if (email.equals("rarcilla@aquasmartguard.ph")) {
+            return "Ricky Arcilla";
+        }
+
+        if (email.equals("r.trinidad@aquasmartguard.ph")) {
+            return "Ruel Trinidad";
+        }
+
+        if (email.equals("gdelantar@aquasmartguard.ph")) {
+            return "Glenda Delantar";
+        }
+
+        if (email.equals("duena@aquasmartguard.ph")) {
+            return "Jerry Duena";
+        }
+
+        if (email.equals("ji@aquasmartguard.ph")) {
+            return "Jonnifer Iglesias";
+        }
+
+        if (email.equals("marlon.salvador@aquasmartguard.ph")) {
+            return "Marlon Salvador";
+        }
+
+        if (email.equals("smjr@aquasmartguard.ph")) {
+            return "Selvino Magora Jr.";
+        }
 
         return "";
     }
@@ -152,23 +196,33 @@ public class TechChatActivity extends AppCompatActivity {
         customerNameDisplay = findViewById(R.id.TechNameDisplay);
         avatarHeader = findViewById(R.id.techAvatar);
 
-        Glide.with(this).load(R.drawable.man_customer_icon).circleCrop().into(avatarHeader);
-        if (customerName != null) customerNameDisplay.setText(customerName);
+        if (avatarHeader != null) {
+            Glide.with(this).load(R.drawable.man_customer_icon).circleCrop().into(avatarHeader);
+        }
+
+        if (customerName != null && customerNameDisplay != null) {
+            customerNameDisplay.setText(customerName);
+        }
     }
 
     private void setupRecyclerView() {
         messageList = new ArrayList<>();
         chatAdapter = new ChatAdapter(messageList, ChatAdapter.MODE_TECH_CHAT);
         chatAdapter.setOtherPartyName(customerName);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(true);
-        chatRecyclerView.setLayoutManager(layoutManager);
-        chatRecyclerView.setAdapter(chatAdapter);
+
+        if (chatRecyclerView != null) {
+            chatRecyclerView.setLayoutManager(layoutManager);
+            chatRecyclerView.setAdapter(chatAdapter);
+        }
     }
 
     private void setupFirebaseChatListener() {
         String chatId = techId + "_" + customerId;
         chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("messages");
+
         chatListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -176,17 +230,34 @@ public class TechChatActivity extends AppCompatActivity {
                 if (msg != null) {
                     msg.setUser(msg.getSenderId() != null && msg.getSenderId().equals(techId));
                     messageList.add(msg);
+
                     int newPos = messageList.size() - 1;
-                    chatAdapter.notifyItemInserted(newPos);
-                    if (newPos > 0) chatAdapter.notifyItemChanged(newPos - 1);
-                    chatRecyclerView.scrollToPosition(newPos);
+                    if (chatAdapter != null) {
+                        chatAdapter.notifyItemInserted(newPos);
+                        if (newPos > 0) {
+                            chatAdapter.notifyItemChanged(newPos - 1);
+                        }
+                    }
+
+                    if (chatRecyclerView != null) {
+                        chatRecyclerView.scrollToPosition(newPos);
+                    }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
+
         chatRef.addChildEventListener(chatListener);
     }
 
@@ -203,55 +274,73 @@ public class TechChatActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
+
         notifRef.addChildEventListener(notifListener);
         notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot snapshot) { isInitialNotifLoad = false; }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                isInitialNotifLoad = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void showIncomingCallPopup(String message, String callerCustId, String callerName) {
         IncomingCallPopup popup = new IncomingCallPopup(
-            this,
-            callerName != null ? callerName : "Customer",
-            "Customer",
-            callerCustId != null ? callerCustId : customerId,
-            techId,
-            true,
-            new IncomingCallPopup.OnCallActionListener() {
-                @Override
-                public void onAnswer() {
-                    String chatId = techId + "_" + (callerCustId != null ? callerCustId : customerId);
-                    DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
-                    Map<String, Object> updates = new HashMap<>();
-                    updates.put("callStatus", "active");
-                    updates.put("callStartTime", ServerValue.TIMESTAMP);
-                    chatRef.updateChildren(updates);
+                this,
+                callerName != null ? callerName : "Customer",
+                "Customer",
+                callerCustId != null ? callerCustId : customerId,
+                techId,
+                true,
+                new IncomingCallPopup.OnCallActionListener() {
+                    @Override
+                    public void onAnswer() {
+                        String chatId = techId + "_" + (callerCustId != null ? callerCustId : customerId);
+                        DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
 
-                    Intent intent = new Intent(TechChatActivity.this, VoiceCallActivity.class);
-                    intent.putExtra("TECH_ID", techId);
-                    intent.putExtra("CUSTOMER_ID", callerCustId != null ? callerCustId : customerId);
-                    intent.putExtra("NAME", callerName);
-                    startActivity(intent);
-                }
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("callStatus", "active");
+                        updates.put("callStartTime", ServerValue.TIMESTAMP);
+                        chatRef.updateChildren(updates);
 
-                @Override
-                public void onDecline() {
-                    String chatId = techId + "_" + (callerCustId != null ? callerCustId : customerId);
-                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                        Intent intent = new Intent(TechChatActivity.this, VoiceCallActivity.class);
+                        intent.putExtra("TECH_ID", techId);
+                        intent.putExtra("CUSTOMER_ID", callerCustId != null ? callerCustId : customerId);
+                        intent.putExtra("NAME", callerName);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onDecline() {
+                        String chatId = techId + "_" + (callerCustId != null ? callerCustId : customerId);
+                        FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
+                    }
                 }
-            }
         );
+
         popup.show();
     }
 
     private void sendMessage(String text) {
-        if (techId == null || customerId == null) return;
+        if (techId == null || customerId == null) {
+            return;
+        }
 
         String finalName = resolveTechNameFromEmail();
         if (finalName.isEmpty()) {
@@ -262,7 +351,9 @@ public class TechChatActivity extends AppCompatActivity {
         DatabaseReference rootChatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
         DatabaseReference messageRef = rootChatRef.child("messages");
         String msgId = messageRef.push().getKey();
-        if (msgId == null) return;
+        if (msgId == null) {
+            return;
+        }
 
         Map<String, Object> msgData = new HashMap<>();
         msgData.put("text", text);
@@ -285,11 +376,17 @@ public class TechChatActivity extends AppCompatActivity {
         sendNotificationToUser(customerId, notifMessage, "CHAT", techId, true);
 
         messageRef.child(msgId).setValue(msgData).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) etMessage.setText("");
+            if (task.isSuccessful() && etMessage != null) {
+                etMessage.setText("");
+            }
         });
     }
 
     private void sendNotificationToUser(String userId, String message, String type, String ticketId, boolean isToCustomer) {
+        if (userId == null) {
+            return;
+        }
+
         String target = isToCustomer ? "CustomerNotifications" : "Notifications";
         DatabaseReference ref = FirebaseDatabase.getInstance(DB_URL).getReference(target).child(userId).push();
 
@@ -302,42 +399,62 @@ public class TechChatActivity extends AppCompatActivity {
                 ticketId,
                 senderName
         );
+
         ref.setValue(notification);
     }
 
     private void setupClickListeners() {
-        btnBack.setOnClickListener(v -> finish());
-        btnSend.setOnClickListener(v -> {
-            String msg = etMessage.getText().toString().trim();
-            if (!msg.isEmpty()) sendMessage(msg);
-        });
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        btnCall.setOnClickListener(v -> {
-            Dialog d = new Dialog(this);
-            d.setContentView(R.layout.dialog_call_confirm);
-            if (d.getWindow() != null) d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-            TextView title = d.findViewById(R.id.tvRequestTitle);
-            if (title != null) title.setText("Call " + customerName + "?");
-
-            View btnConfirm = d.findViewById(R.id.btnConfirmCall);
-            if (btnConfirm != null) btnConfirm.setOnClickListener(view -> {
-                initiateCall();
-                d.dismiss();
+        if (btnSend != null) {
+            btnSend.setOnClickListener(v -> {
+                String msg = etMessage != null ? etMessage.getText().toString().trim() : "";
+                if (!msg.isEmpty()) {
+                    sendMessage(msg);
+                }
             });
+        }
 
-            View btnClose = d.findViewById(R.id.btnCloseCallDialog);
-            if (btnClose != null) btnClose.setOnClickListener(view -> d.dismiss());
+        if (btnCall != null) {
+            btnCall.setOnClickListener(v -> {
+                Dialog d = new Dialog(this);
+                d.setContentView(R.layout.dialog_call_confirm);
 
-            d.show();
-        });
+                if (d.getWindow() != null) {
+                    d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                }
+
+                TextView title = d.findViewById(R.id.tvRequestTitle);
+                if (title != null) {
+                    title.setText("Call " + customerName + "?");
+                }
+
+                View btnConfirm = d.findViewById(R.id.btnConfirmCall);
+                if (btnConfirm != null) {
+                    btnConfirm.setOnClickListener(view -> {
+                        initiateCall();
+                        d.dismiss();
+                    });
+                }
+
+                View btnClose = d.findViewById(R.id.btnCloseCallDialog);
+                if (btnClose != null) {
+                    btnClose.setOnClickListener(view -> d.dismiss());
+                }
+
+                d.show();
+            });
+        }
     }
 
     private void initiateCall() {
-        String callerId = techId;
-        String receiverId = customerId;
-        String callerName = (myRealName != null && !myRealName.isEmpty()) ? myRealName : "Technician";
+        if (techId == null || customerId == null) {
+            return;
+        }
 
+        String callerName = (myRealName != null && !myRealName.isEmpty()) ? myRealName : "Technician";
         String chatId = techId + "_" + customerId;
         DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
 
@@ -359,8 +476,16 @@ public class TechChatActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (chatRef != null && chatListener != null) chatRef.removeEventListener(chatListener);
-        if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
-        if (myProfileRef != null && profileListener != null) myProfileRef.removeEventListener(profileListener);
+        if (chatRef != null && chatListener != null) {
+            chatRef.removeEventListener(chatListener);
+        }
+
+        if (notifRef != null && notifListener != null) {
+            notifRef.removeEventListener(notifListener);
+        }
+
+        if (myProfileRef != null && profileListener != null) {
+            myProfileRef.removeEventListener(profileListener);
+        }
     }
 }
