@@ -50,11 +50,20 @@ public class SignupActivity extends AppCompatActivity {
         setupStatusBar();
         setupLoginPrompt();
 
-        findViewById(R.id.btnSignUp).setOnClickListener(v -> performSignup());
+        View btnSignUp = findViewById(R.id.btnSignUp);
+        if (btnSignUp != null) {
+            btnSignUp.setOnClickListener(v -> performSignup());
+        }
+
         View btnGoogle = findViewById(R.id.btnGoogleSignUp);
-        if (btnGoogle != null) btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Connecting to Google Sign-In...", Toast.LENGTH_SHORT).show());
+        if (btnGoogle != null) {
+            btnGoogle.setOnClickListener(v -> Toast.makeText(this, "Connecting to Google Sign-In...", Toast.LENGTH_SHORT).show());
+        }
+
         View btnFacebook = findViewById(R.id.btnFacebookSignUp);
-        if (btnFacebook != null) btnFacebook.setOnClickListener(v -> Toast.makeText(this, "Connecting to Facebook Sign-In...", Toast.LENGTH_SHORT).show());
+        if (btnFacebook != null) {
+            btnFacebook.setOnClickListener(v -> Toast.makeText(this, "Connecting to Facebook Sign-In...", Toast.LENGTH_SHORT).show());
+        }
     }
 
     private void initializeViews() {
@@ -74,39 +83,99 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void performSignup() {
-        String firstName = etFirstName.getText().toString().trim();
-        String lastName = etLastName.getText().toString().trim();
-        String email = etEmail.getText().toString().trim();
-        String mobile = etMobile.getText().toString().trim();
-        String address = etAddress.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+        String firstName = etFirstName != null ? etFirstName.getText().toString().trim() : "";
+        String lastName = etLastName != null ? etLastName.getText().toString().trim() : "";
+        String email = etEmail != null ? etEmail.getText().toString().trim() : "";
+        String mobile = etMobile != null ? etMobile.getText().toString().trim() : "";
+        String address = etAddress != null ? etAddress.getText().toString().trim() : "";
+        String password = etPassword != null ? etPassword.getText().toString().trim() : "";
 
         boolean isValid = true;
-        if (firstName.isEmpty()) { tilFirstName.setError("Required"); isValid = false; } else { tilFirstName.setError(null); }
-        if (lastName.isEmpty()) { tilLastName.setError("Required"); isValid = false; } else { tilLastName.setError(null); }
-        if (email.isEmpty()) { tilEmail.setError("Required"); isValid = false; } else { tilEmail.setError(null); }
-        if (mobile.isEmpty()) { tilMobile.setError("Required"); isValid = false; } else { tilMobile.setError(null); }
-        if (address.isEmpty()) { tilAddress.setError("Required"); isValid = false; } else { tilAddress.setError(null); }
-        if (password.isEmpty()) { tilPassword.setError("Required"); isValid = false; }
-        else if (password.length() < 6) { tilPassword.setError("Min 6 characters"); isValid = false; }
-        else { tilPassword.setError(null); }
 
-        if (!isValid) return;
+        if (firstName.isEmpty()) {
+            if (tilFirstName != null) {
+                tilFirstName.setError("Required");
+            }
+            isValid = false;
+        } else if (tilFirstName != null) {
+            tilFirstName.setError(null);
+        }
+
+        if (lastName.isEmpty()) {
+            if (tilLastName != null) {
+                tilLastName.setError("Required");
+            }
+            isValid = false;
+        } else if (tilLastName != null) {
+            tilLastName.setError(null);
+        }
+
+        if (email.isEmpty()) {
+            if (tilEmail != null) {
+                tilEmail.setError("Required");
+            }
+            isValid = false;
+        } else if (tilEmail != null) {
+            tilEmail.setError(null);
+        }
+
+        if (mobile.isEmpty()) {
+            if (tilMobile != null) {
+                tilMobile.setError("Required");
+            }
+            isValid = false;
+        } else if (tilMobile != null) {
+            tilMobile.setError(null);
+        }
+
+        if (address.isEmpty()) {
+            if (tilAddress != null) {
+                tilAddress.setError("Required");
+            }
+            isValid = false;
+        } else if (tilAddress != null) {
+            tilAddress.setError(null);
+        }
+
+        if (password.isEmpty()) {
+            if (tilPassword != null) {
+                tilPassword.setError("Required");
+            }
+            isValid = false;
+        } else if (password.length() < 6) {
+            if (tilPassword != null) {
+                tilPassword.setError("Min 6 characters");
+            }
+            isValid = false;
+        } else if (tilPassword != null) {
+            tilPassword.setError(null);
+        }
+
+        if (!isValid) {
+            return;
+        }
 
         Toast.makeText(this, "Creating Account...", Toast.LENGTH_SHORT).show();
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        String userId = mAuth.getCurrentUser().getUid();
-                        saveUserData(userId, firstName, lastName, email, mobile, address);
-                    } else {
-                        Toast.makeText(SignupActivity.this, "Signup Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+        if (mAuth != null) {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
+                            String userId = mAuth.getCurrentUser().getUid();
+                            saveUserData(userId, firstName, lastName, email, mobile, address);
+                        } else {
+                            String err = task.getException() != null ? task.getException().getMessage() : "Unknown error";
+                            Toast.makeText(SignupActivity.this, "Signup Failed: " + err, Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 
     private void saveUserData(String userId, String firstName, String lastName, String email, String mobile, String address) {
+        if (userId == null || mDatabase == null) {
+            return;
+        }
+
         String role = "Customer";
         String fullName = firstName + " " + lastName;
 
@@ -135,20 +204,27 @@ public class SignupActivity extends AppCompatActivity {
                         startActivity(new Intent(SignupActivity.this, CustomerSetupActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(SignupActivity.this, "Data Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        String err = task.getException() != null ? task.getException().getMessage() : "Unknown error";
+                        Toast.makeText(SignupActivity.this, "Data Error: " + err, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void setupLoginPrompt() {
         TextView tvLoginPrompt = findViewById(R.id.tvLoginPrompt);
+        if (tvLoginPrompt == null) {
+            return;
+        }
+
         String text = "Already have an account? LOGIN here.";
         SpannableString ss = new SpannableString(text);
+
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
                 finish();
             }
+
             @Override
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
@@ -158,8 +234,10 @@ public class SignupActivity extends AppCompatActivity {
                 ds.setColor(Color.parseColor("#1C6EA4"));
             }
         };
+
         ss.setSpan(new StyleSpan(Typeface.BOLD), 25, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(clickableSpan, 25, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         tvLoginPrompt.setText(ss);
         tvLoginPrompt.setMovementMethod(LinkMovementMethod.getInstance());
     }
