@@ -42,7 +42,9 @@ public class TechnicianHelpCenterActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackTechHelp);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         etSearch = findViewById(R.id.etSearchTechHelp);
 
@@ -69,14 +71,17 @@ public class TechnicianHelpCenterActivity extends AppCompatActivity {
         if (catReports != null) {
             catReports.setOnClickListener(v -> startActivity(new Intent(this, TechnicianReportsGuideActivity.class)));
         }
+
         View catProcedures = findViewById(R.id.catNotifications);
         if (catProcedures != null) {
             catProcedures.setOnClickListener(v -> startActivity(new Intent(this, TechnicianProceduresGuideActivity.class)));
         }
+
         View catTrouble = findViewById(R.id.catTroubleshooting);
         if (catTrouble != null) {
             catTrouble.setOnClickListener(v -> startActivity(new Intent(this, TechnicianTroubleshootingGuideActivity.class)));
         }
+
         View catAccount = findViewById(R.id.catAccountProfile);
         if (catAccount != null) {
             catAccount.setOnClickListener(v -> startActivity(new Intent(this, TechnicianAccountGuideActivity.class)));
@@ -101,17 +106,24 @@ public class TechnicianHelpCenterActivity extends AppCompatActivity {
     private void setupSearch() {
         if (etSearch != null) {
             etSearch.addTextChangedListener(new TextWatcher() {
-                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    filterFaqs(s.toString().toLowerCase().trim());
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s != null) {
+                        filterFaqs(s.toString().toLowerCase().trim());
+                    }
                 }
-                @Override public void afterTextChanged(Editable s) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {}
             });
         }
     }
 
     private void filterFaqs(String query) {
-        if (query.isEmpty()) {
+        if (query == null || query.isEmpty()) {
             showAllFaqs();
             return;
         }
@@ -123,21 +135,55 @@ public class TechnicianHelpCenterActivity extends AppCompatActivity {
         boolean f5 = tvQ5 != null && tvQ5.getText().toString().toLowerCase().contains(query);
         boolean f6 = tvQ6 != null && tvQ6.getText().toString().toLowerCase().contains(query);
 
-        if (layoutFaq1 != null) layoutFaq1.setVisibility(f1 ? View.VISIBLE : View.GONE);
-        if (layoutFaq2 != null) layoutFaq2.setVisibility(f2 ? View.VISIBLE : View.GONE);
-        if (layoutFaq3 != null) layoutFaq3.setVisibility(f3 ? View.VISIBLE : View.GONE);
-        if (layoutFaq4 != null) layoutFaq4.setVisibility(f4 ? View.VISIBLE : View.GONE);
-        if (layoutFaq5 != null) layoutFaq5.setVisibility(f5 ? View.VISIBLE : View.GONE);
-        if (layoutFaq6 != null) layoutFaq6.setVisibility(f6 ? View.VISIBLE : View.GONE);
+        if (layoutFaq1 != null) {
+            layoutFaq1.setVisibility(f1 ? View.VISIBLE : View.GONE);
+        }
+
+        if (layoutFaq2 != null) {
+            layoutFaq2.setVisibility(f2 ? View.VISIBLE : View.GONE);
+        }
+
+        if (layoutFaq3 != null) {
+            layoutFaq3.setVisibility(f3 ? View.VISIBLE : View.GONE);
+        }
+
+        if (layoutFaq4 != null) {
+            layoutFaq4.setVisibility(f4 ? View.VISIBLE : View.GONE);
+        }
+
+        if (layoutFaq5 != null) {
+            layoutFaq5.setVisibility(f5 ? View.VISIBLE : View.GONE);
+        }
+
+        if (layoutFaq6 != null) {
+            layoutFaq6.setVisibility(f6 ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void showAllFaqs() {
-        if (layoutFaq1 != null) layoutFaq1.setVisibility(View.VISIBLE);
-        if (layoutFaq2 != null) layoutFaq2.setVisibility(View.VISIBLE);
-        if (layoutFaq3 != null) layoutFaq3.setVisibility(View.VISIBLE);
-        if (layoutFaq4 != null) layoutFaq4.setVisibility(View.VISIBLE);
-        if (layoutFaq5 != null) layoutFaq5.setVisibility(View.VISIBLE);
-        if (layoutFaq6 != null) layoutFaq6.setVisibility(View.VISIBLE);
+        if (layoutFaq1 != null) {
+            layoutFaq1.setVisibility(View.VISIBLE);
+        }
+
+        if (layoutFaq2 != null) {
+            layoutFaq2.setVisibility(View.VISIBLE);
+        }
+
+        if (layoutFaq3 != null) {
+            layoutFaq3.setVisibility(View.VISIBLE);
+        }
+
+        if (layoutFaq4 != null) {
+            layoutFaq4.setVisibility(View.VISIBLE);
+        }
+
+        if (layoutFaq5 != null) {
+            layoutFaq5.setVisibility(View.VISIBLE);
+        }
+
+        if (layoutFaq6 != null) {
+            layoutFaq6.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setupFaqs() {
@@ -150,7 +196,10 @@ public class TechnicianHelpCenterActivity extends AppCompatActivity {
     }
 
     private void setupFaqToggle(View layout, int answerId, int arrowId) {
-        if (layout == null) return;
+        if (layout == null) {
+            return;
+        }
+
         final TextView tvAnswer = layout.findViewById(answerId);
         final ImageView ivArrow = layout.findViewById(arrowId);
 
