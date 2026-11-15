@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,12 +37,18 @@ public class TechnicianAboutActivity extends AppCompatActivity {
 
         View btnAboutApp = findViewById(R.id.btnAboutApp);
         if (btnAboutApp != null) {
-            btnAboutApp.setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
+            btnAboutApp.setOnClickListener(v -> {
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnTerms = findViewById(R.id.btnTermsOfServiceAbout);
         if (btnTerms != null) {
-            btnTerms.setOnClickListener(v -> startActivity(new Intent(this, TermsAndConditionActivity.class)));
+            btnTerms.setOnClickListener(v -> {
+                Intent intent = new Intent(this, TermsAndConditionActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnLicenses = findViewById(R.id.btnOpenSourceLicensesAbout);
