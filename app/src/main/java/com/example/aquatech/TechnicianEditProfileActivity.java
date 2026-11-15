@@ -84,43 +84,45 @@ public class TechnicianEditProfileActivity extends AppCompatActivity {
             if (etEmail != null && user.getEmail() != null) {
                 etEmail.setText(user.getEmail());
             }
-
-            if (tvTechEditUID != null) {
-                String email = user.getEmail() != null ? user.getEmail().toLowerCase() : "";
-                tvTechEditUID.setText(getTechIdFromEmail(email));
-            }
         }
 
         if (userRef != null) {
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String name = snapshot.child("fullName").getValue(String.class);
-                    if (name == null || name.isEmpty()) {
-                        name = snapshot.child("name").getValue(String.class);
-                    }
+                    if (snapshot.exists()) {
+                        String name = snapshot.child("fullName").getValue(String.class);
+                        if (name == null || name.isEmpty()) {
+                            name = snapshot.child("name").getValue(String.class);
+                        }
 
-                    if (etFullName != null && name != null) {
-                        etFullName.setText(name);
-                    }
+                        if (etFullName != null && name != null) {
+                            etFullName.setText(name);
+                        }
 
-                    String mobile = snapshot.child("mobileNumber").getValue(String.class);
-                    if (mobile == null || mobile.isEmpty()) {
-                        mobile = snapshot.child("phone").getValue(String.class);
-                    }
+                        String techId = snapshot.child("techId").getValue(String.class);
+                        if (tvTechEditUID != null) {
+                            tvTechEditUID.setText(techId != null && !techId.isEmpty() ? techId : "ASC-T001");
+                        }
 
-                    if (etPhone != null && mobile != null) {
-                        etPhone.setText(mobile);
-                    }
+                        String mobile = snapshot.child("mobileNumber").getValue(String.class);
+                        if (mobile == null || mobile.isEmpty()) {
+                            mobile = snapshot.child("phone").getValue(String.class);
+                        }
 
-                    String spec = snapshot.child("specialization").getValue(String.class);
-                    if (tvTechEditSpecialization != null && spec != null && !spec.isEmpty()) {
-                        tvTechEditSpecialization.setText(spec);
-                    }
+                        if (etPhone != null && mobile != null) {
+                            etPhone.setText(mobile);
+                        }
 
-                    String addr = snapshot.child("address").getValue(String.class);
-                    if (tvTechEditAddress != null && addr != null && !addr.isEmpty()) {
-                        tvTechEditAddress.setText(addr);
+                        String spec = snapshot.child("specialization").getValue(String.class);
+                        if (tvTechEditSpecialization != null && spec != null && !spec.isEmpty()) {
+                            tvTechEditSpecialization.setText(spec);
+                        }
+
+                        String addr = snapshot.child("address").getValue(String.class);
+                        if (tvTechEditAddress != null && addr != null && !addr.isEmpty()) {
+                            tvTechEditAddress.setText(addr);
+                        }
                     }
                 }
 
@@ -156,49 +158,5 @@ public class TechnicianEditProfileActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Technician Profile updated successfully!", Toast.LENGTH_SHORT).show();
         finish();
-    }
-
-    private String getTechIdFromEmail(String email) {
-        if (email == null) {
-            return "TECH-0001";
-        }
-
-        if (email.contains("john@")) {
-            return "TECH-0001";
-        }
-
-        if (email.contains("jhonny@")) {
-            return "TECH-0002";
-        }
-
-        if (email.contains("ricky@")) {
-            return "TECH-0003";
-        }
-
-        if (email.contains("ruel@")) {
-            return "TECH-0004";
-        }
-
-        if (email.contains("glenda@")) {
-            return "TECH-0005";
-        }
-
-        if (email.contains("jerry@")) {
-            return "TECH-0006";
-        }
-
-        if (email.contains("jonnifer@")) {
-            return "TECH-0007";
-        }
-
-        if (email.contains("marlon@")) {
-            return "TECH-0008";
-        }
-
-        if (email.contains("selvino@")) {
-            return "TECH-0009";
-        }
-
-        return "TECH-0001";
     }
 }
