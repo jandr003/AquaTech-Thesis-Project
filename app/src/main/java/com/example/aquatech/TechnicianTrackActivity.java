@@ -76,7 +76,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private LocationCallback locationCallback;
 
-    // MAKATI COORDINATES (Anchor Point)
     private final GeoPoint COMPANY_LOC = new GeoPoint(14.5584827, 121.0323902);
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
@@ -87,7 +86,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     private ValueAnimator posAnimator;
     private long lastRouteFetchTime = 0;
 
-    // Para sa mas accurate na rotation
     private GeoPoint lastPosition = null;
     private float currentBearing = 0f;
 
@@ -113,7 +111,9 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             return;
         }
 
-        if (customerName != null) tvCustomerName.setText(customerName);
+        if (customerName != null && tvCustomerName != null) {
+            tvCustomerName.setText(customerName);
+        }
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             techUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -136,34 +136,55 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mMap.onResume();
+        if (mMap != null) {
+            mMap.onResume();
+        }
         isActivityInForeground = true;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mMap.onPause();
+        if (mMap != null) {
+            mMap.onPause();
+        }
         isActivityInForeground = false;
     }
 
     private void resolveTechName() {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) return;
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            return;
+        }
+
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         if (email != null) {
             email = email.toLowerCase().trim();
-            if (email.equals("admin@aquasmartguard.ph")) currentTechName = "John Andrew";
-            else if (email.equals("management@aquasmartguard.ph")) currentTechName = "Glenn Jean";
-            else if (email.equals("john1@aquasmartguard.ph")) currentTechName = "John";
-            else if (email.equals("jhonny.s@aquasmartguard.ph")) currentTechName = "Jhonny Sinder";
-            else if (email.equals("rarcilla@aquasmartguard.ph")) currentTechName = "Ricky Arcilla";
-            else if (email.equals("r.trinidad@aquasmartguard.ph")) currentTechName = "Ruel Trinidad";
-            else if (email.equals("gdelantar@aquasmartguard.ph")) currentTechName = "Glenda Delantar";
-            else if (email.equals("duena@aquasmartguard.ph")) currentTechName = "Jerry Duena";
-            else if (email.equals("ji@aquasmartguard.ph")) currentTechName = "Jonnifer Iglesias";
-            else if (email.equals("marlon.salvador@aquasmartguard.ph")) currentTechName = "Marlon Salvador";
-            else if (email.equals("smjr@aquasmartguard.ph")) currentTechName = "Selvino Magora Jr.";
-            else currentTechName = "Technician";
+
+            if (email.equals("admin@aquasmartguard.ph")) {
+                currentTechName = "John Andrew";
+            } else if (email.equals("management@aquasmartguard.ph")) {
+                currentTechName = "Glenn Jean";
+            } else if (email.equals("john1@aquasmartguard.ph")) {
+                currentTechName = "John";
+            } else if (email.equals("jhonny.s@aquasmartguard.ph")) {
+                currentTechName = "Jhonny Sinder";
+            } else if (email.equals("rarcilla@aquasmartguard.ph")) {
+                currentTechName = "Ricky Arcilla";
+            } else if (email.equals("r.trinidad@aquasmartguard.ph")) {
+                currentTechName = "Ruel Trinidad";
+            } else if (email.equals("gdelantar@aquasmartguard.ph")) {
+                currentTechName = "Glenda Delantar";
+            } else if (email.equals("duena@aquasmartguard.ph")) {
+                currentTechName = "Jerry Duena";
+            } else if (email.equals("ji@aquasmartguard.ph")) {
+                currentTechName = "Jonnifer Iglesias";
+            } else if (email.equals("marlon.salvador@aquasmartguard.ph")) {
+                currentTechName = "Marlon Salvador";
+            } else if (email.equals("smjr@aquasmartguard.ph")) {
+                currentTechName = "Selvino Magora Jr.";
+            } else {
+                currentTechName = "Technician";
+            }
 
             if (techUid != null) {
                 setupNotificationMonitor();
@@ -184,8 +205,10 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
-                for (Location location : locationResult.getLocations()) {
-                    updateTechnicianPositionInFirebase(location);
+                if (locationResult != null) {
+                    for (Location location : locationResult.getLocations()) {
+                        updateTechnicianPositionInFirebase(location);
+                    }
                 }
             }
         };
@@ -194,7 +217,9 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     }
 
     private void updateTechnicianPositionInFirebase(Location loc) {
-        if (loc == null) return;
+        if (loc == null) {
+            return;
+        }
 
         double lat = loc.getLatitude();
         double lng = loc.getLongitude();
@@ -208,11 +233,13 @@ public class TechnicianTrackActivity extends AppCompatActivity {
 
         GeoPoint newPos = new GeoPoint(lat, lng);
 
-        if (techMarker.getPosition() != null) {
+        if (techMarker != null && techMarker.getPosition() != null) {
             lastPosition = techMarker.getPosition();
         }
 
-        animateMarkerSmoothly(techMarker, newPos);
+        if (techMarker != null) {
+            animateMarkerSmoothly(techMarker, newPos);
+        }
 
         if (techUid != null) {
             Map<String, Object> updates = new HashMap<>();
@@ -235,12 +262,17 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             isRouteFetched = true;
         }
 
-        mMap.getController().animateTo(newPos);
+        if (mMap != null) {
+            mMap.getController().animateTo(newPos);
+        }
+
         checkProximityToCustomer(newPos);
     }
 
     private void checkProximityToCustomer(GeoPoint techPos) {
-        if (customerLoc == null || hasArrived) return;
+        if (customerLoc == null || hasArrived || techPos == null) {
+            return;
+        }
 
         float[] results = new float[1];
         Location.distanceBetween(
@@ -267,7 +299,10 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     }
 
     private void setupNotificationMonitor() {
-        if (techUid == null) return;
+        if (techUid == null) {
+            return;
+        }
+
         notifRef = FirebaseDatabase.getInstance(DB_URL).getReference("Notifications").child(techUid);
         notifListener = new ChildEventListener() {
             @Override
@@ -283,29 +318,47 @@ public class TechnicianTrackActivity extends AppCompatActivity {
                         } else if (isActivityInForeground) {
                             new AlertDialog.Builder(TechnicianTrackActivity.this)
                                     .setTitle("New Notification")
-                                    .setMessage(Html.fromHtml(n.getMessage()))
+                                    .setMessage(Html.fromHtml(n.getMessage(), Html.FROM_HTML_MODE_LEGACY))
                                     .setPositiveButton("OK", null)
                                     .show();
                         }
                     }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot s) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot s) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         };
+
         notifRef.addChildEventListener(notifListener);
         notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot snapshot) { isInitialNotifLoad = false; }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                isInitialNotifLoad = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void showIncomingCallDialog(String message, String callerCustId) {
+        if (message == null) {
+            return;
+        }
+
         new AlertDialog.Builder(this)
                 .setTitle("Incoming Call")
-                .setMessage(Html.fromHtml(message))
+                .setMessage(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY))
                 .setCancelable(false)
                 .setPositiveButton("Answer", (dialog, which) -> {
                     String chatId = techUid + "_" + callerCustId;
@@ -338,6 +391,10 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     }
 
     private void setupMap() {
+        if (mMap == null) {
+            return;
+        }
+
         mMap.setTileSource(TileSourceFactory.MAPNIK);
         mMap.setMultiTouchControls(true);
         mMap.getController().setZoom(18.0);
@@ -358,23 +415,35 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     }
 
     private void loadTrackingData() {
-        if (ticketId == null) return;
+        if (ticketId == null || requestsRef == null) {
+            return;
+        }
 
         trackingListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (isFinishing() || isDestroyed()) return;
-                if (routeLine == null || mMap == null) return;
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+
+                if (routeLine == null || mMap == null) {
+                    return;
+                }
+
                 if (snapshot.exists()) {
                     customerId = snapshot.child("userId").getValue(String.class);
                     String assignedName = snapshot.child("assignedTechName").getValue(String.class);
-                    if (assignedName != null) currentTechName = assignedName;
+                    if (assignedName != null) {
+                        currentTechName = assignedName;
+                    }
 
                     Double cLat = snapshot.child("latitude").getValue(Double.class);
                     Double cLng = snapshot.child("longitude").getValue(Double.class);
                     String phone = snapshot.child("customerPhone").getValue(String.class);
 
-                    if (phone != null) tvCustomerPhone.setText(phone);
+                    if (phone != null && tvCustomerPhone != null) {
+                        tvCustomerPhone.setText(phone);
+                    }
 
                     if (cLat != null && cLng != null && cLat != 0) {
                         customerLoc = new GeoPoint(cLat, cLng);
@@ -385,24 +454,38 @@ public class TechnicianTrackActivity extends AppCompatActivity {
                             isRouteFetched = true;
                             lastRouteFetchTime = System.currentTimeMillis();
                         }
-                        checkProximityToCustomer(techMarker.getPosition());
+
+                        if (techMarker != null) {
+                            checkProximityToCustomer(techMarker.getPosition());
+                        }
                     }
                 } else {
                     Toast.makeText(TechnicianTrackActivity.this, "Ticket not found in database", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
+
         requestsRef.child(ticketId).addValueEventListener(trackingListener);
     }
+
     private void animateMarkerSmoothly(final Marker marker, final GeoPoint toPosition) {
-        if (marker.getPosition().equals(toPosition)) return;
+        if (marker == null || toPosition == null) {
+            return;
+        }
+
+        if (marker.getPosition().equals(toPosition)) {
+            return;
+        }
 
         final GeoPoint startPosition = marker.getPosition();
-        if (posAnimator != null) posAnimator.cancel();
+        if (posAnimator != null) {
+            posAnimator.cancel();
+        }
 
-        // ✅ MAS MABILIS NA ANIMATION (1 second lang)
         posAnimator = ValueAnimator.ofFloat(0, 1);
         posAnimator.setDuration(1000);
         posAnimator.setInterpolator(new LinearInterpolator());
@@ -412,7 +495,6 @@ public class TechnicianTrackActivity extends AppCompatActivity {
             double lat = v * toPosition.getLatitude() + (1 - v) * startPosition.getLatitude();
             double lng = v * toPosition.getLongitude() + (1 - v) * startPosition.getLongitude();
             GeoPoint currentPoint = new GeoPoint(lat, lng);
-
 
             if (lastPosition != null && v > 0.1f) {
                 float newBearing = calculateBearing(lastPosition, currentPoint);
@@ -426,16 +508,23 @@ public class TechnicianTrackActivity extends AppCompatActivity {
                 pruneRoute(currentPoint);
             }
 
-            mMap.invalidate();
+            if (mMap != null) {
+                mMap.invalidate();
+            }
         });
 
         posAnimator.start();
     }
 
     private void pruneRoute(GeoPoint currentPos) {
-        if (routeLine == null) return;
+        if (routeLine == null || currentPos == null) {
+            return;
+        }
+
         List<GeoPoint> points = routeLine.getActualPoints();
-        if (points == null || points.size() < 2) return;
+        if (points == null || points.size() < 2) {
+            return;
+        }
 
         while (points.size() > 1 && currentPos.distanceToAsDouble(points.get(0)) < 20) {
             points.remove(0);
@@ -449,6 +538,10 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     }
 
     private float calculateBearing(GeoPoint start, GeoPoint end) {
+        if (start == null || end == null) {
+            return 0f;
+        }
+
         double lat1 = Math.toRadians(start.getLatitude());
         double lon1 = Math.toRadians(start.getLongitude());
         double lat2 = Math.toRadians(end.getLatitude());
@@ -458,112 +551,169 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         double y = Math.sin(dLon) * Math.cos(lat2);
         double x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
 
-        float bearing = (float) ((Math.toDegrees(Math.atan2(y, x)) + 360) % 360);
-        return bearing;
+        return (float) ((Math.toDegrees(Math.atan2(y, x)) + 360) % 360);
     }
 
     private void updateCustomerMarker(GeoPoint loc) {
+        if (loc == null || mMap == null) {
+            return;
+        }
+
         if (customerMarker == null) {
             customerMarker = new Marker(mMap);
             customerMarker.setIcon(getResizedIcon(R.drawable.technician_pin_point_customer_loc_png, 12));
             customerMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             mMap.getOverlays().add(customerMarker);
         }
+
         customerMarker.setPosition(loc);
         customerMarker.setTitle("Customer Location");
     }
 
     private Drawable getResizedIcon(int resId, int sizeDp) {
         Drawable d = ContextCompat.getDrawable(this, resId);
-        if (d == null) return null;
+        if (d == null) {
+            return null;
+        }
+
         int px = (int) (sizeDp * getResources().getDisplayMetrics().density);
         if (d instanceof BitmapDrawable) {
             Bitmap b = ((BitmapDrawable) d).getBitmap();
             return new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(b, px, px, true));
         }
+
         d.setBounds(0, 0, px, px);
         return d;
     }
 
     private class FetchRouteTask extends AsyncTask<Void, Void, List<GeoPoint>> {
         private GeoPoint start, end;
-        public FetchRouteTask(GeoPoint start, GeoPoint end) { this.start = start; this.end = end; }
 
-        @Override protected List<GeoPoint> doInBackground(Void... voids) {
+        public FetchRouteTask(GeoPoint start, GeoPoint end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        protected List<GeoPoint> doInBackground(Void... voids) {
             List<GeoPoint> routePoints = new ArrayList<>();
+            if (start == null || end == null) {
+                return routePoints;
+            }
+
             try {
                 String urlStr = "https://router.project-osrm.org/route/v1/driving/"
                         + start.getLongitude() + "," + start.getLatitude() + ";"
                         + end.getLongitude() + "," + end.getLatitude()
                         + "?overview=full&geometries=geojson";
+
                 URL url = new URL(urlStr);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setConnectTimeout(5000);
                 conn.setReadTimeout(5000);
+
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder res = new StringBuilder();
                 String line;
-                while ((line = reader.readLine()) != null) res.append(line);
+                while ((line = reader.readLine()) != null) {
+                    res.append(line);
+                }
+
                 JSONObject json = new JSONObject(res.toString());
                 JSONArray coords = json.getJSONArray("routes").getJSONObject(0).getJSONObject("geometry").getJSONArray("coordinates");
                 for (int i = 0; i < coords.length(); i++) {
                     JSONArray c = coords.getJSONArray(i);
                     routePoints.add(new GeoPoint(c.getDouble(1), c.getDouble(0)));
                 }
-            } catch (Exception e) { Log.e("ROUTE", "Task Error: " + e.getMessage()); }
+            } catch (Exception e) {
+                Log.e("ROUTE", "Task Error: " + e.getMessage());
+            }
+
             return routePoints;
         }
 
-        @Override protected void onPostExecute(List<GeoPoint> points) {
-            if (isFinishing() || isDestroyed()) return;
-            if (points == null || points.isEmpty()) return;
-            if (routeLine == null || mMap == null) return;
+        @Override
+        protected void onPostExecute(List<GeoPoint> points) {
+            if (isFinishing() || isDestroyed()) {
+                return;
+            }
+
+            if (points == null || points.isEmpty()) {
+                return;
+            }
+
+            if (routeLine == null || mMap == null) {
+                return;
+            }
+
             routeLine.setPoints(points);
             mMap.invalidate();
         }
     }
 
     private void setupClickListeners() {
-        btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        if (btnZoomIn != null) btnZoomIn.setOnClickListener(v -> mMap.getController().zoomIn());
-        if (btnZoomOut != null) btnZoomOut.setOnClickListener(v -> mMap.getController().zoomOut());
+        if (btnZoomIn != null) {
+            btnZoomIn.setOnClickListener(v -> {
+                if (mMap != null) {
+                    mMap.getController().zoomIn();
+                }
+            });
+        }
 
-        btnChat.setOnClickListener(v -> {
-            if (customerId == null) {
-                Toast.makeText(this, "Customer data not loaded yet", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (techUid == null) {
-                Toast.makeText(this, "Technician ID not found", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Intent intent = new Intent(this, TechChatActivity.class);
-            intent.putExtra("CUSTOMER_ID", customerId);
-            intent.putExtra("CUSTOMER_NAME", customerName);
-            intent.putExtra("TECH_ID", techUid);
-            intent.putExtra("TECH_NAME", currentTechName);
-            startActivity(intent);
-        });
+        if (btnZoomOut != null) {
+            btnZoomOut.setOnClickListener(v -> {
+                if (mMap != null) {
+                    mMap.getController().zoomOut();
+                }
+            });
+        }
 
-        btnCall.setOnClickListener(v -> {
-            if (customerId == null) {
-                Toast.makeText(this, "Customer data not loaded yet", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (techUid == null || currentTechName == null) {
-                Toast.makeText(this, "Technician info not ready", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        if (btnChat != null) {
+            btnChat.setOnClickListener(v -> {
+                if (customerId == null) {
+                    Toast.makeText(this, "Customer data not loaded yet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            CallHelper.initiateCall(
-                    this,
-                    techUid,
-                    customerId,
-                    customerName,
-                    true
-            );
-        });
+                if (techUid == null) {
+                    Toast.makeText(this, "Technician ID not found", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent intent = new Intent(this, TechChatActivity.class);
+                intent.putExtra("CUSTOMER_ID", customerId);
+                intent.putExtra("CUSTOMER_NAME", customerName);
+                intent.putExtra("TECH_ID", techUid);
+                intent.putExtra("TECH_NAME", currentTechName);
+                startActivity(intent);
+            });
+        }
+
+        if (btnCall != null) {
+            btnCall.setOnClickListener(v -> {
+                if (customerId == null) {
+                    Toast.makeText(this, "Customer data not loaded yet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (techUid == null || currentTechName == null) {
+                    Toast.makeText(this, "Technician info not ready", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                CallHelper.initiateCall(
+                        this,
+                        techUid,
+                        customerId,
+                        customerName,
+                        true
+                );
+            });
+        }
 
         if (btnNextStep != null) {
             btnNextStep.setOnClickListener(v -> {
@@ -574,14 +724,25 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         }
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         if (requestsRef != null && trackingListener != null && ticketId != null) {
             requestsRef.child(ticketId).removeEventListener(trackingListener);
         }
-        if (notifRef != null && notifListener != null) notifRef.removeEventListener(notifListener);
-        if (locationCallback != null) fusedLocationClient.removeLocationUpdates(locationCallback);
-        if (posAnimator != null) posAnimator.cancel();
+
+        if (notifRef != null && notifListener != null) {
+            notifRef.removeEventListener(notifListener);
+        }
+
+        if (locationCallback != null && fusedLocationClient != null) {
+            fusedLocationClient.removeLocationUpdates(locationCallback);
+        }
+
+        if (posAnimator != null) {
+            posAnimator.cancel();
+        }
+
         routeLine = null;
         mMap = null;
     }
