@@ -43,7 +43,9 @@ public class TechnicianReportDialogHelper {
             Runnable onRequestPhoto,
             OnReportSubmittedListener callback
     ) {
-        if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
+        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+            return;
+        }
 
         Dialog reportDialog = new Dialog(activity);
         reportDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -74,7 +76,11 @@ public class TechnicianReportDialogHelper {
 
         View btnUpload = reportDialog.findViewById(R.id.btnUploadProof);
         if (btnUpload != null) {
-            btnUpload.setOnClickListener(v -> onRequestPhoto.run());
+            btnUpload.setOnClickListener(v -> {
+                if (onRequestPhoto != null) {
+                    onRequestPhoto.run();
+                }
+            });
         }
 
         View btnSubmit = reportDialog.findViewById(R.id.btnSubmitReport);
@@ -84,6 +90,7 @@ public class TechnicianReportDialogHelper {
                     Toast.makeText(activity, "Add photo first", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 if (activeTaskSnapshot == null) {
                     Toast.makeText(activity, "No active ticket found to submit report for", Toast.LENGTH_SHORT).show();
                     return;
@@ -91,6 +98,7 @@ public class TechnicianReportDialogHelper {
 
                 ProgressDialog pd = new ProgressDialog(activity);
                 pd.setMessage("Uploading...");
+                pd.setCancelable(false);
                 pd.show();
 
                 String fileName = "report_" + System.currentTimeMillis() + ".jpg";
@@ -102,7 +110,9 @@ public class TechnicianReportDialogHelper {
                             saveReportToDatabase(activity, dbUrl, activeTaskSnapshot, currentTechUid, currentTechName, uri.toString(), remarksText, pd, reportDialog, callback);
                         }))
                         .addOnFailureListener(e -> {
-                            try { pd.dismiss(); } catch (Exception ignored) {}
+                            try {
+                                pd.dismiss();
+                            } catch (Exception ignored) {}
                             Toast.makeText(activity, "Report submitted. Waiting for admin acceptance.", Toast.LENGTH_LONG).show();
                         });
             });
@@ -128,7 +138,10 @@ public class TechnicianReportDialogHelper {
             Dialog reportDialog,
             OnReportSubmittedListener callback
     ) {
-        if (activeTaskSnapshot == null) return;
+        if (activeTaskSnapshot == null) {
+            return;
+        }
+
         String ticketId = activeTaskSnapshot.getKey();
         String ticketNum = activeTaskSnapshot.child("ticketId").getValue(String.class);
 
@@ -153,18 +166,28 @@ public class TechnicianReportDialogHelper {
                 updates.put("submissionTimestamp", ServerValue.TIMESTAMP);
 
                 requestsRef.child(ticketId).updateChildren(updates).addOnCompleteListener(t -> {
-                    try { pd.dismiss(); } catch (Exception ignored) {}
+                    try {
+                        pd.dismiss();
+                    } catch (Exception ignored) {}
+
                     AdminDashboardActivity.addAdminLog("Technician " + currentTechName + " submitted a report for ticket #" + ticketNum);
+
                     try {
                         if (reportDialog != null && reportDialog.isShowing()) {
                             reportDialog.dismiss();
                         }
                     } catch (Exception ignored) {}
-                    if (callback != null) callback.onReportSubmitted();
+
+                    if (callback != null) {
+                        callback.onReportSubmitted();
+                    }
+
                     Toast.makeText(activity, "Report Submitted Successfully!", Toast.LENGTH_LONG).show();
                 });
             } else {
-                try { pd.dismiss(); } catch (Exception ignored) {}
+                try {
+                    pd.dismiss();
+                } catch (Exception ignored) {}
             }
         });
     }
