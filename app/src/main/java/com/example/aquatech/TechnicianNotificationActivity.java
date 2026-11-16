@@ -49,11 +49,11 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_technician_notification);
 
         mAuth = FirebaseAuth.getInstance();
-        
+
         setupStatusBar();
         initializeViews();
 
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth != null && mAuth.getCurrentUser() != null) {
             String currentUid = mAuth.getCurrentUser().getUid();
             dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("Notifications").child(currentUid);
             connectToFirebase();
@@ -74,43 +74,80 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
         chipPayment = findViewById(R.id.chipPayment);
         chipBooking = findViewById(R.id.chipBooking);
 
-        btnBack.setOnClickListener(v -> finish());
-        btnSettings.setOnClickListener(v -> {
-            Toast.makeText(this, "Settings coming soon", Toast.LENGTH_SHORT).show();
-        });
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        rvToday.setLayoutManager(new LinearLayoutManager(this));
+        if (btnSettings != null) {
+            btnSettings.setOnClickListener(v -> {
+                Toast.makeText(this, "Settings coming soon", Toast.LENGTH_SHORT).show();
+            });
+        }
+
         todayList = new ArrayList<>();
         todayAdapter = new TechnicianNotificationAdapter(todayList);
-        rvToday.setAdapter(todayAdapter);
+        if (rvToday != null) {
+            rvToday.setLayoutManager(new LinearLayoutManager(this));
+            rvToday.setAdapter(todayAdapter);
+        }
 
-        rvEarlier.setLayoutManager(new LinearLayoutManager(this));
         earlierList = new ArrayList<>();
         earlierAdapter = new TechnicianNotificationAdapter(earlierList);
-        rvEarlier.setAdapter(earlierAdapter);
+        if (rvEarlier != null) {
+            rvEarlier.setLayoutManager(new LinearLayoutManager(this));
+            rvEarlier.setAdapter(earlierAdapter);
+        }
 
         setupFilterClickListeners();
     }
 
     private void setupFilterClickListeners() {
         View.OnClickListener filterListener = v -> {
-            chipAll.setSelected(false);
-            chipReminders.setSelected(false);
-            chipPayment.setSelected(false);
-            chipBooking.setSelected(false);
-            v.setSelected(true);
-            
-            // Logic for actual filtering can be added here
+            if (chipAll != null) {
+                chipAll.setSelected(false);
+            }
+
+            if (chipReminders != null) {
+                chipReminders.setSelected(false);
+            }
+
+            if (chipPayment != null) {
+                chipPayment.setSelected(false);
+            }
+
+            if (chipBooking != null) {
+                chipBooking.setSelected(false);
+            }
+
+            if (v != null) {
+                v.setSelected(true);
+            }
+
             Toast.makeText(this, "Filtering...", Toast.LENGTH_SHORT).show();
         };
 
-        chipAll.setOnClickListener(filterListener);
-        chipReminders.setOnClickListener(filterListener);
-        chipPayment.setOnClickListener(filterListener);
-        chipBooking.setOnClickListener(filterListener);
+        if (chipAll != null) {
+            chipAll.setOnClickListener(filterListener);
+        }
+
+        if (chipReminders != null) {
+            chipReminders.setOnClickListener(filterListener);
+        }
+
+        if (chipPayment != null) {
+            chipPayment.setOnClickListener(filterListener);
+        }
+
+        if (chipBooking != null) {
+            chipBooking.setOnClickListener(filterListener);
+        }
     }
 
     private void connectToFirebase() {
+        if (dbRef == null) {
+            return;
+        }
+
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -145,20 +182,32 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if (!isInitialLoad) {
                     NotificationModel newNotif = snapshot.getValue(NotificationModel.class);
-                    if (newNotif != null) {
-                        String msg = Html.fromHtml(newNotif.getMessage()).toString();
+                    if (newNotif != null && newNotif.getMessage() != null) {
+                        String msg = Html.fromHtml(newNotif.getMessage(), Html.FROM_HTML_MODE_LEGACY).toString();
                         Toast.makeText(TechnicianNotificationActivity.this, "🔔 NEW UPDATE: " + msg, Toast.LENGTH_LONG).show();
                     }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot s) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot s) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         });
     }
 
     private void distributeToSections(List<NotificationModel> all) {
+        if (all == null) {
+            return;
+        }
+
         todayList.clear();
         earlierList.clear();
 
@@ -166,31 +215,57 @@ public class TechnicianNotificationActivity extends AppCompatActivity {
         long oneDayMillis = 24 * 60 * 60 * 1000;
 
         for (NotificationModel notif : all) {
-            if (now - notif.getTimestamp() < oneDayMillis) {
-                todayList.add(notif);
-            } else {
-                earlierList.add(notif);
+            if (notif != null) {
+                if (now - notif.getTimestamp() < oneDayMillis) {
+                    todayList.add(notif);
+                } else {
+                    earlierList.add(notif);
+                }
             }
         }
 
-        todayAdapter.notifyDataSetChanged();
-        earlierAdapter.notifyDataSetChanged();
+        if (todayAdapter != null) {
+            todayAdapter.notifyDataSetChanged();
+        }
 
-        findViewById(R.id.tvLabelToday).setVisibility(todayList.isEmpty() ? View.GONE : View.VISIBLE);
-        findViewById(R.id.tvLabelEarlier).setVisibility(earlierList.isEmpty() ? View.GONE : View.VISIBLE);
+        if (earlierAdapter != null) {
+            earlierAdapter.notifyDataSetChanged();
+        }
+
+        View labelToday = findViewById(R.id.tvLabelToday);
+        if (labelToday != null) {
+            labelToday.setVisibility(todayList.isEmpty() ? View.GONE : View.VISIBLE);
+        }
+
+        View labelEarlier = findViewById(R.id.tvLabelEarlier);
+        if (labelEarlier != null) {
+            labelEarlier.setVisibility(earlierList.isEmpty() ? View.GONE : View.VISIBLE);
+        }
     }
 
     private void updateEmptyState(boolean isEmpty) {
-        if (isEmpty) {
-            noNotifLayout.setVisibility(View.VISIBLE);
-            findViewById(R.id.rvTodayNotifications).setVisibility(View.GONE);
-            findViewById(R.id.rvEarlierNotifications).setVisibility(View.GONE);
-            findViewById(R.id.tvLabelToday).setVisibility(View.GONE);
-            findViewById(R.id.tvLabelEarlier).setVisibility(View.GONE);
-        } else {
-            noNotifLayout.setVisibility(View.GONE);
-            findViewById(R.id.rvTodayNotifications).setVisibility(View.VISIBLE);
-            findViewById(R.id.rvEarlierNotifications).setVisibility(View.VISIBLE);
+        if (noNotifLayout != null) {
+            noNotifLayout.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+        }
+
+        View rvTodayNotif = findViewById(R.id.rvTodayNotifications);
+        if (rvTodayNotif != null) {
+            rvTodayNotif.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        }
+
+        View rvEarlierNotif = findViewById(R.id.rvEarlierNotifications);
+        if (rvEarlierNotif != null) {
+            rvEarlierNotif.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        }
+
+        View labelToday = findViewById(R.id.tvLabelToday);
+        if (labelToday != null) {
+            labelToday.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        }
+
+        View labelEarlier = findViewById(R.id.tvLabelEarlier);
+        if (labelEarlier != null) {
+            labelEarlier.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
         }
     }
 
