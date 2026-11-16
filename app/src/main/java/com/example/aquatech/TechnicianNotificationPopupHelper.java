@@ -16,15 +16,28 @@ public class TechnicianNotificationPopupHelper {
             String message,
             Runnable onOpenReport
     ) {
-        if (activity == null || activity.isFinishing() || activity.isDestroyed() || notificationContainer == null) return;
+        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+            return;
+        }
+
+        if (notificationContainer == null) {
+            return;
+        }
 
         LayoutInflater inflater = LayoutInflater.from(activity);
         View layout = inflater.inflate(R.layout.layout_resubmit_report_popup, notificationContainer, false);
+        if (layout == null) {
+            return;
+        }
+
         TextView tvMsg = layout.findViewById(R.id.tvResubmitMessage);
         Button btnOpen = layout.findViewById(R.id.btnOpenReport);
         Button btnDismiss = layout.findViewById(R.id.btnDismiss);
 
-        if (tvMsg != null) tvMsg.setText(message);
+        if (tvMsg != null) {
+            tvMsg.setText(message != null ? message : "");
+        }
+
         if (btnOpen != null) {
             btnOpen.setOnClickListener(v -> {
                 notificationContainer.removeAllViews();
@@ -36,6 +49,7 @@ public class TechnicianNotificationPopupHelper {
                 }
             });
         }
+
         if (btnDismiss != null) {
             btnDismiss.setOnClickListener(v -> notificationContainer.removeAllViews());
         }
