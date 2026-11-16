@@ -29,7 +29,9 @@ public class TechnicianTicketsGuideActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackTicketsGuide);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View btnViewAssigned = findViewById(R.id.btnGuideViewAssigned);
         if (btnViewAssigned != null) {
