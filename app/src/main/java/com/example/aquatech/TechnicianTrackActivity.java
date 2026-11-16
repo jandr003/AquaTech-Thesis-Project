@@ -34,6 +34,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -152,43 +153,39 @@ public class TechnicianTrackActivity extends AppCompatActivity {
     }
 
     private void resolveTechName() {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            return;
-        }
+        if (techUid != null && !techUid.isEmpty()) {
+            DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(techUid);
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        String name = snapshot.child("fullName").getValue(String.class);
+                        if (name == null || name.isEmpty()) {
+                            name = snapshot.child("name").getValue(String.class);
+                        }
 
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        if (email != null) {
-            email = email.toLowerCase().trim();
+                        if (name != null && !name.isEmpty()) {
+                            currentTechName = name;
+                        }
+                    }
 
-            if (email.equals("admin@aquasmartguard.ph")) {
-                currentTechName = "John Andrew";
-            } else if (email.equals("management@aquasmartguard.ph")) {
-                currentTechName = "Glenn Jean";
-            } else if (email.equals("john1@aquasmartguard.ph")) {
-                currentTechName = "John";
-            } else if (email.equals("jhonny.s@aquasmartguard.ph")) {
-                currentTechName = "Jhonny Sinder";
-            } else if (email.equals("rarcilla@aquasmartguard.ph")) {
-                currentTechName = "Ricky Arcilla";
-            } else if (email.equals("r.trinidad@aquasmartguard.ph")) {
-                currentTechName = "Ruel Trinidad";
-            } else if (email.equals("gdelantar@aquasmartguard.ph")) {
-                currentTechName = "Glenda Delantar";
-            } else if (email.equals("duena@aquasmartguard.ph")) {
-                currentTechName = "Jerry Duena";
-            } else if (email.equals("ji@aquasmartguard.ph")) {
-                currentTechName = "Jonnifer Iglesias";
-            } else if (email.equals("marlon.salvador@aquasmartguard.ph")) {
-                currentTechName = "Marlon Salvador";
-            } else if (email.equals("smjr@aquasmartguard.ph")) {
-                currentTechName = "Selvino Magora Jr.";
-            } else {
-                currentTechName = "Technician";
-            }
+                    if (currentTechName == null || currentTechName.isEmpty()) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null && user.getEmail() != null) {
+                            currentTechName = TechnicianIdentityHelper.resolveTechNameFromEmail(user.getEmail());
+                        } else {
+                            currentTechName = "Technician";
+                        }
+                    }
 
-            if (techUid != null) {
-                setupNotificationMonitor();
-            }
+                    setupNotificationMonitor();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    setupNotificationMonitor();
+                }
+            });
         }
     }
 
