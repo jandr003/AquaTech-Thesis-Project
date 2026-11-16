@@ -41,7 +41,7 @@ public class TechnicianProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_technician_profile);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = mAuth != null ? mAuth.getCurrentUser() : null;
         if (user != null) {
             userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(user.getUid());
         }
@@ -61,7 +61,9 @@ public class TechnicianProfileActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackTechProfile);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         ivProfilePic = findViewById(R.id.ivTechProfilePic);
         tvTechName = findViewById(R.id.tvTechName);
@@ -72,7 +74,6 @@ public class TechnicianProfileActivity extends AppCompatActivity {
         tvTechPhone = findViewById(R.id.tvTechPhone);
         tvTechPosition = findViewById(R.id.tvTechPosition);
         tvTechBranch = findViewById(R.id.tvTechBranch);
-
         tvTechFullName = findViewById(R.id.tvTechFullName);
 
         View btnChangePic = findViewById(R.id.btnChangeTechPic);
@@ -181,15 +182,14 @@ public class TechnicianProfileActivity extends AppCompatActivity {
     }
 
     private void loadTechnicianProfileData() {
+        if (mAuth == null) {
+            return;
+        }
+
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             if (tvTechEmail != null) {
                 tvTechEmail.setText(user.getEmail());
-            }
-
-            if (tvTechUID != null) {
-                String email = user.getEmail() != null ? user.getEmail().toLowerCase() : "";
-                tvTechUID.setText(getTechIdFromEmail(email));
             }
 
             TechnicianIdentityHelper.attachLiveAvatarListener(DB_URL, user.getUid(), ivProfilePic);
@@ -198,40 +198,54 @@ public class TechnicianProfileActivity extends AppCompatActivity {
                 userRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String name = snapshot.child("fullName").getValue(String.class);
-                        if (name == null || name.isEmpty()) name = snapshot.child("name").getValue(String.class);
-                        if (tvTechName != null && name != null && !name.isEmpty()) {
-                            tvTechName.setText(name);
-                        }
-                        if (tvTechFullName != null && name != null && !name.isEmpty()) {
-                            tvTechFullName.setText(name);
-                        }
-
-                        String mobile = snapshot.child("mobileNumber").getValue(String.class);
-                        if (mobile == null || mobile.isEmpty()) mobile = snapshot.child("phone").getValue(String.class);
-                        if (tvTechPhone != null && mobile != null && !mobile.isEmpty()) {
-                            tvTechPhone.setText(mobile);
-                        }
-
-                        String status = snapshot.child("verificationStatus").getValue(String.class);
-                        if (tvTechVerifiedBadge != null) {
-                            if ("Verified".equalsIgnoreCase(status)) {
-                                tvTechVerifiedBadge.setText("Account Verified");
-                                tvTechVerifiedBadge.setTextColor(Color.parseColor("#166534"));
-                            } else {
-                                tvTechVerifiedBadge.setText("Pending Verification");
-                                tvTechVerifiedBadge.setTextColor(Color.parseColor("#D97706"));
+                        if (snapshot.exists()) {
+                            String name = snapshot.child("fullName").getValue(String.class);
+                            if (name == null || name.isEmpty()) {
+                                name = snapshot.child("name").getValue(String.class);
                             }
-                        }
 
-                        String position = snapshot.child("position").getValue(String.class);
-                        if (tvTechPosition != null && position != null && !position.isEmpty()) {
-                            tvTechPosition.setText(position);
-                        }
+                            if (tvTechName != null && name != null && !name.isEmpty()) {
+                                tvTechName.setText(name);
+                            }
 
-                        String branch = snapshot.child("branch").getValue(String.class);
-                        if (tvTechBranch != null && branch != null && !branch.isEmpty()) {
-                            tvTechBranch.setText(branch);
+                            if (tvTechFullName != null && name != null && !name.isEmpty()) {
+                                tvTechFullName.setText(name);
+                            }
+
+                            String techId = snapshot.child("techId").getValue(String.class);
+                            if (tvTechUID != null) {
+                                tvTechUID.setText(techId != null && !techId.isEmpty() ? techId : "ASC-T001");
+                            }
+
+                            String mobile = snapshot.child("mobileNumber").getValue(String.class);
+                            if (mobile == null || mobile.isEmpty()) {
+                                mobile = snapshot.child("phone").getValue(String.class);
+                            }
+
+                            if (tvTechPhone != null && mobile != null && !mobile.isEmpty()) {
+                                tvTechPhone.setText(mobile);
+                            }
+
+                            String status = snapshot.child("verificationStatus").getValue(String.class);
+                            if (tvTechVerifiedBadge != null) {
+                                if ("Verified".equalsIgnoreCase(status)) {
+                                    tvTechVerifiedBadge.setText("Account Verified");
+                                    tvTechVerifiedBadge.setTextColor(Color.parseColor("#166534"));
+                                } else {
+                                    tvTechVerifiedBadge.setText("Pending Verification");
+                                    tvTechVerifiedBadge.setTextColor(Color.parseColor("#D97706"));
+                                }
+                            }
+
+                            String position = snapshot.child("position").getValue(String.class);
+                            if (tvTechPosition != null && position != null && !position.isEmpty()) {
+                                tvTechPosition.setText(position);
+                            }
+
+                            String branch = snapshot.child("branch").getValue(String.class);
+                            if (tvTechBranch != null && branch != null && !branch.isEmpty()) {
+                                tvTechBranch.setText(branch);
+                            }
                         }
                     }
 
@@ -249,24 +263,16 @@ public class TechnicianProfileActivity extends AppCompatActivity {
     private void showAvatarSelectionDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_select_avatar);
-        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
 
         View btnCancel = dialog.findViewById(R.id.btnCancelAvatar);
-        if (btnCancel != null) btnCancel.setOnClickListener(v -> dialog.dismiss());
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
 
         dialog.show();
-    }
-
-    private String getTechIdFromEmail(String email) {
-        if (email.contains("john@")) return "TECH-0001";
-        if (email.contains("jhonny@")) return "TECH-0002";
-        if (email.contains("ricky@")) return "TECH-0003";
-        if (email.contains("ruel@")) return "TECH-0004";
-        if (email.contains("glenda@")) return "TECH-0005";
-        if (email.contains("jerry@")) return "TECH-0006";
-        if (email.contains("jonnifer@")) return "TECH-0007";
-        if (email.contains("marlon@")) return "TECH-0008";
-        if (email.contains("selvino@")) return "TECH-0009";
-        return "TECH-0001";
     }
 }
