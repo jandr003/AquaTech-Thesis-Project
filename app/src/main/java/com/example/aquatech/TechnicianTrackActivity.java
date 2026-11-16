@@ -104,34 +104,78 @@ public class TechnicianTrackActivity extends AppCompatActivity {
         initializeViews();
 
         ticketId = getIntent().getStringExtra("TICKET_ID");
-        customerName = getIntent().getStringExtra("CUSTOMER_NAME");
-
         if (ticketId == null || ticketId.isEmpty()) {
-            Toast.makeText(this, "ERROR: TechnicianTrackActivity received no TICKET_ID", Toast.LENGTH_LONG).show();
-            finish();
-            return;
+            ticketId = getIntent().getStringExtra("ticketId");
+        }
+        if (ticketId == null || ticketId.isEmpty()) {
+            ticketId = getIntent().getStringExtra("RESUBMIT_TICKET_ID");
         }
 
-        if (customerName != null && tvCustomerName != null) {
-            tvCustomerName.setText(customerName);
-        }
+        customerName = getIntent().getStringExtra("CUSTOMER_NAME");
+        fetchActiveTicketIfMissingAndStart();
+    }
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            techUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        } else {
+    private void fetchActiveTicketIfMissingAndStart() {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             Toast.makeText(this, "Technician not logged in", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
+        techUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
         usersRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users");
 
-        setupMap();
-        resolveTechName();
-        loadTrackingData();
-        setupClickListeners();
-        startLocationUpdates();
+        if (ticketId != null && !ticketId.isEmpty()) {
+            if (customerName != null && tvCustomerName != null) {
+                tvCustomerName.setText(customerName);
+            }
+            setupMap();
+            resolveTechName();
+            loadTrackingData();
+            setupClickListeners();
+            startLocationUpdates();
+        } else {
+            requestsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String assignedTech = ds.child("assignedTechId").getValue(String.class);
+                        String status = ds.child("status").getValue(String.class);
+
+                        if (techUid != null && techUid.equalsIgnoreCase(assignedTech) && status != null &&
+                                ("In Progress".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status) ||
+                                        "Arrived".equalsIgnoreCase(status) || "Assigned".equalsIgnoreCase(status) || "Open".equalsIgnoreCase(status))) {
+                            ticketId = ds.getKey();
+                            if (customerName == null || customerName.isEmpty()) {
+                                customerName = ds.child("customerName").getValue(String.class);
+                            }
+                            break;
+                        }
+                    }
+
+                    if (ticketId != null && !ticketId.isEmpty()) {
+                        if (customerName != null && tvCustomerName != null) {
+                            tvCustomerName.setText(customerName);
+                        }
+                        setupMap();
+                        resolveTechName();
+                        loadTrackingData();
+                        setupClickListeners();
+                        startLocationUpdates();
+                    } else {
+                        Toast.makeText(TechnicianTrackActivity.this, "No active assigned ticket found.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(TechnicianTrackActivity.this, "Unable to load service data.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+        }
     }
 
     @Override
