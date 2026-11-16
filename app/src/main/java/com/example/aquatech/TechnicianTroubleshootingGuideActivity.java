@@ -29,7 +29,9 @@ public class TechnicianTroubleshootingGuideActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackTroubleGuide);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View btnAppWontOpen = findViewById(R.id.btnGuideAppWontOpen);
         if (btnAppWontOpen != null) {
