@@ -29,7 +29,9 @@ public class TechnicianReportsGuideActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackReportsGuide);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View btnCreateReport = findViewById(R.id.btnGuideCreateReport);
         if (btnCreateReport != null) {
