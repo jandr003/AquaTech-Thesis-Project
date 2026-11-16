@@ -2,6 +2,7 @@ package com.example.aquatech;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
     private DatabaseReference requestsRef, techRef;
     private List<HistoryItem> historyList;
     private HistoryAdapter historyAdapter;
-    
+
     private boolean hasActiveRequest = false;
     private String activeTicketId = null;
     private String activeCustomerName = null;
@@ -72,17 +75,28 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
             finish();
             return;
         }
-        if (techName == null) techName = "Technician";
 
-        tvName.setText(techName);
-        tvID.setText("ID: " + techId);
+        if (techName == null) {
+            techName = "Technician";
+        }
+
+        if (tvName != null) {
+            tvName.setText(techName);
+        }
+
+        if (tvID != null) {
+            tvID.setText("ID: " + techId);
+        }
 
         setupRecyclerView();
         setupFirebase();
         loadTechnicianCredentials();
         setupButtons();
 
-        findViewById(R.id.btnExportPdf).setOnClickListener(v -> generatePerformanceReportPDF());
+        View btnExport = findViewById(R.id.btnExportPdf);
+        if (btnExport != null) {
+            btnExport.setOnClickListener(v -> generatePerformanceReportPDF());
+        }
     }
 
     private void initializeViews() {
@@ -98,14 +112,19 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
         rvHistory = findViewById(R.id.rvTechHistory);
         btnLiveTrack = findViewById(R.id.btnLiveTrack);
 
-        findViewById(R.id.btnBackPerformance).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBackPerformance);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
     }
 
     private void setupRecyclerView() {
-        rvHistory.setLayoutManager(new LinearLayoutManager(this));
-        historyList = new ArrayList<>();
-        historyAdapter = new HistoryAdapter(historyList);
-        rvHistory.setAdapter(historyAdapter);
+        if (rvHistory != null) {
+            rvHistory.setLayoutManager(new LinearLayoutManager(this));
+            historyList = new ArrayList<>();
+            historyAdapter = new HistoryAdapter(historyList);
+            rvHistory.setAdapter(historyAdapter);
+        }
     }
 
     private void setupFirebase() {
@@ -114,10 +133,17 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
         requestsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int completed = 0, ongoing = 0;
+                int completed = 0;
+                int ongoing = 0;
                 float totalRating = 0;
                 int ratingCount = 0;
-                historyList.clear();
+
+                if (historyList != null) {
+                    historyList.clear();
+                } else {
+                    historyList = new ArrayList<>();
+                }
+
                 hasActiveRequest = false;
                 activeTicketId = null;
                 activeCustomerName = null;
@@ -125,23 +151,31 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String assignedId = ds.child("assignedTechId").getValue(String.class);
                     String assignedName = ds.child("assignedTechName").getValue(String.class);
-                    
-                    boolean isMatch = (assignedId != null && assignedId.equals(techId)) || 
-                                     (assignedName != null && assignedName.equalsIgnoreCase(techName));
+
+                    boolean isMatch = (assignedId != null && assignedId.equals(techId)) ||
+                            (assignedName != null && assignedName.equalsIgnoreCase(techName));
 
                     if (isMatch) {
                         String status = ds.child("status").getValue(String.class);
-                        if (status == null) status = "Pending";
+                        if (status == null) {
+                            status = "Pending";
+                        }
 
                         String ticketId = ds.child("ticketId").getValue(String.class);
-                        if (ticketId == null) ticketId = ds.getKey();
+                        if (ticketId == null) {
+                            ticketId = ds.getKey();
+                        }
 
                         String customerName = ds.child("customerName").getValue(String.class);
-                        if (customerName == null) customerName = "Customer";
+                        if (customerName == null) {
+                            customerName = "Customer";
+                        }
 
                         String serviceType = getServiceTypeLabel(ds);
                         Long completionTime = ds.child("completedTimestamp").getValue(Long.class);
-                        if (completionTime == null) completionTime = ds.child("maintenanceEndTime").getValue(Long.class);
+                        if (completionTime == null) {
+                            completionTime = ds.child("maintenanceEndTime").getValue(Long.class);
+                        }
 
                         String dateStr = "In Progress";
                         if ("Completed".equalsIgnoreCase(status) && completionTime != null) {
@@ -150,7 +184,6 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
 
                         historyList.add(new HistoryItem(ticketId, customerName, serviceType, dateStr, status));
 
-                        // 📍 Step 1: Filter by "Completed" for Ratings
                         if ("Completed".equalsIgnoreCase(status)) {
                             completed++;
                             Float rating = ds.child("rating").getValue(Float.class);
@@ -160,7 +193,7 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
                             }
                         } else if ("In Progress".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status) || "Arrived".equalsIgnoreCase(status)) {
                             ongoing++;
-                            hasActiveRequest = true; 
+                            hasActiveRequest = true;
                             activeTicketId = ticketId;
                             activeCustomerName = customerName;
                         }
@@ -171,13 +204,22 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
                     historyList = historyList.subList(0, 10);
                 }
 
-                tvCompleted.setText(String.valueOf(completed));
-                tvOngoing.setText(String.valueOf(ongoing));
+                if (tvCompleted != null) {
+                    tvCompleted.setText(String.valueOf(completed));
+                }
 
-                float avgRating = ratingCount > 0 ? totalRating / ratingCount : 0.0f; 
-                tvRating.setText(String.format(Locale.US, "%.1f", avgRating));
+                if (tvOngoing != null) {
+                    tvOngoing.setText(String.valueOf(ongoing));
+                }
 
-                historyAdapter.notifyDataSetChanged();
+                float avgRating = ratingCount > 0 ? totalRating / ratingCount : 0.0f;
+                if (tvRating != null) {
+                    tvRating.setText(String.format(Locale.US, "%.1f", avgRating));
+                }
+
+                if (historyAdapter != null) {
+                    historyAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -188,75 +230,124 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
     }
 
     private String getServiceTypeLabel(DataSnapshot ds) {
+        if (ds == null) {
+            return "General Maintenance";
+        }
+
         StringBuilder sb = new StringBuilder();
-        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10"))
+
+        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
             sb.append("Filter Preventive");
+        }
+
         if (hasQty(ds, "qty_wayvalve")) {
-            if (sb.length() > 0) sb.append(", ");
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
             sb.append("Installation Kit");
         }
+
         if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_uvlamp") ||
                 hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
-            if (sb.length() > 0) sb.append(", ");
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
             sb.append("Other Parts");
         }
+
         return sb.length() == 0 ? "General Maintenance" : sb.toString();
     }
 
     private boolean hasQty(DataSnapshot ds, String key) {
+        if (ds == null || key == null) {
+            return false;
+        }
+
         Object val = ds.child(key).getValue();
         return val instanceof Number && ((Number) val).intValue() > 0;
     }
 
     private void loadTechnicianCredentials() {
+        if (techId == null) {
+            return;
+        }
+
         techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(techId);
         techRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String avatarUrl = snapshot.child("profileImageUrl").getValue(String.class);
-                if (avatarUrl != null) {
+                if (avatarUrl != null && ivAvatar != null) {
                     Glide.with(TechnicianPerformanceActivity.this).load(avatarUrl).circleCrop().into(ivAvatar);
-                } else {
+                } else if (ivAvatar != null) {
                     ivAvatar.setImageResource(R.drawable.new_technician);
                 }
 
                 DataSnapshot verification = snapshot.child("verification");
                 String verificationStatus = verification.child("status").getValue(String.class);
+
+                View statusIndicator = findViewById(R.id.viewStatusIndicator);
+
                 if ("Verified".equalsIgnoreCase(verificationStatus)) {
-                    tvStatus.setText("Verified");
-                    tvStatus.setTextColor(Color.parseColor("#4CAF50"));
-                    findViewById(R.id.viewStatusIndicator).setBackgroundTintList(
-                            android.content.res.ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+                    if (tvStatus != null) {
+                        tvStatus.setText("Verified");
+                        tvStatus.setTextColor(Color.parseColor("#4CAF50"));
+                    }
+
+                    if (statusIndicator != null) {
+                        statusIndicator.setBackgroundTintList(
+                                ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+                    }
 
                     String idUrl = verification.child("idUrl").getValue(String.class);
                     String certUrl = verification.child("certUrl").getValue(String.class);
 
-                    if (idUrl != null) Glide.with(TechnicianPerformanceActivity.this).load(idUrl).into(ivIDPreview);
-                    if (certUrl != null) Glide.with(TechnicianPerformanceActivity.this).load(certUrl).into(ivCertPreview);
+                    if (idUrl != null && ivIDPreview != null) {
+                        Glide.with(TechnicianPerformanceActivity.this).load(idUrl).into(ivIDPreview);
+                    }
+
+                    if (certUrl != null && ivCertPreview != null) {
+                        Glide.with(TechnicianPerformanceActivity.this).load(certUrl).into(ivCertPreview);
+                    }
                 } else {
-                    tvStatus.setText(verificationStatus != null ? verificationStatus : "Not Verified");
-                    tvStatus.setTextColor(Color.parseColor("#FF9800"));
-                    findViewById(R.id.viewStatusIndicator).setBackgroundTintList(
-                            android.content.res.ColorStateList.valueOf(Color.parseColor("#FF9800")));
-                    ivIDPreview.setImageResource(R.drawable.img_place_holder);
-                    ivCertPreview.setImageResource(R.drawable.img_place_holder);
+                    if (tvStatus != null) {
+                        tvStatus.setText(verificationStatus != null ? verificationStatus : "Not Verified");
+                        tvStatus.setTextColor(Color.parseColor("#FF9800"));
+                    }
+
+                    if (statusIndicator != null) {
+                        statusIndicator.setBackgroundTintList(
+                                ColorStateList.valueOf(Color.parseColor("#FF9800")));
+                    }
+
+                    if (ivIDPreview != null) {
+                        ivIDPreview.setImageResource(R.drawable.img_place_holder);
+                    }
+
+                    if (ivCertPreview != null) {
+                        ivCertPreview.setImageResource(R.drawable.img_place_holder);
+                    }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void setupButtons() {
-        btnLiveTrack.setOnClickListener(v -> {
-            if (hasActiveRequest && activeTicketId != null) {
-                Intent intent = new Intent(TechnicianPerformanceActivity.this, TechnicianTrackActivity.class);
-                intent.putExtra("TICKET_ID", activeTicketId);
-                intent.putExtra("CUSTOMER_NAME", activeCustomerName);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "No active request currently assigned to this technician.", Toast.LENGTH_LONG).show();
-            }
-        });
+        if (btnLiveTrack != null) {
+            btnLiveTrack.setOnClickListener(v -> {
+                if (hasActiveRequest && activeTicketId != null) {
+                    Intent intent = new Intent(TechnicianPerformanceActivity.this, TechnicianTrackActivity.class);
+                    intent.putExtra("TICKET_ID", activeTicketId);
+                    intent.putExtra("CUSTOMER_NAME", activeCustomerName);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "No active request currently assigned to this technician.", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     private void generatePerformanceReportPDF() {
@@ -265,7 +356,11 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
         Paint titlePaint = new Paint();
         titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
-        int pageWidth = 595, pageHeight = 842, margin = 40, y = 50;
+        int pageWidth = 595;
+        int pageHeight = 842;
+        int margin = 40;
+        int y = 50;
+
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create();
         PdfDocument.Page page = document.startPage(pageInfo);
         Canvas canvas = page.getCanvas();
@@ -287,12 +382,18 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
         paint.setColor(Color.BLACK);
         paint.setTextSize(14f);
         paint.setFakeBoldText(true);
-        canvas.drawText("TECHNICIAN: " + techName.toUpperCase(), margin + 15, y + 30, paint);
+
+        String techDisplayName = techName != null ? techName.toUpperCase() : "TECHNICIAN";
+        canvas.drawText("TECHNICIAN: " + techDisplayName, margin + 15, y + 30, paint);
         paint.setTextSize(12f);
         paint.setFakeBoldText(false);
-        canvas.drawText("ID: " + techId, margin + 15, y + 55, paint);
-        canvas.drawText("Jobs Completed: " + tvCompleted.getText(), margin + 15, y + 80, paint);
-        canvas.drawText("Avg Rating: " + tvRating.getText() + " Stars", margin + 15, y + 105, paint);
+
+        String completedStr = tvCompleted != null ? tvCompleted.getText().toString() : "0";
+        String ratingStr = tvRating != null ? tvRating.getText().toString() : "0.0";
+
+        canvas.drawText("ID: " + (techId != null ? techId : "N/A"), margin + 15, y + 55, paint);
+        canvas.drawText("Jobs Completed: " + completedStr, margin + 15, y + 80, paint);
+        canvas.drawText("Avg Rating: " + ratingStr + " Stars", margin + 15, y + 105, paint);
         y += 140;
 
         paint.setFakeBoldText(true);
@@ -312,15 +413,19 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
         y += 30;
 
         paint.setFakeBoldText(false);
-        int limit = Math.min(historyList.size(), 15);
-        for (int i = 0; i < limit; i++) {
-            HistoryItem item = historyList.get(i);
-            canvas.drawText(item.ticketId, margin + 10, y, paint);
-            canvas.drawText(truncate(item.customerName, 15), margin + 120, y, paint);
-            canvas.drawText(truncate(item.serviceType, 12), margin + 250, y, paint);
-            canvas.drawText(item.date, margin + 400, y, paint);
-            canvas.drawLine(margin, y + 5, pageWidth - margin, y + 5, paint);
-            y += 20;
+        if (historyList != null) {
+            int limit = Math.min(historyList.size(), 15);
+            for (int i = 0; i < limit; i++) {
+                HistoryItem item = historyList.get(i);
+                if (item != null) {
+                    canvas.drawText(item.ticketId != null ? item.ticketId : "", margin + 10, y, paint);
+                    canvas.drawText(truncate(item.customerName, 15), margin + 120, y, paint);
+                    canvas.drawText(truncate(item.serviceType, 12), margin + 250, y, paint);
+                    canvas.drawText(item.date != null ? item.date : "", margin + 400, y, paint);
+                    canvas.drawLine(margin, y + 5, pageWidth - margin, y + 5, paint);
+                    y += 20;
+                }
+            }
         }
 
         document.finishPage(page);
@@ -328,12 +433,20 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
     }
 
     private String truncate(String text, int maxLen) {
-        if (text == null) return "";
+        if (text == null) {
+            return "";
+        }
         return text.length() > maxLen ? text.substring(0, maxLen - 2) + ".." : text;
     }
 
     private void savePdfToDownloads(PdfDocument document) {
-        String fileName = "Performance_Report_" + techName.replace(" ", "_") + "_" + System.currentTimeMillis() + ".pdf";
+        if (document == null) {
+            return;
+        }
+
+        String safeTechName = techName != null ? techName.replace(" ", "_") : "Technician";
+        String fileName = "Performance_Report_" + safeTechName + "_" + System.currentTimeMillis() + ".pdf";
+
         try {
             OutputStream fos;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -342,15 +455,20 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
                 cv.put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf");
                 cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
                 Uri uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, cv);
-                fos = getContentResolver().openOutputStream(uri);
+                fos = uri != null ? getContentResolver().openOutputStream(uri) : null;
             } else {
-                java.io.File file = new java.io.File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
-                fos = new java.io.FileOutputStream(file);
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+                fos = new FileOutputStream(file);
             }
-            document.writeTo(fos);
+
+            if (fos != null) {
+                document.writeTo(fos);
+                fos.close();
+            }
+
             document.close();
-            fos.close();
             Toast.makeText(this, "Performance report saved to Downloads!", Toast.LENGTH_LONG).show();
+
         } catch (Exception e) {
             Toast.makeText(this, "Error saving PDF: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -366,6 +484,7 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
 
     private static class HistoryItem {
         String ticketId, customerName, serviceType, date, status;
+
         HistoryItem(String ticketId, String customerName, String serviceType, String date, String status) {
             this.ticketId = ticketId;
             this.customerName = customerName;
@@ -376,22 +495,58 @@ public class TechnicianPerformanceActivity extends AppCompatActivity {
     }
 
     private class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
-        private List<HistoryItem> items;
-        HistoryAdapter(List<HistoryItem> items) { this.items = items; }
-        @NonNull @Override public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        private final List<HistoryItem> items;
+
+        HistoryAdapter(List<HistoryItem> items) {
+            this.items = items;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = getLayoutInflater().inflate(R.layout.item_history_log, parent, false);
             return new ViewHolder(view);
         }
-        @Override public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            if (items == null) {
+                return;
+            }
+
             HistoryItem item = items.get(position);
-            holder.tvTicketId.setText(item.ticketId);
-            holder.tvCustomer.setText(item.customerName);
-            holder.tvService.setText(item.serviceType);
-            holder.tvDate.setText(item.date);
+            if (item == null) {
+                return;
+            }
+
+            if (holder.tvTicketId != null) {
+                holder.tvTicketId.setText(item.ticketId != null ? item.ticketId : "");
+            }
+
+            if (holder.tvCustomer != null) {
+                holder.tvCustomer.setText(item.customerName != null ? item.customerName : "");
+            }
+
+            if (holder.tvService != null) {
+                holder.tvService.setText(item.serviceType != null ? item.serviceType : "");
+            }
+
+            if (holder.tvDate != null) {
+                holder.tvDate.setText(item.date != null ? item.date : "");
+            }
         }
-        @Override public int getItemCount() { return items.size(); }
+
+        @Override
+        public int getItemCount() {
+            if (items != null) {
+                return items.size();
+            }
+            return 0;
+        }
+
         class ViewHolder extends RecyclerView.ViewHolder {
             TextView tvTicketId, tvCustomer, tvService, tvDate;
+
             ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tvTicketId = itemView.findViewById(R.id.historyTicketId);
