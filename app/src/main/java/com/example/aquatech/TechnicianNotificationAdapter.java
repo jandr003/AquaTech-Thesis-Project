@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -33,47 +32,76 @@ public class TechnicianNotificationAdapter extends RecyclerView.Adapter<Technici
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotificationModel notif = notificationList.get(position);
-
-        String type = notif.getType() != null ? notif.getType().toUpperCase() : "GENERAL";
-        holder.tvTitle.setText(getDisplayTitle(type));
-        
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.tvBody.setText(Html.fromHtml(notif.getMessage(), Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            holder.tvBody.setText(Html.fromHtml(notif.getMessage()));
+        if (notif == null) {
+            return;
         }
 
-        holder.tvTime.setText(notif.getTimeAgo());
+        String type = notif.getType() != null ? notif.getType().toUpperCase() : "GENERAL";
+        if (holder.tvTitle != null) {
+            holder.tvTitle.setText(getDisplayTitle(type));
+        }
+
+        if (holder.tvBody != null && notif.getMessage() != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                holder.tvBody.setText(Html.fromHtml(notif.getMessage(), Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                holder.tvBody.setText(Html.fromHtml(notif.getMessage()));
+            }
+        }
+
+        if (holder.tvTime != null) {
+            holder.tvTime.setText(notif.getTimeAgo() != null ? notif.getTimeAgo() : "");
+        }
+
         if (holder.ivIcon != null) {
             holder.ivIcon.setImageResource(notif.getIconResId());
         }
     }
 
     private String getDisplayTitle(String type) {
+        if (type == null) {
+            return "System Update";
+        }
+
         switch (type) {
-            case "ASSIGNED": return "New Booking Assigned";
-            case "COMPLETED": return "Job Completed";
-            case "MESSAGE": return "New Message";
-            case "CALL": return "Missed Call";
-            case "RESUBMIT": return "Revision Required";
-            case "PDF": return "Report Generated";
-            default: return "System Update";
+            case "ASSIGNED":
+                return "New Booking Assigned";
+            case "COMPLETED":
+                return "Job Completed";
+            case "MESSAGE":
+                return "New Message";
+            case "CALL":
+                return "Missed Call";
+            case "RESUBMIT":
+                return "Revision Required";
+            case "PDF":
+                return "Report Generated";
+            default:
+                return "System Update";
         }
     }
 
     private int getIconBgColor(String type) {
+        if (type == null) {
+            return Color.parseColor("#FFF5F5");
+        }
+
         switch (type) {
             case "ASSIGNED":
             case "RESUBMIT":
             case "COMPLETED":
             case "MESSAGE":
-            default: return Color.parseColor("#FFF5F5");
+            default:
+                return Color.parseColor("#FFF5F5");
         }
     }
 
     @Override
     public int getItemCount() {
-        return notificationList.size();
+        if (notificationList != null) {
+            return notificationList.size();
+        }
+        return 0;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
