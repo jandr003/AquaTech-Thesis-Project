@@ -32,11 +32,16 @@ public class TechnicianPrivacyActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackTechPrivacy);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View btnPrivacyPolicy = findViewById(R.id.btnTechPrivacyPolicy);
         if (btnPrivacyPolicy != null) {
-            btnPrivacyPolicy.setOnClickListener(v -> startActivity(new Intent(this, TermsAndConditionActivity.class)));
+            btnPrivacyPolicy.setOnClickListener(v -> {
+                Intent intent = new Intent(this, TermsAndConditionActivity.class);
+                startActivity(intent);
+            });
         }
 
         View btnAppPermissions = findViewById(R.id.btnTechAppPermissions);
