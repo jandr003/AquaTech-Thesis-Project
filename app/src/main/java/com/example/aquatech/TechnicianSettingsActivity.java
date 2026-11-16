@@ -25,17 +25,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class TechnicianSettingsActivity extends AppCompatActivity {
 
@@ -52,8 +47,8 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("AquaTechPrefs_Tech", MODE_PRIVATE);
         mAuth = FirebaseAuth.getInstance();
-        
-        FirebaseUser user = mAuth.getCurrentUser();
+
+        FirebaseUser user = mAuth != null ? mAuth.getCurrentUser() : null;
         if (user != null) {
             String uid = user.getUid();
             userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
@@ -67,6 +62,10 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
     }
 
     private void setupRealtimePopupListener() {
+        if (notifRef == null) {
+            return;
+        }
+
         notifRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -77,28 +76,60 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onChildRemoved(@NonNull DataSnapshot s) {}
-            @Override public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot s) {}
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot s, @Nullable String p) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         });
 
         notifRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot s) { isInitialLoad = false; }
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+            @Override
+            public void onDataChange(@NonNull DataSnapshot s) {
+                isInitialLoad = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         });
     }
 
     private void showItemNotificationPopup(NotificationModel notif) {
+        if (notif == null) {
+            return;
+        }
+
         View layout = getLayoutInflater().inflate(R.layout.item_notification, null);
+        if (layout == null) {
+            return;
+        }
 
         TextView tvMsg = layout.findViewById(R.id.tvNotifMessage);
         TextView tvTime = layout.findViewById(R.id.tvNotifTime);
         ImageView ivIcon = layout.findViewById(R.id.ivNotifIcon);
 
-        if (tvMsg != null) tvMsg.setText(Html.fromHtml(notif.getMessage()));
-        if (tvTime != null) tvTime.setText("Just now");
-        if (ivIcon != null) ivIcon.setImageResource(getIconForType(notif.getType()));
+        if (tvMsg != null && notif.getMessage() != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                tvMsg.setText(Html.fromHtml(notif.getMessage(), Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                tvMsg.setText(Html.fromHtml(notif.getMessage()));
+            }
+        }
+
+        if (tvTime != null) {
+            tvTime.setText("Just now");
+        }
+
+        if (ivIcon != null) {
+            ivIcon.setImageResource(getIconForType(notif.getType()));
+        }
 
         Toast toast = new Toast(getApplicationContext());
         toast.setDuration(Toast.LENGTH_LONG);
@@ -108,13 +139,19 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
     }
 
     private int getIconForType(String type) {
-        if (type == null) return R.drawable.maintenance_technician1;
+        if (type == null) {
+            return R.drawable.maintenance_technician1;
+        }
+
         switch (type.toUpperCase()) {
-            case "MESSAGE": return R.drawable.message_notification_1;
-            case "REVISION": return R.drawable.alert_icon;
+            case "MESSAGE":
+                return R.drawable.message_notification_1;
+            case "REVISION":
+                return R.drawable.alert_icon;
             case "APPROVED":
             case "ASSIGNED":
-            default: return R.drawable.maintenance_technician1;
+            default:
+                return R.drawable.maintenance_technician1;
         }
     }
 
@@ -127,7 +164,10 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         SwitchMaterial swAvailability = findViewById(R.id.switchAvailability);
         if (swAvailability != null) {
@@ -141,16 +181,33 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
             });
         }
 
-        findViewById(R.id.btnTechDisplay).setOnClickListener(v -> startActivity(new Intent(this, TechnicianDisplayActivity.class)));
-        findViewById(R.id.btnTechPrivacy).setOnClickListener(v -> startActivity(new Intent(this, TechnicianPrivacyActivity.class)));
-        
-        findViewById(R.id.btnTechNotification).setOnClickListener(v -> {
-            Intent intent = new Intent(this, NotificationSettingsActivity.class);
-            intent.putExtra("IS_TECH", true);
-            startActivity(intent);
-        });
+        View btnDisplay = findViewById(R.id.btnTechDisplay);
+        if (btnDisplay != null) {
+            btnDisplay.setOnClickListener(v -> startActivity(new Intent(this, TechnicianDisplayActivity.class)));
+        }
 
-        findViewById(R.id.btnTechHelp).setOnClickListener(v -> startActivity(new Intent(this, TechnicianHelpCenterActivity.class)));
-        findViewById(R.id.btnTechAbout).setOnClickListener(v -> startActivity(new Intent(this, TechnicianAboutActivity.class)));
+        View btnPrivacy = findViewById(R.id.btnTechPrivacy);
+        if (btnPrivacy != null) {
+            btnPrivacy.setOnClickListener(v -> startActivity(new Intent(this, TechnicianPrivacyActivity.class)));
+        }
+
+        View btnNotif = findViewById(R.id.btnTechNotification);
+        if (btnNotif != null) {
+            btnNotif.setOnClickListener(v -> {
+                Intent intent = new Intent(this, NotificationSettingsActivity.class);
+                intent.putExtra("IS_TECH", true);
+                startActivity(intent);
+            });
+        }
+
+        View btnHelp = findViewById(R.id.btnTechHelp);
+        if (btnHelp != null) {
+            btnHelp.setOnClickListener(v -> startActivity(new Intent(this, TechnicianHelpCenterActivity.class)));
+        }
+
+        View btnAbout = findViewById(R.id.btnTechAbout);
+        if (btnAbout != null) {
+            btnAbout.setOnClickListener(v -> startActivity(new Intent(this, TechnicianAboutActivity.class)));
+        }
     }
 }
