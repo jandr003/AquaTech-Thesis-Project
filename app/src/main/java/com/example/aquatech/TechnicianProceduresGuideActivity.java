@@ -29,7 +29,9 @@ public class TechnicianProceduresGuideActivity extends AppCompatActivity {
 
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackProceduresGuide);
-        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         View btnBeforeService = findViewById(R.id.btnGuideBeforeService);
         if (btnBeforeService != null) {
