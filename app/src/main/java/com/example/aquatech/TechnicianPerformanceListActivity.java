@@ -37,11 +37,6 @@ public class TechnicianPerformanceListActivity extends AppCompatActivity {
     private DataSnapshot lastUserSnapshot, lastRequestSnapshot;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-    private final String[] PREDEFINED_TECH_NAMES = {
-            "John", "Jhonny Sinder", "Ricky Arcilla", "Ruel Trinidad", "Glenda Delantar",
-            "Jerry Duena", "Jonnifer Iglesias", "Marlon Salvador", "Selvino Magora Jr."
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,17 +122,17 @@ public class TechnicianPerformanceListActivity extends AppCompatActivity {
         techList.clear();
         Map<String, TechnicianModel> dbTechs = new HashMap<>();
 
-        if (lastUserSnapshot != null) {
+        if (lastUserSnapshot != null && lastUserSnapshot.exists()) {
             for (DataSnapshot ds : lastUserSnapshot.getChildren()) {
                 TechnicianModel tech = ds.getValue(TechnicianModel.class);
                 if (tech != null) {
-                    if (tech.techId == null) {
+                    if (tech.techId == null || tech.techId.isEmpty()) {
                         tech.techId = ds.getKey();
                     }
 
-                    String nameKey = tech.fullName != null ? tech.fullName.toLowerCase().trim() : "";
+                    String nameKey = tech.fullName != null && !tech.fullName.isEmpty() ? tech.fullName.toLowerCase().trim() : "";
                     if (nameKey.isEmpty()) {
-                        nameKey = tech.name != null ? tech.name.toLowerCase().trim() : "";
+                        nameKey = tech.name != null && !tech.name.isEmpty() ? tech.name.toLowerCase().trim() : ds.getKey();
                     }
 
                     dbTechs.put(nameKey, tech);
@@ -153,7 +148,7 @@ public class TechnicianPerformanceListActivity extends AppCompatActivity {
             String status = ds.child("status").getValue(String.class);
             String tName = ds.child("assignedTechName").getValue(String.class);
 
-            if (tName != null) {
+            if (tName != null && !tName.trim().isEmpty()) {
                 String key = tName.toLowerCase().trim();
 
                 if ("Completed".equalsIgnoreCase(status)) {
@@ -171,34 +166,29 @@ public class TechnicianPerformanceListActivity extends AppCompatActivity {
             }
         }
 
-        for (String name : PREDEFINED_TECH_NAMES) {
-            String nameKey = name.toLowerCase().trim();
-            TechnicianModel tech = dbTechs.get(nameKey);
+        for (Map.Entry<String, TechnicianModel> entry : dbTechs.entrySet()) {
+            String nameKey = entry.getKey();
+            TechnicianModel tech = entry.getValue();
 
-            if (tech == null) {
-                tech = new TechnicianModel();
-                tech.fullName = name;
-                tech.techId = "asc-t-" + nameKey.replace(" ", "");
-                tech.accountStatus = "offline";
+            if (tech != null) {
+                float avgStars = 0;
+                if (ratingCounts.containsKey(nameKey) && ratingCounts.get(nameKey) != null && ratingCounts.get(nameKey) > 0) {
+                    Float totalR = totalRatings.get(nameKey);
+                    avgStars = totalR != null ? totalR / ratingCounts.get(nameKey) : 0;
+                }
+
+                int completed = completedCounts.getOrDefault(nameKey, 0);
+                float productivity = Math.min((completed / 7.0f) * 5.0f, 5.0f);
+
+                if (completed > 0) {
+                    float baseScore = (avgStars == 0) ? productivity : (avgStars + productivity) / 2.0f;
+                    tech.rating = baseScore * 1.4f;
+                } else {
+                    tech.rating = 0.0f;
+                }
+
+                techList.add(tech);
             }
-
-            float avgStars = 0;
-            if (ratingCounts.containsKey(nameKey) && ratingCounts.get(nameKey) != null && ratingCounts.get(nameKey) > 0) {
-                Float totalR = totalRatings.get(nameKey);
-                avgStars = totalR != null ? totalR / ratingCounts.get(nameKey) : 0;
-            }
-
-            int completed = completedCounts.getOrDefault(nameKey, 0);
-            float productivity = Math.min((completed / 7.0f) * 5.0f, 5.0f);
-
-            if (completed > 0) {
-                float baseScore = (avgStars == 0) ? productivity : (avgStars + productivity) / 2.0f;
-                tech.rating = baseScore * 1.4f;
-            } else {
-                tech.rating = 0.0f;
-            }
-
-            techList.add(tech);
         }
 
         Collections.sort(techList, (t1, t2) -> Float.compare(t2.rating, t1.rating));
