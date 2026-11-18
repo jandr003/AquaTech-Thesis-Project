@@ -70,7 +70,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
                 if (!code.isEmpty()) {
                     verifyWithFirebase(code);
                 } else {
-                    Toast.makeText(this, "Enter verification code", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please enter verification code", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -99,16 +99,16 @@ public class VerificationCodeActivity extends AppCompatActivity {
                     if (inputCode != null && inputCode.equals(firebaseOtp)) {
                         proceedToChangePassword();
                     } else {
-                        Toast.makeText(VerificationCodeActivity.this, "Invalid OTP. Try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VerificationCodeActivity.this, "Invalid verification code. Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(VerificationCodeActivity.this, "No valid OTP found. Please resend.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerificationCodeActivity.this, "Verification code expired or not found. Please resend.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(VerificationCodeActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(VerificationCodeActivity.this, "Connection error. Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -136,13 +136,13 @@ public class VerificationCodeActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(VerificationCodeActivity.this, "Account data not found.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerificationCodeActivity.this, "No registered account found for this number.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(VerificationCodeActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(VerificationCodeActivity.this, "Connection error. Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -160,9 +160,9 @@ public class VerificationCodeActivity extends AppCompatActivity {
         resetsRef.child(mobile).setValue(otpData).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 showOtpNotification(newOtp);
-                Toast.makeText(this, "New code sent!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "New verification code sent!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Failed to resend code.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to resend code. Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
     }
