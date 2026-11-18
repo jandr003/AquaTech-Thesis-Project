@@ -17,6 +17,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -74,6 +75,10 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
 
     private void loadIntentExtras() {
         Intent intent = getIntent();
+        if (intent == null) {
+            return;
+        }
+
         ticketId = intent.getStringExtra("TICKET_ID");
         savedUri = intent.getStringExtra("SELECTED_ID_URI");
         remarks = intent.getStringExtra("REMARKS");
@@ -114,7 +119,10 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         circularProgress = findViewById(R.id.circularProgress);
         tv_to_be_continued = findViewById(R.id.tv_to_be_continued);
         ivCheckIcon = findViewById(R.id.ivCheckIcon);
-        tv_to_be_continued.setTextColor(Color.parseColor("#1C4E75"));
+
+        if (tv_to_be_continued != null) {
+            tv_to_be_continued.setTextColor(Color.parseColor("#1C4E75"));
+        }
     }
 
     private void startAnimations() {
@@ -123,33 +131,55 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         pulseAnimator.setRepeatCount(ValueAnimator.INFINITE);
         pulseAnimator.setRepeatMode(ValueAnimator.REVERSE);
         pulseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+
         pulseAnimator.addUpdateListener(animation -> {
             float scale = (float) animation.getAnimatedValue();
-            if(waterWaveView != null) { waterWaveView.setScaleX(scale); waterWaveView.setScaleY(scale); }
-            if(tv_to_be_continued != null) { tv_to_be_continued.setScaleX(scale); tv_to_be_continued.setScaleY(scale); }
+            if (waterWaveView != null) {
+                waterWaveView.setScaleX(scale);
+                waterWaveView.setScaleY(scale);
+            }
+
+            if (tv_to_be_continued != null) {
+                tv_to_be_continued.setScaleX(scale);
+                tv_to_be_continued.setScaleY(scale);
+            }
         });
+
         pulseAnimator.start();
 
         ValueAnimator animator = ValueAnimator.ofInt(0, 100);
         animator.setDuration(4000);
         animator.setInterpolator(new LinearInterpolator());
+
         animator.addUpdateListener(animation -> {
             int progress = (int) animation.getAnimatedValue();
-            if(waterWaveView != null) waterWaveView.setWaveProgress(progress);
-            if(circularProgress != null) circularProgress.setProgress(progress);
+            if (waterWaveView != null) {
+                waterWaveView.setWaveProgress(progress);
+            }
+
+            if (circularProgress != null) {
+                circularProgress.setProgress(progress);
+            }
         });
+
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 showSuccessUI();
             }
         });
+
         animator.start();
     }
 
     private void showSuccessUI() {
-        if (pulseAnimator != null) pulseAnimator.cancel();
-        if (circularProgress != null) circularProgress.setIndicatorColor(Color.parseColor("#4CAF50"));
+        if (pulseAnimator != null) {
+            pulseAnimator.cancel();
+        }
+
+        if (circularProgress != null) {
+            circularProgress.setIndicatorColor(Color.parseColor("#4CAF50"));
+        }
 
         if (waterWaveView != null) {
             waterWaveView.animate()
@@ -160,10 +190,12 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
                             ivCheckIcon.setVisibility(View.VISIBLE);
                             ivCheckIcon.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(600).start();
                         }
+
                         if (tv_to_be_continued != null) {
                             tv_to_be_continued.setText("Request Sent!");
                             tv_to_be_continued.setTextColor(Color.parseColor("#4CAF50"));
                         }
+
                         isAnimationDone = true;
                         checkReadyToNavigate();
                     }).start();
@@ -171,6 +203,11 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
     }
 
     private void geocodeAddressAndUpload() {
+        if (address == null) {
+            uploadRequestToFirebase();
+            return;
+        }
+
         new Thread(() -> {
             try {
                 Geocoder geocoder = new Geocoder(this, new Locale("en", "PH"));
@@ -180,7 +217,10 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
                     latitude = addresses.get(0).getLatitude();
                     longitude = addresses.get(0).getLongitude();
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                Log.e("GEOCODE", "Geocoding failed: " + e.getMessage());
+            }
+
             runOnUiThread(this::uploadRequestToFirebase);
         }).start();
     }
@@ -202,24 +242,51 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         }
     }
 
-    private interface UploadCallback { void onComplete(); }
+    private interface UploadCallback {
+        void onComplete();
+    }
 
     private void uploadFile(Uri uri, String fieldName, UploadCallback callback) {
+        if (uri == null || fieldName == null) {
+            if (callback != null) {
+                callback.onComplete();
+            }
+            return;
+        }
+
         String fileName = (fieldName.equals("receiptUrl") ? "receipt_" : "id_") + ticketId + ".jpg";
-        StorageReference fileRef = (fieldName.equals("receiptUrl") ? 
-            FirebaseStorage.getInstance().getReference("Receipts") : 
-            storageRef).child(fileName);
+        StorageReference fileRef = (fieldName.equals("receiptUrl") ?
+                FirebaseStorage.getInstance().getReference("Receipts") :
+                storageRef).child(fileName);
 
         fileRef.putFile(uri)
-            .addOnSuccessListener(ts -> fileRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
-                if (fieldName.equals("validIdUrl")) firebaseImageUrl = downloadUri.toString();
-                else if (fieldName.equals("receiptUrl")) receiptUriStr = downloadUri.toString();
-                callback.onComplete();
-            }).addOnFailureListener(e -> callback.onComplete()))
-            .addOnFailureListener(e -> callback.onComplete());
+                .addOnSuccessListener(ts -> fileRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                    if (fieldName.equals("validIdUrl")) {
+                        firebaseImageUrl = downloadUri.toString();
+                    } else if (fieldName.equals("receiptUrl")) {
+                        receiptUriStr = downloadUri.toString();
+                    }
+
+                    if (callback != null) {
+                        callback.onComplete();
+                    }
+                }).addOnFailureListener(e -> {
+                    if (callback != null) {
+                        callback.onComplete();
+                    }
+                }))
+                .addOnFailureListener(e -> {
+                    if (callback != null) {
+                        callback.onComplete();
+                    }
+                });
     }
 
     private void pushDataToDatabase() {
+        if (dbRef == null || ticketId == null || mAuth == null) {
+            return;
+        }
+
         Map<String, Object> data = new HashMap<>();
         data.put("ticketId", ticketId);
         data.put("customerName", customerName);
@@ -235,11 +302,13 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         data.put("validIdUrl", firebaseImageUrl);
         data.put("paymentMethod", paymentMethod);
         data.put("serviceFee", serviceFee);
+
         if (paymentMethod != null && paymentMethod.equals("Bank Transfer")) {
             data.put("bankName", bankName);
             data.put("bankReference", bankRef);
             data.put("receiptUrl", receiptUriStr);
         }
+
         data.put("remarks", remarks);
         data.put("totalAmount", totalAmount);
         data.put("unitName", unitModel);
@@ -263,24 +332,28 @@ public class WaterDropFillAnimationActivity extends AppCompatActivity {
         dbRef.child(ticketId).setValue(data).addOnCompleteListener(task -> {
             AdminDashboardActivity.addAdminLog("New Service Request Form submitted by " + customerName);
 
-            if (adminWillSchedule) {
-                String waitMsg = "Your service schedule is <b>Pending Confirmation</b>. ";
-                Calendar now = Calendar.getInstance();
-                int day = now.get(Calendar.DAY_OF_WEEK);
-                int hour = now.get(Calendar.HOUR_OF_DAY);
+            String uid = mAuth.getUid();
+            if (uid != null) {
+                if (adminWillSchedule) {
+                    String waitMsg = "Your service schedule is <b>Pending Confirmation</b>. ";
+                    Calendar now = Calendar.getInstance();
+                    int day = now.get(Calendar.DAY_OF_WEEK);
+                    int hour = now.get(Calendar.HOUR_OF_DAY);
 
-                if ((day == Calendar.SATURDAY && hour >= 17) || day == Calendar.SUNDAY) {
-                    waitMsg += "Our office is currently closed. We will confirm your schedule and send your receipt this coming <b>Monday morning (8:00 AM)</b>.";
+                    if ((day == Calendar.SATURDAY && hour >= 17) || day == Calendar.SUNDAY) {
+                        waitMsg += "Our office is currently closed. We will confirm your schedule and send your receipt this coming <b>Monday morning (8:00 AM)</b>.";
+                    } else {
+                        waitMsg += "Our office is currently closed for the day. We will confirm your schedule and send your receipt on the <b>next business day</b>.";
+                    }
+
+                    NotificationActivity.addNotification(uid, waitMsg, "SYSTEM", ticketId);
                 } else {
-                    waitMsg += "Our office is currently closed for the day. We will confirm your schedule and send your receipt on the <b>next business day</b>.";
+                    NotificationActivity.addNotification(uid,
+                            "Your service request has been received. Your <b>Pending Receipt</b> has been generated and sent to your messages.",
+                            "SYSTEM", ticketId);
                 }
-                NotificationActivity.addNotification(mAuth.getUid(), waitMsg, "SYSTEM", ticketId);
-            } else {
-                NotificationActivity.addNotification(mAuth.getUid(),
-                    "Your service request has been received. Your <b>Pending Receipt</b> has been generated and sent to your messages.", 
-                    "SYSTEM", ticketId);
             }
-            
+
             isFirebaseDone = true;
             checkReadyToNavigate();
         });
