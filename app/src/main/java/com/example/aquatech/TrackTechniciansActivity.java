@@ -1,7 +1,6 @@
 package com.example.aquatech;
 
 import android.animation.ValueAnimator;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -60,13 +59,9 @@ public class TrackTechniciansActivity extends AppCompatActivity {
     private final Map<String, Marker> customerMarkers = new HashMap<>();
     private final Map<String, Polyline> trackingLines = new HashMap<>();
     private final Map<String, Long> lastRouteFetchTimes = new HashMap<>();
-    private final Map<String, GeoPoint> lastTechPositions = new HashMap<>();
-    private final Map<String, Float> currentBearings = new HashMap<>();
 
     private final GeoPoint COMPANY_LOC = new GeoPoint(14.5584827, 121.0323902);
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
-
-    private Set<String> currentTechIds = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,15 +95,11 @@ public class TrackTechniciansActivity extends AppCompatActivity {
     }
 
     private void setupMap() {
-        try {
-            if (mMap != null) {
-                mMap.setTileSource(TileSourceFactory.MAPNIK);
-                mMap.setMultiTouchControls(true);
-                mMap.getController().setZoom(15.0);
-                mMap.getController().setCenter(COMPANY_LOC);
-            }
-        } catch (Exception e) {
-            Log.e("MAP", "Error setting up map", e);
+        if (mMap != null) {
+            mMap.setTileSource(TileSourceFactory.MAPNIK);
+            mMap.setMultiTouchControls(true);
+            mMap.getController().setZoom(15.0);
+            mMap.getController().setCenter(COMPANY_LOC);
         }
     }
 
@@ -150,73 +141,72 @@ public class TrackTechniciansActivity extends AppCompatActivity {
         requestsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    trackList.clear();
-                    Set<String> newTechIds = new HashSet<>();
+                if (!snapshot.exists()) {
+                    return;
+                }
 
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        try {
-                            String status = ds.child("status").getValue(String.class);
-                            String assignedTechName = ds.child("assignedTechName").getValue(String.class);
-                            String techId = ds.child("assignedTechId").getValue(String.class);
-                            String ticketId = ds.child("ticketId").getValue(String.class);
-                            String sro = ds.child("sroNumber").getValue(String.class);
-                            String custName = ds.child("customerName").getValue(String.class);
-                            String address = ds.child("address").getValue(String.class);
-                            String timeRange = ds.child("timeRange").getValue(String.class);
-                            Double custLat = ds.child("latitude").getValue(Double.class);
-                            Double custLng = ds.child("longitude").getValue(Double.class);
+                trackList.clear();
+                Set<String> newTechIds = new HashSet<>();
 
-                            if (techId != null && !techId.isEmpty() &&
-                                    (("In Progress".equalsIgnoreCase(status)) ||
-                                            ("Open".equalsIgnoreCase(status) && assignedTechName != null))) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (ds == null) {
+                        continue;
+                    }
 
-                                String key = ticketId != null ? ticketId : ds.getKey();
-                                newTechIds.add(techId);
+                    String status = ds.child("status").getValue(String.class);
+                    String assignedTechName = ds.child("assignedTechName").getValue(String.class);
+                    String techId = ds.child("assignedTechId").getValue(String.class);
+                    String ticketId = ds.child("ticketId").getValue(String.class);
+                    String sro = ds.child("sroNumber").getValue(String.class);
+                    String custName = ds.child("customerName").getValue(String.class);
+                    String address = ds.child("address").getValue(String.class);
+                    String timeRange = ds.child("timeRange").getValue(String.class);
+                    Double custLat = ds.child("latitude").getValue(Double.class);
+                    Double custLng = ds.child("longitude").getValue(Double.class);
 
-                                if (custLat != null && custLng != null && custLat != 0 && mMap != null) {
-                                    GeoPoint custLoc = new GeoPoint(custLat, custLng);
-                                    updateCustomerMarker(key, custLoc, custName);
-                                }
+                    if (techId != null && !techId.isEmpty() &&
+                            (("In Progress".equalsIgnoreCase(status)) ||
+                                    ("Open".equalsIgnoreCase(status) && assignedTechName != null))) {
 
-                                GeoPoint custLoc = (custLat != null && custLng != null && custLat != 0) ?
-                                        new GeoPoint(custLat, custLng) : null;
-                                trackTechnicianLocation(techId, assignedTechName, custLoc, status, key);
+                        String key = ticketId != null ? ticketId : ds.getKey();
+                        newTechIds.add(techId);
 
-                                ServiceLogModel model = new ServiceLogModel();
-                                model.setSroNumber(sro != null ? sro : key);
-                                model.setTechName(assignedTechName);
-                                model.setCustomerName(custName);
-                                model.setTechRole(getServiceTypeFromSnapshot(ds));
-                                model.setDateTime(timeRange);
-                                model.setAddress(address);
-                                model.setStatus(status);
-                                model.setTechId(techId);
-
-                                if (custLat != null) {
-                                    model.setLatitude(custLat);
-                                }
-
-                                if (custLng != null) {
-                                    model.setLongitude(custLng);
-                                }
-
-                                trackList.add(model);
-                            }
-                        } catch (Exception e) {
-                            Log.e("TICKET_PROCESS", "Error processing ticket", e);
+                        if (custLat != null && custLng != null && custLat != 0 && mMap != null) {
+                            GeoPoint custLoc = new GeoPoint(custLat, custLng);
+                            updateCustomerMarker(key, custLoc, custName);
                         }
+
+                        GeoPoint custLoc = (custLat != null && custLng != null && custLat != 0) ?
+                                new GeoPoint(custLat, custLng) : null;
+
+                        trackTechnicianLocation(techId, assignedTechName, custLoc, status);
+
+                        ServiceLogModel model = new ServiceLogModel();
+                        model.setSroNumber(sro != null ? sro : key);
+                        model.setTechName(assignedTechName);
+                        model.setCustomerName(custName);
+                        model.setTechRole(getServiceTypeFromSnapshot(ds));
+                        model.setDateTime(timeRange);
+                        model.setAddress(address);
+                        model.setStatus(status);
+                        model.setTechId(techId);
+
+                        if (custLat != null) {
+                            model.setLatitude(custLat);
+                        }
+
+                        if (custLng != null) {
+                            model.setLongitude(custLng);
+                        }
+
+                        trackList.add(model);
                     }
+                }
 
-                    removeInactiveTechs(newTechIds);
-                    currentTechIds = newTechIds;
+                removeInactiveTechs(newTechIds);
 
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-
-                } catch (Exception e) {
-                    Log.e("LOAD_TICKETS", "Fatal error loading tickets", e);
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -225,7 +215,7 @@ public class TrackTechniciansActivity extends AppCompatActivity {
         });
     }
 
-    private void trackTechnicianLocation(String techId, String techName, GeoPoint custLoc, String status, String ticketKey) {
+    private void trackTechnicianLocation(String techId, String techName, GeoPoint custLoc, String status) {
         if (techId == null || techId.isEmpty()) {
             return;
         }
@@ -237,43 +227,43 @@ public class TrackTechniciansActivity extends AppCompatActivity {
         ValueEventListener locationListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    Double tLat = snapshot.child("latitude").getValue(Double.class);
-                    Double tLng = snapshot.child("longitude").getValue(Double.class);
-                    GeoPoint techLoc = (tLat != null && tLng != null && tLat != 0.0) ?
-                            new GeoPoint(tLat, tLng) : COMPANY_LOC;
+                if (!snapshot.exists()) {
+                    return;
+                }
 
-                    updateTechMarker(techId, techLoc, techName);
+                Double tLat = snapshot.child("latitude").getValue(Double.class);
+                Double tLng = snapshot.child("longitude").getValue(Double.class);
+                GeoPoint techLoc = (tLat != null && tLng != null && tLat != 0.0) ?
+                        new GeoPoint(tLat, tLng) : COMPANY_LOC;
 
-                    for (ServiceLogModel m : trackList) {
-                        if (techId.equals(m.getTechId())) {
-                            m.setTechLat(techLoc.getLatitude());
-                            m.setTechLng(techLoc.getLongitude());
-                            break;
-                        }
+                updateTechMarker(techId, techLoc, techName);
+
+                for (ServiceLogModel m : trackList) {
+                    if (m != null && techId.equals(m.getTechId())) {
+                        m.setTechLat(techLoc.getLatitude());
+                        m.setTechLng(techLoc.getLongitude());
+                        break;
+                    }
+                }
+
+                if ("In Progress".equalsIgnoreCase(status) && custLoc != null) {
+                    long now = System.currentTimeMillis();
+                    Long lastFetch = lastRouteFetchTimes.get(techId);
+                    if (lastFetch == null || now - lastFetch > 7000) {
+                        new FetchRouteTask(techId, techLoc, custLoc).execute();
+                        lastRouteFetchTimes.put(techId, now);
+                    }
+                } else if (trackingLines.containsKey(techId)) {
+                    Polyline line = trackingLines.get(techId);
+                    if (line != null && mMap != null) {
+                        mMap.getOverlays().remove(line);
                     }
 
-                    if ("In Progress".equalsIgnoreCase(status) && custLoc != null) {
-                        long now = System.currentTimeMillis();
-                        Long lastFetch = lastRouteFetchTimes.get(techId);
-                        if (lastFetch == null || now - lastFetch > 7000) {
-                            new FetchRouteTask(techId, techLoc, custLoc).execute();
-                            lastRouteFetchTimes.put(techId, now);
-                        }
-                    } else if (trackingLines.containsKey(techId)) {
-                        Polyline line = trackingLines.get(techId);
-                        if (line != null && mMap != null) {
-                            mMap.getOverlays().remove(line);
-                        }
+                    trackingLines.remove(techId);
 
-                        trackingLines.remove(techId);
-
-                        if (mMap != null) {
-                            mMap.invalidate();
-                        }
+                    if (mMap != null) {
+                        mMap.invalidate();
                     }
-                } catch (Exception e) {
-                    Log.e("TRACK_LOC", "Error tracking location", e);
                 }
             }
 
@@ -292,30 +282,26 @@ public class TrackTechniciansActivity extends AppCompatActivity {
             return;
         }
 
-        try {
-            Marker marker = techMarkers.get(techId);
-            if (marker == null) {
-                marker = new Marker(mMap);
-                marker.setPosition(newPos);
-                marker.setTitle("Tech: " + (techName != null ? techName : "Technician"));
+        Marker marker = techMarkers.get(techId);
+        if (marker == null) {
+            marker = new Marker(mMap);
+            marker.setPosition(newPos);
+            marker.setTitle("Tech: " + (techName != null ? techName : "Technician"));
 
-                Drawable icon = ContextCompat.getDrawable(this, R.drawable.tech_gps_icon_png);
-                if (icon instanceof BitmapDrawable) {
-                    Bitmap bitmap = ((BitmapDrawable) icon).getBitmap();
-                    int size = (int) (12 * getResources().getDisplayMetrics().density);
-                    marker.setIcon(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, size, size, true)));
-                }
-
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-                marker.setFlat(true);
-                mMap.getOverlays().add(marker);
-                techMarkers.put(techId, marker);
-                lastTechPositions.put(techId, newPos);
-                currentBearings.put(techId, 0f);
-            } else {
-                animateMarkerWithBearing(techId, marker, newPos);
+            Drawable icon = ContextCompat.getDrawable(this, R.drawable.tech_gps_icon_png);
+            if (icon instanceof BitmapDrawable) {
+                Bitmap bitmap = ((BitmapDrawable) icon).getBitmap();
+                int size = (int) (12 * getResources().getDisplayMetrics().density);
+                marker.setIcon(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, size, size, true)));
             }
-        } catch (Exception ignored) {}
+
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+            marker.setFlat(true);
+            mMap.getOverlays().add(marker);
+            techMarkers.put(techId, marker);
+        } else {
+            animateMarkerWithBearing(techId, marker, newPos);
+        }
     }
 
     private void animateMarkerWithBearing(final String techId, final Marker marker, final GeoPoint toPosition) {
@@ -328,36 +314,33 @@ public class TrackTechniciansActivity extends AppCompatActivity {
             return;
         }
 
-        try {
-            float bearing = calculateBearing(startPosition, toPosition);
-            ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
-            animator.setDuration(1000);
-            animator.setInterpolator(new LinearInterpolator());
+        float bearing = calculateBearing(startPosition, toPosition);
+        ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
+        animator.setDuration(1000);
+        animator.setInterpolator(new LinearInterpolator());
 
-            animator.addUpdateListener(animation -> {
-                try {
-                    float v = animation.getAnimatedFraction();
-                    double lat = v * toPosition.getLatitude() + (1 - v) * startPosition.getLatitude();
-                    double lng = v * toPosition.getLongitude() + (1 - v) * startPosition.getLongitude();
-                    GeoPoint currentPos = new GeoPoint(lat, lng);
+        animator.addUpdateListener(animation -> {
+            float v = animation.getAnimatedFraction();
+            if (startPosition != null) {
+                double lat = v * toPosition.getLatitude() + (1 - v) * startPosition.getLatitude();
+                double lng = v * toPosition.getLongitude() + (1 - v) * startPosition.getLongitude();
+                GeoPoint currentPos = new GeoPoint(lat, lng);
 
-                    marker.setRotation(bearing);
-                    marker.setPosition(currentPos);
+                marker.setRotation(bearing);
+                marker.setPosition(currentPos);
 
-                    Polyline line = trackingLines.get(techId);
-                    if (line != null) {
-                        pruneRoute(line, currentPos);
-                    }
+                Polyline line = trackingLines.get(techId);
+                if (line != null) {
+                    pruneRoute(line, currentPos);
+                }
 
-                    if (mMap != null) {
-                        mMap.invalidate();
-                    }
-                } catch (Exception ignored) {}
-            });
+                if (mMap != null) {
+                    mMap.invalidate();
+                }
+            }
+        });
 
-            animator.start();
-            lastTechPositions.put(techId, toPosition);
-        } catch (Exception ignored) {}
+        animator.start();
     }
 
     private float calculateBearing(GeoPoint start, GeoPoint end) {
@@ -382,22 +365,20 @@ public class TrackTechniciansActivity extends AppCompatActivity {
             return;
         }
 
-        try {
-            List<GeoPoint> points = line.getActualPoints();
-            if (points == null || points.size() < 2) {
-                return;
-            }
+        List<GeoPoint> points = line.getActualPoints();
+        if (points == null || points.size() < 2) {
+            return;
+        }
 
-            while (points.size() > 1 && currentPos.distanceToAsDouble(points.get(0)) < 20) {
-                points.remove(0);
-            }
+        while (points.size() > 1 && currentPos.distanceToAsDouble(points.get(0)) < 20) {
+            points.remove(0);
+        }
 
-            if (!points.isEmpty()) {
-                points.set(0, currentPos);
-            }
+        if (!points.isEmpty()) {
+            points.set(0, currentPos);
+        }
 
-            line.setPoints(points);
-        } catch (Exception ignored) {}
+        line.setPoints(points);
     }
 
     private void updateCustomerMarker(String ticketKey, GeoPoint loc, String custName) {
@@ -405,27 +386,25 @@ public class TrackTechniciansActivity extends AppCompatActivity {
             return;
         }
 
-        try {
-            Marker marker = customerMarkers.get(ticketKey);
-            if (marker == null) {
-                marker = new Marker(mMap);
-                marker.setPosition(loc);
-                marker.setTitle("Customer: " + (custName != null ? custName : "Guest"));
+        Marker marker = customerMarkers.get(ticketKey);
+        if (marker == null) {
+            marker = new Marker(mMap);
+            marker.setPosition(loc);
+            marker.setTitle("Customer: " + (custName != null ? custName : "Guest"));
 
-                Drawable custIcon = ContextCompat.getDrawable(this, R.drawable.technician_pin_point_customer_loc_png);
-                if (custIcon instanceof BitmapDrawable) {
-                    Bitmap bitmap = ((BitmapDrawable) custIcon).getBitmap();
-                    int size = (int) (12 * getResources().getDisplayMetrics().density);
-                    marker.setIcon(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, size, size, true)));
-                }
-
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                mMap.getOverlays().add(marker);
-                customerMarkers.put(ticketKey, marker);
-            } else {
-                marker.setPosition(loc);
+            Drawable custIcon = ContextCompat.getDrawable(this, R.drawable.technician_pin_point_customer_loc_png);
+            if (custIcon instanceof BitmapDrawable) {
+                Bitmap bitmap = ((BitmapDrawable) custIcon).getBitmap();
+                int size = (int) (12 * getResources().getDisplayMetrics().density);
+                marker.setIcon(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, size, size, true)));
             }
-        } catch (Exception ignored) {}
+
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            mMap.getOverlays().add(marker);
+            customerMarkers.put(ticketKey, marker);
+        } else {
+            marker.setPosition(loc);
+        }
     }
 
     private void removeInactiveTechs(Set<String> activeTechIds) {
