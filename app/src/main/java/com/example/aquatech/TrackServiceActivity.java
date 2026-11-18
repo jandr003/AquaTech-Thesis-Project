@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -73,11 +74,15 @@ public class TrackServiceActivity extends AppCompatActivity {
         btnCall = findViewById(R.id.btnCall1);
         btnBack = findViewById(R.id.btnBack);
 
-        mMap.setTileSource(TileSourceFactory.MAPNIK);
-        mMap.setMultiTouchControls(true);
-        mMap.getController().setZoom(18.0);
+        if (mMap != null) {
+            mMap.setTileSource(TileSourceFactory.MAPNIK);
+            mMap.setMultiTouchControls(true);
+            mMap.getController().setZoom(18.0);
+        }
 
-        btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         setupClickListeners();
         usersRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users");
@@ -85,51 +90,58 @@ public class TrackServiceActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        btnChat.setOnClickListener(v -> {
-            if (assignedTechId != null) {
-                Intent intent = new Intent(this, CustomerChatActivity.class);
-                intent.putExtra("TECH_ID", assignedTechId);
-                intent.putExtra("TECH_NAME", assignedTechName);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "No technician assigned yet", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnCall.setOnClickListener(v -> {
-            if (assignedTechId != null && currentUid != null) {
-                String chatId = assignedTechId + "_" + currentUid;
-                FirebaseDatabase.getInstance(DB_URL).getReference("UserChats")
-                        .child(chatId).child("callStatus").setValue("calling");
-
-                DatabaseReference techNotifRef = FirebaseDatabase.getInstance(DB_URL)
-                        .getReference("Notifications").child(assignedTechId);
-
-                String notifId = techNotifRef.push().getKey();
-                if (notifId != null) {
-                    HashMap<String, Object> callData = new HashMap<>();
-                    callData.put("id", notifId);
-                    callData.put("type", "CALL");
-                    callData.put("message", "<b>Customer</b> is calling you...");
-                    callData.put("ticketId", currentUid);
-                    callData.put("timestamp", System.currentTimeMillis());
-
-                    techNotifRef.child(notifId).setValue(callData).addOnSuccessListener(aVoid -> {
-                        Intent intent = new Intent(this, CustomerVoiceCallActivity.class);
-                        intent.putExtra("TECH_ID", assignedTechId);
-                        intent.putExtra("CUSTOMER_ID", currentUid);
-                        intent.putExtra("NAME", assignedTechName);
-                        startActivity(intent);
-                    });
+        if (btnChat != null) {
+            btnChat.setOnClickListener(v -> {
+                if (assignedTechId != null) {
+                    Intent intent = new Intent(this, CustomerChatActivity.class);
+                    intent.putExtra("TECH_ID", assignedTechId);
+                    intent.putExtra("TECH_NAME", assignedTechName);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "No technician assigned yet", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                Toast.makeText(this, "No technician assigned yet", Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+        }
+
+        if (btnCall != null) {
+            btnCall.setOnClickListener(v -> {
+                if (assignedTechId != null && currentUid != null) {
+                    String chatId = assignedTechId + "_" + currentUid;
+                    FirebaseDatabase.getInstance(DB_URL).getReference("UserChats")
+                            .child(chatId).child("callStatus").setValue("calling");
+
+                    DatabaseReference techNotifRef = FirebaseDatabase.getInstance(DB_URL)
+                            .getReference("Notifications").child(assignedTechId);
+
+                    String notifId = techNotifRef.push().getKey();
+                    if (notifId != null) {
+                        HashMap<String, Object> callData = new HashMap<>();
+                        callData.put("id", notifId);
+                        callData.put("type", "CALL");
+                        callData.put("message", "<b>Customer</b> is calling you...");
+                        callData.put("ticketId", currentUid);
+                        callData.put("timestamp", System.currentTimeMillis());
+
+                        techNotifRef.child(notifId).setValue(callData).addOnSuccessListener(aVoid -> {
+                            Intent intent = new Intent(this, CustomerVoiceCallActivity.class);
+                            intent.putExtra("TECH_ID", assignedTechId);
+                            intent.putExtra("CUSTOMER_ID", currentUid);
+                            intent.putExtra("NAME", assignedTechName);
+                            startActivity(intent);
+                        });
+                    }
+                } else {
+                    Toast.makeText(this, "No technician assigned yet", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void setupFirebase() {
-        if (currentUid == null) return;
+        if (currentUid == null) {
+            return;
+        }
+
         requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
         Query customerQuery = requestsRef.orderByChild("userId").equalTo(currentUid).limitToLast(1);
 
@@ -146,20 +158,34 @@ public class TrackServiceActivity extends AppCompatActivity {
                         GeoPoint custLoc = (cLat != null && cLng != null) ? new GeoPoint(cLat, cLng) : null;
 
                         if (custLoc != null) {
-                            if (!hasFocusedOnCustomer) {
+                            if (!hasFocusedOnCustomer && mMap != null) {
                                 mMap.getController().setCenter(custLoc);
                                 hasFocusedOnCustomer = true;
                             }
+
                             updateCustomerMarker(custLoc);
 
                             if (assignedTechId == null || assignedTechId.isEmpty()) {
-                                tvTechName.setText("Waiting for Technician...");
+                                if (tvTechName != null) {
+                                    tvTechName.setText("Waiting for Technician...");
+                                }
+
                                 updateCommunicationUI(false);
-                                if (tvEta != null) tvEta.setText("-- mins away");
+
+                                if (tvEta != null) {
+                                    tvEta.setText("-- mins away");
+                                }
+
                                 updateTechAndRoute(COMPANY_LOC, "AquaTech Hub", custLoc);
                             } else {
-                                tvTechName.setText(assignedTechName);
-                                tvTechPhone.setText(ds.child("techPhone").getValue(String.class));
+                                if (tvTechName != null) {
+                                    tvTechName.setText(assignedTechName != null ? assignedTechName : "Aqua Technician");
+                                }
+
+                                if (tvTechPhone != null) {
+                                    tvTechPhone.setText(ds.child("techPhone").getValue(String.class));
+                                }
+
                                 updateCommunicationUI(true);
                                 trackLiveTech(assignedTechId, custLoc);
                             }
@@ -167,26 +193,37 @@ public class TrackServiceActivity extends AppCompatActivity {
                     }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void updateCommunicationUI(boolean enabled) {
         int color = enabled ? Color.parseColor("#37AAFD") : Color.GRAY;
-        btnChat.setColorFilter(color);
-        btnCall.setColorFilter(color);
-        btnChat.setEnabled(enabled);
-        btnCall.setEnabled(enabled);
+
+        if (btnChat != null) {
+            btnChat.setColorFilter(color);
+            btnChat.setEnabled(enabled);
+        }
+
+        if (btnCall != null) {
+            btnCall.setColorFilter(color);
+            btnCall.setEnabled(enabled);
+        }
     }
 
     private void trackLiveTech(String techId, GeoPoint custLoc) {
+        if (techId == null || usersRef == null) {
+            return;
+        }
+
         usersRef.child(techId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot s) {
                 Double tLat = s.child("latitude").getValue(Double.class);
                 Double tLng = s.child("longitude").getValue(Double.class);
-                
-                // Real-time location check
+
                 if (tLat != null && tLng != null && tLat != 0) {
                     GeoPoint techLoc = new GeoPoint(tLat, tLng);
                     updateTechAndRoute(techLoc, "Technician", custLoc);
@@ -194,89 +231,141 @@ public class TrackServiceActivity extends AppCompatActivity {
                     updateTechAndRoute(COMPANY_LOC, "AquaTech Hub", custLoc);
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         });
     }
 
     private void updateTechAndRoute(GeoPoint techLoc, String label, GeoPoint custLoc) {
+        if (techLoc == null || mMap == null) {
+            return;
+        }
+
         if (techMarker == null) {
             techMarker = new Marker(mMap);
             techMarker.setIcon(getResizedIcon(R.drawable.tech_gps_icon_png));
             techMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
             mMap.getOverlays().add(techMarker);
         }
+
         techMarker.setPosition(techLoc);
-        techMarker.setTitle(label);
+        techMarker.setTitle(label != null ? label : "Technician");
 
         long currentTime = System.currentTimeMillis();
         if (custLoc != null && (currentTime - lastRouteRequestTime > 3000)) {
             new FetchRouteTask(techLoc, custLoc).execute();
             lastRouteRequestTime = currentTime;
         }
-        
+
         mMap.invalidate();
     }
 
     private void updateCustomerMarker(GeoPoint loc) {
+        if (loc == null || mMap == null) {
+            return;
+        }
+
         if (customerMarker == null) {
             customerMarker = new Marker(mMap);
             customerMarker.setIcon(getResizedIcon(R.drawable.technician_pin_point_customer_loc_png));
             customerMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             mMap.getOverlays().add(customerMarker);
         }
+
         customerMarker.setPosition(loc);
     }
 
     private Drawable getResizedIcon(int resId) {
         Drawable drawable = ContextCompat.getDrawable(this, resId);
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        return new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 25, 25, true));
+        if (drawable == null) {
+            return null;
+        }
+
+        if (drawable instanceof BitmapDrawable) {
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            return new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 25, 25, true));
+        }
+
+        return drawable;
     }
 
     private class FetchRouteTask extends AsyncTask<Void, Void, JSONObject> {
         private GeoPoint start, end;
-        public FetchRouteTask(GeoPoint start, GeoPoint end) { this.start = start; this.end = end; }
+
+        public FetchRouteTask(GeoPoint start, GeoPoint end) {
+            this.start = start;
+            this.end = end;
+        }
 
         @Override
         protected JSONObject doInBackground(Void... voids) {
+            if (start == null || end == null) {
+                return null;
+            }
+
             try {
-                String urlStr = "https://router.project-osrm.org/route/v1/driving/" + start.getLongitude() + "," + start.getLatitude() + ";" + end.getLongitude() + "," + end.getLatitude() + "?overview=full&geometries=geojson";
+                String urlStr = "https://router.project-osrm.org/route/v1/driving/" +
+                        start.getLongitude() + "," + start.getLatitude() + ";" +
+                        end.getLongitude() + "," + end.getLatitude() +
+                        "?overview=full&geometries=geojson";
+
                 URL url = new URL(urlStr);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder sb = new StringBuilder(); String line;
-                while ((line = reader.readLine()) != null) sb.append(line);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+
                 return new JSONObject(sb.toString());
-            } catch (Exception e) { return null; }
+            } catch (Exception e) {
+                return null;
+            }
         }
 
         @Override
         protected void onPostExecute(JSONObject json) {
-            if (json == null || isFinishing()) return;
+            if (json == null || isFinishing() || isDestroyed()) {
+                return;
+            }
+
             try {
                 JSONObject route = json.getJSONArray("routes").getJSONObject(0);
 
                 double durationSeconds = route.getDouble("duration");
                 int minutes = (int) Math.ceil(durationSeconds / 60.0);
+
                 if (tvEta != null) {
-                    if (minutes <= 1) tvEta.setText("Arriving soon");
-                    else tvEta.setText(minutes + " mins away");
+                    if (minutes <= 1) {
+                        tvEta.setText("Arriving soon");
+                    } else {
+                        tvEta.setText(minutes + " mins away");
+                    }
                 }
 
                 JSONArray coords = route.getJSONObject("geometry").getJSONArray("coordinates");
                 List<GeoPoint> pts = new ArrayList<>();
-                for (int i=0; i<coords.length(); i++) {
+
+                for (int i = 0; i < coords.length(); i++) {
                     JSONArray c = coords.getJSONArray(i);
                     pts.add(new GeoPoint(c.getDouble(1), c.getDouble(0)));
                 }
 
-                if (routeLine != null) mMap.getOverlays().remove(routeLine);
-                routeLine = new Polyline();
-                routeLine.setPoints(pts);
-                routeLine.setColor(Color.parseColor("#3775BB"));
-                routeLine.setWidth(12f);
-                mMap.getOverlays().add(0, routeLine);
-                mMap.invalidate();
+                if (mMap != null) {
+                    if (routeLine != null) {
+                        mMap.getOverlays().remove(routeLine);
+                    }
+
+                    routeLine = new Polyline();
+                    routeLine.setPoints(pts);
+                    routeLine.setColor(Color.parseColor("#3775BB"));
+                    routeLine.setWidth(12f);
+                    mMap.getOverlays().add(0, routeLine);
+                    mMap.invalidate();
+                }
 
             } catch (Exception e) {
                 Log.e("ROUTE_ERR", "Error parsing OSRM: " + e.getMessage());
@@ -284,6 +373,19 @@ public class TrackServiceActivity extends AppCompatActivity {
         }
     }
 
-    @Override protected void onResume() { super.onResume(); mMap.onResume(); }
-    @Override protected void onPause() { super.onPause(); mMap.onPause(); }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mMap != null) {
+            mMap.onResume();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMap != null) {
+            mMap.onPause();
+        }
+    }
 }
