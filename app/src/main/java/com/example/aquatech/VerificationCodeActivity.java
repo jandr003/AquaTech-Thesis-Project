@@ -3,11 +3,11 @@ package com.example.aquatech;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -56,34 +56,47 @@ public class VerificationCodeActivity extends AppCompatActivity {
 
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         mobile = getIntent().getStringExtra("mobile");
-        
-        yourMobileNum.setText("We sent a code to " + (phoneNumber != null ? phoneNumber : mobile));
+
+        if (yourMobileNum != null) {
+            yourMobileNum.setText("We sent a code to " + (phoneNumber != null ? phoneNumber : (mobile != null ? mobile : "")));
+        }
 
         setupStatusBar();
         createNotificationChannel();
 
-        btnResetPassword.setOnClickListener(v -> {
-            String code = etOtpCode.getText().toString().trim();
-            if (!code.isEmpty()) {
-                verifyWithFirebase(code);
-            } else {
-                Toast.makeText(this, "Enter verification code", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (btnResetPassword != null) {
+            btnResetPassword.setOnClickListener(v -> {
+                String code = etOtpCode != null ? etOtpCode.getText().toString().trim() : "";
+                if (!code.isEmpty()) {
+                    verifyWithFirebase(code);
+                } else {
+                    Toast.makeText(this, "Enter verification code", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
-        yourResendCode.setText(Html.fromHtml("Didn't receive code? <b>RESEND CODE</b>"));
-        yourResendCode.setOnClickListener(v -> resendOtp());
+        if (yourResendCode != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                yourResendCode.setText(Html.fromHtml("Didn't receive code? <b>RESEND CODE</b>", Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                yourResendCode.setText(Html.fromHtml("Didn't receive code? <b>RESEND CODE</b>"));
+            }
+
+            yourResendCode.setOnClickListener(v -> resendOtp());
+        }
     }
 
     private void verifyWithFirebase(String inputCode) {
-        if (mobile == null) return;
+        if (mobile == null || resetsRef == null) {
+            return;
+        }
 
         resetsRef.child(mobile).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String firebaseOtp = snapshot.child("otp").getValue(String.class);
-                    if (inputCode.equals(firebaseOtp)) {
+                    if (inputCode != null && inputCode.equals(firebaseOtp)) {
                         proceedToChangePassword();
                     } else {
                         Toast.makeText(VerificationCodeActivity.this, "Invalid OTP. Try again.", Toast.LENGTH_SHORT).show();
@@ -94,11 +107,17 @@ public class VerificationCodeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(VerificationCodeActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
     private void proceedToChangePassword() {
+        if (mobile == null || usersRef == null) {
+            return;
+        }
+
         usersRef.orderByChild("mobile").equalTo(mobile).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -107,9 +126,10 @@ public class VerificationCodeActivity extends AppCompatActivity {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         uid = ds.getKey();
                     }
-                    
-                    // Clear OTP after success
-                    resetsRef.child(mobile).removeValue();
+
+                    if (resetsRef != null) {
+                        resetsRef.child(mobile).removeValue();
+                    }
 
                     Intent intent = new Intent(VerificationCodeActivity.this, ConfirmPasswordActivity.class);
                     intent.putExtra("USER_ID", uid);
@@ -121,13 +141,17 @@ public class VerificationCodeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(VerificationCodeActivity.this, "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
     private void resendOtp() {
-        if (mobile == null) return;
-        
+        if (mobile == null || resetsRef == null) {
+            return;
+        }
+
         String newOtp = generateOtp(6);
         Map<String, Object> otpData = new HashMap<>();
         otpData.put("otp", newOtp);
@@ -137,6 +161,8 @@ public class VerificationCodeActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 showOtpNotification(newOtp);
                 Toast.makeText(this, "New code sent!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to resend code.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -152,23 +178,28 @@ public class VerificationCodeActivity extends AppCompatActivity {
         try {
             NotificationManagerCompat.from(this).notify(1001, builder.build());
         } catch (SecurityException e) {
-            e.printStackTrace();
+            Log.e("OTP_NOTIF", "Permission error: " + e.getMessage());
         }
     }
 
     private String generateOtp(int length) {
         SecureRandom random = new SecureRandom();
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < length; i++) {
             sb.append(random.nextInt(10));
         }
+
         return sb.toString();
     }
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("otp_channel", "OTP Channel", NotificationManager.IMPORTANCE_HIGH);
-            getSystemService(NotificationManager.class).createNotificationChannel(channel);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
         }
     }
 
