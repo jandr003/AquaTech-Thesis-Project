@@ -52,16 +52,16 @@ public class TrackTechniciansActivity extends AppCompatActivity {
     private MapView mMap;
     private RecyclerView rvTrackTechs;
     private TrackTechAdapter adapter;
-    private List<ServiceLogModel> trackList = new ArrayList<>();
+    private final List<ServiceLogModel> trackList = new ArrayList<>();
 
     private DatabaseReference requestsRef, usersRef;
-    private Map<String, ValueEventListener> techLocationListeners = new HashMap<>();
-    private Map<String, Marker> techMarkers = new HashMap<>();
-    private Map<String, Marker> customerMarkers = new HashMap<>();
-    private Map<String, Polyline> trackingLines = new HashMap<>();
-    private Map<String, Long> lastRouteFetchTimes = new HashMap<>();
-    private Map<String, GeoPoint> lastTechPositions = new HashMap<>();
-    private Map<String, Float> currentBearings = new HashMap<>();
+    private final Map<String, ValueEventListener> techLocationListeners = new HashMap<>();
+    private final Map<String, Marker> techMarkers = new HashMap<>();
+    private final Map<String, Marker> customerMarkers = new HashMap<>();
+    private final Map<String, Polyline> trackingLines = new HashMap<>();
+    private final Map<String, Long> lastRouteFetchTimes = new HashMap<>();
+    private final Map<String, GeoPoint> lastTechPositions = new HashMap<>();
+    private final Map<String, Float> currentBearings = new HashMap<>();
 
     private final GeoPoint COMPANY_LOC = new GeoPoint(14.5584827, 121.0323902);
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -79,7 +79,11 @@ public class TrackTechniciansActivity extends AppCompatActivity {
 
         mMap = findViewById(R.id.mapTrack);
         rvTrackTechs = findViewById(R.id.rvTrackTechs);
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
         if (mMap == null) {
             Toast.makeText(this, "Map initialization failed", Toast.LENGTH_SHORT).show();
@@ -97,42 +101,52 @@ public class TrackTechniciansActivity extends AppCompatActivity {
 
     private void setupMap() {
         try {
-            mMap.setTileSource(TileSourceFactory.MAPNIK);
-            mMap.setMultiTouchControls(true);
-            mMap.getController().setZoom(15.0);
-            mMap.getController().setCenter(COMPANY_LOC);
+            if (mMap != null) {
+                mMap.setTileSource(TileSourceFactory.MAPNIK);
+                mMap.setMultiTouchControls(true);
+                mMap.getController().setZoom(15.0);
+                mMap.getController().setCenter(COMPANY_LOC);
+            }
         } catch (Exception e) {
             Log.e("MAP", "Error setting up map", e);
         }
     }
 
     private void setupRecyclerView() {
-        rvTrackTechs.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TrackTechAdapter(this, trackList, new TrackTechAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(ServiceLogModel model) {
-            }
+        if (rvTrackTechs != null) {
+            rvTrackTechs.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new TrackTechAdapter(this, trackList, new TrackTechAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(ServiceLogModel model) {}
 
-            @Override
-            public void onTrackClick(ServiceLogModel model) {
-                if (model == null || model.getTechId() == null) return;
-                
-                Marker marker = techMarkers.get(model.getTechId());
-                if (marker != null) {
-                    GeoPoint techPos = marker.getPosition();
-                    mMap.getController().animateTo(techPos);
-                    mMap.getController().setZoom(18.0);
-                    marker.showInfoWindow();
-                    Toast.makeText(TrackTechniciansActivity.this, "Tracking " + model.getTechName(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(TrackTechniciansActivity.this, "Technician location not available yet", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onTrackClick(ServiceLogModel model) {
+                    if (model == null || model.getTechId() == null) {
+                        return;
+                    }
+
+                    Marker marker = techMarkers.get(model.getTechId());
+                    if (marker != null && mMap != null) {
+                        GeoPoint techPos = marker.getPosition();
+                        mMap.getController().animateTo(techPos);
+                        mMap.getController().setZoom(18.0);
+                        marker.showInfoWindow();
+                        Toast.makeText(TrackTechniciansActivity.this, "Tracking " + model.getTechName(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(TrackTechniciansActivity.this, "Technician location not available yet", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
-        rvTrackTechs.setAdapter(adapter);
+            });
+
+            rvTrackTechs.setAdapter(adapter);
+        }
     }
 
     private void loadActiveTickets() {
+        if (requestsRef == null) {
+            return;
+        }
+
         requestsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -178,8 +192,14 @@ public class TrackTechniciansActivity extends AppCompatActivity {
                                 model.setAddress(address);
                                 model.setStatus(status);
                                 model.setTechId(techId);
-                                if (custLat != null) model.setLatitude(custLat);
-                                if (custLng != null) model.setLongitude(custLng);
+
+                                if (custLat != null) {
+                                    model.setLatitude(custLat);
+                                }
+
+                                if (custLng != null) {
+                                    model.setLongitude(custLng);
+                                }
 
                                 trackList.add(model);
                             }
@@ -191,20 +211,28 @@ public class TrackTechniciansActivity extends AppCompatActivity {
                     removeInactiveTechs(newTechIds);
                     currentTechIds = newTechIds;
 
-                    adapter.notifyDataSetChanged();
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
 
                 } catch (Exception e) {
                     Log.e("LOAD_TICKETS", "Fatal error loading tickets", e);
                 }
             }
 
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void trackTechnicianLocation(String techId, String techName, GeoPoint custLoc, String status, String ticketKey) {
-        if (techId == null || techId.isEmpty()) return;
-        if (techLocationListeners.containsKey(techId)) return;
+        if (techId == null || techId.isEmpty()) {
+            return;
+        }
+
+        if (techLocationListeners.containsKey(techId)) {
+            return;
+        }
 
         ValueEventListener locationListener = new ValueEventListener() {
             @Override
@@ -233,37 +261,51 @@ public class TrackTechniciansActivity extends AppCompatActivity {
                             lastRouteFetchTimes.put(techId, now);
                         }
                     } else if (trackingLines.containsKey(techId)) {
-                        mMap.getOverlays().remove(trackingLines.get(techId));
+                        Polyline line = trackingLines.get(techId);
+                        if (line != null && mMap != null) {
+                            mMap.getOverlays().remove(line);
+                        }
+
                         trackingLines.remove(techId);
-                        mMap.invalidate();
+
+                        if (mMap != null) {
+                            mMap.invalidate();
+                        }
                     }
                 } catch (Exception e) {
                     Log.e("TRACK_LOC", "Error tracking location", e);
                 }
             }
 
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         };
 
-        usersRef.child(techId).addValueEventListener(locationListener);
-        techLocationListeners.put(techId, locationListener);
+        if (usersRef != null) {
+            usersRef.child(techId).addValueEventListener(locationListener);
+            techLocationListeners.put(techId, locationListener);
+        }
     }
 
     private void updateTechMarker(String techId, GeoPoint newPos, String techName) {
-        if (mMap == null) return;
+        if (mMap == null || techId == null || newPos == null) {
+            return;
+        }
 
         try {
             Marker marker = techMarkers.get(techId);
             if (marker == null) {
                 marker = new Marker(mMap);
                 marker.setPosition(newPos);
-                marker.setTitle("Tech: " + techName);
+                marker.setTitle("Tech: " + (techName != null ? techName : "Technician"));
+
                 Drawable icon = ContextCompat.getDrawable(this, R.drawable.tech_gps_icon_png);
                 if (icon instanceof BitmapDrawable) {
                     Bitmap bitmap = ((BitmapDrawable) icon).getBitmap();
                     int size = (int) (12 * getResources().getDisplayMetrics().density);
                     marker.setIcon(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, size, size, true)));
                 }
+
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
                 marker.setFlat(true);
                 mMap.getOverlays().add(marker);
@@ -273,26 +315,32 @@ public class TrackTechniciansActivity extends AppCompatActivity {
             } else {
                 animateMarkerWithBearing(techId, marker, newPos);
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 
     private void animateMarkerWithBearing(final String techId, final Marker marker, final GeoPoint toPosition) {
-        if (marker == null || toPosition == null) return;
+        if (marker == null || toPosition == null) {
+            return;
+        }
+
         final GeoPoint startPosition = marker.getPosition();
-        if (startPosition.equals(toPosition)) return;
+        if (startPosition != null && startPosition.equals(toPosition)) {
+            return;
+        }
 
         try {
             float bearing = calculateBearing(startPosition, toPosition);
             ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
             animator.setDuration(1000);
             animator.setInterpolator(new LinearInterpolator());
+
             animator.addUpdateListener(animation -> {
                 try {
                     float v = animation.getAnimatedFraction();
                     double lat = v * toPosition.getLatitude() + (1 - v) * startPosition.getLatitude();
                     double lng = v * toPosition.getLongitude() + (1 - v) * startPosition.getLongitude();
                     GeoPoint currentPos = new GeoPoint(lat, lng);
-                    
+
                     marker.setRotation(bearing);
                     marker.setPosition(currentPos);
 
@@ -301,91 +349,148 @@ public class TrackTechniciansActivity extends AppCompatActivity {
                         pruneRoute(line, currentPos);
                     }
 
-                    mMap.invalidate();
-                } catch (Exception e) {}
+                    if (mMap != null) {
+                        mMap.invalidate();
+                    }
+                } catch (Exception ignored) {}
             });
+
             animator.start();
             lastTechPositions.put(techId, toPosition);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 
     private float calculateBearing(GeoPoint start, GeoPoint end) {
+        if (start == null || end == null) {
+            return 0f;
+        }
+
         double lat1 = Math.toRadians(start.getLatitude());
         double lon1 = Math.toRadians(start.getLongitude());
         double lat2 = Math.toRadians(end.getLatitude());
         double lon2 = Math.toRadians(end.getLongitude());
+
         double dLon = lon2 - lon1;
         double y = Math.sin(dLon) * Math.cos(lat2);
         double x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+
         return (float) ((Math.toDegrees(Math.atan2(y, x)) + 360) % 360);
     }
 
     private void pruneRoute(Polyline line, GeoPoint currentPos) {
+        if (line == null || currentPos == null) {
+            return;
+        }
+
         try {
             List<GeoPoint> points = line.getActualPoints();
-            if (points.size() < 2) return;
+            if (points == null || points.size() < 2) {
+                return;
+            }
 
             while (points.size() > 1 && currentPos.distanceToAsDouble(points.get(0)) < 20) {
                 points.remove(0);
             }
+
             if (!points.isEmpty()) {
                 points.set(0, currentPos);
             }
+
             line.setPoints(points);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 
     private void updateCustomerMarker(String ticketKey, GeoPoint loc, String custName) {
-        if (mMap == null) return;
+        if (mMap == null || loc == null || ticketKey == null) {
+            return;
+        }
+
         try {
             Marker marker = customerMarkers.get(ticketKey);
             if (marker == null) {
                 marker = new Marker(mMap);
                 marker.setPosition(loc);
-                marker.setTitle("Customer: " + custName);
+                marker.setTitle("Customer: " + (custName != null ? custName : "Guest"));
+
                 Drawable custIcon = ContextCompat.getDrawable(this, R.drawable.technician_pin_point_customer_loc_png);
                 if (custIcon instanceof BitmapDrawable) {
                     Bitmap bitmap = ((BitmapDrawable) custIcon).getBitmap();
                     int size = (int) (12 * getResources().getDisplayMetrics().density);
                     marker.setIcon(new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, size, size, true)));
                 }
+
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                 mMap.getOverlays().add(marker);
                 customerMarkers.put(ticketKey, marker);
             } else {
                 marker.setPosition(loc);
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 
     private void removeInactiveTechs(Set<String> activeTechIds) {
+        if (activeTechIds == null) {
+            return;
+        }
+
         List<String> toRemove = new ArrayList<>();
         for (String techId : techMarkers.keySet()) {
-            if (!activeTechIds.contains(techId)) toRemove.add(techId);
+            if (!activeTechIds.contains(techId)) {
+                toRemove.add(techId);
+            }
         }
+
         for (String techId : toRemove) {
             Marker m = techMarkers.remove(techId);
-            if (m != null) mMap.getOverlays().remove(m);
+            if (m != null && mMap != null) {
+                mMap.getOverlays().remove(m);
+            }
+
             ValueEventListener listener = techLocationListeners.remove(techId);
-            if (listener != null) usersRef.child(techId).removeEventListener(listener);
+            if (listener != null && usersRef != null) {
+                usersRef.child(techId).removeEventListener(listener);
+            }
+
             Polyline line = trackingLines.remove(techId);
-            if (line != null) mMap.getOverlays().remove(line);
+            if (line != null && mMap != null) {
+                mMap.getOverlays().remove(line);
+            }
         }
     }
 
     private class FetchRouteTask extends AsyncTask<Void, Void, List<GeoPoint>> {
         private String techId;
         private GeoPoint start, end;
-        public FetchRouteTask(String techId, GeoPoint start, GeoPoint end) { this.techId = techId; this.start = start; this.end = end; }
-        @Override protected List<GeoPoint> doInBackground(Void... voids) {
+
+        public FetchRouteTask(String techId, GeoPoint start, GeoPoint end) {
+            this.techId = techId;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        protected List<GeoPoint> doInBackground(Void... voids) {
             List<GeoPoint> routePoints = new ArrayList<>();
+            if (start == null || end == null) {
+                return routePoints;
+            }
+
             try {
-                String urlStr = "https://router.project-osrm.org/route/v1/driving/" + start.getLongitude() + "," + start.getLatitude() + ";" + end.getLongitude() + "," + end.getLatitude() + "?overview=full&geometries=geojson";
+                String urlStr = "https://router.project-osrm.org/route/v1/driving/" +
+                        start.getLongitude() + "," + start.getLatitude() + ";" +
+                        end.getLongitude() + "," + end.getLatitude() +
+                        "?overview=full&geometries=geojson";
+
                 URL url = new URL(urlStr);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder response = new StringBuilder(); String line;
-                while ((line = reader.readLine()) != null) response.append(line);
+
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
                 JSONObject json = new JSONObject(response.toString());
                 JSONArray routes = json.getJSONArray("routes");
                 if (routes.length() > 0) {
@@ -395,31 +500,65 @@ public class TrackTechniciansActivity extends AppCompatActivity {
                         routePoints.add(new GeoPoint(coord.getDouble(1), coord.getDouble(0)));
                     }
                 }
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
+
             return routePoints;
         }
-        @Override protected void onPostExecute(List<GeoPoint> points) {
-            if (points.isEmpty() || mMap == null) return;
+
+        @Override
+        protected void onPostExecute(List<GeoPoint> points) {
+            if (points == null || points.isEmpty() || mMap == null) {
+                return;
+            }
+
             Polyline line = trackingLines.get(techId);
             if (line == null) {
-                line = new Polyline(); line.setColor(Color.parseColor("#3775BB")); line.setWidth(10f);
-                mMap.getOverlays().add(0, line); trackingLines.put(techId, line);
+                line = new Polyline();
+                line.setColor(Color.parseColor("#3775BB"));
+                line.setWidth(10f);
+                mMap.getOverlays().add(0, line);
+                trackingLines.put(techId, line);
             }
-            line.setPoints(points); mMap.invalidate();
+
+            line.setPoints(points);
+            mMap.invalidate();
         }
     }
 
     private String getServiceTypeFromSnapshot(DataSnapshot ds) {
+        if (ds == null) {
+            return "General Service";
+        }
+
         List<String> categories = new ArrayList<>();
-        if (hasQty(ds, "qty_wayvalve")) categories.add("Installation Kit");
-        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) categories.add("Other Parts");
-        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) categories.add("Filter Preventive");
-        if (categories.isEmpty()) return "General Service";
-        if (categories.size() == 1) return categories.get(0);
+        if (hasQty(ds, "qty_wayvalve")) {
+            categories.add("Installation Kit");
+        }
+
+        if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
+            categories.add("Other Parts");
+        }
+
+        if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
+            categories.add("Filter Preventive");
+        }
+
+        if (categories.isEmpty()) {
+            return "General Service";
+        }
+
+        if (categories.size() == 1) {
+            return categories.get(0);
+        }
+
         return categories.get(0) + " & others";
     }
 
     private boolean hasQty(DataSnapshot ds, String key) {
+        if (ds == null || key == null) {
+            return false;
+        }
+
         Object val = ds.child(key).getValue();
         return val instanceof Number && ((Number) val).intValue() > 0;
     }
@@ -432,10 +571,15 @@ public class TrackTechniciansActivity extends AppCompatActivity {
         }
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
-        for (Map.Entry<String, ValueEventListener> entry : techLocationListeners.entrySet()) {
-            usersRef.child(entry.getKey()).removeEventListener(entry.getValue());
+        if (usersRef != null) {
+            for (Map.Entry<String, ValueEventListener> entry : techLocationListeners.entrySet()) {
+                if (entry != null && entry.getKey() != null && entry.getValue() != null) {
+                    usersRef.child(entry.getKey()).removeEventListener(entry.getValue());
+                }
+            }
         }
     }
 }
