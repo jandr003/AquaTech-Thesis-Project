@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,12 +46,16 @@ public class WorkPerformanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_work_performance);
 
         mAuth = FirebaseAuth.getInstance();
-        if (mAuth.getCurrentUser() == null) {
+        if (mAuth != null && mAuth.getCurrentUser() == null) {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        currentTechUid = mAuth.getCurrentUser().getUid();
+
+        if (mAuth != null && mAuth.getCurrentUser() != null) {
+            currentTechUid = mAuth.getCurrentUser().getUid();
+        }
+
         requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
 
         setupStatusBar();
@@ -91,16 +96,29 @@ public class WorkPerformanceActivity extends AppCompatActivity {
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
         Calendar cal = Calendar.getInstance();
 
-        tvMonth1Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
+        if (tvMonth1Name != null) {
+            tvMonth1Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
+        }
+
         cal.add(Calendar.MONTH, -1);
-        tvMonth2Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
+        if (tvMonth2Name != null) {
+            tvMonth2Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
+        }
+
         cal.add(Calendar.MONTH, -1);
-        tvMonth3Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
+        if (tvMonth3Name != null) {
+            tvMonth3Name.setText(monthFormat.format(cal.getTime()).toUpperCase());
+        }
     }
 
     private void fetchTechIdentity() {
-        if (mAuth.getCurrentUser() == null) return;
-        String userEmail = mAuth.getCurrentUser().getEmail();
+        if (mAuth == null || mAuth.getCurrentUser() == null) {
+            return;
+        }
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userEmail = currentUser != null ? currentUser.getEmail() : "";
+
         TechnicianIdentityHelper.fetchTechnicianIdentity(DB_URL, currentTechUid, userEmail, (uid, resolvedName) -> {
             if (tvTechName != null && resolvedName != null && !resolvedName.trim().isEmpty()) {
                 tvTechName.setText(resolvedName);
@@ -109,11 +127,17 @@ public class WorkPerformanceActivity extends AppCompatActivity {
     }
 
     private void fetchPerformanceData() {
+        if (requestsRef == null) {
+            return;
+        }
+
         requestsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int totalCount = 0;
-                int m1Count = 0, m2Count = 0, m3Count = 0;
+                int m1Count = 0;
+                int m2Count = 0;
+                int m3Count = 0;
 
                 Calendar cal = Calendar.getInstance();
                 int currentMonth = cal.get(Calendar.MONTH);
@@ -140,6 +164,7 @@ public class WorkPerformanceActivity extends AppCompatActivity {
                         if (timestamp == null) {
                             timestamp = ds.child("maintenanceEndTime").getValue(Long.class);
                         }
+
                         if (timestamp == null) {
                             timestamp = ds.child("timestamp").getValue(Long.class);
                         }
@@ -172,34 +197,54 @@ public class WorkPerformanceActivity extends AppCompatActivity {
     }
 
     private void updateUI(int total, int m1, int m2, int m3) {
-        tvTotalTasks.setText(String.valueOf(m1));
+        if (tvTotalTasks != null) {
+            tvTotalTasks.setText(String.valueOf(m1));
+        }
+
         if (pbTotalChart != null) {
             pbTotalChart.setMax(30);
             pbTotalChart.setProgress(Math.min(m1, 30));
         }
 
-        tvMonth1Tasks.setText(m1 + " tasks");
-        tvMonth2Tasks.setText(m2 + " tasks");
-        tvMonth3Tasks.setText(m3 + " tasks");
+        if (tvMonth1Tasks != null) {
+            tvMonth1Tasks.setText(m1 + " tasks");
+        }
+
+        if (tvMonth2Tasks != null) {
+            tvMonth2Tasks.setText(m2 + " tasks");
+        }
+
+        if (tvMonth3Tasks != null) {
+            tvMonth3Tasks.setText(m3 + " tasks");
+        }
 
         int targetTasksPerMonth = 30;
-        pbMonth1.setMax(targetTasksPerMonth);
-        pbMonth1.setProgress(Math.min(m1, targetTasksPerMonth));
 
-        pbMonth2.setMax(targetTasksPerMonth);
-        pbMonth2.setProgress(Math.min(m2, targetTasksPerMonth));
+        if (pbMonth1 != null) {
+            pbMonth1.setMax(targetTasksPerMonth);
+            pbMonth1.setProgress(Math.min(m1, targetTasksPerMonth));
+        }
 
-        pbMonth3.setMax(targetTasksPerMonth);
-        pbMonth3.setProgress(Math.min(m3, targetTasksPerMonth));
+        if (pbMonth2 != null) {
+            pbMonth2.setMax(targetTasksPerMonth);
+            pbMonth2.setProgress(Math.min(m2, targetTasksPerMonth));
+        }
 
-        if (m1 == 0) {
-            tvPerfMessage.setText("LET'S GET STARTED THIS MONTH!");
-        } else if (m1 <= 5) {
-            tvPerfMessage.setText("GOOD START! KEEP PUSHING!");
-        } else if (m1 <= 15) {
-            tvPerfMessage.setText("EXCELLENT WORK! YOU'RE ON FIRE!");
-        } else {
-            tvPerfMessage.setText("LEGENDARY PERFORMANCE! GREAT JOB!");
+        if (pbMonth3 != null) {
+            pbMonth3.setMax(targetTasksPerMonth);
+            pbMonth3.setProgress(Math.min(m3, targetTasksPerMonth));
+        }
+
+        if (tvPerfMessage != null) {
+            if (m1 == 0) {
+                tvPerfMessage.setText("LET'S GET STARTED THIS MONTH!");
+            } else if (m1 <= 5) {
+                tvPerfMessage.setText("GOOD START! KEEP PUSHING!");
+            } else if (m1 <= 15) {
+                tvPerfMessage.setText("EXCELLENT WORK! YOU'RE ON FIRE!");
+            } else {
+                tvPerfMessage.setText("LEGENDARY PERFORMANCE! GREAT JOB!");
+            }
         }
     }
 
