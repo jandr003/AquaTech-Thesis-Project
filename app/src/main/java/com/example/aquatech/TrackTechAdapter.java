@@ -1,7 +1,6 @@
 package com.example.aquatech;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.view.LayoutInflater;
@@ -45,6 +44,9 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ServiceLogModel item = list.get(position);
+        if (item == null) {
+            return;
+        }
 
         int[] techAvatars = {
                 R.drawable.technician_avatar1,
@@ -56,8 +58,9 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
                 R.drawable.technician_avatar7,
                 R.drawable.technician_avatar8
         };
+
         if (holder.ivTechAvatar != null) {
-            if (item.getProfileImageUrl() != null && !item.getProfileImageUrl().isEmpty()) {
+            if (item.getProfileImageUrl() != null && !item.getProfileImageUrl().isEmpty() && context != null) {
                 Glide.with(context)
                         .load(item.getProfileImageUrl())
                         .placeholder(techAvatars[Math.abs(position) % techAvatars.length])
@@ -70,19 +73,32 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
             }
         }
 
-        holder.tvTechName.setText(item.getTechName() != null ? item.getTechName() : "Unknown Tech");
-        holder.tvTicketID.setText(item.getSroNumber() != null ? item.getSroNumber() : "N/A");
+        if (holder.tvTechName != null) {
+            holder.tvTechName.setText(item.getTechName() != null ? item.getTechName() : "Unknown Tech");
+        }
+
+        if (holder.tvTicketID != null) {
+            holder.tvTicketID.setText(item.getSroNumber() != null ? item.getSroNumber() : "N/A");
+        }
+
         String serviceType = item.getTechRole();
         if (serviceType == null || serviceType.isEmpty()) {
             serviceType = "General Service";
         }
-        holder.tvServiceType.setText(serviceType);
+
+        if (holder.tvServiceType != null) {
+            holder.tvServiceType.setText(serviceType);
+        }
 
         String timeRange = item.getDateTime();
-        holder.tvServiceTime.setText(timeRange != null ? "Service Time: " + timeRange : "Service Time: Not set");
+        if (holder.tvServiceTime != null) {
+            holder.tvServiceTime.setText(timeRange != null ? "Service Time: " + timeRange : "Service Time: Not set");
+        }
 
         String address = item.getAddress();
-        holder.tvLocation.setText(address != null ? address : "Address not available");
+        if (holder.tvLocation != null) {
+            holder.tvLocation.setText(address != null ? address : "Address not available");
+        }
 
         double techLat = item.getTechLat();
         double techLng = item.getTechLng();
@@ -97,39 +113,68 @@ public class TrackTechAdapter extends RecyclerView.Adapter<TrackTechAdapter.View
             float distanceKm = distanceMeters / 1000;
 
             int minutes = (int) (distanceKm / 30 * 60);
-            if (minutes < 1) minutes = 1;
+            if (minutes < 1) {
+                minutes = 1;
+            }
 
             if ("In Progress".equalsIgnoreCase(item.getStatus())) {
                 liveStatus = String.format("On the way · %.1f km · %d min away", distanceKm, minutes);
-                holder.tvLiveStatus.setTextColor(Color.parseColor("#8BC34A"));
+                if (holder.tvLiveStatus != null) {
+                    holder.tvLiveStatus.setTextColor(Color.parseColor("#8BC34A"));
+                }
             } else {
                 liveStatus = String.format("Waiting for acceptance · %.1f km away", distanceKm);
-                holder.tvLiveStatus.setTextColor(Color.parseColor("#FF9800"));
+                if (holder.tvLiveStatus != null) {
+                    holder.tvLiveStatus.setTextColor(Color.parseColor("#FF9800"));
+                }
             }
         } else {
             if ("In Progress".equalsIgnoreCase(item.getStatus())) {
                 liveStatus = "On the way to customer location";
-                holder.tvLiveStatus.setTextColor(Color.parseColor("#8BC34A"));
+                if (holder.tvLiveStatus != null) {
+                    holder.tvLiveStatus.setTextColor(Color.parseColor("#8BC34A"));
+                }
             } else {
                 liveStatus = "Waiting for acceptance";
-                holder.tvLiveStatus.setTextColor(Color.parseColor("#FF9800"));
+                if (holder.tvLiveStatus != null) {
+                    holder.tvLiveStatus.setTextColor(Color.parseColor("#FF9800"));
+                }
             }
         }
-        holder.tvLiveStatus.setText(liveStatus);
 
-        if ("In Progress".equalsIgnoreCase(item.getStatus())) {
-            holder.badgeStatus.setText("EN ROUTE");
-        } else {
-            holder.badgeStatus.setText("OPEN");
+        if (holder.tvLiveStatus != null) {
+            holder.tvLiveStatus.setText(liveStatus);
         }
 
-        holder.itemView.setOnClickListener(v -> listener.onItemClick(item));
-        holder.btnTrackOnMap.setOnClickListener(v -> listener.onTrackClick(item));
+        if (holder.badgeStatus != null) {
+            if ("In Progress".equalsIgnoreCase(item.getStatus())) {
+                holder.badgeStatus.setText("EN ROUTE");
+            } else {
+                holder.badgeStatus.setText("OPEN");
+            }
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(item);
+            }
+        });
+
+        if (holder.btnTrackOnMap != null) {
+            holder.btnTrackOnMap.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onTrackClick(item);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list != null) {
+            return list.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
