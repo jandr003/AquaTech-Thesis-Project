@@ -36,8 +36,17 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TechnicianModel tech = techList.get(position);
-        holder.tvTechName.setText(tech.fullName != null ? tech.fullName : "Unknown Tech");
-        holder.tvTechRating.setText(String.format(Locale.getDefault(), "%.1f ★", tech.rating));
+        if (tech == null) {
+            return;
+        }
+
+        if (holder.tvTechName != null) {
+            holder.tvTechName.setText(tech.fullName != null ? tech.fullName : "Unknown Tech");
+        }
+
+        if (holder.tvTechRating != null) {
+            holder.tvTechRating.setText(String.format(Locale.getDefault(), "%.1f ★", tech.rating));
+        }
 
         if (holder.rbTechRating != null) {
             holder.rbTechRating.setRating((float) tech.rating);
@@ -62,16 +71,21 @@ public class TechPerformanceAdapter extends RecyclerView.Adapter<TechPerformance
 
         holder.itemView.setOnClickListener(v -> {
             Context context = v.getContext();
-            Intent intent = new Intent(context, TechnicianPerformanceActivity.class);
-            intent.putExtra("TECH_ID", tech.techId);
-            intent.putExtra("TECH_NAME", tech.fullName);
-            context.startActivity(intent);
+            if (context != null) {
+                Intent intent = new Intent(context, TechnicianPerformanceActivity.class);
+                intent.putExtra("TECH_ID", tech.techId);
+                intent.putExtra("TECH_NAME", tech.fullName);
+                context.startActivity(intent);
+            }
         });
     }
 
     @Override
     public int getItemCount() {
-        return techList != null ? techList.size() : 0;
+        if (techList != null) {
+            return techList.size();
+        }
+        return 0;
     }
 
     public void updateList(List<TechnicianModel> newList) {
