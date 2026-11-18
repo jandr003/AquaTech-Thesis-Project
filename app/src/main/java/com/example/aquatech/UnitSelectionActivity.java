@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -55,8 +56,15 @@ public class UnitSelectionActivity extends AppCompatActivity {
     }
 
     private void setupFirebaseListener() {
+        if (mAuth == null) {
+            return;
+        }
+
         String uid = mAuth.getUid();
-        if (uid == null) return;
+        if (uid == null) {
+            return;
+        }
+
         unitsRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid).child("units");
         unitsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -64,97 +72,170 @@ public class UnitSelectionActivity extends AppCompatActivity {
                 List<DataSnapshot> unitList = new ArrayList<>();
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        unitList.add(ds);
+                        if (ds != null) {
+                            unitList.add(ds);
+                        }
                     }
                     updateUI(unitList);
                 } else {
                     fetchLegacyUnit(uid);
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void fetchLegacyUnit(String uid) {
+        if (uid == null) {
+            return;
+        }
+
         FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot s) {
                 if (s.exists() && s.hasChild("unitName")) {
-                    List<DataSnapshot> legacyList = new ArrayList<>();
-                    // We treat the root unit as one item list if units folder is empty
                     updateUI_Legacy(s);
                 } else {
-                    card1.setVisibility(View.GONE);
-                    card2.setVisibility(View.GONE);
-                    tvNoUnits.setVisibility(View.VISIBLE);
+                    if (card1 != null) {
+                        card1.setVisibility(View.GONE);
+                    }
+
+                    if (card2 != null) {
+                        card2.setVisibility(View.GONE);
+                    }
+
+                    if (tvNoUnits != null) {
+                        tvNoUnits.setVisibility(View.VISIBLE);
+                    }
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         });
     }
 
     private void updateUI(List<DataSnapshot> unitList) {
-        tvNoUnits.setVisibility(View.GONE);
+        if (tvNoUnits != null) {
+            tvNoUnits.setVisibility(View.GONE);
+        }
 
-        if (unitList.size() >= 1) {
-            card1.setVisibility(View.VISIBLE);
-            mapDataToCard(unitList.get(0), card1, R.id.customerUnit, R.id.CustomerUnitSerial, R.id.CustomerUnitPurchase, R.id.imgDispenser01);
-        } else {
+        if (unitList != null && unitList.size() >= 1) {
+            if (card1 != null) {
+                card1.setVisibility(View.VISIBLE);
+                mapDataToCard(unitList.get(0), card1, R.id.customerUnit, R.id.CustomerUnitSerial, R.id.CustomerUnitPurchase, R.id.imgDispenser01);
+            }
+        } else if (card1 != null) {
             card1.setVisibility(View.GONE);
         }
 
-        if (unitList.size() >= 2) {
-            card2.setVisibility(View.VISIBLE);
-            mapDataToCard(unitList.get(1), card2, R.id.CustomerUnit01, R.id.CustomerUnitSerial01, R.id.CustomerUnitPurchase01, R.id.imgDispenser02);
-            cardAdd.setVisibility(View.GONE); // Limit to 2 units
+        if (unitList != null && unitList.size() >= 2) {
+            if (card2 != null) {
+                card2.setVisibility(View.VISIBLE);
+                mapDataToCard(unitList.get(1), card2, R.id.CustomerUnit01, R.id.CustomerUnitSerial01, R.id.CustomerUnitPurchase01, R.id.imgDispenser02);
+            }
+
+            if (cardAdd != null) {
+                cardAdd.setVisibility(View.GONE);
+            }
         } else {
-            card2.setVisibility(View.GONE);
-            cardAdd.setVisibility(View.VISIBLE);
+            if (card2 != null) {
+                card2.setVisibility(View.GONE);
+            }
+
+            if (cardAdd != null) {
+                cardAdd.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     private void updateUI_Legacy(DataSnapshot ds) {
-        tvNoUnits.setVisibility(View.GONE);
-        card1.setVisibility(View.VISIBLE);
-        card2.setVisibility(View.GONE);
-        
+        if (ds == null) {
+            return;
+        }
+
+        if (tvNoUnits != null) {
+            tvNoUnits.setVisibility(View.GONE);
+        }
+
+        if (card1 != null) {
+            card1.setVisibility(View.VISIBLE);
+        }
+
+        if (card2 != null) {
+            card2.setVisibility(View.GONE);
+        }
+
         String name = ds.child("unitName").getValue(String.class);
         String serial = ds.child("serialNo").getValue(String.class);
         String purchase = ds.child("purchaseType").getValue(String.class);
         String referenceNo = ds.child("referenceNo").getValue(String.class);
-        
-        ((TextView) card1.findViewById(R.id.customerUnit)).setText(name != null ? name : "Unknown Unit");
-        ((TextView) card1.findViewById(R.id.CustomerUnitSerial)).setText(serial != null ? serial : "N/A");
-        ((TextView) card1.findViewById(R.id.CustomerUnitPurchase)).setText(purchase != null ? purchase : "N/A");
-        
-        card1.setOnClickListener(v -> selectUnit(name, serial, referenceNo, R.drawable.titled_design1));
+
+        if (card1 != null) {
+            TextView tvName = card1.findViewById(R.id.customerUnit);
+            if (tvName != null) {
+                tvName.setText(name != null ? name : "Unknown Unit");
+            }
+
+            TextView tvSerial = card1.findViewById(R.id.CustomerUnitSerial);
+            if (tvSerial != null) {
+                tvSerial.setText(serial != null ? serial : "N/A");
+            }
+
+            TextView tvPurchase = card1.findViewById(R.id.CustomerUnitPurchase);
+            if (tvPurchase != null) {
+                tvPurchase.setText(purchase != null ? purchase : "N/A");
+            }
+
+            card1.setOnClickListener(v -> selectUnit(name, serial, referenceNo, R.drawable.titled_design1));
+        }
     }
 
     private void mapDataToCard(DataSnapshot ds, CardView card, int nameId, int serialId, int purchaseId, int imgId) {
+        if (ds == null || card == null) {
+            return;
+        }
+
         String name = ds.child("unitName").getValue(String.class);
         String serial = ds.child("serialNo").getValue(String.class);
         String purchase = ds.child("purchaseType").getValue(String.class);
         String referenceNo = ds.child("referenceNo").getValue(String.class);
         Integer imgRes = ds.child("unitImageRes").getValue(Integer.class);
 
-        ((TextView) card.findViewById(nameId)).setText(name != null ? name : "Unknown Unit");
-        ((TextView) card.findViewById(serialId)).setText(serial != null ? serial : "N/A");
-        ((TextView) card.findViewById(purchaseId)).setText(purchase != null ? purchase : "N/A");
+        TextView tvName = card.findViewById(nameId);
+        if (tvName != null) {
+            tvName.setText(name != null ? name : "Unknown Unit");
+        }
 
-        if (imgRes != null) {
-            ((ImageView) card.findViewById(imgId)).setImageResource(imgRes);
+        TextView tvSerial = card.findViewById(serialId);
+        if (tvSerial != null) {
+            tvSerial.setText(serial != null ? serial : "N/A");
+        }
+
+        TextView tvPurchase = card.findViewById(purchaseId);
+        if (tvPurchase != null) {
+            tvPurchase.setText(purchase != null ? purchase : "N/A");
+        }
+
+        ImageView imgView = card.findViewById(imgId);
+        if (imgView != null && imgRes != null) {
+            imgView.setImageResource(imgRes);
         }
 
         card.setOnClickListener(v -> selectUnit(name, serial, referenceNo, imgRes != null ? imgRes : R.drawable.titled_design1));
     }
 
     private void selectUnit(String name, String serial, String refNo, int imgRes) {
-        String uid = mAuth.getUid();
-        if (uid != null) {
-            DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
-            userRef.child("unitName").setValue(name);
-            userRef.child("serialNo").setValue(serial);
-            userRef.child("referenceNo").setValue(refNo);
+        if (mAuth != null) {
+            String uid = mAuth.getUid();
+            if (uid != null) {
+                DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid);
+                userRef.child("unitName").setValue(name);
+                userRef.child("serialNo").setValue(serial);
+                userRef.child("referenceNo").setValue(refNo);
+            }
         }
 
         Intent intent = new Intent();
