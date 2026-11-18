@@ -30,23 +30,30 @@ public class VoiceCallActivity extends AppCompatActivity {
     private ImageView callAvatar, muteIcon, speakerIcon;
     private boolean isMuted = false, isSpeakerOn = false, isTimerRunning = false;
     private long syncedStartTime = 0L, serverTimeOffset = 0L;
-    private Handler timerHandler = new Handler(Looper.getMainLooper());
+    private final Handler timerHandler = new Handler(Looper.getMainLooper());
     private DatabaseReference callRef;
     private String techId, customerId, customerName;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-    private Runnable timerRunnable = new Runnable() {
+    private final Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
             if (syncedStartTime <= 0) {
                 timerHandler.postDelayed(this, 500);
                 return;
             }
+
             long currentTimeOnServer = System.currentTimeMillis() + serverTimeOffset;
             long millis = currentTimeOnServer - syncedStartTime;
-            if (millis < 0) millis = 0;
+            if (millis < 0) {
+                millis = 0;
+            }
+
             int seconds = (int) (millis / 1000);
-            tvCallTimer.setText(String.format(Locale.getDefault(), "%02d:%02d", seconds / 60, seconds % 60));
+            if (tvCallTimer != null) {
+                tvCallTimer.setText(String.format(Locale.getDefault(), "%02d:%02d", seconds / 60, seconds % 60));
+            }
+
             timerHandler.postDelayed(this, 1000);
         }
     };
@@ -59,15 +66,23 @@ public class VoiceCallActivity extends AppCompatActivity {
         techId = getIntent().getStringExtra("TECH_ID");
         customerId = getIntent().getStringExtra("CUSTOMER_ID");
         customerName = getIntent().getStringExtra("NAME");
-        if (techId == null) techId = FirebaseAuth.getInstance().getUid();
+
+        if (techId == null && FirebaseAuth.getInstance().getCurrentUser() != null) {
+            techId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
 
         FirebaseDatabase.getInstance(DB_URL).getReference(".info/serverTimeOffset")
                 .addValueEventListener(new ValueEventListener() {
-                    @Override public void onDataChange(@NonNull DataSnapshot s) {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot s) {
                         Long offset = s.getValue(Long.class);
-                        if (offset != null) serverTimeOffset = offset;
+                        if (offset != null) {
+                            serverTimeOffset = offset;
+                        }
                     }
-                    @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError e) {}
                 });
 
         setupStatusBar();
@@ -79,8 +94,9 @@ public class VoiceCallActivity extends AppCompatActivity {
 
     private void setupStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            Window window = getWindow();
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
 
@@ -93,40 +109,79 @@ public class VoiceCallActivity extends AppCompatActivity {
         muteIcon = findViewById(R.id.mutedMicroPhone);
         speakerIcon = findViewById(R.id.btnSpeakerIcon);
 
+        if (tvCallTimer != null) {
+            tvCallTimer.setText("00:00");
+        }
 
-        tvCallTimer.setText("00:00");
-        tvStatusLabel.setText("CALLING...");
-        muteIcon.setColorFilter(isMuted ? Color.RED : Color.parseColor("#4D4D4D"));
+        if (tvStatusLabel != null) {
+            tvStatusLabel.setText("CALLING...");
+        }
 
-        if (tvRoleLabel != null) tvRoleLabel.setText("Customer");
+        if (muteIcon != null) {
+            muteIcon.setColorFilter(isMuted ? Color.RED : Color.parseColor("#4D4D4D"));
+        }
 
-        Glide.with(this).load(R.drawable.man_user_circle_icon).circleCrop().into(callAvatar);
+        if (tvRoleLabel != null) {
+            tvRoleLabel.setText("Customer");
+        }
 
-        tvTechNameDisplay.setText(customerName != null ? customerName : "Connecting...");
+        if (callAvatar != null) {
+            Glide.with(this).load(R.drawable.man_user_circle_icon).circleCrop().into(callAvatar);
+        }
+
+        if (tvTechNameDisplay != null) {
+            tvTechNameDisplay.setText(customerName != null ? customerName : "Connecting...");
+        }
     }
 
     private void loadCustomerName() {
-        if (customerName != null && !customerName.isEmpty()) return;
+        if (customerName != null && !customerName.isEmpty()) {
+            return;
+        }
+
+        if (customerId == null) {
+            return;
+        }
+
         FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(customerId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override public void onDataChange(@NonNull DataSnapshot s) {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot s) {
                         String name = s.child("fullName").getValue(String.class);
-                        if (name == null) name = s.child("name").getValue(String.class);
-                        if (name != null) tvTechNameDisplay.setText(name);
+                        if (name == null) {
+                            name = s.child("name").getValue(String.class);
+                        }
+
+                        if (name != null && tvTechNameDisplay != null) {
+                            tvTechNameDisplay.setText(name);
+                        }
                     }
-                    @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError e) {}
                 });
     }
 
     private void setupCallListener() {
+        if (techId == null || customerId == null) {
+            return;
+        }
+
         String chatId = techId + "_" + customerId;
         callRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
         callRef.addValueEventListener(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot s) {
-                if (!s.exists()) return;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot s) {
+                if (!s.exists()) {
+                    return;
+                }
+
                 String status = s.child("callStatus").getValue(String.class);
                 if ("active".equalsIgnoreCase(status)) {
-                    tvStatusLabel.setText("CONNECTED");
+                    if (tvStatusLabel != null) {
+                        tvStatusLabel.setText("CONNECTED");
+                    }
+
                     Long start = s.child("callStartTime").getValue(Long.class);
                     if (start != null) {
                         syncedStartTime = start;
@@ -139,23 +194,42 @@ public class VoiceCallActivity extends AppCompatActivity {
                     finishCall();
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError e) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError e) {}
         });
     }
 
     private void setupListeners() {
-        findViewById(R.id.btnEndCallWrapper).setOnClickListener(v -> {
-            if (callRef != null) callRef.child("callStatus").setValue("ended");
-            finishCall();
-        });
-        findViewById(R.id.btnMicrophoneWrapper).setOnClickListener(v -> {
-            isMuted = !isMuted;
-            muteIcon.setColorFilter(isMuted ? Color.RED : Color.parseColor("#4D4D4D"));
-        });
-        findViewById(R.id.btnSpeakerWrapper).setOnClickListener(v -> {
-            isSpeakerOn = !isSpeakerOn;
-            speakerIcon.setColorFilter(isSpeakerOn ? Color.parseColor("#37AAFD") : Color.parseColor("#4D4D4D"));
-        });
+        View btnEndCallWrapper = findViewById(R.id.btnEndCallWrapper);
+        if (btnEndCallWrapper != null) {
+            btnEndCallWrapper.setOnClickListener(v -> {
+                if (callRef != null) {
+                    callRef.child("callStatus").setValue("ended");
+                }
+                finishCall();
+            });
+        }
+
+        View btnMicrophoneWrapper = findViewById(R.id.btnMicrophoneWrapper);
+        if (btnMicrophoneWrapper != null) {
+            btnMicrophoneWrapper.setOnClickListener(v -> {
+                isMuted = !isMuted;
+                if (muteIcon != null) {
+                    muteIcon.setColorFilter(isMuted ? Color.RED : Color.parseColor("#4D4D4D"));
+                }
+            });
+        }
+
+        View btnSpeakerWrapper = findViewById(R.id.btnSpeakerWrapper);
+        if (btnSpeakerWrapper != null) {
+            btnSpeakerWrapper.setOnClickListener(v -> {
+                isSpeakerOn = !isSpeakerOn;
+                if (speakerIcon != null) {
+                    speakerIcon.setColorFilter(isSpeakerOn ? Color.parseColor("#37AAFD") : Color.parseColor("#4D4D4D"));
+                }
+            });
+        }
     }
 
     private void finishCall() {
@@ -164,7 +238,8 @@ public class VoiceCallActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         timerHandler.removeCallbacks(timerRunnable);
     }
