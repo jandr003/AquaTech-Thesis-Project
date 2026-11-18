@@ -33,6 +33,7 @@ public class UnitDetailsActivity extends AppCompatActivity {
     private Button btnConfirm;
 
     private String selectedName;
+    private String selectedModel;
     private int unitImageRes = R.drawable.titled_design1;
 
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -45,8 +46,14 @@ public class UnitDetailsActivity extends AppCompatActivity {
         setupStatusBar();
         initializeViews();
 
-        selectedName = getIntent().getStringExtra("UNIT_NAME");
-        setupUnitDetails(selectedName);
+        Intent intent = getIntent();
+        if (intent != null) {
+            selectedName = intent.getStringExtra("UNIT_NAME");
+            selectedModel = intent.getStringExtra("UNIT_MODEL");
+            unitImageRes = intent.getIntExtra("UNIT_IMAGE_RES", R.drawable.titled_design1);
+        }
+
+        setupUnitDetails(selectedName, selectedModel);
 
         String[] types = {"Select Type", "SUBSCRIPTION", "OUTRIGHT"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
@@ -99,7 +106,7 @@ public class UnitDetailsActivity extends AppCompatActivity {
         }
 
         Map<String, Object> unitData = new HashMap<>();
-        unitData.put("unitName", name);
+        unitData.put("unitName", name != null ? name : "Water Purifier");
         unitData.put("serialNo", finalSerial);
         unitData.put("referenceNo", formattedSro);
         unitData.put("purchaseType", purchaseType);
@@ -125,52 +132,69 @@ public class UnitDetailsActivity extends AppCompatActivity {
         finish();
     }
 
-    private void setupUnitDetails(String name) {
-        if (name == null) {
-            return;
-        }
+    private void setupUnitDetails(String name, String model) {
+        String displayName = (name != null && !name.isEmpty()) ? name : "Water Purifier";
 
         if (tvUnitName != null) {
-            tvUnitName.setText(name);
+            tvUnitName.setText(displayName);
         }
 
-        switch (name) {
-            case "WL CUBE FIREWALL":
-                unitImageRes = R.drawable.titled_design1;
-                if (tvUnitModel != null) {
-                    tvUnitModel.setText("F-FXCU1-M-HCA-TT-K1-**-***");
-                }
-                break;
+        String modelTemplate;
+        if (model != null && !model.isEmpty()) {
+            modelTemplate = model;
+        } else {
+            modelTemplate = deriveModelTemplate(displayName);
+        }
 
-            case "SMART SLIM":
-                unitImageRes = R.drawable.titled_design2;
-                if (tvUnitModel != null) {
-                    tvUnitModel.setText("S-FXCU1-M-HCA-AA-B2-**-***");
-                }
-                break;
-
-            case "COUNTER TOP WATER PURIFIER":
-                unitImageRes = R.drawable.titled_design3;
-                if (tvUnitModel != null) {
-                    tvUnitModel.setText("CT-FXCU1-M-HCA-WT-**-***");
-                }
-                break;
-
-            case "STANDING WATER PURIFIER":
-                unitImageRes = R.drawable.titled_design4;
-                if (tvUnitModel != null) {
-                    tvUnitModel.setText("ST-FXCU1-M-HCA-WT-**-***");
-                }
-                break;
-
-            default:
-                unitImageRes = R.drawable.titled_design1;
-                break;
+        if (tvUnitModel != null) {
+            tvUnitModel.setText(modelTemplate);
         }
 
         if (imgUnit != null) {
             imgUnit.setImageResource(unitImageRes);
         }
+    }
+
+    private String deriveModelTemplate(String name) {
+        if (name == null) {
+            return "ST-FXCU1-M-HCA-WT-**-***";
+        }
+
+        String upper = name.toUpperCase();
+        if (upper.contains("CUBE")) {
+            unitImageRes = R.drawable.titled_design1;
+            return "F-FXCU1-M-HCA-TT-K1-**-***";
+        } else if (upper.contains("SLIM")) {
+            unitImageRes = R.drawable.titled_design2;
+            return "S-FXCU1-M-HCA-AA-B2-**-***";
+        } else if (upper.contains("COUNTER")) {
+            unitImageRes = R.drawable.titled_design3;
+            return "CT-FXCU1-M-HCA-WT-**-***";
+        } else if (upper.contains("STANDING")) {
+            unitImageRes = R.drawable.titled_design4;
+            return "ST-FXCU1-M-HCA-WT-**-***";
+        }
+
+        String prefix = generatePrefixFromName(name);
+        return prefix + "-FXCU1-M-HCA-WT-**-***";
+    }
+
+    private String generatePrefixFromName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return "GEN";
+        }
+
+        String[] words = name.trim().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+
+        for (String w : words) {
+            if (!w.isEmpty()) {
+                sb.append(w.charAt(0));
+            }
+        }
+
+        String prefix = sb.toString().toUpperCase();
+        return prefix.length() > 0 ? prefix : "GEN";
     }
 
     private void initializeViews() {
