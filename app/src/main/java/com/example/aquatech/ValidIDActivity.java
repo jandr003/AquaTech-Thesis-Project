@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -29,7 +28,7 @@ public class ValidIDActivity extends AppCompatActivity {
         setupStatusBar();
         initializeViews();
         setupClickListeners();
-        updateUI("none"); 
+        updateUI("none");
     }
 
     private void setupStatusBar() {
@@ -50,47 +49,87 @@ public class ValidIDActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        btnBack.setOnClickListener(v -> finish());
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-        btnUpdateId.setOnClickListener(v -> {
-            Toast.makeText(this, "Opening Gallery/Camera...", Toast.LENGTH_SHORT).show();
-            // Pagkatapos
-        });
+        if (btnUpdateId != null) {
+            btnUpdateId.setOnClickListener(v -> {
+                Toast.makeText(this, "Opening Gallery/Camera...", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     private void updateUI(String status) {
+        if (status == null) {
+            return;
+        }
+
         switch (status) {
             case "none":
-                ivStatusIcon.setImageResource(android.R.drawable.ic_dialog_info);
-                ivStatusIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#4B91C6")));
-                tvVerificationStatus.setText("ACCOUNT NOT VERIFIED");
-                tvVerificationStatus.setTextColor(Color.parseColor("#4B91C6"));
-                tvStatusDescription.setText("Please upload a valid ID to verify your identity.");
-                btnUpdateId.setText("UPLOAD VALID ID");
-                btnUpdateId.setEnabled(true);
-                btnUpdateId.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4B91C6")));
+                if (ivStatusIcon != null) {
+                    ivStatusIcon.setImageResource(android.R.drawable.ic_dialog_info);
+                    ivStatusIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#4B91C6")));
+                }
+
+                if (tvVerificationStatus != null) {
+                    tvVerificationStatus.setText("ACCOUNT NOT VERIFIED");
+                    tvVerificationStatus.setTextColor(Color.parseColor("#4B91C6"));
+                }
+
+                if (tvStatusDescription != null) {
+                    tvStatusDescription.setText("Please upload a valid ID to verify your identity.");
+                }
+
+                if (btnUpdateId != null) {
+                    btnUpdateId.setText("UPLOAD VALID ID");
+                    btnUpdateId.setEnabled(true);
+                    btnUpdateId.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4B91C6")));
+                }
                 break;
 
             case "pending":
-                ivStatusIcon.setImageResource(android.R.drawable.ic_menu_recent_history);
-                ivStatusIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF9800")));
-                tvVerificationStatus.setText("VERIFICATION PENDING");
-                tvVerificationStatus.setTextColor(Color.parseColor("#FF9800"));
-                tvStatusDescription.setText("Reviewing your ID. Please wait 24 hours.");
-                btnUpdateId.setText("PENDING REVIEW");
-                btnUpdateId.setEnabled(false);
-                btnUpdateId.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#CCCCCC")));
+                if (ivStatusIcon != null) {
+                    ivStatusIcon.setImageResource(android.R.drawable.ic_menu_recent_history);
+                    ivStatusIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF9800")));
+                }
+
+                if (tvVerificationStatus != null) {
+                    tvVerificationStatus.setText("VERIFICATION PENDING");
+                    tvVerificationStatus.setTextColor(Color.parseColor("#FF9800"));
+                }
+
+                if (tvStatusDescription != null) {
+                    tvStatusDescription.setText("Reviewing your ID. Please wait 24 hours.");
+                }
+
+                if (btnUpdateId != null) {
+                    btnUpdateId.setText("PENDING REVIEW");
+                    btnUpdateId.setEnabled(false);
+                    btnUpdateId.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#CCCCCC")));
+                }
                 break;
 
             case "verified":
-                ivStatusIcon.setImageResource(R.drawable.ic_check_on);
-                ivStatusIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#4CAF50")));
-                tvVerificationStatus.setText("ACCOUNT VERIFIED");
-                tvVerificationStatus.setTextColor(Color.parseColor("#4CAF50"));
-                tvStatusDescription.setText("Your identity has been confirmed. Thank you!");
-                btnUpdateId.setText("UPDATE VALID ID");
-                btnUpdateId.setEnabled(true);
-                btnUpdateId.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+                if (ivStatusIcon != null) {
+                    ivStatusIcon.setImageResource(R.drawable.ic_check_on);
+                    ivStatusIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+                }
+
+                if (tvVerificationStatus != null) {
+                    tvVerificationStatus.setText("ACCOUNT VERIFIED");
+                    tvVerificationStatus.setTextColor(Color.parseColor("#4CAF50"));
+                }
+
+                if (tvStatusDescription != null) {
+                    tvStatusDescription.setText("Your identity has been confirmed. Thank you!");
+                }
+
+                if (btnUpdateId != null) {
+                    btnUpdateId.setText("UPDATE VALID ID");
+                    btnUpdateId.setEnabled(true);
+                    btnUpdateId.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4CAF50")));
+                }
                 break;
         }
     }
