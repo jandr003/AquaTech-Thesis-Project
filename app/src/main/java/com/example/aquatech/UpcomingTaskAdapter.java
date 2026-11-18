@@ -29,6 +29,7 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
 
     public interface OnUpcomingClickListener {
         void onAcceptClick(DataSnapshot snapshot);
+
         void onMessageClick(DataSnapshot snapshot);
     }
 
@@ -47,38 +48,62 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DataSnapshot ds = taskList.get(position);
+        if (ds == null) {
+            return;
+        }
 
         String name = ds.child("customerName").getValue(String.class);
-        holder.tvName.setText(name != null ? name : "Unknown");
+        if (holder.tvName != null) {
+            holder.tvName.setText(name != null ? name : "Unknown");
+        }
+
         String tId = ds.child("ticketId").getValue(String.class);
-        holder.tvTicketId.setText("#" + (tId != null ? tId : "---"));
+        if (holder.tvTicketId != null) {
+            holder.tvTicketId.setText("#" + (tId != null ? tId : "---"));
+        }
+
         String time = ds.child("timeRange").getValue(String.class);
         if (time == null || time.isEmpty()) {
             String start = ds.child("startTime").getValue(String.class);
             String end = ds.child("endTime").getValue(String.class);
-            if (start != null && end != null) time = start + " - " + end;
-            else time = "Not Specified";
+            if (start != null && end != null) {
+                time = start + " - " + end;
+            } else {
+                time = "Not Specified";
+            }
         }
-        holder.tvTime.setText(time);
+
+        if (holder.tvTime != null) {
+            holder.tvTime.setText(time);
+        }
 
         String addr = ds.child("address").getValue(String.class);
-        holder.tvAddress.setText(addr != null ? addr : "No Address");
-        String sro = ds.child("referenceNo").getValue(String.class);
-        if (sro == null) sro = ds.child("sroNumber").getValue(String.class);
+        if (holder.tvAddress != null) {
+            holder.tvAddress.setText(addr != null ? addr : "No Address");
+        }
 
-        if (sro != null && !sro.isEmpty()) {
-            holder.tvSro.setText(sro);
-        } else {
-            holder.tvSro.setText("No SRO Attached");
+        String sro = ds.child("referenceNo").getValue(String.class);
+        if (sro == null) {
+            sro = ds.child("sroNumber").getValue(String.class);
+        }
+
+        if (holder.tvSro != null) {
+            if (sro != null && !sro.isEmpty()) {
+                holder.tvSro.setText(sro);
+            } else {
+                holder.tvSro.setText("No SRO Attached");
+            }
         }
 
         List<String> categories = new ArrayList<>();
         if (hasQty(ds, "qty_cbc") || hasQty(ds, "qty_sediment") || hasQty(ds, "qty_inline") || hasQty(ds, "qty_smsf1") || hasQty(ds, "qty_smsf10")) {
             categories.add("Filter Preventive");
         }
+
         if (hasQty(ds, "qty_aquatal") || hasQty(ds, "qty_uvlamp") || hasQty(ds, "qty_touchpanel") || hasQty(ds, "qty_pbcboard")) {
             categories.add("Other Parts");
         }
+
         if (hasQty(ds, "qty_wayvalve")) {
             categories.add("Installation Kit");
         }
@@ -86,28 +111,46 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
         StringBuilder categoryStr = new StringBuilder();
         for (int i = 0; i < categories.size(); i++) {
             categoryStr.append(categories.get(i));
-            if (i < categories.size() - 2) categoryStr.append(", ");
-            else if (i == categories.size() - 2) categoryStr.append(" and ");
+            if (i < categories.size() - 2) {
+                categoryStr.append(", ");
+            } else if (i == categories.size() - 2) {
+                categoryStr.append(" and ");
+            }
         }
 
-        if (categoryStr.length() > 0) holder.tvServiceType.setText(categoryStr.toString());
-        else holder.tvServiceType.setText("General Service");
+        if (holder.tvServiceType != null) {
+            if (categoryStr.length() > 0) {
+                holder.tvServiceType.setText(categoryStr.toString());
+            } else {
+                holder.tvServiceType.setText("General Service");
+            }
+        }
 
         Long timestamp = ds.child("assignedTimestamp").getValue(Long.class);
-        if (timestamp != null) {
-            Date date = new Date(timestamp);
-            holder.tvDateStatus.setText(toVerticalDateString(date));
-        } else {
-            holder.tvDateStatus.setText("N\nO\nW");
+        if (holder.tvDateStatus != null) {
+            if (timestamp != null) {
+                Date date = new Date(timestamp);
+                holder.tvDateStatus.setText(toVerticalDateString(date));
+            } else {
+                holder.tvDateStatus.setText("N\nO\nW");
+            }
         }
 
-        holder.btnAccept.setOnClickListener(v -> {
-            if (listener != null) listener.onAcceptClick(ds);
-        });
+        if (holder.btnAccept != null) {
+            holder.btnAccept.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onAcceptClick(ds);
+                }
+            });
+        }
 
-        holder.btnMessage.setOnClickListener(v -> {
-            if (listener != null) listener.onMessageClick(ds);
-        });
+        if (holder.btnMessage != null) {
+            holder.btnMessage.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onMessageClick(ds);
+                }
+            });
+        }
     }
 
     private CharSequence toVerticalDateString(Date d) {
@@ -142,13 +185,20 @@ public class UpcomingTaskAdapter extends RecyclerView.Adapter<UpcomingTaskAdapte
     }
 
     private boolean hasQty(DataSnapshot ds, String key) {
+        if (ds == null || key == null) {
+            return false;
+        }
+
         Object val = ds.child(key).getValue();
         return val instanceof Number && ((Number) val).intValue() > 0;
     }
 
     @Override
     public int getItemCount() {
-        return taskList != null ? taskList.size() : 0;
+        if (taskList != null) {
+            return taskList.size();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
