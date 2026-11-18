@@ -51,34 +51,48 @@ public class UnitDetailsActivity extends AppCompatActivity {
         String[] types = {"Select Type", "SUBSCRIPTION", "OUTRIGHT"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPurchaseType.setAdapter(adapter);
 
-        btnBack.setOnClickListener(v -> finish());
+        if (spinnerPurchaseType != null) {
+            spinnerPurchaseType.setAdapter(adapter);
+        }
 
-        btnConfirm.setOnClickListener(v -> {
-            String unitNo = etUnitNumber.getText().toString().trim();
-            String sroNo = etReferenceNumber.getText().toString().trim();
-            String purchaseType = spinnerPurchaseType.getSelectedItem().toString();
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
 
-            if (sroNo.isEmpty()) {
-                etReferenceNumber.setError("Reference Number (SRO) is required");
-            } else if (unitNo.isEmpty()) {
-                etUnitNumber.setError("Please enter unit number");
-            } else if (purchaseType.equals("Select Type")) {
-                Toast.makeText(this, "Please select purchase type", Toast.LENGTH_SHORT).show();
-            } else {
-                saveUnitToFirebase(selectedName, unitNo, sroNo, purchaseType);
-            }
-        });
+        if (btnConfirm != null) {
+            btnConfirm.setOnClickListener(v -> {
+                String unitNo = etUnitNumber != null ? etUnitNumber.getText().toString().trim() : "";
+                String sroNo = etReferenceNumber != null ? etReferenceNumber.getText().toString().trim() : "";
+                String purchaseType = (spinnerPurchaseType != null && spinnerPurchaseType.getSelectedItem() != null) ?
+                        spinnerPurchaseType.getSelectedItem().toString() : "Select Type";
+
+                if (sroNo.isEmpty()) {
+                    if (etReferenceNumber != null) {
+                        etReferenceNumber.setError("Reference Number (SRO) is required");
+                    }
+                } else if (unitNo.isEmpty()) {
+                    if (etUnitNumber != null) {
+                        etUnitNumber.setError("Please enter unit number");
+                    }
+                } else if (purchaseType.equals("Select Type")) {
+                    Toast.makeText(this, "Please select purchase type", Toast.LENGTH_SHORT).show();
+                } else {
+                    saveUnitToFirebase(selectedName, unitNo, sroNo, purchaseType);
+                }
+            });
+        }
     }
 
     private void saveUnitToFirebase(String name, String unitNo, String sroNo, String purchaseType) {
         String uid = FirebaseAuth.getInstance().getUid();
-        if (uid == null) return;
+        if (uid == null) {
+            return;
+        }
 
-        String serialTemplate = tvUnitModel.getText().toString();
+        String serialTemplate = tvUnitModel != null ? tvUnitModel.getText().toString() : "";
         String finalSerial = serialTemplate.replace("**-***", unitNo);
-        String formattedSro = sroNo.toUpperCase();
+        String formattedSro = sroNo != null ? sroNo.toUpperCase() : "";
 
         if (!formattedSro.startsWith("SRO-") && !formattedSro.startsWith("SR0-") && !formattedSro.startsWith("ASC-")) {
             formattedSro = "SRO-" + formattedSro;
@@ -112,15 +126,51 @@ public class UnitDetailsActivity extends AppCompatActivity {
     }
 
     private void setupUnitDetails(String name) {
-        if (name == null) return;
-        tvUnitName.setText(name);
-        switch (name) {
-            case "WL CUBE FIREWALL": unitImageRes = R.drawable.titled_design1; tvUnitModel.setText("F-FXCU1-M-HCA-TT-K1-**-***"); break;
-            case "SMART SLIM": unitImageRes = R.drawable.titled_design2; tvUnitModel.setText("S-FXCU1-M-HCA-AA-B2-**-***"); break;
-            case "COUNTER TOP WATER PURIFIER": unitImageRes = R.drawable.titled_design3; tvUnitModel.setText("CT-FXCU1-M-HCA-WT-**-***"); break;
-            case "STANDING WATER PURIFIER": unitImageRes = R.drawable.titled_design4; tvUnitModel.setText("ST-FXCU1-M-HCA-WT-**-***"); break;
+        if (name == null) {
+            return;
         }
-        imgUnit.setImageResource(unitImageRes);
+
+        if (tvUnitName != null) {
+            tvUnitName.setText(name);
+        }
+
+        switch (name) {
+            case "WL CUBE FIREWALL":
+                unitImageRes = R.drawable.titled_design1;
+                if (tvUnitModel != null) {
+                    tvUnitModel.setText("F-FXCU1-M-HCA-TT-K1-**-***");
+                }
+                break;
+
+            case "SMART SLIM":
+                unitImageRes = R.drawable.titled_design2;
+                if (tvUnitModel != null) {
+                    tvUnitModel.setText("S-FXCU1-M-HCA-AA-B2-**-***");
+                }
+                break;
+
+            case "COUNTER TOP WATER PURIFIER":
+                unitImageRes = R.drawable.titled_design3;
+                if (tvUnitModel != null) {
+                    tvUnitModel.setText("CT-FXCU1-M-HCA-WT-**-***");
+                }
+                break;
+
+            case "STANDING WATER PURIFIER":
+                unitImageRes = R.drawable.titled_design4;
+                if (tvUnitModel != null) {
+                    tvUnitModel.setText("ST-FXCU1-M-HCA-WT-**-***");
+                }
+                break;
+
+            default:
+                unitImageRes = R.drawable.titled_design1;
+                break;
+        }
+
+        if (imgUnit != null) {
+            imgUnit.setImageResource(unitImageRes);
+        }
     }
 
     private void initializeViews() {
