@@ -20,8 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,7 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,8 +58,12 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
             uri -> {
                 if (uri != null) {
                     idUri = uri;
-                    layoutIdPlaceholder.setVisibility(View.GONE);
-                    Glide.with(this).load(uri).centerCrop().into(ivIdPreview);
+                    if (layoutIdPlaceholder != null) {
+                        layoutIdPlaceholder.setVisibility(View.GONE);
+                    }
+                    if (ivIdPreview != null) {
+                        Glide.with(this).load(uri).centerCrop().into(ivIdPreview);
+                    }
                 }
             }
     );
@@ -72,8 +73,12 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
             uri -> {
                 if (uri != null) {
                     certUri = uri;
-                    layoutCertPlaceholder.setVisibility(View.GONE);
-                    Glide.with(this).load(uri).centerCrop().into(ivCertPreview);
+                    if (layoutCertPlaceholder != null) {
+                        layoutCertPlaceholder.setVisibility(View.GONE);
+                    }
+                    if (ivCertPreview != null) {
+                        Glide.with(this).load(uri).centerCrop().into(ivCertPreview);
+                    }
                 }
             }
     );
@@ -84,14 +89,14 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_technician_verification);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = mAuth != null ? mAuth.getCurrentUser() : null;
         if (currentUser == null) {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        currentUid = currentUser.getUid();
 
+        currentUid = currentUser.getUid();
         techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(currentUid);
         userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(currentUid);
         storageRef = FirebaseStorage.getInstance().getReference().child("verifications").child(currentUid);
@@ -104,25 +109,37 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
     }
 
     private void fetchTechName() {
+        if (techRef == null) {
+            return;
+        }
+
         techRef.child("fullName").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 currentTechName = snapshot.getValue(String.class);
-                if (currentTechName == null) {
+                if (currentTechName == null && userRef != null) {
                     userRef.child("fullName").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             currentTechName = snapshot.getValue(String.class);
                         }
-                        @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {}
                     });
                 }
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void checkCurrentVerificationStatus() {
+        if (techRef == null) {
+            return;
+        }
+
         techRef.child("verification").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -131,68 +148,138 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
                 certDownloadUrl = snapshot.child("certUrl").getValue(String.class);
                 updateStatusUI(status, idDownloadUrl, certDownloadUrl);
             }
-            @Override public void onCancelled(@NonNull DatabaseError error) {}
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
     private void updateStatusUI(String status, String idUrl, String certUrl) {
         if ("Verified".equalsIgnoreCase(status)) {
-            tvVerificationStatus.setText("VERIFIED");
-            tvVerificationStatus.setTextColor(Color.parseColor("#4CAF50"));
-            tvStatusDescription.setText("Identity confirmed. You can now accept all job requests.");
-            ivStatusIcon.setImageResource(R.drawable.ic_completed);
-            ivStatusIcon.setColorFilter(Color.parseColor("#4CAF50"));
-            btnSubmit.setVisibility(View.GONE);
-            uploadSection.setVisibility(View.GONE);
+            if (tvVerificationStatus != null) {
+                tvVerificationStatus.setText("VERIFIED");
+                tvVerificationStatus.setTextColor(Color.parseColor("#4CAF50"));
+            }
+
+            if (tvStatusDescription != null) {
+                tvStatusDescription.setText("Identity confirmed. You can now accept all job requests.");
+            }
+
+            if (ivStatusIcon != null) {
+                ivStatusIcon.setImageResource(R.drawable.ic_completed);
+                ivStatusIcon.setColorFilter(Color.parseColor("#4CAF50"));
+            }
+
+            if (btnSubmit != null) {
+                btnSubmit.setVisibility(View.GONE);
+            }
+
+            if (uploadSection != null) {
+                uploadSection.setVisibility(View.GONE);
+            }
+
             showUploadedImages(idUrl, certUrl);
         } else if ("Reviewing".equalsIgnoreCase(status)) {
-            tvVerificationStatus.setText("PENDING REVIEW");
-            tvVerificationStatus.setTextColor(Color.parseColor("#FFA000"));
-            tvStatusDescription.setText("We are checking your documents. Verification in progress...");
-            ivStatusIcon.setImageResource(R.drawable.ic_pdf_clock);
-            ivStatusIcon.setColorFilter(Color.parseColor("#FFA000"));
-            btnSubmit.setVisibility(View.VISIBLE);
-            btnSubmit.setEnabled(false);
-            btnSubmit.setText("UNDER REVIEW");
-            uploadSection.setVisibility(View.VISIBLE);
+            if (tvVerificationStatus != null) {
+                tvVerificationStatus.setText("PENDING REVIEW");
+                tvVerificationStatus.setTextColor(Color.parseColor("#FFA000"));
+            }
+
+            if (tvStatusDescription != null) {
+                tvStatusDescription.setText("We are checking your documents. Verification in progress...");
+            }
+
+            if (ivStatusIcon != null) {
+                ivStatusIcon.setImageResource(R.drawable.ic_pdf_clock);
+                ivStatusIcon.setColorFilter(Color.parseColor("#FFA000"));
+            }
+
+            if (btnSubmit != null) {
+                btnSubmit.setVisibility(View.VISIBLE);
+                btnSubmit.setEnabled(false);
+                btnSubmit.setText("UNDER REVIEW");
+            }
+
+            if (uploadSection != null) {
+                uploadSection.setVisibility(View.VISIBLE);
+            }
+
             showUploadedImages(idUrl, certUrl);
         } else if ("Rejected".equalsIgnoreCase(status)) {
-            tvVerificationStatus.setText("REJECTED");
-            tvVerificationStatus.setTextColor(Color.parseColor("#EF4444"));
-            tvStatusDescription.setText("Your documents were rejected. Please upload valid requirements.");
-            ivStatusIcon.setImageResource(R.drawable.ic_rejected_x);
-            ivStatusIcon.setColorFilter(Color.parseColor("#EF4444"));
-            btnSubmit.setVisibility(View.VISIBLE);
-            btnSubmit.setEnabled(true);
-            btnSubmit.setText("RESUBMIT FOR REVIEW");
-            uploadSection.setVisibility(View.VISIBLE);
+            if (tvVerificationStatus != null) {
+                tvVerificationStatus.setText("REJECTED");
+                tvVerificationStatus.setTextColor(Color.parseColor("#EF4444"));
+            }
+
+            if (tvStatusDescription != null) {
+                tvStatusDescription.setText("Your documents were rejected. Please upload valid requirements.");
+            }
+
+            if (ivStatusIcon != null) {
+                ivStatusIcon.setImageResource(R.drawable.ic_rejected_x);
+                ivStatusIcon.setColorFilter(Color.parseColor("#EF4444"));
+            }
+
+            if (btnSubmit != null) {
+                btnSubmit.setVisibility(View.VISIBLE);
+                btnSubmit.setEnabled(true);
+                btnSubmit.setText("RESUBMIT FOR REVIEW");
+            }
+
+            if (uploadSection != null) {
+                uploadSection.setVisibility(View.VISIBLE);
+            }
+
             showUploadedImages(idUrl, certUrl);
         } else {
-            tvVerificationStatus.setText("NOT VERIFIED");
-            tvVerificationStatus.setTextColor(Color.parseColor("#2196F3"));
-            tvStatusDescription.setText("Upload requirements to start accepting jobs.");
-            ivStatusIcon.setImageResource(R.drawable.ic_unverified_shield);
-            ivStatusIcon.setColorFilter(Color.parseColor("#2196F3"));
-            btnSubmit.setVisibility(View.VISIBLE);
-            btnSubmit.setEnabled(true);
-            btnSubmit.setText("SUBMIT FOR REVIEW");
-            uploadSection.setVisibility(View.VISIBLE);
+            if (tvVerificationStatus != null) {
+                tvVerificationStatus.setText("NOT VERIFIED");
+                tvVerificationStatus.setTextColor(Color.parseColor("#2196F3"));
+            }
+
+            if (tvStatusDescription != null) {
+                tvStatusDescription.setText("Upload requirements to start accepting jobs.");
+            }
+
+            if (ivStatusIcon != null) {
+                ivStatusIcon.setImageResource(R.drawable.ic_unverified_shield);
+                ivStatusIcon.setColorFilter(Color.parseColor("#2196F3"));
+            }
+
+            if (btnSubmit != null) {
+                btnSubmit.setVisibility(View.VISIBLE);
+                btnSubmit.setEnabled(true);
+                btnSubmit.setText("SUBMIT FOR REVIEW");
+            }
+
+            if (uploadSection != null) {
+                uploadSection.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     private void showUploadedImages(String idUrl, String certUrl) {
-        if (idUrl != null && !idUrl.isEmpty()) {
-            layoutIdPlaceholder.setVisibility(View.GONE);
+        if (idUrl != null && !idUrl.isEmpty() && ivIdPreview != null) {
+            if (layoutIdPlaceholder != null) {
+                layoutIdPlaceholder.setVisibility(View.GONE);
+            }
             Glide.with(this).load(idUrl).centerCrop().into(ivIdPreview);
         }
-        if (certUrl != null && !certUrl.isEmpty()) {
-            layoutCertPlaceholder.setVisibility(View.GONE);
+
+        if (certUrl != null && !certUrl.isEmpty() && ivCertPreview != null) {
+            if (layoutCertPlaceholder != null) {
+                layoutCertPlaceholder.setVisibility(View.GONE);
+            }
             Glide.with(this).load(certUrl).centerCrop().into(ivCertPreview);
         }
     }
 
     private void initializeViews() {
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        View btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         ivIdPreview = findViewById(R.id.ivIdPreview);
         ivCertPreview = findViewById(R.id.ivCertPreview);
         ivStatusIcon = findViewById(R.id.ivStatusIcon);
@@ -205,14 +292,29 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        findViewById(R.id.cardUploadId).setOnClickListener(v -> idPickerLauncher.launch("image/*"));
-        findViewById(R.id.cardUploadCert).setOnClickListener(v -> certPickerLauncher.launch("image/*"));
-        btnSubmit.setOnClickListener(v -> submitVerification());
+        View cardUploadId = findViewById(R.id.cardUploadId);
+        if (cardUploadId != null) {
+            cardUploadId.setOnClickListener(v -> idPickerLauncher.launch("image/*"));
+        }
+
+        View cardUploadCert = findViewById(R.id.cardUploadCert);
+        if (cardUploadCert != null) {
+            cardUploadCert.setOnClickListener(v -> certPickerLauncher.launch("image/*"));
+        }
+
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> submitVerification());
+        }
     }
 
     private void submitVerification() {
         if (idUri == null || certUri == null) {
             Toast.makeText(this, "Please upload both ID and Certificate", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (storageRef == null) {
+            Toast.makeText(this, "Storage reference missing", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -225,30 +327,46 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
         StorageReference idRef = storageRef.child("id_" + timestamp + ".jpg");
         StorageReference certRef = storageRef.child("cert_" + timestamp + ".jpg");
 
-        // Robust Chaining using Task.continueWithTask
         idRef.putFile(idUri).continueWithTask(task -> {
-            if (!task.isSuccessful()) throw task.getException();
+            if (!task.isSuccessful() && task.getException() != null) {
+                throw task.getException();
+            }
             return idRef.getDownloadUrl();
         }).continueWithTask(task -> {
-            if (!task.isSuccessful()) throw task.getException();
-            idDownloadUrl = task.getResult().toString();
+            if (!task.isSuccessful() && task.getException() != null) {
+                throw task.getException();
+            }
+
+            if (task.getResult() != null) {
+                idDownloadUrl = task.getResult().toString();
+            }
+
             pd.setMessage("Uploading Certificate...");
             return certRef.putFile(certUri);
         }).continueWithTask(task -> {
-            if (!task.isSuccessful()) throw task.getException();
+            if (!task.isSuccessful() && task.getException() != null) {
+                throw task.getException();
+            }
             return certRef.getDownloadUrl();
         }).addOnSuccessListener(uri -> {
-            certDownloadUrl = uri.toString();
+            if (uri != null) {
+                certDownloadUrl = uri.toString();
+            }
             saveVerificationData(pd);
         }).addOnFailureListener(e -> {
-            pd.dismiss();
+            try {
+                pd.dismiss();
+            } catch (Exception ignored) {}
             Log.e("VERIFICATION", "Upload failed", e);
             Toast.makeText(this, "Upload failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
         });
     }
 
     private void saveVerificationData(ProgressDialog pd) {
-        pd.setMessage("Finalizing...");
+        if (pd != null) {
+            pd.setMessage("Finalizing...");
+        }
+
         Map<String, Object> verificationData = new HashMap<>();
         verificationData.put("status", "Reviewing");
         verificationData.put("idUrl", idDownloadUrl);
@@ -261,7 +379,12 @@ public class TechnicianVerificationActivity extends AppCompatActivity {
 
         FirebaseDatabase.getInstance(DB_URL).getReference().updateChildren(updates)
                 .addOnCompleteListener(task -> {
-                    pd.dismiss();
+                    if (pd != null) {
+                        try {
+                            pd.dismiss();
+                        } catch (Exception ignored) {}
+                    }
+
                     if (task.isSuccessful()) {
                         Toast.makeText(TechnicianVerificationActivity.this, "Documents submitted! Admin will review your account.", Toast.LENGTH_LONG).show();
                         finish();
