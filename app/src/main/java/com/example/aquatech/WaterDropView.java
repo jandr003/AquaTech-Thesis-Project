@@ -12,6 +12,7 @@ import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
+
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.PathParser;
 
@@ -43,8 +44,10 @@ public class WaterDropView extends View {
         textPaint.setTextAlign(Paint.Align.CENTER);
 
         try {
-            Typeface poppins = ResourcesCompat.getFont(context, R.font.poppins_black);
-            textPaint.setTypeface(poppins);
+            if (context != null) {
+                Typeface poppins = ResourcesCompat.getFont(context, R.font.poppins_black);
+                textPaint.setTypeface(poppins);
+            }
         } catch (Exception e) {
             textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         }
@@ -56,6 +59,7 @@ public class WaterDropView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
         String pathData = "M363,44.429 C356.657,45.3072 351.354,46.9115 346,50.5201 " +
                 "C341.772,53.37 338.173,56.7046 335.387,61 C318.282,87.3804 " +
                 "342.005,120.455 372,116.816 C376.525,116.267 381.073,114.38 385,112.12 " +
@@ -78,6 +82,11 @@ public class WaterDropView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        if (canvas == null || dropPath == null || dropBounds == null) {
+            return;
+        }
+
         canvas.drawPath(dropPath, dropPaint);
 
         String progressText = waveProgress + "%";
@@ -103,6 +112,7 @@ public class WaterDropView extends View {
             float y = (float) (Math.sin(angle) * waveStrength) + waveBase;
             wavePath.lineTo(x, y);
         }
+
         wavePath.lineTo(dropBounds.right, dropBounds.bottom);
         wavePath.lineTo(dropBounds.left, dropBounds.bottom);
         wavePath.close();
@@ -119,7 +129,10 @@ public class WaterDropView extends View {
         canvas.restore();
 
         wavePhase += waveSpeed;
-        if (wavePhase > 360f) wavePhase = 0f;
+        if (wavePhase > 360f) {
+            wavePhase = 0f;
+        }
+
         postInvalidateOnAnimation();
     }
 
