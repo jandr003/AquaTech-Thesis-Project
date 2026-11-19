@@ -1,16 +1,26 @@
 package com.example.aquatech;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -23,6 +33,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class AdminServiceHistoryExporter {
+
+
 
     public static void exportToPdf(Activity activity, List<ServiceLogModel> targetList) {
         if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
