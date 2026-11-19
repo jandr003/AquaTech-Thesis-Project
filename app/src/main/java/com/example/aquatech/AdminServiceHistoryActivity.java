@@ -1,14 +1,19 @@
 package com.example.aquatech;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +28,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -74,6 +83,11 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
         tvHeaderTotalCount = findViewById(R.id.tvTotalHistoryCount);
         tvStatTotal = findViewById(R.id.tvStatTotal);
         tvStatCompleted = findViewById(R.id.tvStatCompleted);
+
+        View btnExportCsv = findViewById(R.id.btnExportCsv);
+        if (btnExportCsv != null) {
+            btnExportCsv.setOnClickListener(v -> exportServiceHistoryToCsv());
+        }
 
         searchView = findViewById(R.id.searchAdminHistory);
         if (searchView != null) {
@@ -142,6 +156,7 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
                     if (sroNumber == null) {
                         sroNumber = ds.child("sroNumber").getValue(String.class);
                     }
+
                     if (sroNumber == null) {
                         sroNumber = ticketId;
                     }
@@ -236,6 +251,77 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
         }
     }
 
+    private void exportServiceHistoryToCsv() {
+        List<ServiceLogModel> targetList = (filteredHistoryList != null && !filteredHistoryList.isEmpty()) ?
+                filteredHistoryList : fullHistoryList;
+
+        if (targetList == null || targetList.isEmpty()) {
+            Toast.makeText(this, "No service history records available to export", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        StringBuilder csvData = new StringBuilder();
+        csvData.append("Ticket ID,Reference No (SRO),Customer Name,Customer Phone,Technician Name,Unit Model,Service Date,Status\n");
+
+        for (ServiceLogModel item : targetList) {
+            if (item == null) {
+                continue;
+            }
+
+            csvData.append(escapeCsvField(item.getTicketId())).append(",");
+            csvData.append(escapeCsvField(item.getSroNumber())).append(",");
+            csvData.append(escapeCsvField(item.getCustomerName())).append(",");
+            csvData.append(escapeCsvField(item.getCustomerPhone())).append(",");
+            csvData.append(escapeCsvField(item.getTechName())).append(",");
+            csvData.append(escapeCsvField(item.getUnitName())).append(",");
+            csvData.append(escapeCsvField(item.getDateTime())).append(",");
+            csvData.append(escapeCsvField(item.getStatus())).append("\n");
+        }
+
+        String fileName = "AquaTech_Service_History_" + System.currentTimeMillis() + ".csv";
+
+        try {
+            OutputStream os;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ContentValues cv = new ContentValues();
+                cv.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
+                cv.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
+                cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/AquaTech");
+                Uri uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, cv);
+                os = uri != null ? getContentResolver().openOutputStream(uri) : null;
+            } else {
+                File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "AquaTech");
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                File file = new File(dir, fileName);
+                os = new FileOutputStream(file);
+            }
+
+            if (os != null) {
+                os.write(csvData.toString().getBytes(StandardCharsets.UTF_8));
+                os.flush();
+                os.close();
+                Toast.makeText(this, "CSV Report exported to Downloads/AquaTech!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Failed to create CSV export file", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Export Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String escapeCsvField(String data) {
+        if (data == null) {
+            return "\"\"";
+        }
+
+        String field = data.replace("\"", "\"\"");
+        return "\"" + field + "\"";
+    }
+
     private static class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
         private final List<ServiceLogModel> list;
 
@@ -253,6 +339,9 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             ServiceLogModel item = list.get(position);
+            if (item == null) {
+                return;
+            }
 
             String ticketId = item.getTicketId();
             if (ticketId != null && !ticketId.isEmpty()) {
@@ -273,41 +362,54 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
                 holder.tvTicket.setText("SRO-00002346");
             }
 
-            holder.tvCustomer.setText(item.getCustomerName() != null ? item.getCustomerName() : "Customer Name");
+            if (holder.tvCustomer != null) {
+                holder.tvCustomer.setText(item.getCustomerName() != null ? item.getCustomerName() : "Customer Name");
+            }
 
             String serviceType = item.getUnitName();
             if (serviceType == null || serviceType.isEmpty()) {
                 serviceType = "Water dispenser service";
             }
-            holder.tvServiceType.setText(serviceType);
+
+            if (holder.tvServiceType != null) {
+                holder.tvServiceType.setText(serviceType);
+            }
 
             String techName = item.getTechName();
             if (techName == null || techName.isEmpty()) {
                 techName = "Assigned technician";
             }
-            holder.tvTech.setText("Technician: " + techName);
+
+            if (holder.tvTech != null) {
+                holder.tvTech.setText("Technician: " + techName);
+            }
 
             String dateStr = item.getDateTime();
-            holder.tvDate.setText("Service Date: " + (dateStr != null && !dateStr.isEmpty() ? dateStr : "—"));
+            if (holder.tvDate != null) {
+                holder.tvDate.setText("Service Date: " + (dateStr != null && !dateStr.isEmpty() ? dateStr : "—"));
+            }
 
             String status = item.getStatus();
             if (status == null || status.isEmpty()) {
                 status = "Completed";
             }
-            holder.tvStatus.setText(status);
 
-            if ("Completed".equalsIgnoreCase(status)) {
-                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
-                holder.tvStatus.setTextColor(Color.WHITE);
-            } else if ("Cancelled".equalsIgnoreCase(status)) {
-                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
-                holder.tvStatus.setTextColor(Color.WHITE);
-            } else if ("In Progress".equalsIgnoreCase(status) || "Assigned".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
-                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_blue_pill);
-                holder.tvStatus.setTextColor(Color.WHITE);
-            } else {
-                holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_amber_pill);
-                holder.tvStatus.setTextColor(Color.WHITE);
+            if (holder.tvStatus != null) {
+                holder.tvStatus.setText(status);
+
+                if ("Completed".equalsIgnoreCase(status)) {
+                    holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_green_pill);
+                    holder.tvStatus.setTextColor(Color.WHITE);
+                } else if ("Cancelled".equalsIgnoreCase(status)) {
+                    holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_red_pill);
+                    holder.tvStatus.setTextColor(Color.WHITE);
+                } else if ("In Progress".equalsIgnoreCase(status) || "Assigned".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
+                    holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_blue_pill);
+                    holder.tvStatus.setTextColor(Color.WHITE);
+                } else {
+                    holder.tvStatus.setBackgroundResource(R.drawable.bg_solid_amber_pill);
+                    holder.tvStatus.setTextColor(Color.WHITE);
+                }
             }
 
             holder.itemView.setOnClickListener(v -> {
