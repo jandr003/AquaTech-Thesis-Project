@@ -39,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -232,6 +233,14 @@ public class SplashActivity extends AppCompatActivity {
         if (dbRef == null || uid == null) {
             return;
         }
+
+        try {
+            FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+                if (token != null && !token.isEmpty()) {
+                    AquaFirebaseMessagingService.saveTokenToFirebase(token);
+                }
+            });
+        } catch (Exception ignored) {}
 
         dbRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
