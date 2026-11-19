@@ -8,7 +8,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardSuccessRoot"
-        android:layout_width="340dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="24dp"
@@ -22,13 +22,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="22dp">
 
             <ImageView
                 android:id="@+id/ivSuccessIcon"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginBottom="16dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="14dp"
                 android:contentDescription="Success Check"
                 android:src="@drawable/ic_completed"
                 app:tint="#4CAF50" />
@@ -39,47 +39,47 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_black_ttf"
                 android:letterSpacing="0.03"
-                android:text="REPORT SUBMITTED!"
+                android:text="REPORT SUBMITTED"
                 android:textColor="#1C4E75"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvReportSuccessSubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:fontFamily="@font/poppins"
-                android:text="Waiting for Admin Approval"
+                android:text="Pending Admin Review"
                 android:textColor="#4CAF50"
-                android:textSize="13sp"
+                android:textSize="12.5sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvReportSuccessMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="18dp"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
-                android:lineSpacingExtra="3dp"
-                android:text="Your service report has been successfully submitted to dispatch. Please wait while the admin reviews and approves your submission."
+                android:lineSpacingExtra="2dp"
+                android:text="Your report has been submitted and is pending admin approval."
                 android:textColor="#64748B"
-                android:textSize="12.5sp" />
+                android:textSize="12sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDoneReportSuccess"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="46dp"
                 android:backgroundTint="#2196F3"
                 android:fontFamily="@font/poppins"
                 android:text="GOT IT"
                 android:textAllCaps="true"
                 android:textColor="#FFFFFF"
-                android:textSize="14sp"
+                android:textSize="13.5sp"
                 android:textStyle="bold"
-                app:cornerRadius="14dp"
+                app:cornerRadius="12dp"
                 app:elevation="2dp" />
 
         </LinearLayout>

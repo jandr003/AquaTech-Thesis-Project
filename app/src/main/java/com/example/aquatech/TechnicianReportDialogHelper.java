@@ -220,7 +220,7 @@ public class TechnicianReportDialogHelper {
         TextView tvMsg = dialog.findViewById(R.id.tvReportSuccessMessage);
 
         if (tvMsg != null && ticketNum != null) {
-            tvMsg.setText("Your service report for Ticket #" + ticketNum + " has been successfully submitted to dispatch. Please wait while the admin reviews and approves your submission.");
+            tvMsg.setText("Report for Ticket #" + ticketNum + " submitted and pending admin approval.");
         }
 
         if (cardSuccess != null) {
