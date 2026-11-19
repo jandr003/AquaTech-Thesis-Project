@@ -9,7 +9,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.text.Html;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -26,14 +25,12 @@ import java.util.Map;
 
 public class AquaFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "AquaFCM";
     private static final String CHANNEL_ID = "aquatech_fcm_channel";
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-        Log.d(TAG, "Refreshed FCM Token: " + token);
         saveTokenToFirebase(token);
     }
 
