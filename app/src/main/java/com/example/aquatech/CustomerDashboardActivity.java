@@ -585,91 +585,19 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private void showRatingDialog(String ticketId, String techName, String techId) {
-        if (hasRated || isFinishing()) {
+        if (hasRated || isFinishing() || isDestroyed()) {
             return;
         }
         hasRated = true;
 
-        Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_rate_technician);
-
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            window.setGravity(Gravity.CENTER);
-            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            window.setWindowAnimations(android.R.style.Animation_Dialog);
-        }
-
-        ImageView ivTechProfile = dialog.findViewById(R.id.ivTechProfile);
-        TextView tvTechName = dialog.findViewById(R.id.tvTechName);
-        RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
-        EditText etFeedback = dialog.findViewById(R.id.etRatingFeedback);
-        Button btnSubmit = dialog.findViewById(R.id.btnSubmitRating);
-
-        if (tvTechName != null) {
-            tvTechName.setText(techName != null ? techName : "Technician");
-        }
-
-        if (techId != null) {
-            DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(techId);
-            techRef.child("profileImageUrl").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String url = snapshot.getValue(String.class);
-                    if (ivTechProfile != null) {
-                        if (url != null && !url.isEmpty()) {
-                            Glide.with(CustomerDashboardActivity.this).load(url).circleCrop().into(ivTechProfile);
-                        } else {
-                            ivTechProfile.setImageResource(R.drawable.new_technician);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {}
-            });
-        } else if (ivTechProfile != null) {
-            ivTechProfile.setImageResource(R.drawable.new_technician);
-        }
-
-        if (btnSubmit != null) {
-            btnSubmit.setOnClickListener(v -> {
-                if (ratingBar == null) {
-                    return;
-                }
-
-                float rating = ratingBar.getRating();
-                if (rating < 1) {
-                    Toast.makeText(this, "Please select at least 1 star", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String feedbackText = etFeedback != null && etFeedback.getText() != null ? etFeedback.getText().toString().trim() : "";
-
-                Map<String, Object> ratingUpdate = new HashMap<>();
-                ratingUpdate.put("rating", rating);
-                ratingUpdate.put("ratingFeedback", feedbackText);
-                ratingUpdate.put("rated", true);
-
-                if (requestsRef != null && ticketId != null) {
-                    requestsRef.child(ticketId).updateChildren(ratingUpdate)
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(this, "Thank you for your rating and feedback!", Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                                hasRated = false;
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(this, "Failed to submit rating", Toast.LENGTH_SHORT).show();
-                                hasRated = false;
-                            });
-                }
-            });
-        }
-
-        dialog.setOnDismissListener(d -> hasRated = false);
-        dialog.show();
+        CustomerRatingDialogHelper.showRatingDialog(
+                this,
+                DB_URL,
+                ticketId,
+                techName,
+                techId,
+                () -> hasRated = false
+        );
     }
 
     private void setupNotificationMonitor() {
