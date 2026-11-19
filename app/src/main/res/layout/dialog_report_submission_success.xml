@@ -7,6 +7,7 @@
     android:padding="16dp">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSuccessRoot"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"

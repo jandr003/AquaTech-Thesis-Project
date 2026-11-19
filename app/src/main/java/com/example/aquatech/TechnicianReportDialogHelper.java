@@ -6,10 +6,13 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,6 +60,7 @@ public class TechnicianReportDialogHelper {
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             window.setGravity(Gravity.CENTER);
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setWindowAnimations(android.R.style.Animation_Dialog);
         }
 
         ImageView ivPreview = reportDialog.findViewById(R.id.imgProofPreview);
@@ -179,7 +183,9 @@ public class TechnicianReportDialogHelper {
                         }
                     } catch (Exception ignored) {}
 
-                    showSubmissionSuccessDialog(activity, ticketNum, callback);
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        showSubmissionSuccessDialog(activity, ticketNum, callback);
+                    }, 150);
                 });
             } else {
                 try {
@@ -206,19 +212,45 @@ public class TechnicianReportDialogHelper {
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             window.setGravity(Gravity.CENTER);
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setWindowAnimations(android.R.style.Animation_Dialog);
         }
 
+        View cardSuccess = dialog.findViewById(R.id.cardSuccessRoot);
+        ImageView ivIcon = dialog.findViewById(R.id.ivSuccessIcon);
         TextView tvMsg = dialog.findViewById(R.id.tvReportSuccessMessage);
+
         if (tvMsg != null && ticketNum != null) {
             tvMsg.setText("Your service report for Ticket #" + ticketNum + " has been successfully submitted to dispatch. Please wait while the admin reviews and approves your submission.");
+        }
+
+        if (cardSuccess != null) {
+            cardSuccess.setAlpha(0f);
+            cardSuccess.setScaleX(0.85f);
+            cardSuccess.setScaleY(0.85f);
+            cardSuccess.animate().alpha(1f).scaleX(1.0f).scaleY(1.0f).setDuration(350).setInterpolator(new OvershootInterpolator(1.2f)).start();
+        }
+
+        if (ivIcon != null) {
+            ivIcon.setScaleX(0.2f);
+            ivIcon.setScaleY(0.2f);
+            ivIcon.animate().scaleX(1.0f).scaleY(1.0f).setDuration(450).setStartDelay(100).setInterpolator(new OvershootInterpolator(1.5f)).start();
         }
 
         View btnDone = dialog.findViewById(R.id.btnDoneReportSuccess);
         if (btnDone != null) {
             btnDone.setOnClickListener(v -> {
-                dialog.dismiss();
-                if (callback != null) {
-                    callback.onReportSubmitted();
+                if (cardSuccess != null) {
+                    cardSuccess.animate().alpha(0f).scaleX(0.85f).scaleY(0.85f).setDuration(250).withEndAction(() -> {
+                        dialog.dismiss();
+                        if (callback != null) {
+                            callback.onReportSubmitted();
+                        }
+                    }).start();
+                } else {
+                    dialog.dismiss();
+                    if (callback != null) {
+                        callback.onReportSubmitted();
+                    }
                 }
             });
         }
