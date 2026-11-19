@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,20 +73,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private boolean isActivityInForeground = false;
     private boolean hasRated = false;
 
-    private RecyclerView rvChatThreads;
-    private ChatThreadAdapter chatThreadAdapter;
-    private final List<DataSnapshot> chatThreadsList = new ArrayList<>();
-
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
-
-    private final ActivityResultLauncher<Intent> editProfileLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    reloadUserProfile();
-                }
-            }
-    );
 
     private final ActivityResultLauncher<Intent> unitSelectionLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -304,7 +290,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        chatThreadsList.clear();
                         boolean hasUnread = false;
                         String latestMessage = "";
                         String latestSender = "";
@@ -320,14 +305,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                                 }
                                 break;
                             }
-
-                            for (DataSnapshot chatSnapshot : snapshot.getChildren()) {
-                                chatThreadsList.add(chatSnapshot);
-                            }
-                        }
-
-                        if (chatThreadAdapter != null) {
-                            chatThreadAdapter.notifyDataSetChanged();
                         }
 
                         if (msgNotificationDot != null) {
@@ -940,29 +917,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
     private void showProfileMenu() {
         startActivity(new Intent(this, EditProfileActivity.class));
-    }
-
-    private void showLogoutDialog() {
-        Dialog d = new Dialog(this);
-        d.setContentView(R.layout.dialog_logout);
-        if (d.getWindow() != null) {
-            d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-
-        View btnCancel = d.findViewById(R.id.btnCancelLogout);
-        if (btnCancel != null) {
-            btnCancel.setOnClickListener(v -> d.dismiss());
-        }
-
-        View btnConfirm = d.findViewById(R.id.btnConfirmLogout);
-        if (btnConfirm != null) {
-            btnConfirm.setOnClickListener(v -> {
-                d.dismiss();
-                logoutUser();
-            });
-        }
-
-        d.show();
     }
 
     private void logoutUser() {
