@@ -1,24 +1,17 @@
 package com.example.aquatech;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ContentValues;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,8 +27,6 @@ import java.util.Locale;
 
 public class AdminServiceHistoryExporter {
 
-
-
     public static void exportToPdf(Activity activity, List<ServiceLogModel> targetList) {
         if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
             return;
@@ -46,69 +37,132 @@ public class AdminServiceHistoryExporter {
             return;
         }
 
-        PdfDocument document = new PdfDocument();
-        Paint paint = new Paint();
-        Paint titlePaint = new Paint();
-        titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-
-        int pageWidth = 595;
-        int pageHeight = 842;
-        int margin = 35;
-        int y = 45;
-
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create();
-        PdfDocument.Page page = document.startPage(pageInfo);
-        Canvas canvas = page.getCanvas();
-
-        titlePaint.setColor(Color.parseColor("#1E3A8A"));
-        titlePaint.setTextSize(20f);
-        canvas.drawText("AQUATECH OFFICIAL SERVICE HISTORY", margin, y, titlePaint);
-        y += 25;
-
-        paint.setColor(Color.parseColor("#64748B"));
-        paint.setTextSize(10.5f);
-        String dateStr = new SimpleDateFormat("MMMM dd, yyyy hh:mm a", Locale.getDefault()).format(new Date());
-        canvas.drawText("Generated on: " + dateStr + "  |  Total Records: " + targetList.size(), margin, y, paint);
-        y += 25;
-
-        paint.setColor(Color.parseColor("#F1F5F9"));
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(margin, y, pageWidth - margin, y + 24, paint);
-
-        paint.setColor(Color.parseColor("#1E293B"));
-        paint.setTextSize(9.5f);
-        paint.setFakeBoldText(true);
-        canvas.drawText("SRO / TICKET", margin + 8, y + 16, paint);
-        canvas.drawText("CUSTOMER", margin + 115, y + 16, paint);
-        canvas.drawText("TECHNICIAN", margin + 245, y + 16, paint);
-        canvas.drawText("SERVICE DATE", margin + 375, y + 16, paint);
-        canvas.drawText("STATUS", margin + 475, y + 16, paint);
-        y += 28;
-
-        paint.setFakeBoldText(false);
-        int limit = Math.min(targetList.size(), 28);
-        for (int i = 0; i < limit; i++) {
-            ServiceLogModel item = targetList.get(i);
-            if (item == null) {
-                continue;
+        try {
+            View pdfView = LayoutInflater.from(activity).inflate(R.layout.layout_service_history_pdf_template, null);
+            if (pdfView == null) {
+                return;
             }
 
-            String sro = item.getSroNumber() != null ? item.getSroNumber() : item.getTicketId();
-            canvas.drawText(truncate(sro, 14), margin + 8, y, paint);
-            canvas.drawText(truncate(item.getCustomerName(), 16), margin + 115, y, paint);
-            canvas.drawText(truncate(item.getTechName(), 16), margin + 245, y, paint);
-            canvas.drawText(truncate(item.getDateTime(), 14), margin + 375, y, paint);
-            canvas.drawText(truncate(item.getStatus(), 10), margin + 475, y, paint);
+            TextView tvDate = pdfView.findViewById(R.id.pdfReportGeneratedDate);
+            if (tvDate != null) {
+                String dateStr = new SimpleDateFormat("MMMM dd, yyyy hh:mm a", Locale.getDefault()).format(new Date());
+                tvDate.setText("Generated: " + dateStr);
+            }
 
-            paint.setColor(Color.parseColor("#E2E8F0"));
-            canvas.drawLine(margin, y + 5, pageWidth - margin, y + 5, paint);
-            paint.setColor(Color.parseColor("#1E293B"));
+            TextView tvTotalRec = pdfView.findViewById(R.id.pdfReportTotalRecords);
+            if (tvTotalRec != null) {
+                tvTotalRec.setText("Total Records: " + targetList.size());
+            }
 
-            y += 22;
+            int completedCount = 0;
+            int pendingCount = 0;
+            for (ServiceLogModel item : targetList) {
+                if (item != null) {
+                    if ("Completed".equalsIgnoreCase(item.getStatus())) {
+                        completedCount++;
+                    } else if (!"Cancelled".equalsIgnoreCase(item.getStatus())) {
+                        pendingCount++;
+                    }
+                }
+            }
+
+            TextView tvStatTotal = pdfView.findViewById(R.id.pdfStatTotalCount);
+            if (tvStatTotal != null) {
+                tvStatTotal.setText(String.valueOf(targetList.size()));
+            }
+
+            TextView tvStatCompleted = pdfView.findViewById(R.id.pdfStatCompletedCount);
+            if (tvStatCompleted != null) {
+                tvStatCompleted.setText(String.valueOf(completedCount));
+            }
+
+            TextView tvStatPending = pdfView.findViewById(R.id.pdfStatPendingCount);
+            if (tvStatPending != null) {
+                tvStatPending.setText(String.valueOf(pendingCount));
+            }
+
+            LinearLayout containerRows = pdfView.findViewById(R.id.pdfHistoryContainer);
+            if (containerRows != null) {
+                containerRows.removeAllViews();
+                int limit = Math.min(targetList.size(), 25);
+
+                for (int i = 0; i < limit; i++) {
+                    ServiceLogModel item = targetList.get(i);
+                    if (item == null) {
+                        continue;
+                    }
+
+                    View rowView = LayoutInflater.from(activity).inflate(R.layout.item_pdf_history_row, containerRows, false);
+                    if (rowView != null) {
+                        TextView tvTicket = rowView.findViewById(R.id.pdfRowTicket);
+                        TextView tvCustomer = rowView.findViewById(R.id.pdfRowCustomer);
+                        TextView tvTech = rowView.findViewById(R.id.pdfRowTech);
+                        TextView tvUnit = rowView.findViewById(R.id.pdfRowUnit);
+                        TextView tvRowDate = rowView.findViewById(R.id.pdfRowDate);
+                        TextView tvStatus = rowView.findViewById(R.id.pdfRowStatus);
+
+                        String sro = item.getSroNumber() != null && !item.getSroNumber().isEmpty() ? item.getSroNumber() : item.getTicketId();
+                        if (tvTicket != null) {
+                            tvTicket.setText(sro != null ? sro : "---");
+                        }
+
+                        if (tvCustomer != null) {
+                            tvCustomer.setText(item.getCustomerName() != null ? item.getCustomerName() : "---");
+                        }
+
+                        if (tvTech != null) {
+                            tvTech.setText(item.getTechName() != null ? item.getTechName() : "Unassigned");
+                        }
+
+                        if (tvUnit != null) {
+                            tvUnit.setText(item.getUnitName() != null ? item.getUnitName() : "---");
+                        }
+
+                        if (tvRowDate != null) {
+                            tvRowDate.setText(item.getDateTime() != null ? item.getDateTime() : "---");
+                        }
+
+                        if (tvStatus != null) {
+                            String st = item.getStatus() != null ? item.getStatus() : "Open";
+                            tvStatus.setText(st);
+
+                            if ("Completed".equalsIgnoreCase(st)) {
+                                tvStatus.setTextColor(Color.parseColor("#16A34A"));
+                            } else if ("Cancelled".equalsIgnoreCase(st)) {
+                                tvStatus.setTextColor(Color.parseColor("#DC2626"));
+                            } else {
+                                tvStatus.setTextColor(Color.parseColor("#D97706"));
+                            }
+                        }
+
+                        containerRows.addView(rowView);
+                    }
+                }
+            }
+
+            pdfView.measure(
+                    View.MeasureSpec.makeMeasureSpec(1200, View.MeasureSpec.EXACTLY),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            );
+            pdfView.layout(0, 0, pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight());
+
+            Bitmap bitmap = Bitmap.createBitmap(pdfView.getMeasuredWidth(), pdfView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            pdfView.draw(canvas);
+
+            PdfDocument document = new PdfDocument();
+            PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(bitmap.getWidth(), bitmap.getHeight(), 1).create();
+            PdfDocument.Page page = document.startPage(pageInfo);
+
+            Canvas pageCanvas = page.getCanvas();
+            pageCanvas.drawBitmap(bitmap, 0f, 0f, null);
+            document.finishPage(page);
+
+            savePdfToDownloads(activity, document);
+
+        } catch (Exception e) {
+            Toast.makeText(activity, "Error generating PDF report: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-        document.finishPage(page);
-        savePdfToDownloads(activity, document);
     }
 
     public static void exportToCsv(Activity activity, List<ServiceLogModel> targetList) {
@@ -209,13 +263,6 @@ public class AdminServiceHistoryExporter {
         } catch (Exception e) {
             Toast.makeText(activity, "Error saving PDF: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private static String truncate(String text, int maxLen) {
-        if (text == null) {
-            return "";
-        }
-        return text.length() > maxLen ? text.substring(0, maxLen - 2) + ".." : text;
     }
 
     private static String escapeCsvField(String data) {
