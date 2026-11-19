@@ -700,39 +700,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private String getTemplateForUnit(String name) {
-        if (name == null) {
-            return "F-FXCU1-M-HCA-TT-**-***";
-        }
-
-        String upper = name.toUpperCase();
-        if (upper.contains("SLIM")) {
-            return "S-FXCU1-M-HCA-AA-**-***";
-        }
-        if (upper.contains("COUNTER")) {
-            return "CT-FXCU1-M-HCA-WT-**-***";
-        }
-        if (upper.contains("STANDING")) {
-            return "ST-FXCU1-M-HCA-WT-**-***";
-        }
-        return "F-FXCU1-M-HCA-TT-**-***";
+        return CustomerDashboardAlertHelper.getTemplateForUnit(name);
     }
 
     private int getImageForUnit(String name) {
-        if (name == null) {
-            return R.drawable.titled_design1;
-        }
-
-        String upper = name.toUpperCase();
-        if (upper.contains("SLIM")) {
-            return R.drawable.titled_design2;
-        }
-        if (upper.contains("COUNTER")) {
-            return R.drawable.titled_design3;
-        }
-        if (upper.contains("STANDING")) {
-            return R.drawable.titled_design4;
-        }
-        return R.drawable.titled_design1;
+        return CustomerDashboardAlertHelper.getImageForUnit(name);
     }
 
     private void saveUnitToFirebase(String name, String serial) {
@@ -765,7 +737,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         if (btnReq != null) {
             btnReq.setOnClickListener(v -> {
                 if (hasActiveRequest) {
-                    showActiveRequestAlert();
+                    CustomerDashboardAlertHelper.showActiveRequestAlert(this);
                 } else {
                     startActivity(new Intent(this, ServiceRequestActivity.class));
                 }
@@ -778,7 +750,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                 if (hasActiveRequest) {
                     startActivity(new Intent(this, ServiceLogActivity.class));
                 } else {
-                    showNoActiveRequestAlert();
+                    CustomerDashboardAlertHelper.showNoActiveRequestAlert(this);
                 }
             });
         }
@@ -787,9 +759,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         if (btnMessage != null) {
             btnMessage.setOnClickListener(v -> {
                 if (assignedTechId == null || assignedTechId.isEmpty()) {
-                    showNoTechAssignedAlert();
+                    CustomerDashboardAlertHelper.showNoTechAssignedAlert(this);
                 } else if (!"In Progress".equalsIgnoreCase(currentRequestStatus)) {
-                    showTechNotAcceptedAlert();
+                    CustomerDashboardAlertHelper.showTechNotAcceptedAlert(this);
                 } else {
                     if (msgNotificationDot != null) {
                         msgNotificationDot.setVisibility(View.GONE);
@@ -807,40 +779,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         if (btnAssistance != null) {
             btnAssistance.setOnClickListener(v -> startActivity(new Intent(this, AquaBuddyActivity.class)));
         }
-    }
-
-    private void showActiveRequestAlert() {
-        new AlertDialog.Builder(this)
-                .setTitle("Ongoing Request")
-                .setMessage("You currently have an active service request. Please wait for it to be completed before submitting a new one.")
-                .setPositiveButton("Track Progress", (dialog, which) -> startActivity(new Intent(this, ServiceLogActivity.class)))
-                .setNegativeButton("Close", null)
-                .show();
-    }
-
-    private void showNoTechAssignedAlert() {
-        new AlertDialog.Builder(this)
-                .setTitle("Technician Not Assigned")
-                .setMessage("A technician needs to be assigned to your request before you can chat.")
-                .setPositiveButton("OK", null)
-                .show();
-    }
-
-    private void showTechNotAcceptedAlert() {
-        new AlertDialog.Builder(this)
-                .setTitle("Request Pending")
-                .setMessage("The technician has been assigned but hasn't accepted your request yet. Please wait for them to accept to start chatting.")
-                .setPositiveButton("OK", null)
-                .show();
-    }
-
-    private void showNoActiveRequestAlert() {
-        new AlertDialog.Builder(this)
-                .setTitle("No Active Request")
-                .setMessage("Would you like to submit one now?")
-                .setPositiveButton("Submit", (dialog, which) -> startActivity(new Intent(this, ServiceRequestActivity.class)))
-                .setNegativeButton("Not Now", null)
-                .show();
     }
 
     private void showProfileMenu() {
