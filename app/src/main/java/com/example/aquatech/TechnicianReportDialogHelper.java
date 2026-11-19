@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -178,11 +179,7 @@ public class TechnicianReportDialogHelper {
                         }
                     } catch (Exception ignored) {}
 
-                    if (callback != null) {
-                        callback.onReportSubmitted();
-                    }
-
-                    Toast.makeText(activity, "Report Submitted Successfully!", Toast.LENGTH_LONG).show();
+                    showSubmissionSuccessDialog(activity, ticketNum, callback);
                 });
             } else {
                 try {
@@ -190,5 +187,42 @@ public class TechnicianReportDialogHelper {
                 } catch (Exception ignored) {}
             }
         });
+    }
+
+    public static void showSubmissionSuccessDialog(Activity activity, String ticketNum, OnReportSubmittedListener callback) {
+        if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+            if (callback != null) {
+                callback.onReportSubmitted();
+            }
+            return;
+        }
+
+        Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_report_submission_success);
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.setGravity(Gravity.CENTER);
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        }
+
+        TextView tvMsg = dialog.findViewById(R.id.tvReportSuccessMessage);
+        if (tvMsg != null && ticketNum != null) {
+            tvMsg.setText("Your service report for Ticket #" + ticketNum + " has been successfully submitted to dispatch. Please wait while the admin reviews and approves your submission.");
+        }
+
+        View btnDone = dialog.findViewById(R.id.btnDoneReportSuccess);
+        if (btnDone != null) {
+            btnDone.setOnClickListener(v -> {
+                dialog.dismiss();
+                if (callback != null) {
+                    callback.onReportSubmitted();
+                }
+            });
+        }
+
+        dialog.show();
     }
 }
