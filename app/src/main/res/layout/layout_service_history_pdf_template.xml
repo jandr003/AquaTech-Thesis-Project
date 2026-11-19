@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="1200dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="40dp">
+    android:padding="20dp"
+    tools:context=".AdminServiceHistoryActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:id="@+id/pdfCompanyLogo"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:contentDescription="Company Logo"
@@ -25,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="14dp"
             android:layout_toEndOf="@id/pdfCompanyLogo"
             android:orientation="vertical">
 
@@ -33,10 +35,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_black_ttf"
-                android:letterSpacing="0.04"
+                android:letterSpacing="0.03"
                 android:text="AQUATECH SMARTGUARD CORP."
                 android:textColor="#1E3A8A"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -45,7 +47,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="Official Technical Service History Report"
                 android:textColor="#475569"
-                android:textSize="14sp" />
+                android:textSize="12.5sp" />
 
         </LinearLayout>
 
@@ -64,7 +66,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="Generated: October 26, 2024"
                 android:textColor="#64748B"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -75,7 +77,7 @@
                 android:fontFamily="@font/poppins"
                 android:text="Total Records: 0"
                 android:textColor="#0284C7"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -85,22 +87,22 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="20dp"
         android:background="#1E3A8A" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             app:cardBackgroundColor="#F8FAFC"
-            app:cardCornerRadius="14dp"
+            app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:strokeColor="#CBD5E1"
             app:strokeWidth="1dp">
@@ -109,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="12dp">
 
                 <TextView
                     android:id="@+id/pdfStatTotalCount"
@@ -118,7 +120,7 @@
                     android:fontFamily="@font/poppins_black_ttf"
                     android:text="0"
                     android:textColor="#0F172A"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -127,7 +129,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Total Jobs Recorded"
                     android:textColor="#64748B"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -136,10 +138,10 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="6dp"
+            android:layout_marginHorizontal="4dp"
             android:layout_weight="1"
             app:cardBackgroundColor="#F0FDF4"
-            app:cardCornerRadius="14dp"
+            app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:strokeColor="#BBF7D0"
             app:strokeWidth="1dp">
@@ -148,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="12dp">
 
                 <TextView
                     android:id="@+id/pdfStatCompletedCount"
@@ -157,7 +159,7 @@
                     android:fontFamily="@font/poppins_black_ttf"
                     android:text="0"
                     android:textColor="#16A34A"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -166,7 +168,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Completed Jobs"
                     android:textColor="#166534"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -175,10 +177,10 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
             app:cardBackgroundColor="#FFFBEB"
-            app:cardCornerRadius="14dp"
+            app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:strokeColor="#FDE68A"
             app:strokeWidth="1dp">
@@ -187,7 +189,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="12dp">
 
                 <TextView
                     android:id="@+id/pdfStatPendingCount"
@@ -196,7 +198,7 @@
                     android:fontFamily="@font/poppins_black_ttf"
                     android:text="0"
                     android:textColor="#D97706"
-                    android:textSize="22sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -205,7 +207,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Pending / En Route"
                     android:textColor="#92400E"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -299,7 +301,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="30dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -308,7 +310,7 @@
             android:fontFamily="@font/poppins"
             android:text="AquaTech Smartguard Corp. · Confidential Internal Report"
             android:textColor="#94A3B8"
-            android:textSize="11sp" />
+            android:textSize="10.5sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -317,7 +319,7 @@
             android:fontFamily="@font/poppins"
             android:text="Page 1 of 1"
             android:textColor="#94A3B8"
-            android:textSize="11sp" />
+            android:textSize="10.5sp" />
 
     </RelativeLayout>
 
