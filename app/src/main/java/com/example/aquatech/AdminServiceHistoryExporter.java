@@ -101,7 +101,11 @@ public class AdminServiceHistoryExporter {
                         TextView tvRowDate = rowView.findViewById(R.id.pdfRowDate);
                         TextView tvStatus = rowView.findViewById(R.id.pdfRowStatus);
 
-                        String sro = item.getSroNumber() != null && !item.getSroNumber().isEmpty() ? item.getSroNumber() : item.getTicketId();
+                        String sro = item.getSroNumber();
+                        if (sro == null || sro.isEmpty()) {
+                            sro = item.getTicketId();
+                        }
+
                         if (tvTicket != null) {
                             tvTicket.setText(sro != null ? sro : "---");
                         }
@@ -183,14 +187,22 @@ public class AdminServiceHistoryExporter {
                 continue;
             }
 
-            csvData.append(escapeCsvField(item.getTicketId())).append(",");
-            csvData.append(escapeCsvField(item.getSroNumber())).append(",");
-            csvData.append(escapeCsvField(item.getCustomerName())).append(",");
-            csvData.append(escapeCsvField(item.getCustomerPhone())).append(",");
-            csvData.append(escapeCsvField(item.getTechName())).append(",");
-            csvData.append(escapeCsvField(item.getUnitName())).append(",");
-            csvData.append(escapeCsvField(item.getDateTime())).append(",");
-            csvData.append(escapeCsvField(item.getStatus())).append("\n");
+            csvData.append(escapeCsvField(item.getTicketId()))
+                    .append(",")
+                    .append(escapeCsvField(item.getSroNumber()))
+                    .append(",")
+                    .append(escapeCsvField(item.getCustomerName()))
+                    .append(",")
+                    .append(escapeCsvField(item.getCustomerPhone()))
+                    .append(",")
+                    .append(escapeCsvField(item.getTechName()))
+                    .append(",")
+                    .append(escapeCsvField(item.getUnitName()))
+                    .append(",")
+                    .append(escapeCsvField(item.getDateTime()))
+                    .append(",")
+                    .append(escapeCsvField(item.getStatus()))
+                    .append("\n");
         }
 
         String fileName = "AquaTech_Service_History_" + System.currentTimeMillis() + ".csv";
@@ -202,8 +214,13 @@ public class AdminServiceHistoryExporter {
                 cv.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
                 cv.put(MediaStore.MediaColumns.MIME_TYPE, "text/csv");
                 cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/AquaTech");
+
                 Uri uri = activity.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, cv);
-                os = uri != null ? activity.getContentResolver().openOutputStream(uri) : null;
+                if (uri != null) {
+                    os = activity.getContentResolver().openOutputStream(uri);
+                } else {
+                    os = null;
+                }
             } else {
                 File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "AquaTech");
                 if (!dir.exists()) {
@@ -241,13 +258,19 @@ public class AdminServiceHistoryExporter {
                 cv.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
                 cv.put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf");
                 cv.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/AquaTech");
+
                 Uri uri = activity.getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, cv);
-                os = uri != null ? activity.getContentResolver().openOutputStream(uri) : null;
+                if (uri != null) {
+                    os = activity.getContentResolver().openOutputStream(uri);
+                } else {
+                    os = null;
+                }
             } else {
                 File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "AquaTech");
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
+
                 File file = new File(dir, fileName);
                 os = new FileOutputStream(file);
             }
