@@ -512,48 +512,13 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private void showTopNotificationPopup(String techName) {
-        if (isFinishing() || isDestroyed() || notificationContainer == null) {
-            return;
-        }
-
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View layout = inflater.inflate(R.layout.dialog_technician_accepted, notificationContainer, false);
-
-        TextView tvTechName = layout.findViewById(R.id.tvAcceptedTechName);
-        TextView btnView = layout.findViewById(R.id.btnAcceptedView);
-        ImageView btnClose = layout.findViewById(R.id.btnCloseAccepted);
-
-        if (tvTechName != null) {
-            tvTechName.setText("Technician " + techName + " is on the way");
-        }
-
-        if (btnView != null) {
-            btnView.setOnClickListener(v -> {
-                notificationContainer.removeAllViews();
-                if (hasActiveRequest && currentTicketId != null) {
-                    Intent intent = new Intent(CustomerDashboardActivity.this, ServiceReceiptActivity.class);
-                    intent.putExtra("TICKET_ID", currentTicketId);
-                    startActivity(intent);
-                }
-            });
-        }
-
-        if (btnClose != null) {
-            btnClose.setOnClickListener(v -> {
-                if (notificationContainer != null) {
-                    notificationContainer.removeAllViews();
-                }
-            });
-        }
-
-        notificationContainer.removeAllViews();
-        notificationContainer.addView(layout);
-
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (notificationContainer != null) {
-                notificationContainer.removeAllViews();
-            }
-        }, 15000);
+        CustomerDashboardNotificationPopupHelper.showTopNotificationPopup(
+                this,
+                notificationContainer,
+                techName,
+                hasActiveRequest,
+                currentTicketId
+        );
     }
 
     private void showRatingDialog(String ticketId, String techName, String techId) {
@@ -628,47 +593,15 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private void showIncomingCallPopup(String message, String callerTechId) {
-        if (isFinishing() || isDestroyed() || mAuth == null) {
-            return;
-        }
-
-        String currentTechId = callerTechId != null ? callerTechId : assignedTechId;
-        String myUid = mAuth.getUid();
-        String techName = assignedTechName != null ? assignedTechName : "AquaTech Technician";
-
-        IncomingCallPopup popup = new IncomingCallPopup(
+        CustomerDashboardNotificationPopupHelper.showIncomingCallPopup(
                 this,
-                techName,
-                "AquaTech Technician",
-                currentTechId,
-                myUid,
-                false,
-                new IncomingCallPopup.OnCallActionListener() {
-                    @Override
-                    public void onAnswer() {
-                        String chatId = currentTechId + "_" + myUid;
-
-                        Map<String, Object> callUpdates = new HashMap<>();
-                        callUpdates.put("callStatus", "active");
-                        callUpdates.put("callStartTime", ServerValue.TIMESTAMP);
-
-                        FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).updateChildren(callUpdates);
-
-                        Intent intent = new Intent(CustomerDashboardActivity.this, CustomerVoiceCallActivity.class);
-                        intent.putExtra("NAME", techName);
-                        intent.putExtra("TECH_ID", currentTechId);
-                        intent.putExtra("CUSTOMER_ID", myUid);
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onDecline() {
-                        String chatId = currentTechId + "_" + myUid;
-                        FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
-                    }
-                }
+                DB_URL,
+                message,
+                callerTechId,
+                assignedTechId,
+                assignedTechName,
+                mAuth != null ? mAuth.getUid() : null
         );
-        popup.show();
     }
 
     private String getTemplateForUnit(String name) {
