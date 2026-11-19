@@ -182,7 +182,11 @@
                             android:checked="true"
                             android:fontFamily="@font/poppins"
                             android:text="All"
-                            android:textSize="12sp" />
+                            android:textColor="@color/chip_text_blue_selector"
+                            android:textSize="12sp"
+                            app:checkedIconTint="@color/chip_text_blue_selector"
+                            app:chipBackgroundColor="@color/chip_bg_blue_selector"
+                            app:chipStrokeColor="@android:color/transparent" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chipCompleted"
@@ -191,7 +195,11 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Completed"
-                            android:textSize="12sp" />
+                            android:textColor="@color/chip_text_blue_selector"
+                            android:textSize="12sp"
+                            app:checkedIconTint="@color/chip_text_blue_selector"
+                            app:chipBackgroundColor="@color/chip_bg_blue_selector"
+                            app:chipStrokeColor="@android:color/transparent" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chipCancelled"
@@ -200,7 +208,11 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Cancelled"
-                            android:textSize="12sp" />
+                            android:textColor="@color/chip_text_blue_selector"
+                            android:textSize="12sp"
+                            app:checkedIconTint="@color/chip_text_blue_selector"
+                            app:chipBackgroundColor="@color/chip_bg_blue_selector"
+                            app:chipStrokeColor="@android:color/transparent" />
 
                     </com.google.android.material.chip.ChipGroup>
 
