@@ -10,11 +10,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -606,20 +608,27 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     }
 
     private void showRatingDialog(String ticketId, String techName, String techId) {
-        if (hasRated) {
+        if (hasRated || isFinishing()) {
             return;
         }
         hasRated = true;
 
         Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_rate_technician);
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.setGravity(Gravity.CENTER);
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setWindowAnimations(android.R.style.Animation_Dialog);
         }
 
         ImageView ivTechProfile = dialog.findViewById(R.id.ivTechProfile);
         TextView tvTechName = dialog.findViewById(R.id.tvTechName);
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
+        EditText etFeedback = dialog.findViewById(R.id.etRatingFeedback);
         Button btnSubmit = dialog.findViewById(R.id.btnSubmitRating);
 
         if (tvTechName != null) {
@@ -656,18 +665,21 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
                 float rating = ratingBar.getRating();
                 if (rating < 1) {
-                    Toast.makeText(this, "Please rate at least 1 star", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please select at least 1 star", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                String feedbackText = etFeedback != null && etFeedback.getText() != null ? etFeedback.getText().toString().trim() : "";
+
                 Map<String, Object> ratingUpdate = new HashMap<>();
                 ratingUpdate.put("rating", rating);
+                ratingUpdate.put("ratingFeedback", feedbackText);
                 ratingUpdate.put("rated", true);
 
                 if (requestsRef != null && ticketId != null) {
                     requestsRef.child(ticketId).updateChildren(ratingUpdate)
                             .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(this, "Thank you for your rating!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Thank you for your rating and feedback!", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                                 hasRated = false;
                             })

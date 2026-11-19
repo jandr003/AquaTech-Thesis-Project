@@ -7,11 +7,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -189,14 +191,21 @@ public class ServiceLogActivity extends AppCompatActivity {
         hasRated = true;
 
         Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_rate_technician);
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.setGravity(Gravity.CENTER);
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            window.setWindowAnimations(android.R.style.Animation_Dialog);
         }
 
         ImageView ivTechProfile = dialog.findViewById(R.id.ivTechProfile);
         TextView tvName = dialog.findViewById(R.id.tvTechName);
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
+        EditText etFeedback = dialog.findViewById(R.id.etRatingFeedback);
         Button btnSubmit = dialog.findViewById(R.id.btnSubmitRating);
 
         if (tvName != null) {
@@ -227,18 +236,21 @@ public class ServiceLogActivity extends AppCompatActivity {
 
                 float rating = ratingBar.getRating();
                 if (rating < 1) {
-                    Toast.makeText(this, "Please rate at least 1 star", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please select at least 1 star", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                String feedbackText = etFeedback != null && etFeedback.getText() != null ? etFeedback.getText().toString().trim() : "";
+
                 Map<String, Object> update = new HashMap<>();
                 update.put("rating", rating);
+                update.put("ratingFeedback", feedbackText);
                 update.put("rated", true);
 
                 if (ticketId != null) {
                     FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId)
                             .updateChildren(update).addOnSuccessListener(aVoid -> {
-                                Toast.makeText(this, "Thank you for your rating!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Thank you for your rating and feedback!", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             });
                 }

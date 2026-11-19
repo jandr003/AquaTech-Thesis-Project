@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardRatingRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
@@ -62,7 +63,7 @@
             style="?android:attr/ratingBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:isIndicator="false"
             android:numStars="5"
             android:progressTint="#F59E0B"
@@ -72,11 +73,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvRatingDesc" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilRatingFeedback"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Optional feedback or comments..."
+            app:boxBackgroundColor="#F8FAFC"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#2196F3"
+            app:hintTextColor="#2196F3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ratingBar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etRatingFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:textColor="#1E293B"
+                android:textSize="13sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmitRating"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#2196F3"
             android:fontFamily="@font/poppins"
             android:text="Submit Rating"
@@ -86,7 +118,7 @@
             android:textStyle="bold"
             app:cornerRadius="14dp"
             app:elevation="2dp"
-            app:layout_constraintTop_toBottomOf="@id/ratingBar" />
+            app:layout_constraintTop_toBottomOf="@id/tilRatingFeedback" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
