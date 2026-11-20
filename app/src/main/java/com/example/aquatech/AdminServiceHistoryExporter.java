@@ -84,9 +84,8 @@ public class AdminServiceHistoryExporter {
             LinearLayout containerRows = pdfView.findViewById(R.id.pdfHistoryContainer);
             if (containerRows != null) {
                 containerRows.removeAllViews();
-                int limit = Math.min(targetList.size(), 25);
 
-                for (int i = 0; i < limit; i++) {
+                for (int i = 0; i < targetList.size(); i++) {
                     ServiceLogModel item = targetList.get(i);
                     if (item == null) {
                         continue;
