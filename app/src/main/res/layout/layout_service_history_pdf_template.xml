@@ -87,28 +87,29 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="18dp"
-        android:orientation="horizontal">
+        app:cardBackgroundColor="#F8FAFC"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#CBD5E1"
+        app:strokeWidth="1dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#F8FAFC"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeColor="#CBD5E1"
-            app:strokeWidth="1dp">
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="12dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/pdfStatTotalCount"
@@ -126,28 +127,21 @@
                     android:fontFamily="@font/poppins"
                     android:text="Total Jobs"
                     android:textColor="#64748B"
-                    android:textSize="11sp" />
+                    android:textSize="10.5sp" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#F0FDF4"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeColor="#BBF7D0"
-            app:strokeWidth="1dp">
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#CBD5E1" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/pdfStatCompletedCount"
@@ -165,28 +159,21 @@
                     android:fontFamily="@font/poppins"
                     android:text="Completed"
                     android:textColor="#166534"
-                    android:textSize="11sp" />
+                    android:textSize="10.5sp" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#FFFBEB"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
-            app:strokeColor="#FDE68A"
-            app:strokeWidth="1dp">
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#CBD5E1" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/pdfStatPendingCount"
@@ -204,13 +191,13 @@
                     android:fontFamily="@font/poppins"
                     android:text="Pending"
                     android:textColor="#92400E"
-                    android:textSize="11sp" />
+                    android:textSize="10.5sp" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
         android:layout_width="match_parent"
