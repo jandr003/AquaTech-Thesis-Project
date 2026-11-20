@@ -235,12 +235,12 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
                         String reqDate = snapshot.child("date").getValue(String.class);
                         if (tvOriginalReqDate != null) {
-                            tvOriginalReqDate.setText(reqDate != null && !reqDate.isEmpty() ? reqDate : "October 2, 2025");
+                            tvOriginalReqDate.setText(reqDate != null && !reqDate.isEmpty() ? reqDate : "—");
                         }
 
                         String timeSlot = snapshot.child("timeRange").getValue(String.class);
                         if (tvRequestedTime != null) {
-                            tvRequestedTime.setText(timeSlot != null && !timeSlot.isEmpty() ? timeSlot : "9:00 AM – 11:00 AM");
+                            tvRequestedTime.setText(timeSlot != null && !timeSlot.isEmpty() ? timeSlot : "—");
                         }
                     }
 
