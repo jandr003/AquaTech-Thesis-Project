@@ -33,7 +33,7 @@ public class ChatListTech extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tech_chat_list);
+        setContentView(R.layout.activity_chat_list_tech);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
