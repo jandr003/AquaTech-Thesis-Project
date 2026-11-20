@@ -105,7 +105,7 @@ public class CustomerRatingDialogHelper {
                     return;
                 }
 
-                String feedbackText = etFeedback != null && etFeedback.getText() != null ? etFeedback.getText().toString().trim() : "";
+                String feedbackText = (etFeedback != null && etFeedback.getText() != null) ? etFeedback.getText().toString().trim() : "";
 
                 Map<String, Object> ratingUpdate = new HashMap<>();
                 ratingUpdate.put("rating", rating);
@@ -118,12 +118,14 @@ public class CustomerRatingDialogHelper {
                             .addOnSuccessListener(aVoid -> {
                                 Toast.makeText(activity, "Thank you for your rating and feedback!", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
+
                                 if (callback != null) {
                                     callback.onRatingFinished();
                                 }
                             })
                             .addOnFailureListener(e -> {
                                 Toast.makeText(activity, "Failed to submit rating", Toast.LENGTH_SHORT).show();
+
                                 if (callback != null) {
                                     callback.onRatingFinished();
                                 }
