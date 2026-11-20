@@ -25,9 +25,9 @@ import java.util.Locale;
 
 public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.ViewHolder> {
 
-    private List<DataSnapshot> chatThreads;
-    private String myId;
-    private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
+    private final List<DataSnapshot> chatThreads;
+    private final String myId;
+    private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     public ChatThreadAdapter(List<DataSnapshot> chatThreads, String myId) {
         this.chatThreads = chatThreads;
@@ -44,6 +44,9 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DataSnapshot ds = chatThreads.get(position);
+        if (ds == null) {
+            return;
+        }
 
         String techId = ds.child("techId").getValue(String.class);
         String customerId = ds.child("customerId").getValue(String.class);
@@ -52,13 +55,18 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
         String lastMsg = ds.child("lastMessage").getValue(String.class);
         String lastSenderId = ds.child("lastSenderId").getValue(String.class);
 
-        String otherUserId = (myId != null && myId.equals(customerId)) ? techId : customerId;
-        String fallbackName = (myId != null && myId.equals(customerId)) ?
-                ((techName != null && !techName.isEmpty()) ? techName : "Technician") :
-                ((customerName != null && !customerName.isEmpty()) ? customerName : "Customer");
+        boolean isCustomerMode = (myId != null && myId.equals(customerId));
+        String otherUserId = isCustomerMode ? techId : customerId;
+
+        String fallbackName;
+        if (isCustomerMode) {
+            fallbackName = (techName != null && !techName.isEmpty()) ? techName : "Technician";
+        } else {
+            fallbackName = (customerName != null && !customerName.isEmpty()) ? customerName : "Customer";
+        }
 
         holder.tvCustomerName.setText(fallbackName);
-        holder.ivAvatar.setImageResource((myId != null && myId.equals(customerId)) ? R.drawable.new_technician : R.drawable.customer_avatar1);
+        holder.ivAvatar.setImageResource(isCustomerMode ? R.drawable.new_technician : R.drawable.customer_avatar1);
 
         if (otherUserId != null && !otherUserId.isEmpty()) {
             DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(otherUserId);
@@ -70,6 +78,7 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
                         if (realName == null) {
                             realName = snapshot.child("name").getValue(String.class);
                         }
+
                         if (realName != null && !realName.trim().isEmpty()) {
                             holder.tvCustomerName.setText(realName.trim());
                         }
@@ -80,7 +89,7 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
                         if (imgUrl != null && !imgUrl.isEmpty()) {
                             Glide.with(holder.itemView.getContext())
                                     .load(imgUrl)
-                                    .placeholder(R.drawable.customer_avatar1)
+                                    .placeholder(isCustomerMode ? R.drawable.new_technician : R.drawable.customer_avatar1)
                                     .circleCrop()
                                     .into(holder.ivAvatar);
                         } else if (resId != null && resId > 0) {
@@ -94,7 +103,7 @@ public class ChatThreadAdapter extends RecyclerView.Adapter<ChatThreadAdapter.Vi
             });
         }
 
-        if (lastMsg != null) {
+        if (lastMsg != null && !lastMsg.isEmpty()) {
             if (lastSenderId != null && lastSenderId.equals(myId)) {
                 holder.tvLastMsg.setText(Html.fromHtml("<b>You:</b> " + lastMsg, Html.FROM_HTML_MODE_LEGACY));
             } else {
