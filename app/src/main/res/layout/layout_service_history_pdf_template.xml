@@ -12,22 +12,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:layout_marginBottom="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/pdfCompanyLogo"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:contentDescription="Company Logo"
             android:src="@drawable/asc_logo_hd" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="6dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -35,19 +35,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_black_ttf"
-                android:letterSpacing="0.03"
+                android:letterSpacing="0.02"
+                android:includeFontPadding="false"
                 android:text="AQUATECH SMARTGUARD CORP."
                 android:textColor="#1E3A8A"
-                android:textSize="15sp"
+                android:textSize="14.5sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
+                android:includeFontPadding="false"
                 android:text="Official Technical Service History Report"
                 android:textColor="#64748B"
-                android:textSize="11.5sp" />
+                android:textSize="11sp" />
 
         </LinearLayout>
 
