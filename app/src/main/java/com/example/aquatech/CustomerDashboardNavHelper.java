@@ -23,7 +23,7 @@ public class CustomerDashboardNavHelper {
 
         View navRequest = activity.findViewById(R.id.navCustRequest);
         if (navRequest != null) {
-            navRequest.setOnClickListener(v -> activity.startActivity(new Intent(activity, ServiceRequestActivity.class)));
+            navRequest.setOnClickListener(v -> activity.startActivity(new Intent(activity, ServiceLogActivity.class)));
         }
 
         View navMessages = activity.findViewById(R.id.navCustMessages);

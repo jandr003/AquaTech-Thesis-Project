@@ -525,14 +525,14 @@
                 <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/ic_step_request"
+                    android:src="@drawable/maps_and_flags__2__1"
                     app:tint="#64748B" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Book Service"
+                    android:text="Track Req"
                     android:textColor="#64748B"
                     android:textSize="10.5sp"
                     android:textStyle="bold" />
