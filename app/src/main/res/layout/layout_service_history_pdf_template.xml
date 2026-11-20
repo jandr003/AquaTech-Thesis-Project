@@ -215,57 +215,72 @@
         android:background="#1E3A8A"
         android:orientation="horizontal"
         android:paddingHorizontal="8dp"
-        android:paddingVertical="10dp">
+        android:paddingVertical="9dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.0"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins"
-            android:text="SRO / TICKET"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="TICKET ID"
             android:textColor="#FFFFFF"
-            android:textSize="10.5sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.2"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins"
-            android:text="CUSTOMER NAME"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="CUSTOMER"
             android:textColor="#FFFFFF"
-            android:textSize="10.5sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.2"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins"
+            android:maxLines="1"
+            android:singleLine="true"
             android:text="TECHNICIAN"
             android:textColor="#FFFFFF"
-            android:textSize="10.5sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.8"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins"
-            android:text="SERVICE DATE"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="DATE"
             android:textColor="#FFFFFF"
-            android:textSize="10.5sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.8"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins"
             android:gravity="end"
+            android:maxLines="1"
+            android:singleLine="true"
             android:text="STATUS"
             android:textColor="#FFFFFF"
-            android:textSize="10.5sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -285,7 +300,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="30dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -294,7 +309,7 @@
             android:fontFamily="@font/poppins"
             android:text="AquaTech Smartguard Corp. · Confidential Internal Report"
             android:textColor="#94A3B8"
-            android:textSize="10sp" />
+            android:textSize="10.5sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -303,7 +318,7 @@
             android:fontFamily="@font/poppins"
             android:text="Page 1 of 1"
             android:textColor="#94A3B8"
-            android:textSize="10sp" />
+            android:textSize="10.5sp" />
 
     </RelativeLayout>
 
