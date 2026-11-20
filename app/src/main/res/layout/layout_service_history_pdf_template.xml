@@ -225,7 +225,7 @@
             android:fontFamily="@font/poppins"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="TICKET ID"
+            android:text="SRO / REF NO."
             android:textColor="#FFFFFF"
             android:textSize="10sp"
             android:textStyle="bold" />
