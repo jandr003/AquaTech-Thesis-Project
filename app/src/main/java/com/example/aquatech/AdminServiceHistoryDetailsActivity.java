@@ -211,21 +211,40 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
 
                     RatingBar rbRating = findViewById(R.id.rbCustomerRatingInline2);
                     TextView tvScore = findViewById(R.id.tvRatingScoreTextInline2);
+                    TextView tvFeedback = findViewById(R.id.tvCustomerFeedbackInline2);
+
                     Float rating = snapshot.child("rating").getValue(Float.class);
+                    String feedback = snapshot.child("ratingFeedback").getValue(String.class);
+
                     if (rating != null && rating > 0) {
                         if (rbRating != null) {
                             rbRating.setVisibility(View.VISIBLE);
                             rbRating.setRating(rating);
                         }
+
                         if (tvScore != null) {
                             tvScore.setText(String.format(Locale.US, "%.1f Stars", rating));
+                        }
+
+                        if (tvFeedback != null) {
+                            if (feedback != null && !feedback.trim().isEmpty()) {
+                                tvFeedback.setVisibility(View.VISIBLE);
+                                tvFeedback.setText("\"" + feedback.trim() + "\"");
+                            } else {
+                                tvFeedback.setVisibility(View.GONE);
+                            }
                         }
                     } else {
                         if (rbRating != null) {
                             rbRating.setVisibility(View.GONE);
                         }
+
                         if (tvScore != null) {
                             tvScore.setText("Not Rated Yet");
+                        }
+
+                        if (tvFeedback != null) {
+                            tvFeedback.setVisibility(View.GONE);
                         }
                     }
                 }
