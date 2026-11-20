@@ -152,7 +152,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
                     String itemUnit = snapshot.child("unitName").getValue(String.class);
                     if (tvUnitItemName != null) {
-                        tvUnitItemName.setText(itemUnit != null && !itemUnit.isEmpty() ? itemUnit : "Registered Water Purifier");
+                        tvUnitItemName.setText(itemUnit != null && !itemUnit.isEmpty() ? itemUnit : "Water Purifier");
                     }
 
                     String itemCode = snapshot.child("unitCode").getValue(String.class);
@@ -160,12 +160,12 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                         itemCode = snapshot.child("unitModelCode").getValue(String.class);
                     }
                     if (tvCustomerItemCode != null) {
-                        tvCustomerItemCode.setText(itemCode != null && !itemCode.isEmpty() ? itemCode : "F-FXCU1-M-HCA-TT-XX-XXX");
+                        tvCustomerItemCode.setText(itemCode != null && !itemCode.isEmpty() ? itemCode : "N/A");
                     }
 
                     String category = snapshot.child("concernCategory").getValue(String.class);
                     if (tvConcernCategory != null) {
-                        tvConcernCategory.setText(category != null && !category.isEmpty() ? category : "Equipment Issue");
+                        tvConcernCategory.setText(category != null && !category.isEmpty() ? category : "General Service");
                     }
 
                     String concern = snapshot.child("customerConcern").getValue(String.class);
@@ -173,7 +173,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                         concern = snapshot.child("remarks").getValue(String.class);
                     }
                     if (tvCustomerConcernText != null) {
-                        tvCustomerConcernText.setText(concern != null && !concern.isEmpty() ? concern : "Water purifier is not dispensing cold water.");
+                        tvCustomerConcernText.setText(concern != null && !concern.isEmpty() ? concern : "No details logged.");
                     }
 
                     String custName = snapshot.child("customerName").getValue(String.class);
@@ -212,18 +212,18 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                         String origDate = snapshot.child("originalDate").getValue(String.class);
                         String origTime = snapshot.child("originalTimeRange").getValue(String.class);
                         if (tvOriginalReschedText != null) {
-                            tvOriginalReschedText.setText("Original: " + (origDate != null ? origDate : "October 2, 2025") + " · " + (origTime != null ? origTime : "9:00–11:00 AM"));
+                            tvOriginalReschedText.setText("Original: " + (origDate != null ? origDate : "—") + " · " + (origTime != null ? origTime : "—"));
                         }
 
                         String newDate = snapshot.child("date").getValue(String.class);
                         String newTime = snapshot.child("timeRange").getValue(String.class);
                         if (tvNewReschedText != null) {
-                            tvNewReschedText.setText("New Schedule: " + (newDate != null ? newDate : "October 3, 2025") + " · " + (newTime != null ? newTime : "1:00–3:00 PM"));
+                            tvNewReschedText.setText("New Schedule: " + (newDate != null ? newDate : "—") + " · " + (newTime != null ? newTime : "—"));
                         }
 
                         String reason = snapshot.child("rescheduleReason").getValue(String.class);
                         if (tvReschedReasonText != null) {
-                            tvReschedReasonText.setText("Reason: " + (reason != null && !reason.isEmpty() ? reason : "Previous schedule was not fulfilled."));
+                            tvReschedReasonText.setText("Reason: " + (reason != null && !reason.isEmpty() ? reason : "Schedule updated by dispatch."));
                         }
                     } else {
                         if (layoutRequestedTime != null) {
