@@ -38,7 +38,7 @@ public class CustomerDashboardNavHelper {
 
         View navProfile = activity.findViewById(R.id.navCustProfile);
         if (navProfile != null) {
-            navProfile.setOnClickListener(v -> activity.startActivity(new Intent(activity, CustomerSetupActivity.class)));
+            navProfile.setOnClickListener(v -> activity.startActivity(new Intent(activity, EditProfileActivity.class)));
         }
     }
 }
