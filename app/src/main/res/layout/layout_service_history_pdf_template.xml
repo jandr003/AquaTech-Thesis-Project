@@ -72,10 +72,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/poppins"
-            android:text="Generated: October 26, 2024"
             android:textColor="#64748B"
             android:textSize="10.5sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Generated: Current Date &amp; Time" />
 
         <TextView
             android:id="@+id/pdfReportTotalRecords"
