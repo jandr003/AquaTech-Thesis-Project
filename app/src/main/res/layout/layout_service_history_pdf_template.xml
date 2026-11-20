@@ -37,7 +37,7 @@
                 android:fontFamily="@font/poppins_black_ttf"
                 android:includeFontPadding="false"
                 android:letterSpacing="0.04"
-                android:text="AQUATECH SMARTGUARD CORP."
+                android:text="AQUA SMARTGUARD CORP."
                 android:textColor="#1E3A8A"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -302,7 +302,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:fontFamily="@font/poppins"
-            android:text="AquaTech Smartguard Corp. · Confidential Internal Report"
+            android:text="Aqua Smartguard Corp. · AquaTech Official Service History Report"
             android:textColor="#94A3B8"
             android:textSize="10sp" />
 
