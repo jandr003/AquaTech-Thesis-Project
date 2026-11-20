@@ -154,7 +154,7 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
 
                     String unitName = snapshot.child("unitName").getValue(String.class);
                     if (tvItemName != null) {
-                        tvItemName.setText(unitName != null && !unitName.isEmpty() ? unitName : "Water Dispenser Service");
+                        tvItemName.setText(unitName != null && !unitName.isEmpty() ? unitName : "Water Purifier Service");
                     }
 
                     String unitCode = snapshot.child("unitCode").getValue(String.class);

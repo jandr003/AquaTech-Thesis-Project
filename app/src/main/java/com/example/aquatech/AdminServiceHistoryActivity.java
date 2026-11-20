@@ -299,7 +299,7 @@ public class AdminServiceHistoryActivity extends AppCompatActivity {
 
             String serviceType = item.getUnitName();
             if (serviceType == null || serviceType.isEmpty()) {
-                serviceType = "Water dispenser service";
+                serviceType = "Water purifier service";
             }
 
             if (holder.tvServiceType != null) {

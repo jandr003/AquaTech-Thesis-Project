@@ -152,7 +152,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
 
                     String itemUnit = snapshot.child("unitName").getValue(String.class);
                     if (tvUnitItemName != null) {
-                        tvUnitItemName.setText(itemUnit != null && !itemUnit.isEmpty() ? itemUnit : "Registered Water Dispenser");
+                        tvUnitItemName.setText(itemUnit != null && !itemUnit.isEmpty() ? itemUnit : "Registered Water Purifier");
                     }
 
                     String itemCode = snapshot.child("unitCode").getValue(String.class);
@@ -173,7 +173,7 @@ public class CustomerConcernDetailsActivity extends AppCompatActivity {
                         concern = snapshot.child("remarks").getValue(String.class);
                     }
                     if (tvCustomerConcernText != null) {
-                        tvCustomerConcernText.setText(concern != null && !concern.isEmpty() ? concern : "Water dispenser is not dispensing cold water.");
+                        tvCustomerConcernText.setText(concern != null && !concern.isEmpty() ? concern : "Water purifier is not dispensing cold water.");
                     }
 
                     String custName = snapshot.child("customerName").getValue(String.class);
