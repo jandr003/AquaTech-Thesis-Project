@@ -97,7 +97,6 @@ public class AdminServiceHistoryExporter {
                         TextView tvTicket = rowView.findViewById(R.id.pdfRowTicket);
                         TextView tvCustomer = rowView.findViewById(R.id.pdfRowCustomer);
                         TextView tvTech = rowView.findViewById(R.id.pdfRowTech);
-                        TextView tvUnit = rowView.findViewById(R.id.pdfRowUnit);
                         TextView tvRowDate = rowView.findViewById(R.id.pdfRowDate);
                         TextView tvStatus = rowView.findViewById(R.id.pdfRowStatus);
 
@@ -116,10 +115,6 @@ public class AdminServiceHistoryExporter {
 
                         if (tvTech != null) {
                             tvTech.setText(item.getTechName() != null ? item.getTechName() : "Unassigned");
-                        }
-
-                        if (tvUnit != null) {
-                            tvUnit.setText(item.getUnitName() != null ? item.getUnitName() : "---");
                         }
 
                         if (tvRowDate != null) {
