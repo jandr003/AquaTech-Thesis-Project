@@ -50,17 +50,15 @@ import java.util.Map;
 
 public class CustomerDashboardActivity extends AppCompatActivity {
 
-    private TextView customerUserName, refValue, unitValue, unitName, messageSubtitle;
+    private TextView customerUserName, refValue, unitValue, unitName;
     private ImageView imgDispenser;
     private ImageView editPen, settingIcon, notificationIcon, customerIcon;
-    private ImageView iconMessage;
-    private View msgNotificationDot;
     private FrameLayout notificationContainer;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference userRef, requestsRef, notifRef, chatsRef;
+    private DatabaseReference userRef, requestsRef, notifRef;
     private Query monitorQuery;
-    private ValueEventListener monitorListener, messageDotListener, userListener;
+    private ValueEventListener monitorListener, userListener;
     private ChildEventListener notifListener;
 
     private String assignedTechName = "Technician";
@@ -102,7 +100,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         requestsRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests");
-        chatsRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats");
 
         setupStatusBar();
         initializeViews();
@@ -112,18 +109,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         setupClickListeners();
         setupServiceRequestMonitor();
         setupNotificationMonitor();
-        setupMessageNotificationListener();
-        setupCustomerChatThreadsListener();
-        setupMessageClickListener();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         isActivityInForeground = true;
-        if (messageDotListener != null && chatsRef != null) {
-            chatsRef.addListenerForSingleValueEvent(messageDotListener);
-        }
         reloadUserProfile();
     }
 
@@ -190,131 +181,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         settingIcon = findViewById(R.id.SettingIcon);
         notificationIcon = findViewById(R.id.notificationIcon);
         customerIcon = findViewById(R.id.CustomerIcon);
-        msgNotificationDot = findViewById(R.id.msgNotificationDot);
-        messageSubtitle = findViewById(R.id.messageSubtitle);
         notificationContainer = findViewById(R.id.notificationContainer);
-        iconMessage = findViewById(R.id.iconMessage);
-
-        CardView messageCard = findViewById(R.id.messageRequestButton);
-        if (messageCard != null) {
-            messageCard.setCardBackgroundColor(Color.parseColor("#3EB5E8"));
-        }
 
         CustomerDashboardNavHelper.setupBottomNavigation(this);
-    }
-
-    private void setupMessageNotificationListener() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) {
-            return;
-        }
-
-        String myUid = user.getUid();
-        messageDotListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean hasUnread = false;
-                if (currentRequestStatus != null && currentRequestStatus.equalsIgnoreCase("In Progress")) {
-                    for (DataSnapshot chat : snapshot.getChildren()) {
-                        String chatId = chat.getKey();
-                        if (chatId != null && chatId.contains(myUid)) {
-                            String lastSenderId = chat.child("lastSenderId").getValue(String.class);
-                            if (lastSenderId != null && !lastSenderId.equals(myUid)) {
-                                hasUnread = true;
-                                String lastMsg = chat.child("lastMessage").getValue(String.class);
-                                String tName = chat.child("techName").getValue(String.class);
-                                if (lastMsg != null && messageSubtitle != null) {
-                                    messageSubtitle.setText(Html.fromHtml("<b>" + (tName != null ? tName : "Tech") + "</b>: " + lastMsg, Html.FROM_HTML_MODE_LEGACY));
-                                    messageSubtitle.setTextColor(Color.WHITE);
-                                }
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    if (messageSubtitle != null) {
-                        messageSubtitle.setText("Waiting for technician to accept...");
-                        messageSubtitle.setTextColor(Color.parseColor("#B0BEC5"));
-                    }
-                }
-
-                if (msgNotificationDot != null) {
-                    msgNotificationDot.setVisibility(hasUnread ? View.VISIBLE : View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        };
-        chatsRef.addValueEventListener(messageDotListener);
-    }
-
-    private void setupCustomerChatThreadsListener() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) {
-            return;
-        }
-
-        String myUid = user.getUid();
-        DatabaseReference userChatsRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats");
-
-        userChatsRef.orderByChild("customerId").equalTo(myUid)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        boolean hasUnread = false;
-                        String latestMessage = "";
-                        String latestSender = "";
-
-                        if (snapshot.getChildrenCount() > 0) {
-                            hasUnread = true;
-                            for (DataSnapshot chatSnapshot : snapshot.getChildren()) {
-                                String lastMessage = chatSnapshot.child("lastMessage").getValue(String.class);
-                                String techName = chatSnapshot.child("techName").getValue(String.class);
-                                if (lastMessage != null) {
-                                    latestMessage = lastMessage;
-                                    latestSender = techName != null ? techName : "Technician";
-                                }
-                                break;
-                            }
-                        }
-
-                        if (msgNotificationDot != null) {
-                            msgNotificationDot.setVisibility(hasUnread ? View.VISIBLE : View.GONE);
-                        }
-
-                        if (messageSubtitle != null) {
-                            if (hasUnread && !latestMessage.isEmpty()) {
-                                messageSubtitle.setText(Html.fromHtml("<b>" + latestSender + "</b>: " + latestMessage, Html.FROM_HTML_MODE_LEGACY));
-                                messageSubtitle.setTextColor(Color.WHITE);
-                            } else if (currentRequestStatus != null && currentRequestStatus.equalsIgnoreCase("In Progress")) {
-                                messageSubtitle.setText("Chat with your technician");
-                                messageSubtitle.setTextColor(Color.parseColor("#B0BEC5"));
-                            } else {
-                                messageSubtitle.setText("Waiting for technician to accept...");
-                                messageSubtitle.setTextColor(Color.parseColor("#B0BEC5"));
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
-                });
-    }
-
-    private void setupMessageClickListener() {
-        View messageCard = findViewById(R.id.messageRequestButton);
-        if (messageCard != null) {
-            messageCard.setOnClickListener(v -> {
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerChatListActivity.class);
-                startActivity(intent);
-            });
-        } else if (iconMessage != null) {
-            iconMessage.setOnClickListener(v -> {
-                Intent intent = new Intent(CustomerDashboardActivity.this, CustomerChatListActivity.class);
-                startActivity(intent);
-            });
-        }
     }
 
     private void setupFirebaseListener() {
@@ -490,16 +359,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                     }
                 }
 
-                View msgBtn = findViewById(R.id.messageRequestButton);
-                boolean isAccepted = "In Progress".equalsIgnoreCase(currentRequestStatus);
-                if (msgBtn != null) {
-                    msgBtn.setAlpha((isAccepted) ? 1.0f : 0.6f);
-                }
-
-                if (!isAccepted && messageSubtitle != null) {
-                    messageSubtitle.setText("Waiting for technician to accept...");
-                }
-
                 isInitialRequestLoad = false;
             }
 
@@ -557,12 +416,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             }
                             snapshot.getRef().removeValue();
                         } else if ("CHAT".equalsIgnoreCase(type) || "ACCEPTED".equalsIgnoreCase(type)) {
-                            if ("In Progress".equalsIgnoreCase(currentRequestStatus)) {
-                                if (messageSubtitle != null) {
-                                    messageSubtitle.setText(Html.fromHtml(n.getMessage(), Html.FROM_HTML_MODE_LEGACY));
-                                    messageSubtitle.setTextColor(Color.parseColor("#FFD700"));
-                                }
-                            }
+                            // Handled by push notifications & message chat thread
                         }
                     }
                 }
@@ -649,37 +503,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             });
         }
 
-        View btnTrack = findViewById(R.id.trackRequestButton);
-        if (btnTrack != null) {
-            btnTrack.setOnClickListener(v -> {
-                if (hasActiveRequest) {
-                    startActivity(new Intent(this, ServiceLogActivity.class));
-                } else {
-                    CustomerDashboardAlertHelper.showNoActiveRequestAlert(this);
-                }
-            });
-        }
-
-        View btnMessage = findViewById(R.id.messageRequestButton);
-        if (btnMessage != null) {
-            btnMessage.setOnClickListener(v -> {
-                if (assignedTechId == null || assignedTechId.isEmpty()) {
-                    CustomerDashboardAlertHelper.showNoTechAssignedAlert(this);
-                } else if (!"In Progress".equalsIgnoreCase(currentRequestStatus)) {
-                    CustomerDashboardAlertHelper.showTechNotAcceptedAlert(this);
-                } else {
-                    if (msgNotificationDot != null) {
-                        msgNotificationDot.setVisibility(View.GONE);
-                    }
-                    Intent intent = new Intent(this, CustomerChatActivity.class);
-                    intent.putExtra("TECH_ID", assignedTechId);
-                    intent.putExtra("TECH_NAME", assignedTechName);
-                    intent.putExtra("CUSTOMER_ID", mAuth.getUid());
-                    startActivity(intent);
-                }
-            });
-        }
-
         View btnAssistance = findViewById(R.id.requestAssistanceButton);
         if (btnAssistance != null) {
             btnAssistance.setOnClickListener(v -> startActivity(new Intent(this, AquaBuddyActivity.class)));
@@ -718,9 +541,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         }
         if (notifRef != null && notifListener != null) {
             notifRef.removeEventListener(notifListener);
-        }
-        if (chatsRef != null && messageDotListener != null) {
-            chatsRef.removeEventListener(messageDotListener);
         }
         if (userRef != null && userListener != null) {
             userRef.removeEventListener(userListener);
