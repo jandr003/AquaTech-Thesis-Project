@@ -227,11 +227,13 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                         }
 
                         if (tvFeedback != null) {
+                            tvFeedback.setVisibility(View.VISIBLE);
                             if (feedback != null && !feedback.trim().isEmpty()) {
-                                tvFeedback.setVisibility(View.VISIBLE);
-                                tvFeedback.setText("\"" + feedback.trim() + "\"");
+                                tvFeedback.setText("Feedback: \"" + feedback.trim() + "\"");
+                                tvFeedback.setTextColor(Color.parseColor("#475569"));
                             } else {
-                                tvFeedback.setVisibility(View.GONE);
+                                tvFeedback.setText("Feedback: None");
+                                tvFeedback.setTextColor(Color.parseColor("#94A3B8"));
                             }
                         }
                     } else {
@@ -244,7 +246,9 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                         }
 
                         if (tvFeedback != null) {
-                            tvFeedback.setVisibility(View.GONE);
+                            tvFeedback.setVisibility(View.VISIBLE);
+                            tvFeedback.setText("Feedback: None");
+                            tvFeedback.setTextColor(Color.parseColor("#94A3B8"));
                         }
                     }
                 }

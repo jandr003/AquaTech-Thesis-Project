@@ -673,8 +673,8 @@
                         android:fontFamily="@font/poppins"
                         android:textColor="#475569"
                         android:textSize="12.5sp"
-                        android:visibility="gone"
-                        tools:text="&quot;Napakabilis at napakalinis gumawa ng technician!&quot;" />
+                        android:visibility="visible"
+                        tools:text="Feedback: None" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
