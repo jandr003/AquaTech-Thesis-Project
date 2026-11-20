@@ -17,6 +17,20 @@
         android:layout_height="wrap_content"
         android:padding="24dp">
 
+        <ImageView
+            android:id="@+id/btnCloseRating"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="Close Rating Dialog"
+            android:focusable="true"
+            android:padding="6dp"
+            android:src="@drawable/ic_rejected_x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#94A3B8" />
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivTechProfile"
             android:layout_width="72dp"
@@ -36,13 +50,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/poppins"
-            android:text="Technician Name"
             android:textColor="#1E293B"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivTechProfile" />
+            app:layout_constraintTop_toBottomOf="@id/ivTechProfile"
+            tools:text="Technician Name" />
 
         <TextView
             android:id="@+id/tvRatingDesc"

@@ -61,6 +61,11 @@ public class CustomerRatingDialogHelper {
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
         EditText etFeedback = dialog.findViewById(R.id.etRatingFeedback);
         Button btnSubmit = dialog.findViewById(R.id.btnSubmitRating);
+        ImageView btnClose = dialog.findViewById(R.id.btnCloseRating);
+
+        if (btnClose != null) {
+            btnClose.setOnClickListener(v -> dialog.dismiss());
+        }
 
         if (tvTechName != null) {
             tvTechName.setText(techName != null ? techName : "Technician");
