@@ -86,6 +86,10 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
     }
 
     private void setupFirebase() {
+        if (ticketId == null || ticketId.isEmpty()) {
+            return;
+        }
+
         DatabaseReference dbRef = FirebaseDatabase.getInstance(DB_URL).getReference("ServiceRequests").child(ticketId);
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,46 +106,56 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                     if (sroNumber != null && !sroNumber.isEmpty()) {
                         String upper = sroNumber.toUpperCase().trim();
                         if (upper.startsWith("SRO-")) {
-                            tvTicketID.setText(upper);
+                            if (tvTicketID != null) {
+                                tvTicketID.setText(upper);
+                            }
                         } else if (upper.startsWith("SRO")) {
-                            tvTicketID.setText("SRO-" + upper.substring(3));
+                            if (tvTicketID != null) {
+                                tvTicketID.setText("SRO-" + upper.substring(3));
+                            }
                         } else {
                             try {
                                 long num = Long.parseLong(upper.replaceAll("[^0-9]", ""));
-                                tvTicketID.setText(String.format(Locale.US, "SRO-%08d", num));
+                                if (tvTicketID != null) {
+                                    tvTicketID.setText(String.format(Locale.US, "SRO-%08d", num));
+                                }
                             } catch (Exception e) {
-                                tvTicketID.setText("SRO-" + upper);
+                                if (tvTicketID != null) {
+                                    tvTicketID.setText("SRO-" + upper);
+                                }
                             }
                         }
-                    } else {
-                        tvTicketID.setText("SRO-00000001");
+                    } else if (tvTicketID != null) {
+                        tvTicketID.setText(ticketId);
                     }
 
                     String status = snapshot.child("status").getValue(String.class);
                     if (status == null || status.isEmpty()) {
                         status = "Completed";
                     }
-                    tvStatusPill.setText(status);
 
-                    if ("Completed".equalsIgnoreCase(status)) {
-                        tvStatusPill.setBackgroundResource(R.drawable.bg_solid_green_pill);
-                        tvStatusPill.setTextColor(Color.WHITE);
-                    } else if ("Cancelled".equalsIgnoreCase(status)) {
-                        tvStatusPill.setBackgroundResource(R.drawable.bg_solid_red_pill);
-                        tvStatusPill.setTextColor(Color.WHITE);
-                    } else if ("In Progress".equalsIgnoreCase(status) || "Assigned".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
-                        tvStatusPill.setBackgroundResource(R.drawable.bg_solid_blue_pill);
-                        tvStatusPill.setTextColor(Color.WHITE);
-                    } else {
-                        tvStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
-                        tvStatusPill.setTextColor(Color.WHITE);
+                    if (tvStatusPill != null) {
+                        tvStatusPill.setText(status);
+
+                        if ("Completed".equalsIgnoreCase(status)) {
+                            tvStatusPill.setBackgroundResource(R.drawable.bg_solid_green_pill);
+                            tvStatusPill.setTextColor(Color.WHITE);
+                        } else if ("Cancelled".equalsIgnoreCase(status)) {
+                            tvStatusPill.setBackgroundResource(R.drawable.bg_solid_red_pill);
+                            tvStatusPill.setTextColor(Color.WHITE);
+                        } else if ("In Progress".equalsIgnoreCase(status) || "Assigned".equalsIgnoreCase(status) || "Ongoing".equalsIgnoreCase(status)) {
+                            tvStatusPill.setBackgroundResource(R.drawable.bg_solid_blue_pill);
+                            tvStatusPill.setTextColor(Color.WHITE);
+                        } else {
+                            tvStatusPill.setBackgroundResource(R.drawable.bg_solid_amber_pill);
+                            tvStatusPill.setTextColor(Color.WHITE);
+                        }
                     }
 
                     String unitName = snapshot.child("unitName").getValue(String.class);
-                    if (unitName == null || unitName.isEmpty()) {
-                        unitName = "WL CUBE FIREWALL";
+                    if (tvItemName != null) {
+                        tvItemName.setText(unitName != null && !unitName.isEmpty() ? unitName : "Water Dispenser Service");
                     }
-                    tvItemName.setText(unitName);
 
                     String unitCode = snapshot.child("unitCode").getValue(String.class);
                     if (unitCode == null) {
@@ -157,49 +171,75 @@ public class AdminServiceHistoryDetailsActivity extends AppCompatActivity {
                         unitCode = snapshot.child("skuCode").getValue(String.class);
                     }
 
-                    tvItemCode.setText((unitCode != null && !unitCode.isEmpty()) ? unitCode : "F-FXCU1-M-HCA-TT-XX-XXX");
+                    if (tvItemCode != null) {
+                        tvItemCode.setText(unitCode != null && !unitCode.isEmpty() ? unitCode : "N/A");
+                    }
 
                     String customer = snapshot.child("customerName").getValue(String.class);
-                    tvCustomerName.setText(customer != null && !customer.isEmpty() ? customer : "Registered Customer Name");
+                    if (tvCustomerName != null) {
+                        tvCustomerName.setText(customer != null && !customer.isEmpty() ? customer : "Customer");
+                    }
 
                     String address = snapshot.child("address").getValue(String.class);
-                    tvServiceAddress.setText(address != null && !address.isEmpty() ? address : "Complete saved service address");
+                    if (tvServiceAddress != null) {
+                        tvServiceAddress.setText(address != null && !address.isEmpty() ? address : "Address not specified");
+                    }
 
                     String phone = snapshot.child("customerPhone").getValue(String.class);
                     if (phone == null) {
                         phone = snapshot.child("userPhone").getValue(String.class);
                     }
-                    tvCustomerPhone.setText(phone != null && !phone.isEmpty() ? phone : "Registered contact number");
+
+                    if (tvCustomerPhone != null) {
+                        tvCustomerPhone.setText(phone != null && !phone.isEmpty() ? phone : "N/A");
+                    }
 
                     String techName = snapshot.child("assignedTechName").getValue(String.class);
-                    tvTechName.setText(techName != null && !techName.isEmpty() ? techName : "Assigned technician");
+                    if (tvTechName != null) {
+                        tvTechName.setText(techName != null && !techName.isEmpty() ? techName : "Unassigned");
+                    }
 
                     String techId = snapshot.child("assignedTechId").getValue(String.class);
-                    tvTechId.setText("Technician ID: " + (techId != null && !techId.isEmpty() ? techId : "TECH-001"));
+                    if (tvTechId != null) {
+                        tvTechId.setText("Technician ID: " + (techId != null && !techId.isEmpty() ? techId : "Unassigned"));
+                    }
 
                     String dateStr = snapshot.child("date").getValue(String.class);
-                    tvRequestDate.setText(dateStr != null && !dateStr.isEmpty() ? dateStr : "Recorded date");
+                    if (tvRequestDate != null) {
+                        tvRequestDate.setText(dateStr != null && !dateStr.isEmpty() ? dateStr : "—");
+                    }
 
                     String compDate = snapshot.child("completionTime").getValue(String.class);
-                    tvCompletionDate.setText(compDate != null && !compDate.isEmpty() ? compDate : (dateStr != null ? dateStr : "Recorded date"));
+                    if (tvCompletionDate != null) {
+                        tvCompletionDate.setText(compDate != null && !compDate.isEmpty() ? compDate : (dateStr != null ? dateStr : "—"));
+                    }
 
                     String serviceType = snapshot.child("serviceTypeLabel").getValue(String.class);
-                    tvServiceType.setText(serviceType != null && !serviceType.isEmpty() ? serviceType : "Water System Service");
+                    if (tvServiceType != null) {
+                        tvServiceType.setText(serviceType != null && !serviceType.isEmpty() ? serviceType : "Water System Service");
+                    }
 
                     String work = snapshot.child("workPerformed").getValue(String.class);
-                    tvWorkPerformed.setText(work != null && !work.isEmpty() ? work : "Recorded maintenance or repair activities");
+                    if (tvWorkPerformed != null) {
+                        tvWorkPerformed.setText(work != null && !work.isEmpty() ? work : "No specific details logged.");
+                    }
 
                     String findings = snapshot.child("inspectionFindings").getValue(String.class);
-                    tvInspectionFindings.setText(findings != null && !findings.isEmpty() ? findings : "Recorded inspection results");
+                    if (tvInspectionFindings != null) {
+                        tvInspectionFindings.setText(findings != null && !findings.isEmpty() ? findings : "No findings recorded.");
+                    }
 
                     String remarks = snapshot.child("technicianRemarks").getValue(String.class);
-                    tvTechRemarks.setText(remarks != null && !remarks.isEmpty() ? remarks : "Recorded service remarks and outcome");
+                    if (tvTechRemarks != null) {
+                        tvTechRemarks.setText(remarks != null && !remarks.isEmpty() ? remarks : "No remarks entered.");
+                    }
 
                     ImageView ivProofInline = findViewById(R.id.ivProofOfServiceInline2);
                     String proofUrl = snapshot.child("proofImageUrl").getValue(String.class);
                     if (proofUrl == null) {
                         proofUrl = snapshot.child("proofUrl").getValue(String.class);
                     }
+
                     if (ivProofInline != null && proofUrl != null && !proofUrl.isEmpty()) {
                         ivProofInline.setPadding(0, 0, 0, 0);
                         ivProofInline.setScaleType(ImageView.ScaleType.CENTER_CROP);
