@@ -416,7 +416,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
                             }
                             snapshot.getRef().removeValue();
                         } else if ("CHAT".equalsIgnoreCase(type) || "ACCEPTED".equalsIgnoreCase(type)) {
-                            // Handled by push notifications & message chat thread
+                            snapshot.getRef().removeValue();
                         }
                     }
                 }
