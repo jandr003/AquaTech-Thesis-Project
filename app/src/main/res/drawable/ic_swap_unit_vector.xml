@@ -6,17 +6,17 @@
     <!-- Top-Right Rounded Unit Box -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M16,2 h5 C22.1,2 23,2.9 23,4 v5 C23,10.1 22.1,11 21,11 h-5 C14.9,11 14,10.1 14,9 V4 C14,2.9 14.9,2 16,2 Z"/>
+        android:pathData="M15,2 h5 C21.1,2 22,2.9 22,4 v5 C22,10.1 21.1,11 20,11 h-5 C13.9,11 13,10.1 13,9 V4 C13,2.9 13.9,2 15,2 Z"/>
     <!-- Bottom-Left Rounded Unit Box -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M3,13 h5 C9.1,13 10,13.9 10,15 v5 C10,21.1 9.1,22 8,22 H3 C1.9,22 1,21.1 1,20 v-5 C1,13.9 1.9,13 3,13 Z"/>
-    <!-- Top Curved Swap Arrow (With Wide Clear Gap) -->
+        android:pathData="M2,13 h5 C8.1,13 9,13.9 9,15 v5 C9,21.1 8.1,22 7,22 H2 C0.9,22 0,21.1 0,20 v-5 C0,13.9 0.9,13 2,13 Z"/>
+    <!-- Top Bold Curved Swap Arrow -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M2,11 V10 C2,7.2 4.2,5 7,5 H8.5 V2.5 L11.5,5.5 L8.5,8.5 V6 H7 C4.8,6 3.5,7.3 3.5,9.5 V11 H2 Z"/>
-    <!-- Bottom Curved Swap Arrow (With Wide Clear Gap) -->
+        android:pathData="M1.5,11 V9 C1.5,6.0 3.8,3.5 6.8,3.5 H8.5 V1 L12,5.5 L8.5,10 V7.5 H6.8 C5.3,7.5 4.2,8.6 4.2,10 V11 H1.5 Z"/>
+    <!-- Bottom Bold Curved Swap Arrow -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M22,13 v1.5 C22,16.7 20.7,18 18.5,18 H17 v2.5 L14,17.5 L17,14.5 V17 h1.5 C20.3,17 20.5,15.3 20.5,13 H22 Z"/>
+        android:pathData="M22.5,13 v2 C22.5,18.0 20.2,20.5 17.2,20.5 H15.5 V23 L12,18.5 L15.5,14 V16.5 H17.2 C18.7,16.5 19.8,15.4 19.8,14 V13 H22.5 Z"/>
 </vector>
