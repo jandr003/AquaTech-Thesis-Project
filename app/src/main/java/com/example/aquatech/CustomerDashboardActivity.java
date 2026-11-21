@@ -488,9 +488,9 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             notificationIcon.setOnClickListener(v -> startActivity(new Intent(this, NotificationActivity.class)));
         }
 
-        CardView blueCard = findViewById(R.id.blueCard);
-        if (blueCard != null) {
-            blueCard.setOnClickListener(v -> unitSelectionLauncher.launch(new Intent(this, UnitSelectionActivity.class)));
+        View btnChangeUnit = findViewById(R.id.changeUnitButton);
+        if (btnChangeUnit != null) {
+            btnChangeUnit.setOnClickListener(v -> unitSelectionLauncher.launch(new Intent(this, UnitSelectionActivity.class)));
         }
 
         View btnReq = findViewById(R.id.requestButton);
