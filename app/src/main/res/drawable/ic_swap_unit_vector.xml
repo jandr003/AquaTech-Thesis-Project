@@ -3,20 +3,20 @@
     android:height="48dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
-    <!-- Top-Right Rounded Unit Box -->
+    <!-- Top-Right Rounded Box -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M15,2 h5 C21.1,2 22,2.9 22,4 v5 C22,10.1 21.1,11 20,11 h-5 C13.9,11 13,10.1 13,9 V4 C13,2.9 13.9,2 15,2 Z"/>
-    <!-- Bottom-Left Rounded Unit Box -->
+        android:pathData="M14,1.5 h6.5 C21.9,1.5 22.5,2.1 22.5,3.5 v6.5 C22.5,11.4 21.9,12 20.5,12 h-6.5 C12.6,12 12,11.4 12,10 V3.5 C12,2.1 12.6,1.5 14,1.5 Z"/>
+    <!-- Bottom-Left Rounded Box -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M2,13 h5 C8.1,13 9,13.9 9,15 v5 C9,21.1 8.1,22 7,22 H2 C0.9,22 0,21.1 0,20 v-5 C0,13.9 0.9,13 2,13 Z"/>
-    <!-- Top Bold Curved Swap Arrow -->
+        android:pathData="M3.5,12 h6.5 C11.4,12 12,12.6 12,14 v6.5 C12,21.9 11.4,22.5 10,22.5 H3.5 C2.1,22.5 1.5,21.9 1.5,20.5 v-6.5 C1.5,12.6 2.1,12 3.5,12 Z"/>
+    <!-- Top Curved Arrow -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M1.5,11 V9 C1.5,6.0 3.8,3.5 6.8,3.5 H8.5 V1.2 L11.8,5.5 L8.5,9.8 V7.5 H6.8 C5.3,7.5 4.2,8.6 4.2,10 V11 H1.5 Z"/>
-    <!-- Bottom Bold Curved Swap Arrow (Moved Slightly Left) -->
+        android:pathData="M2.5,11.5 V9 C2.5,5.5 5,3 8.5,3 H10 V0.5 L14,4.5 L10,8.5 V6 H8.5 C6.8,6 5,7.8 5,9.5 V11.5 H2.5 Z"/>
+    <!-- Bottom Curved Arrow -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M22.5,13 v2 C22.5,18.0 20.2,20.5 17.2,20.5 H14.5 V22.8 L10.7,18.5 L14.5,14.2 V16.5 H17.2 C18.7,16.5 19.8,15.4 19.8,14 V13 H22.5 Z"/>
+        android:pathData="M21.5,12.5 v2.5 C21.5,18.5 19,21 15.5,21 H14 v2.5 L10,19.5 L14,15.5 V18 H15.5 C17.2,18 19,16.2 19,14.5 V12.5 H21.5 Z"/>
 </vector>
