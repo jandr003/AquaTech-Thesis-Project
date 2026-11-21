@@ -11,12 +11,12 @@
     <path
         android:fillColor="#FFFFFF"
         android:pathData="M4,12 h6 C11.1,12 12,12.9 12,14 v6 C12,21.1 11.1,22 10,22 H4 C2.9,22 2,21.1 2,20 v-6 C2,12.9 2.9,12 4,12 Z"/>
-    <!-- Top Curved Swap Arrow -->
+    <!-- Top Curved Swap Arrow (sleek compact arrow head) -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M3,9.5 C3,6.5 5.5,4 8.5,4 H10 V1.5 L14,5.5 L10,9.5 V7 H8.5 C7.1,7 6,8.1 6,9.5 V10 H3 Z"/>
-    <!-- Bottom Curved Swap Arrow -->
+        android:pathData="M3,9.5 C3,6.8 5.2,4.5 8,4.5 H10.5 V3 L13.5,5.5 L10.5,8 V6.5 H8 C6.9,6.5 6,7.4 6,8.5 V9.5 H3 Z"/>
+    <!-- Bottom Curved Swap Arrow (sleek compact arrow head) -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M21,14.5 C21,17.5 18.5,20 15.5,20 H14 v2.5 L10,18.5 L14,14.5 V17 h1.5 C16.9,17 18,15.9 18,14.5 V14 h3 Z"/>
+        android:pathData="M21,14.5 C21,17.2 18.8,19.5 16,19.5 H13.5 V21 L10.5,18.5 L13.5,16 V17.5 H16 C17.1,17.5 18,16.6 18,15.5 V14.5 H21 Z"/>
 </vector>
