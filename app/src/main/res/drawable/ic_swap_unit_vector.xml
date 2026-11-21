@@ -6,17 +6,17 @@
     <!-- Top-Right Rounded Box -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M14,1.5 h6.5 C21.9,1.5 22.5,2.1 22.5,3.5 v6.5 C22.5,11.4 21.9,12 20.5,12 h-6.5 C12.6,12 12,11.4 12,10 V3.5 C12,2.1 12.6,1.5 14,1.5 Z"/>
+        android:pathData="M15.5,1.5 h5.5 C22.1,1.5 22.5,1.9 22.5,3 v5.5 C22.5,9.6 22.1,10 21,10 h-5.5 C14.4,10 14,9.6 14,8.5 V3 C14,1.9 14.4,1.5 15.5,1.5 Z"/>
     <!-- Bottom-Left Rounded Box -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M3.5,12 h6.5 C11.4,12 12,12.6 12,14 v6.5 C12,21.9 11.4,22.5 10,22.5 H3.5 C2.1,22.5 1.5,21.9 1.5,20.5 v-6.5 C1.5,12.6 2.1,12 3.5,12 Z"/>
-    <!-- Top Curved Arrow -->
+        android:pathData="M3,14 h5.5 C9.6,14 10,14.4 10,15.5 v5.5 C10,22.1 9.6,22.5 8.5,22.5 H3 C1.9,22.5 1.5,22.1 1.5,21 v-5.5 C1.5,14.4 1.9,14 3,14 Z"/>
+    <!-- Top Curved Arrow (Compact Head + Guaranteed 3.5px Gap) -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M2.5,11.5 V9 C2.5,5.5 5,3 8.5,3 H10 V0.5 L14,4.5 L10,8.5 V6 H8.5 C6.8,6 5,7.8 5,9.5 V11.5 H2.5 Z"/>
-    <!-- Bottom Curved Arrow -->
+        android:pathData="M1.5,11 V8.5 C1.5,5.5 3.8,3.2 6.8,3.2 H8.5 V1.2 L12,4.2 L8.5,7.2 V5.2 H6.8 C5.0,5.2 3.5,6.7 3.5,8.5 V11 H1.5 Z"/>
+    <!-- Bottom Curved Arrow (Compact Head + Guaranteed 3.5px Gap) -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M21.5,12.5 v2.5 C21.5,18.5 19,21 15.5,21 H14 v2.5 L10,19.5 L14,15.5 V18 H15.5 C17.2,18 19,16.2 19,14.5 V12.5 H21.5 Z"/>
+        android:pathData="M22.5,13 v2.5 C22.5,18.5 20.2,20.8 17.2,20.8 H15.5 V22.8 L12,19.8 L15.5,16.8 V18.8 H17.2 C19.0,18.8 20.5,17.3 20.5,15.5 V13 H22.5 Z"/>
 </vector>
