@@ -357,34 +357,26 @@
                     android:layout_height="match_parent"
                     android:padding="12dp">
 
-                    <FrameLayout
-                        android:id="@+id/iconFrameChangeUnit"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/circle_white"
-                        android:padding="10dp"
+                    <ImageView
+                        android:id="@+id/iconChangeUnit"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="Water Purifier Product Photo"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/titled_design1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/iconChangeUnit"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="Change Unit Icon"
-                            android:src="@drawable/image_241"
-                            app:tint="#2196F3" />
-
-                    </FrameLayout>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="14dp"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iconFrameChangeUnit"
+                        app:layout_constraintStart_toEndOf="@id/iconChangeUnit"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
