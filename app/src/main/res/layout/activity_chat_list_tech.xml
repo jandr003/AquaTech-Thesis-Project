@@ -240,7 +240,7 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:contentDescription="Messages Nav"
-                    android:src="@drawable/chat_1"
+                    android:src="@drawable/ic_message"
                     app:tint="#2196F3" />
 
                 <TextView
