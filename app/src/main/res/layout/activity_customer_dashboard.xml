@@ -359,15 +359,14 @@
 
                     <ImageView
                         android:id="@+id/iconChangeUnit"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="Water Purifier Product Photo"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/titled_design1"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="Swap Registered Unit Icon"
+                        android:src="@drawable/ic_swap_unit_vector"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="#FFFFFF" />
 
                     <LinearLayout
                         android:layout_width="0dp"
