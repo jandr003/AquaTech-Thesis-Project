@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CustomerProfileActivity extends AppCompatActivity {
 
+    private ImageView ivAvatar;
     private TextView tvName, tvPhone;
     private FirebaseAuth mAuth;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -38,6 +39,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        ivAvatar = findViewById(R.id.ivCustProfileAvatar);
         tvName = findViewById(R.id.tvCustProfileName);
         tvPhone = findViewById(R.id.tvCustProfilePhone);
     }
@@ -66,11 +68,6 @@ public class CustomerProfileActivity extends AppCompatActivity {
         View menuSecurity = findViewById(R.id.menuAccountSecurityCust);
         if (menuSecurity != null) {
             menuSecurity.setOnClickListener(v -> startActivity(new Intent(this, ConfirmPasswordActivity.class)));
-        }
-
-        View menuHistory = findViewById(R.id.menuServiceHistoryCust);
-        if (menuHistory != null) {
-            menuHistory.setOnClickListener(v -> startActivity(new Intent(this, ServiceHistoryActivity.class)));
         }
 
         View menuSupport = findViewById(R.id.menuSupportHelp);
@@ -114,6 +111,19 @@ public class CustomerProfileActivity extends AppCompatActivity {
                     }
                     if (tvPhone != null) {
                         tvPhone.setText(phone != null && !phone.isEmpty() ? phone : "Registered Account");
+                    }
+
+                    String imgUrl = snapshot.child("profileImageUrl").getValue(String.class);
+                    if (ivAvatar != null) {
+                        if (imgUrl != null && !imgUrl.isEmpty()) {
+                            Glide.with(CustomerProfileActivity.this)
+                                    .load(imgUrl)
+                                    .placeholder(R.drawable.customer_avatar1)
+                                    .circleCrop()
+                                    .into(ivAvatar);
+                        } else {
+                            ivAvatar.setImageResource(R.drawable.customer_avatar1);
+                        }
                     }
                 }
             }
