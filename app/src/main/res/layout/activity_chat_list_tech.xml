@@ -270,7 +270,7 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:contentDescription="History Nav"
-                    android:src="@drawable/ic_clock"
+                    android:src="@drawable/ic_history_book_vector"
                     app:tint="#64748B" />
 
                 <TextView
