@@ -71,14 +71,7 @@
                     android:id="@+id/SettingIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
                     app:srcCompat="@drawable/settingicon" />
-
-                <ImageView
-                    android:id="@+id/CustomerIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/man_user_circle_icon" />
             </LinearLayout>
 
             <TextView

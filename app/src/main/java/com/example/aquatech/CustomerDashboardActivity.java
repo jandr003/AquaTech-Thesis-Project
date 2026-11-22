@@ -180,7 +180,6 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         editPen = findViewById(R.id.EditPen1);
         settingIcon = findViewById(R.id.SettingIcon);
         notificationIcon = findViewById(R.id.notificationIcon);
-        customerIcon = findViewById(R.id.CustomerIcon);
         notificationContainer = findViewById(R.id.notificationContainer);
 
         CustomerDashboardNavHelper.setupBottomNavigation(this);
