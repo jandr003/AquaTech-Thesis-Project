@@ -44,7 +44,7 @@
                 android:id="@+id/AquaLogo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="32dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/asc_logooo"
                 app:layout_constraintWidth_max="130dp"
