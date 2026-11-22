@@ -28,7 +28,7 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
-                android:paddingTop="32dp"
+                android:paddingTop="48dp"
                 android:paddingBottom="20dp">
 
                 <RelativeLayout
@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="14dp"
+                        android:layout_marginStart="20dp"
                         android:layout_toStartOf="@id/arrowProfileHeader"
                         android:layout_toEndOf="@id/ivCustProfileAvatar"
                         android:orientation="vertical">
