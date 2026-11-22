@@ -64,7 +64,7 @@
                     android:id="@+id/notificationIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="10dp"
                     app:srcCompat="@drawable/notification_icon" />
 
                 <ImageView
