@@ -65,24 +65,14 @@ public class CustomerProfileActivity extends AppCompatActivity {
             menuUnit.setOnClickListener(v -> startActivity(new Intent(this, UnitSelectionActivity.class)));
         }
 
-        View menuAddress = findViewById(R.id.menuServiceAddressGCash);
-        if (menuAddress != null) {
-            menuAddress.setOnClickListener(v -> startActivity(new Intent(this, CustomerSetupActivity.class)));
+        View menuSupport = findViewById(R.id.menuSupportHelp);
+        if (menuSupport != null) {
+            menuSupport.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
         }
 
-        View menuSecurity = findViewById(R.id.menuAccountSecurityGCash);
-        if (menuSecurity != null) {
-            menuSecurity.setOnClickListener(v -> startActivity(new Intent(this, ConfirmPasswordActivity.class)));
-        }
-
-        View menuSettings = findViewById(R.id.menuSettingsGCash);
-        if (menuSettings != null) {
-            menuSettings.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
-        }
-
-        View menuLogout = findViewById(R.id.menuLogoutGCash);
-        if (menuLogout != null) {
-            menuLogout.setOnClickListener(v -> logoutUser());
+        View btnLogout = findViewById(R.id.btnCustLogout);
+        if (btnLogout != null) {
+            btnLogout.setOnClickListener(v -> logoutUser());
         }
     }
 
