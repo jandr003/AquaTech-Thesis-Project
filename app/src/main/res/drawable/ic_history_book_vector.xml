@@ -20,19 +20,19 @@
         android:strokeLineJoin="round"
         android:pathData="M 13,2 V 7 H 18" />
 
-    <!-- Document Lines (Shortened to give clear gap from clock badge) -->
+    <!-- Document Lines -->
     <path
         android:strokeColor="#FFFFFF"
         android:strokeWidth="1.5"
         android:strokeLineCap="round"
-        android:pathData="M 5.5,7.5 H 10 M 5.5,10.5 H 14 M 5.5,13.5 H 9" />
+        android:pathData="M 5.5,7.5 H 10 M 5.5,10.5 H 11 M 5.5,13.5 H 8.5" />
 
-    <!-- History Clock Circle in Lower Right Corner (With Clear Margin) -->
+    <!-- History Clock Circle (Shifted 2.5px Left - Completely Inside Border) -->
     <path
         android:strokeColor="#FFFFFF"
         android:strokeWidth="1.5"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:pathData="M 18.5,16.5 A 3.2,3.2 0 1,1 12.1,16.5 A 3.2,3.2 0 1,1 18.5,16.5 Z M 15.3,15 V 16.5 L 16.8,17.5" />
+        android:pathData="M 16.0,16.5 A 3.2,3.2 0 1,1 9.6,16.5 A 3.2,3.2 0 1,1 16.0,16.5 Z M 12.8,15 V 16.5 L 14.3,17.5" />
 
 </vector>
