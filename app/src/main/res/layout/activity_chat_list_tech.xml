@@ -298,7 +298,7 @@
                     android:layout_width="22dp"
                     android:layout_height="22dp"
                     android:contentDescription="Profile Nav"
-                    android:src="@drawable/man_user_circle_icon"
+                    android:src="@drawable/ic_nav_profile"
                     app:tint="#64748B" />
 
                 <TextView

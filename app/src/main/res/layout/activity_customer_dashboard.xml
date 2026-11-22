@@ -534,7 +534,7 @@
                 <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/ic_person_white"
+                    android:src="@drawable/ic_nav_profile"
                     app:tint="#64748B" />
 
                 <TextView
