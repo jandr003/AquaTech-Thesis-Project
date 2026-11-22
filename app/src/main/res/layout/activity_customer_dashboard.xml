@@ -480,7 +480,7 @@
                 <ImageView
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/ic_chat_bubble"
+                    android:src="@drawable/ic_sleek_messages_vector"
                     app:tint="#64748B" />
 
                 <TextView
