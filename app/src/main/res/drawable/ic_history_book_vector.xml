@@ -4,6 +4,7 @@
     android:viewportWidth="24"
     android:viewportHeight="24">
 
+    <!-- Document Sheet Outline -->
     <path
         android:strokeColor="#FFFFFF"
         android:strokeWidth="1.5"
@@ -11,6 +12,7 @@
         android:strokeLineJoin="round"
         android:pathData="M 4,2 H 13 L 18,7 V 20 C 18,21.1 17.1,22 16,22 H 4 C 2.9,22 2,21.1 2,20 V 4 C 2,2.9 2.9,2 4,2 Z" />
 
+    <!-- Corner Paper Fold Line -->
     <path
         android:strokeColor="#FFFFFF"
         android:strokeWidth="1.3"
@@ -18,12 +20,14 @@
         android:strokeLineJoin="round"
         android:pathData="M 13,2 V 7 H 18" />
 
+    <!-- Document Lines -->
     <path
         android:strokeColor="#FFFFFF"
         android:strokeWidth="1.3"
         android:strokeLineCap="round"
         android:pathData="M 5.5,7.5 H 10 M 5.5,10.5 H 12 M 5.5,13.5 H 9" />
 
+    <!-- History Clock Circle Outer Ring -->
     <path
         android:strokeColor="#FFFFFF"
         android:strokeWidth="1.0"
@@ -31,11 +35,12 @@
         android:strokeLineJoin="round"
         android:pathData="M 15.5,16.5 A 2.5,2.5 0 1,1 10.5,16.5 A 2.5,2.5 0 1,1 15.5,16.5 Z" />
 
+    <!-- Slender Fine Clock Hands (0.8px Thin Lines) -->
     <path
         android:strokeColor="#FFFFFF"
-        android:strokeWidth="1.0"
+        android:strokeWidth="0.8"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:pathData="M 13.0,14.8 V 16.5 H 14.5" />
+        android:pathData="M 13.0,15.2 V 16.5 H 14.2" />
 
 </vector>
