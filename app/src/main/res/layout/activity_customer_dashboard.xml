@@ -424,8 +424,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:src="@drawable/ic_pdf_house"
                     app:tint="#2196F3" />
 
@@ -463,7 +463,7 @@
                     android:text="Track Request"
                     android:textColor="#64748B"
                     android:textSize="10sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -490,7 +490,7 @@
                     android:text="Messages"
                     android:textColor="#64748B"
                     android:textSize="10.5sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -517,7 +517,7 @@
                     android:text="History"
                     android:textColor="#64748B"
                     android:textSize="10.5sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -544,7 +544,7 @@
                     android:text="Profile"
                     android:textColor="#64748B"
                     android:textSize="10.5sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
 
             </LinearLayout>
         </LinearLayout>

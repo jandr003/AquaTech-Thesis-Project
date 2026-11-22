@@ -220,8 +220,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Track Request"
                     android:textColor="#64748B"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -237,8 +236,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:contentDescription="Messages Nav"
                     android:src="@drawable/ic_sleek_messages_vector"
                     app:tint="#2196F3" />
