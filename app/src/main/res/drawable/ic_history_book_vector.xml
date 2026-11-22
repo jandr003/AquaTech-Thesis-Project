@@ -25,14 +25,14 @@
         android:strokeColor="#FFFFFF"
         android:strokeWidth="1.5"
         android:strokeLineCap="round"
-        android:pathData="M 5.5,7.5 H 10 M 5.5,10.5 H 11 M 5.5,13.5 H 8.5" />
+        android:pathData="M 5.5,7.5 H 10 M 5.5,10.5 H 12 M 5.5,13.5 H 9" />
 
-    <!-- History Clock Circle (Shifted 2.5px Left - Completely Inside Border) -->
+    <!-- History Clock Circle (Compact Smaller Badge) -->
     <path
         android:strokeColor="#FFFFFF"
-        android:strokeWidth="1.5"
+        android:strokeWidth="1.4"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:pathData="M 16.0,16.5 A 3.2,3.2 0 1,1 9.6,16.5 A 3.2,3.2 0 1,1 16.0,16.5 Z M 12.8,15 V 16.5 L 14.3,17.5" />
+        android:pathData="M 15.5,16.5 A 2.5,2.5 0 1,1 10.5,16.5 A 2.5,2.5 0 1,1 15.5,16.5 Z M 13.0,15.2 V 16.5 L 14.1,17.2" />
 
 </vector>
