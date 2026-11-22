@@ -21,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CustomerProfileActivity extends AppCompatActivity {
 
-    private ImageView ivAvatar;
     private TextView tvName, tvPhone;
     private FirebaseAuth mAuth;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -39,14 +38,8 @@ public class CustomerProfileActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        ivAvatar = findViewById(R.id.ivCustProfileAvatar);
         tvName = findViewById(R.id.tvCustProfileName);
         tvPhone = findViewById(R.id.tvCustProfilePhone);
-
-        View btnBack = findViewById(R.id.btnBackCustProfile);
-        if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
-        }
     }
 
     private void setupClickListeners() {
@@ -63,6 +56,21 @@ public class CustomerProfileActivity extends AppCompatActivity {
         View menuUnit = findViewById(R.id.menuRegisteredUnitGCash);
         if (menuUnit != null) {
             menuUnit.setOnClickListener(v -> startActivity(new Intent(this, UnitSelectionActivity.class)));
+        }
+
+        View menuAddress = findViewById(R.id.menuServiceAddressCust);
+        if (menuAddress != null) {
+            menuAddress.setOnClickListener(v -> startActivity(new Intent(this, CustomerSetupActivity.class)));
+        }
+
+        View menuSecurity = findViewById(R.id.menuAccountSecurityCust);
+        if (menuSecurity != null) {
+            menuSecurity.setOnClickListener(v -> startActivity(new Intent(this, ConfirmPasswordActivity.class)));
+        }
+
+        View menuHistory = findViewById(R.id.menuServiceHistoryCust);
+        if (menuHistory != null) {
+            menuHistory.setOnClickListener(v -> startActivity(new Intent(this, ServiceHistoryActivity.class)));
         }
 
         View menuSupport = findViewById(R.id.menuSupportHelp);
@@ -106,19 +114,6 @@ public class CustomerProfileActivity extends AppCompatActivity {
                     }
                     if (tvPhone != null) {
                         tvPhone.setText(phone != null && !phone.isEmpty() ? phone : "Registered Account");
-                    }
-
-                    String imgUrl = snapshot.child("profileImageUrl").getValue(String.class);
-                    if (ivAvatar != null) {
-                        if (imgUrl != null && !imgUrl.isEmpty()) {
-                            Glide.with(CustomerProfileActivity.this)
-                                    .load(imgUrl)
-                                    .placeholder(R.drawable.customer_avatar1)
-                                    .circleCrop()
-                                    .into(ivAvatar);
-                        } else {
-                            ivAvatar.setImageResource(R.drawable.customer_avatar1);
-                        }
                     }
                 }
             }
