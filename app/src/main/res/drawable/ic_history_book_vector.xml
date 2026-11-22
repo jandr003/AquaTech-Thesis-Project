@@ -3,29 +3,60 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
-    <!-- Book Outline -->
+
+    <!-- Top Book Isometric Cover Outline -->
     <path
-        android:strokeColor="#000000"
+        android:strokeColor="#FFFFFF"
         android:strokeWidth="1.6"
         android:strokeLineCap="round"
         android:strokeLineJoin="round"
-        android:pathData="M 3,4 C 3,2.9 3.9,2 5,2 H 16 C 17.1,2 18,2.9 18,4 V 17 C 18,18.1 17.1,19 16,19 H 5 C 3.9,19 3,18.1 3,17 V 4 Z M 3,17 H 16 C 17.1,17 18,17.9 18,19 V 19 C 18,20.1 17.1,21 16,21 H 5 C 3.9,21 3,20.1 3,19 V 17 Z M 6,2 V 17" />
-    <!-- Bookmark Ribbon -->
+        android:pathData="M 1,9 L 12,4 L 22,8 L 11,13 Z" />
+
+    <!-- Top Cover Inner Label Bar -->
     <path
-        android:strokeColor="#000000"
+        android:strokeColor="#FFFFFF"
         android:strokeWidth="1.5"
         android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M 8,2 V 8 L 10.5,6 L 13,8 V 2" />
-    <!-- Magnifying Glass Ring -->
+        android:pathData="M 11,6.5 L 16.5,8.5" />
+
+    <!-- 1st Book Bottom Spine Fold Line -->
     <path
-        android:strokeColor="#000000"
+        android:strokeColor="#FFFFFF"
         android:strokeWidth="1.6"
-        android:pathData="M 15.5,12.5 A 3.5,3.5 0 1,1 8.5,12.5 A 3.5,3.5 0 1,1 15.5,12.5 Z" />
-    <!-- Magnifying Glass Handle -->
-    <path
-        android:strokeColor="#000000"
-        android:strokeWidth="1.8"
         android:strokeLineCap="round"
-        android:pathData="M 14.8,15 L 19,19.2" />
+        android:strokeLineJoin="round"
+        android:pathData="M 1,9 C 1,11 2,12 3.5,12 L 11,15.5 L 22,10.5" />
+
+    <!-- 2nd Book Spine Fold & Bottom Line -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 1,12 C 1,14 2,15 3.5,15 L 11,18.5 L 22,13.5" />
+
+    <!-- 3rd Book Spine Fold & Base Line -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 1,15 C 1,18 2,19.5 4,19.5 L 11,22.5 L 22,17.5" />
+
+    <!-- Right Edge Vertical Line Connectors -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.6"
+        android:strokeLineCap="round"
+        android:pathData="M 22,8 V 17.5" />
+
+    <!-- Ribbon Bookmark (Hanging from 2nd Book) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 4,11.5 V 17 L 5.5,15.5 L 7,17 V 12.8 Z" />
+
 </vector>
