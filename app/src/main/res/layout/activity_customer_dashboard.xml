@@ -125,7 +125,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/customerUserName"
-                        tools:text="Mary Dela Torre" />
+                        tools:text="Customer Full Name" />
 
                     <TextView
                         android:id="@+id/refNumber"
@@ -149,7 +149,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/refNumber"
-                        tools:text="2025-00310" />
+                        tools:text="Reference SRO No." />
 
                     <TextView
                         android:id="@+id/unitLabel"
@@ -176,7 +176,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/imgDispenser"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/unitLabel"
-                        tools:text="WL Cube Firewall Water Purifier" />
+                        tools:text="Registered Unit Name" />
 
                     <ImageView
                         android:id="@+id/imgDispenser"
@@ -199,7 +199,7 @@
                         android:textSize="10sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/imgDispenser"
-                        tools:text="F-FXCU1-M-HCA-TT-**-***" />
+                        tools:text="Unit Serial Code" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
