@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -55,6 +56,11 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
         icStepBasic = findViewById(R.id.icStepBasic);
         icStepSemi = findViewById(R.id.icStepSemi);
         icStepFull = findViewById(R.id.icStepFull);
+
+        View btnUploadId = findViewById(R.id.btnUploadIdForVerif);
+        if (btnUploadId != null) {
+            btnUploadId.setOnClickListener(v -> startActivity(new Intent(this, ServiceRequestActivity.class)));
+        }
     }
 
     private void loadVerificationRecord() {
@@ -116,6 +122,11 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
 
                     if (tvDateVal != null) {
                         tvDateVal.setText(verifDate != null && !verifDate.isEmpty() ? verifDate : "Recorded Date");
+                    }
+
+                    View btnUploadId = findViewById(R.id.btnUploadIdForVerif);
+                    if (btnUploadId != null) {
+                        btnUploadId.setVisibility((isVerified != null && isVerified) ? View.GONE : View.VISIBLE);
                     }
 
                     if (isVerified != null && isVerified) {
