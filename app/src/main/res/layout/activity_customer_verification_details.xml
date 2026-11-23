@@ -423,6 +423,7 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:cornerRadius="16dp"
                 app:elevation="2dp" />
 
