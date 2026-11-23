@@ -34,9 +34,17 @@ import java.util.Map;
 
 public class CustomerVerificationDetailsActivity extends AppCompatActivity {
 
-    private ImageView ivBannerIcon, icStepBasic, icStepSemi, icStepFull;
-    private TextView tvBannerTitle, tvBannerSubtitle;
-    private TextView tvLevelVal, tvIdTypeVal, tvIdNumVal, tvStatusVal, tvDateVal;
+    private ImageView ivBannerIcon;
+    private ImageView icStepBasic;
+    private ImageView icStepSemi;
+    private ImageView icStepFull;
+    private TextView tvBannerTitle;
+    private TextView tvBannerSubtitle;
+    private TextView tvLevelVal;
+    private TextView tvIdTypeVal;
+    private TextView tvIdNumVal;
+    private TextView tvStatusVal;
+    private TextView tvDateVal;
     private FirebaseAuth mAuth;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMediaLauncher;
     private String selectedIdType = "Government-issued ID";
@@ -54,11 +62,14 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
     }
 
     private void setupPhotoPicker() {
-        pickMediaLauncher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
-            if (uri != null) {
-                uploadIdPhotoToFirebase(uri);
-            }
-        });
+        pickMediaLauncher = registerForActivityResult(
+                new ActivityResultContracts.PickVisualMedia(),
+                uri -> {
+                    if (uri != null) {
+                        uploadIdPhotoToFirebase(uri);
+                    }
+                }
+        );
     }
 
     private void initializeViews() {
@@ -123,21 +134,29 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
         String uid = user.getUid();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference("CustomerGovIDs").child(uid + ".jpg");
 
-        storageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
-            String photoUrl = downloadUri.toString();
-            String todayStr = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+        storageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            storageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+                String photoUrl = downloadUri.toString();
+                String todayStr = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
 
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("govIdUrl", photoUrl);
-            updates.put("govIdType", selectedIdType);
-            updates.put("govIdVerified", false);
-            updates.put("verificationLevel", "Semi-Verified");
-            updates.put("verificationDate", todayStr);
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("govIdUrl", photoUrl);
+                updates.put("govIdType", selectedIdType);
+                updates.put("govIdVerified", false);
+                updates.put("verificationLevel", "Semi-Verified");
+                updates.put("verificationDate", todayStr);
 
-            FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid).updateChildren(updates)
-                    .addOnSuccessListener(aVoid -> Toast.makeText(CustomerVerificationDetailsActivity.this, "ID submitted successfully! Status updated to Semi-Verified.", Toast.LENGTH_LONG).show())
-                    .addOnFailureListener(e -> Toast.makeText(CustomerVerificationDetailsActivity.this, "Failed to update record: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-        })).addOnFailureListener(e -> Toast.makeText(CustomerVerificationDetailsActivity.this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid).updateChildren(updates)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(CustomerVerificationDetailsActivity.this, "ID submitted successfully! Status updated to Semi-Verified.", Toast.LENGTH_LONG).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(CustomerVerificationDetailsActivity.this, "Failed to update record: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            });
+        }).addOnFailureListener(e -> {
+            Toast.makeText(CustomerVerificationDetailsActivity.this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void loadVerificationRecord() {
@@ -222,9 +241,15 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                             tvStatusVal.setText("Approved");
                             tvStatusVal.setTextColor(Color.parseColor("#16A34A"));
                         }
-                        if (icStepBasic != null) icStepBasic.setColorFilter(Color.parseColor("#16A34A"));
-                        if (icStepSemi != null) icStepSemi.setColorFilter(Color.parseColor("#16A34A"));
-                        if (icStepFull != null) icStepFull.setColorFilter(Color.parseColor("#16A34A"));
+                        if (icStepBasic != null) {
+                            icStepBasic.setColorFilter(Color.parseColor("#16A34A"));
+                        }
+                        if (icStepSemi != null) {
+                            icStepSemi.setColorFilter(Color.parseColor("#16A34A"));
+                        }
+                        if (icStepFull != null) {
+                            icStepFull.setColorFilter(Color.parseColor("#16A34A"));
+                        }
                     } else if ("Semi-Verified".equalsIgnoreCase(level)) {
                         if (ivBannerIcon != null) {
                             ivBannerIcon.setImageResource(R.drawable.ic_clock);
@@ -241,9 +266,15 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                             tvStatusVal.setText("Under Review");
                             tvStatusVal.setTextColor(Color.parseColor("#0284C7"));
                         }
-                        if (icStepBasic != null) icStepBasic.setColorFilter(Color.parseColor("#16A34A"));
-                        if (icStepSemi != null) icStepSemi.setColorFilter(Color.parseColor("#16A34A"));
-                        if (icStepFull != null) icStepFull.setColorFilter(Color.parseColor("#94A3B8"));
+                        if (icStepBasic != null) {
+                            icStepBasic.setColorFilter(Color.parseColor("#16A34A"));
+                        }
+                        if (icStepSemi != null) {
+                            icStepSemi.setColorFilter(Color.parseColor("#16A34A"));
+                        }
+                        if (icStepFull != null) {
+                            icStepFull.setColorFilter(Color.parseColor("#94A3B8"));
+                        }
                     } else {
                         if (ivBannerIcon != null) {
                             ivBannerIcon.setImageResource(R.drawable.ic_help_center);
@@ -260,9 +291,15 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                             tvStatusVal.setText("Basic Registration");
                             tvStatusVal.setTextColor(Color.parseColor("#D97706"));
                         }
-                        if (icStepBasic != null) icStepBasic.setColorFilter(Color.parseColor("#16A34A"));
-                        if (icStepSemi != null) icStepSemi.setColorFilter(Color.parseColor("#94A3B8"));
-                        if (icStepFull != null) icStepFull.setColorFilter(Color.parseColor("#94A3B8"));
+                        if (icStepBasic != null) {
+                            icStepBasic.setColorFilter(Color.parseColor("#16A34A"));
+                        }
+                        if (icStepSemi != null) {
+                            icStepSemi.setColorFilter(Color.parseColor("#94A3B8"));
+                        }
+                        if (icStepFull != null) {
+                            icStepFull.setColorFilter(Color.parseColor("#94A3B8"));
+                        }
                     }
                 }
             }
