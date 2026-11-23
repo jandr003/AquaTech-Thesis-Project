@@ -28,7 +28,7 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
-                android:paddingTop="38dp"
+                android:paddingTop="48dp"
                 android:paddingBottom="20dp">
 
                 <RelativeLayout
@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="2dp"
+                        android:layout_marginStart="20dp"
                         android:layout_toStartOf="@id/arrowProfileHeader"
                         android:layout_toEndOf="@id/ivCustProfileAvatar"
                         android:orientation="vertical">
@@ -251,6 +251,7 @@
                         android:orientation="vertical"
                         android:padding="4dp">
 
+                        <!-- 1. Personal Information -->
                         <LinearLayout
                             android:id="@+id/menuEditProfileGCash"
                             android:layout_width="match_parent"
@@ -294,6 +295,7 @@
                             android:layout_height="1dp"
                             android:background="#F1F5F9" />
 
+                        <!-- 2. My Registered Purifier Unit -->
                         <LinearLayout
                             android:id="@+id/menuRegisteredUnitGCash"
                             android:layout_width="match_parent"
@@ -337,6 +339,7 @@
                             android:layout_height="1dp"
                             android:background="#F1F5F9" />
 
+                        <!-- 3. My Saved Service Address -->
                         <LinearLayout
                             android:id="@+id/menuServiceAddressCust"
                             android:layout_width="match_parent"
@@ -380,6 +383,51 @@
                             android:layout_height="1dp"
                             android:background="#F1F5F9" />
 
+                        <!-- 4. Notification Preferences -->
+                        <LinearLayout
+                            android:id="@+id/menuNotificationPreferencesCust"
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="14dp">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:contentDescription="Notification Preferences"
+                                android:src="@drawable/notification_icon"
+                                app:tint="#2196F3" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins"
+                                android:text="Notification Preferences"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="Forward"
+                                android:src="@drawable/ic_arrow_right"
+                                app:tint="#94A3B8" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#F1F5F9" />
+
+                        <!-- 5. Account & Security Settings -->
                         <LinearLayout
                             android:id="@+id/menuAccountSecurityCust"
                             android:layout_width="match_parent"
@@ -423,6 +471,7 @@
                             android:layout_height="1dp"
                             android:background="#F1F5F9" />
 
+                        <!-- 6. Dispatch & Support Help -->
                         <LinearLayout
                             android:id="@+id/menuSupportHelp"
                             android:layout_width="match_parent"
@@ -461,10 +510,99 @@
 
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#F1F5F9" />
+
+                        <!-- 7. About AquaTech -->
+                        <LinearLayout
+                            android:id="@+id/menuAboutAquaTechCust"
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="14dp">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:contentDescription="About"
+                                android:src="@drawable/ic_about_aquatech"
+                                app:tint="#2196F3" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins"
+                                android:text="About AquaTech"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="Forward"
+                                android:src="@drawable/ic_arrow_right"
+                                app:tint="#94A3B8" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#F1F5F9" />
+
+                        <!-- 8. Privacy & Legal -->
+                        <LinearLayout
+                            android:id="@+id/menuPrivacyLegalCust"
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="14dp">
+
+                            <ImageView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:contentDescription="Privacy"
+                                android:src="@drawable/ic_dialog_privacy_shield"
+                                app:tint="#2196F3" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="14dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins"
+                                android:text="Privacy &amp; Legal"
+                                android:textColor="#1E293B"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="Forward"
+                                android:src="@drawable/ic_arrow_right"
+                                app:tint="#94A3B8" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- 9. Sign Out -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCustLogout"
                     android:layout_width="match_parent"

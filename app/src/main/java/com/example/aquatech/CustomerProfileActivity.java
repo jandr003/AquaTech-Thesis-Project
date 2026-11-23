@@ -65,6 +65,11 @@ public class CustomerProfileActivity extends AppCompatActivity {
             menuAddress.setOnClickListener(v -> startActivity(new Intent(this, CustomerSetupActivity.class)));
         }
 
+        View menuNotif = findViewById(R.id.menuNotificationPreferencesCust);
+        if (menuNotif != null) {
+            menuNotif.setOnClickListener(v -> startActivity(new Intent(this, NotificationActivity.class)));
+        }
+
         View menuSecurity = findViewById(R.id.menuAccountSecurityCust);
         if (menuSecurity != null) {
             menuSecurity.setOnClickListener(v -> startActivity(new Intent(this, ConfirmPasswordActivity.class)));
@@ -72,7 +77,17 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         View menuSupport = findViewById(R.id.menuSupportHelp);
         if (menuSupport != null) {
-            menuSupport.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
+            menuSupport.setOnClickListener(v -> startActivity(new Intent(this, TechnicianHelpCenterActivity.class)));
+        }
+
+        View menuAbout = findViewById(R.id.menuAboutAquaTechCust);
+        if (menuAbout != null) {
+            menuAbout.setOnClickListener(v -> startActivity(new Intent(this, TechnicianAboutActivity.class)));
+        }
+
+        View menuPrivacy = findViewById(R.id.menuPrivacyLegalCust);
+        if (menuPrivacy != null) {
+            menuPrivacy.setOnClickListener(v -> startActivity(new Intent(this, TechnicianPrivacyActivity.class)));
         }
 
         View btnLogout = findViewById(R.id.btnCustLogout);
