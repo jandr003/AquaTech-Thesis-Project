@@ -60,8 +60,8 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/ivCustProfileAvatar"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
                         android:layout_alignParentStart="true"
                         android:layout_marginTop="4dp"
                         android:contentDescription="Profile Photo"
@@ -73,7 +73,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="8dp"
                         android:layout_toStartOf="@id/arrowProfileHeader"
                         android:layout_toEndOf="@id/ivCustProfileAvatar"
                         android:orientation="vertical">
@@ -144,7 +144,6 @@
                         app:tint="#94A3B8" />
 
                 </RelativeLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
