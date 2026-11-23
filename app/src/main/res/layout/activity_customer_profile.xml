@@ -99,6 +99,16 @@
                             android:textSize="12.5sp"
                             tools:text="0998 961 9845" />
 
+                        <TextView
+                            android:id="@+id/tvCustMemberSince"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/poppins"
+                            android:textColor="#94A3B8"
+                            android:textSize="11.5sp"
+                            tools:text="Member Since: Nov 2026" />
+
                         <LinearLayout
                             android:id="@+id/btnViewBenefits"
                             android:layout_width="wrap_content"

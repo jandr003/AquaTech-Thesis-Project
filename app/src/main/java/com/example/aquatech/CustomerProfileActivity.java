@@ -3,7 +3,6 @@ package com.example.aquatech;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +19,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class CustomerProfileActivity extends AppCompatActivity {
 
     private ImageView ivAvatar;
-    private TextView tvName, tvPhone, btnVerifiedBadge;
+    private TextView tvName, tvPhone, tvMemberSince, btnVerifiedBadge;
     private View btnViewBenefits;
     private FirebaseAuth mAuth;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -44,6 +47,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
         ivAvatar = findViewById(R.id.ivCustProfileAvatar);
         tvName = findViewById(R.id.tvCustProfileName);
         tvPhone = findViewById(R.id.tvCustProfilePhone);
+        tvMemberSince = findViewById(R.id.tvCustMemberSince);
         btnViewBenefits = findViewById(R.id.btnViewBenefits);
         btnVerifiedBadge = findViewById(R.id.btnVerifiedBadge);
     }
@@ -134,6 +138,23 @@ public class CustomerProfileActivity extends AppCompatActivity {
                     }
                     if (tvPhone != null) {
                         tvPhone.setText(phone != null && !phone.isEmpty() ? phone : "Registered Account");
+                    }
+
+                    Long creationTs = snapshot.child("createdAt").getValue(Long.class);
+                    if (creationTs == null) {
+                        creationTs = snapshot.child("timestamp").getValue(Long.class);
+                    }
+                    if (creationTs == null && user.getMetadata() != null) {
+                        creationTs = user.getMetadata().getCreationTimestamp();
+                    }
+
+                    if (tvMemberSince != null) {
+                        if (creationTs != null && creationTs > 0) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("MMM yyyy", Locale.getDefault());
+                            tvMemberSince.setText("Member Since: " + sdf.format(new Date(creationTs)));
+                        } else {
+                            tvMemberSince.setText("Member Since: Active");
+                        }
                     }
 
                     Boolean isVerified = snapshot.child("govIdVerified").getValue(Boolean.class);
