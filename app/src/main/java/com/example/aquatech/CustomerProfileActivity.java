@@ -3,6 +3,7 @@ package com.example.aquatech;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 public class CustomerProfileActivity extends AppCompatActivity {
 
     private ImageView ivAvatar;
-    private TextView tvName, tvPhone;
+    private TextView tvName, tvPhone, btnVerifiedBadge;
+    private Button btnViewBenefits;
     private FirebaseAuth mAuth;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
@@ -42,9 +44,16 @@ public class CustomerProfileActivity extends AppCompatActivity {
         ivAvatar = findViewById(R.id.ivCustProfileAvatar);
         tvName = findViewById(R.id.tvCustProfileName);
         tvPhone = findViewById(R.id.tvCustProfilePhone);
+        btnViewBenefits = findViewById(R.id.btnViewBenefits);
+        btnVerifiedBadge = findViewById(R.id.btnVerifiedBadge);
     }
 
     private void setupClickListeners() {
+        if (btnViewBenefits != null) {
+            btnViewBenefits.setText("View Verification");
+            btnViewBenefits.setOnClickListener(v -> startActivity(new Intent(this, CustomerVerificationDetailsActivity.class)));
+        }
+
         View headerCard = findViewById(R.id.cardCustProfileHeader);
         if (headerCard != null) {
             headerCard.setOnClickListener(v -> startActivity(new Intent(this, EditProfileActivity.class)));
@@ -126,6 +135,20 @@ public class CustomerProfileActivity extends AppCompatActivity {
                     }
                     if (tvPhone != null) {
                         tvPhone.setText(phone != null && !phone.isEmpty() ? phone : "Registered Account");
+                    }
+
+                    Boolean isVerified = snapshot.child("govIdVerified").getValue(Boolean.class);
+                    if (isVerified == null) {
+                        isVerified = snapshot.child("isVerified").getValue(Boolean.class);
+                    }
+
+                    String level = snapshot.child("verificationLevel").getValue(String.class);
+                    if (level == null || level.isEmpty()) {
+                        level = (isVerified != null && isVerified) ? "Fully Verified" : "Basic Level";
+                    }
+
+                    if (btnVerifiedBadge != null) {
+                        btnVerifiedBadge.setText(level);
                     }
 
                     String imgUrl = snapshot.child("profileImageUrl").getValue(String.class);
