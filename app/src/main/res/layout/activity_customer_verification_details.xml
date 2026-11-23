@@ -54,7 +54,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Banner Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,7 +105,6 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Verification Information Details Table Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -247,7 +245,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Completed Steps Progress Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
