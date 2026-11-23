@@ -58,10 +58,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#F0F9FF"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="2dp"
-                app:strokeColor="#BAE6FD"
+                app:strokeColor="#E2E8F0"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -77,7 +77,7 @@
                         android:layout_height="56dp"
                         android:contentDescription="Verified Icon"
                         android:src="@drawable/ic_check_on"
-                        app:tint="#0284C7" />
+                        app:tint="#16A34A" />
 
                     <TextView
                         android:id="@+id/tvVerifBannerTitle"
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/poppins_black_ttf"
-                        android:textColor="#0369A1"
+                        android:textColor="#15803D"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         tools:text="Verification Status Title" />
@@ -97,7 +97,7 @@
                         android:layout_marginTop="4dp"
                         android:fontFamily="@font/poppins"
                         android:gravity="center"
-                        android:textColor="#0284C7"
+                        android:textColor="#64748B"
                         android:textSize="13sp"
                         tools:text="Account verification information message." />
 
@@ -243,9 +243,7 @@
                             tools:text="Verification Date" />
 
                     </LinearLayout>
-
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Completed Steps Progress Card -->
@@ -314,7 +312,6 @@
                                 android:textSize="12sp" />
 
                         </LinearLayout>
-
                     </LinearLayout>
 
                     <View
@@ -362,7 +359,6 @@
                                 android:textSize="12sp" />
 
                         </LinearLayout>
-
                     </LinearLayout>
 
                     <View
@@ -410,15 +406,9 @@
                                 android:textSize="12sp" />
 
                         </LinearLayout>
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
