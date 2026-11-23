@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMediaLauncher;
     private String selectedIdType = "Government-issued ID";
+    private String enteredIdNumber = "";
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     @Override
@@ -114,13 +116,37 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
         builder.setTitle("Select Government ID Type");
         builder.setItems(idTypes, (dialog, which) -> {
             selectedIdType = idTypes[which];
-            if (pickMediaLauncher != null) {
-                pickMediaLauncher.launch(new PickVisualMediaRequest.Builder()
-                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                        .build());
-            }
+            promptIdNumberInput();
         });
         builder.show();
+    }
+
+    private void promptIdNumberInput() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter " + selectedIdType + " Number");
+
+        final EditText input = new EditText(this);
+        input.setHint("ID Number (Optional)");
+        input.setPadding(32, 32, 32, 32);
+        builder.setView(input);
+
+        builder.setPositiveButton("Next (Select Photo)", (dialog, which) -> {
+            enteredIdNumber = input.getText().toString().trim();
+            launchPhotoPicker();
+        });
+        builder.setNegativeButton("Skip & Upload Photo", (dialog, which) -> {
+            enteredIdNumber = "";
+            launchPhotoPicker();
+        });
+        builder.show();
+    }
+
+    private void launchPhotoPicker() {
+        if (pickMediaLauncher != null) {
+            pickMediaLauncher.launch(new PickVisualMediaRequest.Builder()
+                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                    .build());
+        }
     }
 
     private void uploadIdPhotoToFirebase(Uri imageUri) {
@@ -142,6 +168,9 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                 Map<String, Object> updates = new HashMap<>();
                 updates.put("govIdUrl", photoUrl);
                 updates.put("govIdType", selectedIdType);
+                if (!enteredIdNumber.isEmpty()) {
+                    updates.put("govIdNumber", enteredIdNumber);
+                }
                 updates.put("govIdVerified", false);
                 updates.put("verificationLevel", "Semi-Verified");
                 updates.put("verificationDate", todayStr);
@@ -202,27 +231,6 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
 
                     if (tvLevelVal != null) {
                         tvLevelVal.setText(level);
-                    }
-
-                    if (tvIdTypeVal != null) {
-                        tvIdTypeVal.setText(idType != null && !idType.isEmpty() ? idType : "None");
-                    }
-
-                    if (tvIdNumVal != null) {
-                        if (idNum != null && !idNum.isEmpty()) {
-                            tvIdNumVal.setText("••••••••" + (idNum.length() >= 4 ? idNum.substring(idNum.length() - 4) : idNum));
-                        } else {
-                            tvIdNumVal.setText("Not Available");
-                        }
-                    }
-
-                    if (tvDateVal != null) {
-                        tvDateVal.setText(verifDate != null && !verifDate.isEmpty() ? verifDate : "Pending");
-                    }
-
-                    View btnUploadId = findViewById(R.id.btnUploadIdForVerif);
-                    if (btnUploadId != null) {
-                        btnUploadId.setVisibility((isVerified != null && isVerified) ? View.GONE : View.VISIBLE);
                     }
 
                     if (isVerified != null && isVerified) {
