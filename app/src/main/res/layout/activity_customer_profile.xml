@@ -220,49 +220,6 @@
                         android:background="#F1F5F9" />
 
                     <LinearLayout
-                        android:id="@+id/menuRegisteredUnitGCash"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="14dp">
-
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:contentDescription="Purifier Unit"
-                            android:src="@drawable/ic_pdf_droplet"
-                            app:tint="#2196F3" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="14dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/poppins"
-                            android:text="My Registered Purifier Unit"
-                            android:textColor="#1E293B"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:contentDescription="Forward"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="#94A3B8" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#F1F5F9" />
-
-                    <LinearLayout
                         android:id="@+id/menuServiceAddressCust"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"

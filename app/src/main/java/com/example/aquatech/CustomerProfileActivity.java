@@ -67,11 +67,6 @@ public class CustomerProfileActivity extends AppCompatActivity {
             menuEdit.setOnClickListener(v -> startActivity(new Intent(this, EditProfileActivity.class)));
         }
 
-        View menuUnit = findViewById(R.id.menuRegisteredUnitGCash);
-        if (menuUnit != null) {
-            menuUnit.setOnClickListener(v -> startActivity(new Intent(this, UnitSelectionActivity.class)));
-        }
-
         View menuAddress = findViewById(R.id.menuServiceAddressCust);
         if (menuAddress != null) {
             menuAddress.setOnClickListener(v -> startActivity(new Intent(this, CustomerSetupActivity.class)));
