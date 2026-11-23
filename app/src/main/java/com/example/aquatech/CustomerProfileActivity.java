@@ -24,7 +24,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
     private ImageView ivAvatar;
     private TextView tvName, tvPhone, btnVerifiedBadge;
-    private Button btnViewBenefits;
+    private View btnViewBenefits;
     private FirebaseAuth mAuth;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
@@ -50,7 +50,6 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
     private void setupClickListeners() {
         if (btnViewBenefits != null) {
-            btnViewBenefits.setText("View Verification");
             btnViewBenefits.setOnClickListener(v -> startActivity(new Intent(this, CustomerVerificationDetailsActivity.class)));
         }
 
