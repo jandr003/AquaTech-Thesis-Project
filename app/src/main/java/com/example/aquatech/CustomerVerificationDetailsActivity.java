@@ -1,13 +1,18 @@
 package com.example.aquatech;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +23,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class CustomerVerificationDetailsActivity extends AppCompatActivity {
 
@@ -25,6 +38,8 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
     private TextView tvBannerTitle, tvBannerSubtitle;
     private TextView tvLevelVal, tvIdTypeVal, tvIdNumVal, tvStatusVal, tvDateVal;
     private FirebaseAuth mAuth;
+    private ActivityResultLauncher<PickVisualMediaRequest> pickMediaLauncher;
+    private String selectedIdType = "Government-issued ID";
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
     @Override
@@ -33,8 +48,17 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_verification_details);
 
         mAuth = FirebaseAuth.getInstance();
+        setupPhotoPicker();
         initializeViews();
         loadVerificationRecord();
+    }
+
+    private void setupPhotoPicker() {
+        pickMediaLauncher = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+            if (uri != null) {
+                uploadIdPhotoToFirebase(uri);
+            }
+        });
     }
 
     private void initializeViews() {
@@ -59,8 +83,61 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
 
         View btnUploadId = findViewById(R.id.btnUploadIdForVerif);
         if (btnUploadId != null) {
-            btnUploadId.setOnClickListener(v -> startActivity(new Intent(this, ServiceRequestActivity.class)));
+            btnUploadId.setOnClickListener(v -> showIdTypeSelectionDialog());
         }
+    }
+
+    private void showIdTypeSelectionDialog() {
+        String[] idTypes = {
+                "Driver's License",
+                "Passport",
+                "UMID / SSS ID",
+                "PhilHealth ID",
+                "Postal ID",
+                "Voter's ID",
+                "PRC ID",
+                "Government-issued ID"
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Government ID Type");
+        builder.setItems(idTypes, (dialog, which) -> {
+            selectedIdType = idTypes[which];
+            if (pickMediaLauncher != null) {
+                pickMediaLauncher.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+            }
+        });
+        builder.show();
+    }
+
+    private void uploadIdPhotoToFirebase(Uri imageUri) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null || imageUri == null) {
+            return;
+        }
+
+        Toast.makeText(this, "Uploading ID for verification...", Toast.LENGTH_SHORT).show();
+
+        String uid = user.getUid();
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference("CustomerGovIDs").child(uid + ".jpg");
+
+        storageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+            String photoUrl = downloadUri.toString();
+            String todayStr = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("govIdUrl", photoUrl);
+            updates.put("govIdType", selectedIdType);
+            updates.put("govIdVerified", false);
+            updates.put("verificationLevel", "Semi-Verified");
+            updates.put("verificationDate", todayStr);
+
+            FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(uid).updateChildren(updates)
+                    .addOnSuccessListener(aVoid -> Toast.makeText(CustomerVerificationDetailsActivity.this, "ID submitted successfully! Status updated to Semi-Verified.", Toast.LENGTH_LONG).show())
+                    .addOnFailureListener(e -> Toast.makeText(CustomerVerificationDetailsActivity.this, "Failed to update record: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        })).addOnFailureListener(e -> Toast.makeText(CustomerVerificationDetailsActivity.this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void loadVerificationRecord() {
