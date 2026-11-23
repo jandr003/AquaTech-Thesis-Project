@@ -126,18 +126,20 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
         builder.setTitle("Enter " + selectedIdType + " Number");
 
         final EditText input = new EditText(this);
-        input.setHint("ID Number (Optional)");
-        input.setPadding(32, 32, 32, 32);
+        input.setHint("Enter your official ID Number");
+        input.setPadding(36, 36, 36, 36);
         builder.setView(input);
 
-        builder.setPositiveButton("Next (Select Photo)", (dialog, which) -> {
-            enteredIdNumber = input.getText().toString().trim();
+        builder.setPositiveButton("Next: Select ID Photo", (dialog, which) -> {
+            String val = input.getText().toString().trim();
+            if (val.isEmpty()) {
+                Toast.makeText(this, "Please enter your ID Number to proceed.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            enteredIdNumber = val;
             launchPhotoPicker();
         });
-        builder.setNegativeButton("Skip & Upload Photo", (dialog, which) -> {
-            enteredIdNumber = "";
-            launchPhotoPicker();
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.show();
     }
 
