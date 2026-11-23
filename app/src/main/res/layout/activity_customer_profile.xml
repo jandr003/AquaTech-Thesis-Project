@@ -47,11 +47,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
-                app:cardBackgroundColor="#0284C7"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="3dp"
-                app:strokeColor="@android:color/transparent"
-                app:strokeWidth="0dp">
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E2E8F0"
+                app:strokeWidth="1dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_black_ttf"
-                            android:textColor="#FFFFFF"
+                            android:textColor="#1E293B"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             tools:text="Customer Name" />
@@ -94,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:fontFamily="@font/poppins"
-                            android:textColor="#E0F2FE"
+                            android:textColor="#64748B"
                             android:textSize="12.5sp"
                             tools:text="0998 961 9845" />
 
@@ -141,7 +141,7 @@
                         android:layout_centerVertical="true"
                         android:contentDescription="Edit Profile"
                         android:src="@drawable/ic_arrow_right"
-                        app:tint="#E0F2FE" />
+                        app:tint="#94A3B8" />
 
                 </RelativeLayout>
 
