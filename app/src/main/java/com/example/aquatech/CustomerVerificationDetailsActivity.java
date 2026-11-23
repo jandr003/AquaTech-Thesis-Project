@@ -205,19 +205,19 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                     }
 
                     if (tvIdTypeVal != null) {
-                        tvIdTypeVal.setText(idType != null && !idType.isEmpty() ? idType : "Government-issued ID");
+                        tvIdTypeVal.setText(idType != null && !idType.isEmpty() ? idType : "None");
                     }
 
                     if (tvIdNumVal != null) {
-                        if (idNum != null && idNum.length() >= 4) {
-                            tvIdNumVal.setText("••••••••" + idNum.substring(idNum.length() - 4));
+                        if (idNum != null && !idNum.isEmpty()) {
+                            tvIdNumVal.setText("••••••••" + (idNum.length() >= 4 ? idNum.substring(idNum.length() - 4) : idNum));
                         } else {
-                            tvIdNumVal.setText("••••••••1234");
+                            tvIdNumVal.setText("Not Available");
                         }
                     }
 
                     if (tvDateVal != null) {
-                        tvDateVal.setText(verifDate != null && !verifDate.isEmpty() ? verifDate : "Recorded Date");
+                        tvDateVal.setText(verifDate != null && !verifDate.isEmpty() ? verifDate : "Pending");
                     }
 
                     View btnUploadId = findViewById(R.id.btnUploadIdForVerif);
