@@ -59,7 +59,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         View headerCard = findViewById(R.id.cardCustProfileHeader);
         if (headerCard != null) {
-            headerCard.setOnClickListener(v -> startActivity(new Intent(this, EditProfileActivity.class)));
+            headerCard.setOnClickListener(v -> startActivity(new Intent(this, CustomerVerificationDetailsActivity.class)));
         }
 
         View menuEdit = findViewById(R.id.menuEditProfileGCash);
