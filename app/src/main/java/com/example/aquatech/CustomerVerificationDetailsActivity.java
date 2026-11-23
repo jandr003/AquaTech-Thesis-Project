@@ -121,18 +121,18 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                     if (isVerified != null && isVerified) {
                         if (tvBannerTitle != null) {
                             tvBannerTitle.setText("Fully Verified");
-                            tvBannerTitle.setTextColor(Color.parseColor("#15803D"));
+                            tvBannerTitle.setTextColor(Color.parseColor("#0369A1"));
                         }
                         if (tvBannerSubtitle != null) {
                             tvBannerSubtitle.setText("Your account verification is complete and approved.");
                         }
                         if (tvStatusVal != null) {
                             tvStatusVal.setText("Approved");
-                            tvStatusVal.setTextColor(Color.parseColor("#16A34A"));
+                            tvStatusVal.setTextColor(Color.parseColor("#0284C7"));
                         }
-                        if (icStepBasic != null) icStepBasic.setColorFilter(Color.parseColor("#16A34A"));
-                        if (icStepSemi != null) icStepSemi.setColorFilter(Color.parseColor("#16A34A"));
-                        if (icStepFull != null) icStepFull.setColorFilter(Color.parseColor("#16A34A"));
+                        if (icStepBasic != null) icStepBasic.setColorFilter(Color.parseColor("#0284C7"));
+                        if (icStepSemi != null) icStepSemi.setColorFilter(Color.parseColor("#0284C7"));
+                        if (icStepFull != null) icStepFull.setColorFilter(Color.parseColor("#0284C7"));
                     } else if ("Semi-Verified".equalsIgnoreCase(level)) {
                         if (tvBannerTitle != null) {
                             tvBannerTitle.setText("Semi-Verified");
