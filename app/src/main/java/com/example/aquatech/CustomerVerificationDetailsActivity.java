@@ -130,6 +130,10 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                     }
 
                     if (isVerified != null && isVerified) {
+                        if (ivBannerIcon != null) {
+                            ivBannerIcon.setImageResource(R.drawable.ic_check_on);
+                            ivBannerIcon.setColorFilter(Color.parseColor("#16A34A"));
+                        }
                         if (tvBannerTitle != null) {
                             tvBannerTitle.setText("Fully Verified");
                             tvBannerTitle.setTextColor(Color.parseColor("#15803D"));
@@ -145,6 +149,10 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                         if (icStepSemi != null) icStepSemi.setColorFilter(Color.parseColor("#16A34A"));
                         if (icStepFull != null) icStepFull.setColorFilter(Color.parseColor("#16A34A"));
                     } else if ("Semi-Verified".equalsIgnoreCase(level)) {
+                        if (ivBannerIcon != null) {
+                            ivBannerIcon.setImageResource(R.drawable.ic_clock);
+                            ivBannerIcon.setColorFilter(Color.parseColor("#0284C7"));
+                        }
                         if (tvBannerTitle != null) {
                             tvBannerTitle.setText("Semi-Verified");
                             tvBannerTitle.setTextColor(Color.parseColor("#0284C7"));
@@ -160,6 +168,10 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                         if (icStepSemi != null) icStepSemi.setColorFilter(Color.parseColor("#16A34A"));
                         if (icStepFull != null) icStepFull.setColorFilter(Color.parseColor("#94A3B8"));
                     } else {
+                        if (ivBannerIcon != null) {
+                            ivBannerIcon.setImageResource(R.drawable.ic_help_center);
+                            ivBannerIcon.setColorFilter(Color.parseColor("#D97706"));
+                        }
                         if (tvBannerTitle != null) {
                             tvBannerTitle.setText("Basic Level");
                             tvBannerTitle.setTextColor(Color.parseColor("#D97706"));
