@@ -139,15 +139,19 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
             enteredIdNumber = val;
             launchPhotoPicker();
         });
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.dismiss();
+        });
         builder.show();
     }
 
     private void launchPhotoPicker() {
         if (pickMediaLauncher != null) {
-            pickMediaLauncher.launch(new PickVisualMediaRequest.Builder()
-                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                    .build());
+            pickMediaLauncher.launch(
+                    new PickVisualMediaRequest.Builder()
+                            .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                            .build()
+            );
         }
     }
 
