@@ -160,7 +160,7 @@
                             android:textColor="#1E293B"
                             android:textSize="15sp"
                             android:textStyle="bold"
-                            tools:text="Fully Verified" />
+                            tools:text="Verification Level" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
                             android:textColor="#1E293B"
                             android:textSize="15sp"
                             android:textStyle="bold"
-                            tools:text="Government-issued ID" />
+                            tools:text="ID Type" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -200,7 +200,7 @@
                             android:textColor="#1E293B"
                             android:textSize="15sp"
                             android:textStyle="bold"
-                            tools:text="••••••••1234" />
+                            tools:text="ID Number" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -220,7 +220,7 @@
                             android:textColor="#16A34A"
                             android:textSize="15sp"
                             android:textStyle="bold"
-                            tools:text="Approved" />
+                            tools:text="Verification Status" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -240,7 +240,7 @@
                             android:textColor="#1E293B"
                             android:textSize="15sp"
                             android:textStyle="bold"
-                            tools:text="November 20, 2026" />
+                            tools:text="Verification Date" />
 
                     </LinearLayout>
 
