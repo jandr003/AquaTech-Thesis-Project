@@ -530,6 +530,28 @@
                             app:tint="#2196F3" />
                     </LinearLayout>
 
+                    <CheckBox
+                        android:id="@+id/cbSaveAddressToProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:buttonTint="#2196F3"
+                        android:fontFamily="@font/poppins"
+                        android:text="Save this address to My Saved Service Addresses"
+                        android:textColor="#334155"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Your changes will apply to this service request. Check the box if you want to save this new address to your profile."
+                        android:textColor="#64748B"
+                        android:textSize="11sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

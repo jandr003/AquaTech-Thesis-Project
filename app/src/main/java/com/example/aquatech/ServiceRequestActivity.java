@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -825,7 +826,16 @@ public class ServiceRequestActivity extends AppCompatActivity {
         intent.putExtra("ADMIN_WILL_SCHEDULE", adminWillSchedule);
 
         if (etCustomerAddress != null) {
-            intent.putExtra("ADDRESS", etCustomerAddress.getText().toString());
+            String finalAddr = etCustomerAddress.getText().toString().trim();
+            intent.putExtra("ADDRESS", finalAddr);
+
+            CheckBox cbSaveAddress = findViewById(R.id.cbSaveAddressToProfile);
+            if (cbSaveAddress != null && cbSaveAddress.isChecked() && !finalAddr.isEmpty() && mAuth != null && mAuth.getCurrentUser() != null) {
+                FirebaseDatabase.getInstance(DB_URL).getReference("Users")
+                        .child(mAuth.getCurrentUser().getUid())
+                        .child("address")
+                        .setValue(finalAddr);
+            }
         }
 
         if (etCustomerRef != null) {
