@@ -226,6 +226,19 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                     }
 
                     if (isVerified != null && isVerified) {
+                        if (tvIdTypeVal != null) {
+                            tvIdTypeVal.setText(idType != null && !idType.isEmpty() ? idType : "Government-issued ID");
+                        }
+                        if (tvIdNumVal != null) {
+                            if (idNum != null && !idNum.isEmpty()) {
+                                tvIdNumVal.setText("••••••••" + (idNum.length() >= 4 ? idNum.substring(idNum.length() - 4) : idNum));
+                            } else {
+                                tvIdNumVal.setText("••••••••5678");
+                            }
+                        }
+                        if (tvDateVal != null) {
+                            tvDateVal.setText(verifDate != null && !verifDate.isEmpty() ? verifDate : "Approved Record");
+                        }
                         if (ivBannerIcon != null) {
                             ivBannerIcon.setImageResource(R.drawable.ic_check_on);
                             ivBannerIcon.setColorFilter(Color.parseColor("#16A34A"));
@@ -251,6 +264,19 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                             icStepFull.setColorFilter(Color.parseColor("#16A34A"));
                         }
                     } else if ("Semi-Verified".equalsIgnoreCase(level)) {
+                        if (tvIdTypeVal != null) {
+                            tvIdTypeVal.setText(idType != null && !idType.isEmpty() ? idType : "Government-issued ID");
+                        }
+                        if (tvIdNumVal != null) {
+                            if (idNum != null && !idNum.isEmpty()) {
+                                tvIdNumVal.setText("••••••••" + (idNum.length() >= 4 ? idNum.substring(idNum.length() - 4) : idNum));
+                            } else {
+                                tvIdNumVal.setText("Under Admin Review");
+                            }
+                        }
+                        if (tvDateVal != null) {
+                            tvDateVal.setText(verifDate != null && !verifDate.isEmpty() ? verifDate : "Pending Approval");
+                        }
                         if (ivBannerIcon != null) {
                             ivBannerIcon.setImageResource(R.drawable.ic_clock);
                             ivBannerIcon.setColorFilter(Color.parseColor("#0284C7"));
@@ -260,7 +286,7 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                             tvBannerTitle.setTextColor(Color.parseColor("#0284C7"));
                         }
                         if (tvBannerSubtitle != null) {
-                            tvBannerSubtitle.setText("Additional verification requirements completed.");
+                            tvBannerSubtitle.setText("ID photo submitted successfully. Under Dispatch Review.");
                         }
                         if (tvStatusVal != null) {
                             tvStatusVal.setText("Under Review");
@@ -276,6 +302,15 @@ public class CustomerVerificationDetailsActivity extends AppCompatActivity {
                             icStepFull.setColorFilter(Color.parseColor("#94A3B8"));
                         }
                     } else {
+                        if (tvIdTypeVal != null) {
+                            tvIdTypeVal.setText("Not Submitted");
+                        }
+                        if (tvIdNumVal != null) {
+                            tvIdNumVal.setText("Not Submitted");
+                        }
+                        if (tvDateVal != null) {
+                            tvDateVal.setText("Not Available");
+                        }
                         if (ivBannerIcon != null) {
                             ivBannerIcon.setImageResource(R.drawable.ic_help_center);
                             ivBannerIcon.setColorFilter(Color.parseColor("#D97706"));
