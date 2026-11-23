@@ -309,7 +309,7 @@
                                 android:layout_width="22dp"
                                 android:layout_height="22dp"
                                 android:contentDescription="Purifier Unit"
-                                android:src="@drawable/standing_water_purifier"
+                                android:src="@drawable/ic_pdf_droplet"
                                 app:tint="#2196F3" />
 
                             <TextView
