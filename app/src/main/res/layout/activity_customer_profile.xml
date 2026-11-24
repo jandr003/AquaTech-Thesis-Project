@@ -234,7 +234,7 @@
                             android:layout_width="22dp"
                             android:layout_height="22dp"
                             android:contentDescription="Service Address"
-                            android:src="@drawable/ic_pdf_house"
+                            android:src="@drawable/ic_pinpoint"
                             app:tint="#2196F3" />
 
                         <TextView
@@ -256,9 +256,7 @@
                             app:tint="#94A3B8" />
 
                     </LinearLayout>
-
                 </LinearLayout>
-
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
