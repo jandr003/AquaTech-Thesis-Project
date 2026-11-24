@@ -74,7 +74,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         View menuNotif = findViewById(R.id.menuNotificationPreferencesCust);
         if (menuNotif != null) {
-            menuNotif.setOnClickListener(v -> startActivity(new Intent(this, NotificationActivity.class)));
+            menuNotif.setOnClickListener(v -> startActivity(new Intent(this, NotificationSettingsActivity.class)));
         }
 
         View menuSecurity = findViewById(R.id.menuAccountSecurityCust);
