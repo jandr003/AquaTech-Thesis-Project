@@ -59,66 +59,6 @@ public class CustomerSavedAddressesActivity extends AppCompatActivity {
         }
     }
 
-    private void showEditAddressDialog() {
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_address, null);
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(dialogView)
-                .create();
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        EditText etInput = dialogView.findViewById(R.id.etDialogAddressInput);
-        if (etInput != null) {
-            etInput.setText(currentSavedAddress);
-        }
-
-        View btnCancel = dialogView.findViewById(R.id.btnCancelDialogAddress);
-        if (btnCancel != null) {
-            btnCancel.setOnClickListener(v -> dialog.dismiss());
-        }
-
-        View btnPickMap = dialogView.findViewById(R.id.btnDialogPickOnMap);
-        if (btnPickMap != null) {
-            btnPickMap.setOnClickListener(v -> {
-                dialog.dismiss();
-                startActivity(new Intent(this, MapPickerActivity.class));
-            });
-        }
-
-        View btnSave = dialogView.findViewById(R.id.btnSaveDialogAddress);
-        if (btnSave != null) {
-            btnSave.setOnClickListener(v -> {
-                String newAddr = etInput != null ? etInput.getText().toString().trim() : "";
-                if (newAddr.isEmpty()) {
-                    Toast.makeText(this, "Address cannot be empty.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                saveAddressToFirebase(newAddr);
-                dialog.dismiss();
-            });
-        }
-
-        dialog.show();
-    }
-
-    private void saveAddressToFirebase(String newAddress) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) {
-            return;
-        }
-
-        DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(user.getUid());
-        userRef.child("address").setValue(newAddress)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(CustomerSavedAddressesActivity.this, "Service address updated successfully!", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(CustomerSavedAddressesActivity.this, "Failed to update address: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-
     private void loadSavedAddress() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
