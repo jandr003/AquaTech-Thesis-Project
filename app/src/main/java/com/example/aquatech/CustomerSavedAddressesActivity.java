@@ -50,7 +50,7 @@ public class CustomerSavedAddressesActivity extends AppCompatActivity {
     private void setupClickListeners() {
         View btnEdit = findViewById(R.id.btnEditSavedAddress);
         if (btnEdit != null) {
-            btnEdit.setOnClickListener(v -> showEditAddressDialog());
+            btnEdit.setOnClickListener(v -> startActivity(new Intent(this, EditAddressActivity.class)));
         }
 
         View btnAddMap = findViewById(R.id.btnAddAddressMap);
