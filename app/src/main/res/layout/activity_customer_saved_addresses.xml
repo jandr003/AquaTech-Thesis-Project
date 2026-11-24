@@ -161,13 +161,17 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="#2196F3"
                 android:fontFamily="@font/poppins"
-                android:text="+ Add / Pick New Address on Map"
+                android:text="Pinpoint Address on Map"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:cornerRadius="16dp"
-                app:elevation="2dp" />
+                app:elevation="2dp"
+                app:icon="@drawable/ic_location_pin_vector"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/white" />
 
         </LinearLayout>
 
