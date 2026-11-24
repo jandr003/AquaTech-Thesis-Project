@@ -113,7 +113,7 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_pdf_house"
+                    android:src="@drawable/ic_location_pin_vector"
                     app:tint="#2196F3" />
 
                 <TextView
