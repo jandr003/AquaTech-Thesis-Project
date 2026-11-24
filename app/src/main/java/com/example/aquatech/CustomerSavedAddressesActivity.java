@@ -60,29 +60,39 @@ public class CustomerSavedAddressesActivity extends AppCompatActivity {
     }
 
     private void showEditAddressDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Edit Saved Service Address");
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_address, null);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .create();
 
-        final EditText input = new EditText(this);
-        input.setHint("Enter complete house & street address");
-        input.setText(currentSavedAddress);
-        input.setPadding(36, 36, 36, 36);
-        builder.setView(input);
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
 
-        builder.setPositiveButton("Save Address", (dialog, which) -> {
-            String newAddress = input.getText().toString().trim();
-            if (newAddress.isEmpty()) {
-                Toast.makeText(this, "Address cannot be empty.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            saveAddressToFirebase(newAddress);
-        });
+        EditText etInput = dialogView.findViewById(R.id.etDialogAddressInput);
+        if (etInput != null) {
+            etInput.setText(currentSavedAddress);
+        }
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> {
-            dialog.dismiss();
-        });
+        View btnCancel = dialogView.findViewById(R.id.btnCancelDialogAddress);
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
+        }
 
-        builder.show();
+        View btnSave = dialogView.findViewById(R.id.btnSaveDialogAddress);
+        if (btnSave != null) {
+            btnSave.setOnClickListener(v -> {
+                String newAddr = etInput != null ? etInput.getText().toString().trim() : "";
+                if (newAddr.isEmpty()) {
+                    Toast.makeText(this, "Address cannot be empty.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                saveAddressToFirebase(newAddr);
+                dialog.dismiss();
+            });
+        }
+
+        dialog.show();
     }
 
     private void saveAddressToFirebase(String newAddress) {
