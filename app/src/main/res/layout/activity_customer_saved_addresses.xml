@@ -111,7 +111,7 @@
                             android:layout_width="22dp"
                             android:layout_height="22dp"
                             android:contentDescription="Address Icon"
-                            android:src="@drawable/ic_pinpoint"
+                            android:src="@drawable/ic_location_pin_vector"
                             app:tint="#2196F3" />
 
                         <TextView
