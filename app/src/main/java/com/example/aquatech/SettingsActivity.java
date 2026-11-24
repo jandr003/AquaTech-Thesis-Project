@@ -43,7 +43,9 @@ public class SettingsActivity extends AppCompatActivity {
     private void setupStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            );
             window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
@@ -51,23 +53,54 @@ public class SettingsActivity extends AppCompatActivity {
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBack);
         if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
+            btnBack.setOnClickListener(v -> {
+                finish();
+            });
         }
 
-        setupClick(R.id.yourAccSec, R.id.arrowUp, this::showAccountSecurityDialog);
+        setupClick(R.id.yourAccSec, R.id.arrowUp, () -> {
+            showAccountSecurityDialog();
+        });
 
-        setupClick(R.id.yourChat, R.id.arrowUp06, () -> startActivity(new Intent(this, ChatSettingsActivity.class)));
-        setupClick(R.id.yourNotification, R.id.arrowUp07, () -> startActivity(new Intent(this, CustomerNotificationSettingsActivity.class)));
-        setupClick(R.id.yourValidID, R.id.arrowUp02, () -> startActivity(new Intent(this, ValidIDActivity.class)));
+        setupClick(R.id.yourChat, R.id.arrowUp06, () -> {
+            startActivity(new Intent(this, ChatSettingsActivity.class));
+        });
 
-        setupClick(R.id.yourLanguage, R.id.arrowUp03, this::showLanguageDialog);
-        setupClick(R.id.yourDisplay, R.id.arrowUp04, this::showDisplayDialog);
-        setupClick(R.id.yourPrivacySettings, R.id.arrowUp05, this::showPrivacyDialog);
+        setupClick(R.id.yourNotification, R.id.arrowUp07, () -> {
+            startActivity(new Intent(this, CustomerNotificationSettingsActivity.class));
+        });
 
-        setupClick(R.id.yourHelp, R.id.arrowUp08, () -> startActivity(new Intent(this, HelpCenterActivity.class)));
-        setupClick(R.id.yourTermsCondition, R.id.arrowUp09, () -> startActivity(new Intent(this, TermsAndConditionActivity.class)));
-        setupClick(R.id.yourAccDelete, R.id.arrowUp10, () -> startActivity(new Intent(this, AccountDeletionActivity.class)));
-        setupClick(R.id.youAboutInfo, R.id.arrowUp11, () -> startActivity(new Intent(this, AboutActivity.class)));
+        setupClick(R.id.yourValidID, R.id.arrowUp02, () -> {
+            startActivity(new Intent(this, ValidIDActivity.class));
+        });
+
+        setupClick(R.id.yourLanguage, R.id.arrowUp03, () -> {
+            showLanguageDialog();
+        });
+
+        setupClick(R.id.yourDisplay, R.id.arrowUp04, () -> {
+            showDisplayDialog();
+        });
+
+        setupClick(R.id.yourPrivacySettings, R.id.arrowUp05, () -> {
+            showPrivacyDialog();
+        });
+
+        setupClick(R.id.yourHelp, R.id.arrowUp08, () -> {
+            startActivity(new Intent(this, HelpCenterActivity.class));
+        });
+
+        setupClick(R.id.yourTermsCondition, R.id.arrowUp09, () -> {
+            startActivity(new Intent(this, TermsAndConditionActivity.class));
+        });
+
+        setupClick(R.id.yourAccDelete, R.id.arrowUp10, () -> {
+            startActivity(new Intent(this, AccountDeletionActivity.class));
+        });
+
+        setupClick(R.id.youAboutInfo, R.id.arrowUp11, () -> {
+            startActivity(new Intent(this, AboutActivity.class));
+        });
     }
 
     private void showAccountSecurityDialog() {
@@ -121,7 +154,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         View btnDone = dialog.findViewById(R.id.btnDoneSecurity);
         if (btnDone != null) {
-            btnDone.setOnClickListener(v -> dialog.dismiss());
+            btnDone.setOnClickListener(v -> {
+                dialog.dismiss();
+            });
         }
 
         dialog.show();
@@ -236,7 +271,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         View btnCancel = dialog.findViewById(R.id.btnCancelLang);
         if (btnCancel != null) {
-            btnCancel.setOnClickListener(v -> dialog.dismiss());
+            btnCancel.setOnClickListener(v -> {
+                dialog.dismiss();
+            });
         }
 
         dialog.show();
