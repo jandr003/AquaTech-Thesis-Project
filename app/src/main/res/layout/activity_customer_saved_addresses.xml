@@ -167,11 +167,7 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:cornerRadius="16dp"
-                app:elevation="2dp"
-                app:icon="@drawable/ic_location_pin_vector"
-                app:iconGravity="textStart"
-                app:iconPadding="8dp"
-                app:iconTint="@color/white" />
+                app:elevation="2dp" />
 
         </LinearLayout>
 
