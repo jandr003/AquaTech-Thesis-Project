@@ -79,7 +79,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         View menuSecurity = findViewById(R.id.menuAccountSecurityCust);
         if (menuSecurity != null) {
-            menuSecurity.setOnClickListener(v -> startActivity(new Intent(this, ConfirmPasswordActivity.class)));
+            menuSecurity.setOnClickListener(v -> startActivity(new Intent(this, CustomerAccountSecurityActivity.class)));
         }
 
         View menuSupport = findViewById(R.id.menuSupportHelp);
