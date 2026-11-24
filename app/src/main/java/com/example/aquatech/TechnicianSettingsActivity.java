@@ -193,11 +193,7 @@ public class TechnicianSettingsActivity extends AppCompatActivity {
 
         View btnNotif = findViewById(R.id.btnTechNotification);
         if (btnNotif != null) {
-            btnNotif.setOnClickListener(v -> {
-                Intent intent = new Intent(this, NotificationSettingsActivity.class);
-                intent.putExtra("IS_TECH", true);
-                startActivity(intent);
-            });
+            btnNotif.setOnClickListener(v -> startActivity(new Intent(this, TechnicianNotificationSettingsActivity.class)));
         }
 
         View btnHelp = findViewById(R.id.btnTechHelp);

@@ -57,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
         setupClick(R.id.yourAccSec, R.id.arrowUp, this::showAccountSecurityDialog);
 
         setupClick(R.id.yourChat, R.id.arrowUp06, () -> startActivity(new Intent(this, ChatSettingsActivity.class)));
-        setupClick(R.id.yourNotification, R.id.arrowUp07, () -> startActivity(new Intent(this, NotificationSettingsActivity.class)));
+        setupClick(R.id.yourNotification, R.id.arrowUp07, () -> startActivity(new Intent(this, CustomerNotificationSettingsActivity.class)));
         setupClick(R.id.yourValidID, R.id.arrowUp02, () -> startActivity(new Intent(this, ValidIDActivity.class)));
 
         setupClick(R.id.yourLanguage, R.id.arrowUp03, this::showLanguageDialog);
