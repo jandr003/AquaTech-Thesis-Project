@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -61,9 +60,14 @@ public class CustomerSavedAddressesActivity extends AppCompatActivity {
     }
 
     private void showEditAddressDialog() {
-        BottomSheetDialog bottomSheet = new BottomSheetDialog(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_address, null);
-        bottomSheet.setContentView(dialogView);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
 
         EditText etInput = dialogView.findViewById(R.id.etDialogAddressInput);
         if (etInput != null) {
@@ -72,7 +76,7 @@ public class CustomerSavedAddressesActivity extends AppCompatActivity {
 
         View btnCancel = dialogView.findViewById(R.id.btnCancelDialogAddress);
         if (btnCancel != null) {
-            btnCancel.setOnClickListener(v -> bottomSheet.dismiss());
+            btnCancel.setOnClickListener(v -> dialog.dismiss());
         }
 
         View btnSave = dialogView.findViewById(R.id.btnSaveDialogAddress);
@@ -84,11 +88,11 @@ public class CustomerSavedAddressesActivity extends AppCompatActivity {
                     return;
                 }
                 saveAddressToFirebase(newAddr);
-                bottomSheet.dismiss();
+                dialog.dismiss();
             });
         }
 
-        bottomSheet.show();
+        dialog.show();
     }
 
     private void saveAddressToFirebase(String newAddress) {
