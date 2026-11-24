@@ -79,6 +79,14 @@ public class CustomerSavedAddressesActivity extends AppCompatActivity {
             btnCancel.setOnClickListener(v -> dialog.dismiss());
         }
 
+        View btnPickMap = dialogView.findViewById(R.id.btnDialogPickOnMap);
+        if (btnPickMap != null) {
+            btnPickMap.setOnClickListener(v -> {
+                dialog.dismiss();
+                startActivity(new Intent(this, MapPickerActivity.class));
+            });
+        }
+
         View btnSave = dialogView.findViewById(R.id.btnSaveDialogAddress);
         if (btnSave != null) {
             btnSave.setOnClickListener(v -> {

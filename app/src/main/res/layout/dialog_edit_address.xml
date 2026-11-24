@@ -91,10 +91,30 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDialogPickOnMap"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/poppins"
+            android:text="Pinpoint Location on Map"
+            android:textAllCaps="false"
+            android:textColor="#2196F3"
+            android:textSize="13.5sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_location_pin_vector"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="#2196F3"
+            app:strokeColor="#2196F3"
+            app:strokeWidth="1.2dp" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveDialogAddress"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:backgroundTint="#2196F3"
             android:fontFamily="@font/poppins"
             android:text="Save Address Changes"
