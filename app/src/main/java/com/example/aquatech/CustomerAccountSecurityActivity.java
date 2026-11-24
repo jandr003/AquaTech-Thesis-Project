@@ -16,7 +16,6 @@ public class CustomerAccountSecurityActivity extends AppCompatActivity {
 
         initializeViews();
         setupClickListeners();
-        CustomerDashboardNavHelper.setupBottomNavigation(this);
     }
 
     private void initializeViews() {
