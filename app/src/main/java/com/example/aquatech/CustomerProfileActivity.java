@@ -69,7 +69,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         View menuAddress = findViewById(R.id.menuServiceAddressCust);
         if (menuAddress != null) {
-            menuAddress.setOnClickListener(v -> startActivity(new Intent(this, CustomerSetupActivity.class)));
+            menuAddress.setOnClickListener(v -> startActivity(new Intent(this, CustomerSavedAddressesActivity.class)));
         }
 
         View menuNotif = findViewById(R.id.menuNotificationPreferencesCust);
