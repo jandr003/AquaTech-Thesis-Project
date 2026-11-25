@@ -87,10 +87,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:fontFamily="@font/poppins"
-                        android:text="Effective Date: November 2026 | Compliant with R.A. 10173 (Data Privacy Act of 2012)"
-                        android:textColor="#0284C7"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:text="Compliant with R.A. 10173 • Data Privacy Act of 2012"
+                        android:textColor="#64748B"
+                        android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
