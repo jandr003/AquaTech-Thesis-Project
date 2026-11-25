@@ -94,7 +94,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         View menuPrivacy = findViewById(R.id.menuPrivacyLegalCust);
         if (menuPrivacy != null) {
-            menuPrivacy.setOnClickListener(v -> startActivity(new Intent(this, TechnicianPrivacyActivity.class)));
+            menuPrivacy.setOnClickListener(v -> startActivity(new Intent(this, CustomerPrivacyLegalActivity.class)));
         }
 
         View btnLogout = findViewById(R.id.btnCustLogout);

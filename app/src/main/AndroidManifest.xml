@@ -153,6 +153,20 @@
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
+            android:name=".CustomerPrivacyLegalActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
+            android:name=".CustomerPrivacyPolicyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
             android:name=".TechnicianNotificationSettingsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
