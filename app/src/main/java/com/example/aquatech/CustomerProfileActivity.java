@@ -89,7 +89,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         View menuAbout = findViewById(R.id.menuAboutAquaTechCust);
         if (menuAbout != null) {
-            menuAbout.setOnClickListener(v -> startActivity(new Intent(this, TechnicianAboutActivity.class)));
+            menuAbout.setOnClickListener(v -> startActivity(new Intent(this, AboutActivity.class)));
         }
 
         View menuPrivacy = findViewById(R.id.menuPrivacyLegalCust);
