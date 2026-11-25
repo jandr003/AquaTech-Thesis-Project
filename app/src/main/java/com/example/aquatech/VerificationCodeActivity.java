@@ -54,6 +54,11 @@ public class VerificationCodeActivity extends AppCompatActivity {
         yourMobileNum = findViewById(R.id.yourMobileNum);
         yourResendCode = findViewById(R.id.yourResendCode);
 
+        View btnBack = findViewById(R.id.btnBackVerifCode);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         mobile = getIntent().getStringExtra("mobile");
 

@@ -39,13 +39,15 @@ import java.util.Map;
 public class ForgetPasswordActivity extends AppCompatActivity {
 
     private static final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
-    private TextView tvForgotHeader, tvForgotPassword;
+    private TextView tvForgotHeader;
+    private TextView tvForgotPassword;
     private EditText etMobileNumber;
     private Button btnResetPassword;
     private CardView floatingCard;
     private String phoneNumber;
     private CheckBox cbRememberMe;
-    private DatabaseReference usersRef, resetsRef;
+    private DatabaseReference usersRef;
+    private DatabaseReference resetsRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         createNotificationChannel();
 
         if (btnResetPassword != null) {
-            btnResetPassword.setOnClickListener(v -> handleReset());
+            btnResetPassword.setOnClickListener(v -> {
+                handleReset();
+            });
         }
     }
 
@@ -73,7 +77,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            );
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
@@ -90,7 +95,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackForgot);
         if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
+            btnBack.setOnClickListener(v -> {
+                finish();
+            });
         }
 
         tvForgotHeader = findViewById(R.id.tvForgotHeader);
@@ -110,6 +117,12 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     }
 
     private void loadPrefs() {
+        String prefillPhone = getIntent().getStringExtra("PREFILL_PHONE");
+        if (prefillPhone != null && !prefillPhone.isEmpty() && etMobileNumber != null) {
+            etMobileNumber.setText(prefillPhone);
+            return;
+        }
+
         SharedPreferences prefs = getSharedPreferences("aquatech_prefs", MODE_PRIVATE);
         if (prefs == null) {
             return;
