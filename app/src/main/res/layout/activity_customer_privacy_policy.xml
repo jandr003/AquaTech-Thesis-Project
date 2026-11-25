@@ -203,7 +203,7 @@
                 android:layout_marginBottom="16dp"
                 android:backgroundTint="#2196F3"
                 android:fontFamily="@font/poppins"
-                android:text="I Understand &amp; Agree"
+                android:text="Accept Privacy Policy"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="15sp"
