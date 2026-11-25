@@ -20,7 +20,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+
+import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
 
@@ -129,12 +134,32 @@ public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
             }
             startActivity(intent);
         } else {
-            Intent intent = new Intent(this, ForgetPasswordActivity.class);
-            if (!userPhone.isEmpty()) {
-                intent.putExtra("PREFILL_PHONE", userPhone);
-            }
-            startActivity(intent);
+            String targetNum = !userPhone.isEmpty() ? userPhone : "09989619845";
+            String otpCode = generateOtpCode(6);
+
+            Map<String, Object> otpData = new HashMap<>();
+            otpData.put("otp", otpCode);
+            otpData.put("timestamp", ServerValue.TIMESTAMP);
+
+            FirebaseDatabase.getInstance(DB_URL).getReference("PasswordResets")
+                    .child(targetNum)
+                    .setValue(otpData)
+                    .addOnCompleteListener(task -> {
+                        Intent intent = new Intent(this, VerificationCodeActivity.class);
+                        intent.putExtra("mobile", targetNum);
+                        intent.putExtra("phoneNumber", targetNum);
+                        startActivity(intent);
+                    });
         }
+    }
+
+    private String generateOtpCode(int length) {
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
     }
 
     private void loadCustomerRecord() {
