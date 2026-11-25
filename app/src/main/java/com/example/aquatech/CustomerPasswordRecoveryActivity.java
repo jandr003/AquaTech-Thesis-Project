@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
 
     private MaterialCardView cardEmail, cardSMS;
     private RadioButton rbEmail, rbSMS;
+    private ImageView ivIconEmail, ivIconSMS;
+    private TextView tvTitleEmail, tvTitleSMS;
     private MaterialButton btnSendMethod;
     private TextView tvEmailSub, tvPhoneSub;
     private FirebaseAuth mAuth;
@@ -54,8 +57,13 @@ public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
         cardSMS = findViewById(R.id.cardOptionSMS);
         rbEmail = findViewById(R.id.rbOptionEmail);
         rbSMS = findViewById(R.id.rbOptionSMS);
-        btnSendMethod = findViewById(R.id.btnSendResetMethod);
 
+        ivIconEmail = findViewById(R.id.ivIconEmail);
+        ivIconSMS = findViewById(R.id.ivIconSMS);
+        tvTitleEmail = findViewById(R.id.tvTitleEmail);
+        tvTitleSMS = findViewById(R.id.tvTitleSMS);
+
+        btnSendMethod = findViewById(R.id.btnSendResetMethod);
         tvEmailSub = findViewById(R.id.tvRegisteredEmailSub);
         tvPhoneSub = findViewById(R.id.tvRegisteredPhoneSub);
     }
@@ -92,6 +100,20 @@ public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
         if (cardSMS != null) {
             cardSMS.setStrokeColor(Color.parseColor(!isEmail ? "#2196F3" : "#E2E8F0"));
             cardSMS.setStrokeWidth(!isEmail ? 6 : 2);
+        }
+
+        if (ivIconEmail != null) {
+            ivIconEmail.setColorFilter(Color.parseColor(isEmail ? "#2196F3" : "#94A3B8"));
+        }
+        if (ivIconSMS != null) {
+            ivIconSMS.setColorFilter(Color.parseColor(!isEmail ? "#2196F3" : "#94A3B8"));
+        }
+
+        if (tvTitleEmail != null) {
+            tvTitleEmail.setTextColor(Color.parseColor(isEmail ? "#0284C7" : "#64748B"));
+        }
+        if (tvTitleSMS != null) {
+            tvTitleSMS.setTextColor(Color.parseColor(!isEmail ? "#0284C7" : "#64748B"));
         }
 
         if (btnSendMethod != null) {
