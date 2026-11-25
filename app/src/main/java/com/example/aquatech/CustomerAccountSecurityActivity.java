@@ -33,7 +33,7 @@ public class CustomerAccountSecurityActivity extends AppCompatActivity {
 
         View btnRecovery = findViewById(R.id.btnCustPasswordRecovery);
         if (btnRecovery != null) {
-            btnRecovery.setOnClickListener(v -> startActivity(new Intent(this, ForgetPasswordActivity.class)));
+            btnRecovery.setOnClickListener(v -> startActivity(new Intent(this, CustomerPasswordRecoveryActivity.class)));
         }
 
         View btnActivity = findViewById(R.id.btnCustLoginActivity);
