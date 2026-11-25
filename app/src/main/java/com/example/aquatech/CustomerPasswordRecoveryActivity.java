@@ -1,14 +1,18 @@
 package com.example.aquatech;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,8 +23,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
 
+    private MaterialCardView cardEmail, cardSMS;
+    private RadioButton rbEmail, rbSMS;
+    private MaterialButton btnSendMethod;
     private TextView tvEmailSub, tvPhoneSub;
     private FirebaseAuth mAuth;
+    private boolean isEmailSelected = true;
     private String userEmail = "";
     private String userPhone = "";
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -42,31 +50,68 @@ public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
             btnBack.setOnClickListener(v -> finish());
         }
 
+        cardEmail = findViewById(R.id.cardOptionEmail);
+        cardSMS = findViewById(R.id.cardOptionSMS);
+        rbEmail = findViewById(R.id.rbOptionEmail);
+        rbSMS = findViewById(R.id.rbOptionSMS);
+        btnSendMethod = findViewById(R.id.btnSendResetMethod);
+
         tvEmailSub = findViewById(R.id.tvRegisteredEmailSub);
         tvPhoneSub = findViewById(R.id.tvRegisteredPhoneSub);
     }
 
     private void setupClickListeners() {
-        View cardEmail = findViewById(R.id.cardOptionEmail);
         if (cardEmail != null) {
-            cardEmail.setOnClickListener(v -> {
-                Intent intent = new Intent(this, ForgetPasswordActivity.class);
-                if (!userEmail.isEmpty()) {
-                    intent.putExtra("PREFILL_EMAIL", userEmail);
-                }
-                startActivity(intent);
-            });
+            cardEmail.setOnClickListener(v -> selectRecoveryMethod(true));
         }
 
-        View cardSMS = findViewById(R.id.cardOptionSMS);
         if (cardSMS != null) {
-            cardSMS.setOnClickListener(v -> {
-                Intent intent = new Intent(this, ForgetPasswordActivity.class);
-                if (!userPhone.isEmpty()) {
-                    intent.putExtra("PREFILL_PHONE", userPhone);
-                }
-                startActivity(intent);
-            });
+            cardSMS.setOnClickListener(v -> selectRecoveryMethod(false));
+        }
+
+        if (btnSendMethod != null) {
+            btnSendMethod.setOnClickListener(v -> executeSelectedRecovery());
+        }
+    }
+
+    private void selectRecoveryMethod(boolean isEmail) {
+        isEmailSelected = isEmail;
+
+        if (rbEmail != null) {
+            rbEmail.setChecked(isEmail);
+        }
+        if (rbSMS != null) {
+            rbSMS.setChecked(!isEmail);
+        }
+
+        if (cardEmail != null) {
+            cardEmail.setStrokeColor(Color.parseColor(isEmail ? "#2196F3" : "#E2E8F0"));
+            cardEmail.setStrokeWidth(isEmail ? 6 : 2);
+        }
+
+        if (cardSMS != null) {
+            cardSMS.setStrokeColor(Color.parseColor(!isEmail ? "#2196F3" : "#E2E8F0"));
+            cardSMS.setStrokeWidth(!isEmail ? 6 : 2);
+        }
+
+        if (btnSendMethod != null) {
+            btnSendMethod.setText(isEmail ? "Send Password Reset Link" : "Send SMS Verification Code");
+        }
+    }
+
+    private void executeSelectedRecovery() {
+        if (isEmailSelected) {
+            Intent intent = new Intent(this, ForgetPasswordActivity.class);
+            if (!userEmail.isEmpty()) {
+                intent.putExtra("PREFILL_EMAIL", userEmail);
+            }
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, ForgetPasswordActivity.class);
+            if (!userPhone.isEmpty()) {
+                intent.putExtra("PREFILL_PHONE", userPhone);
+            }
+            startActivity(intent);
         }
     }
 
