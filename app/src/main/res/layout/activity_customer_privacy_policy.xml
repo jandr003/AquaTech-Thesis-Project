@@ -150,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:fontFamily="@font/poppins"
-                        android:text="All customer records and uploaded Government IDs are encrypted in transit using SSL/TLS protocols and stored securely in Firebase Cloud Database. We enforce strict role-based access control (RBAC)."
+                        android:text="All personal information, service addresses, and uploaded Government IDs are encrypted using enterprise-grade security protocols. Your data is stored securely and accessed exclusively by authorized AquaTech personnel for dispatch and customer support purposes."
                         android:textColor="#475569"
                         android:textSize="13sp" />
 
