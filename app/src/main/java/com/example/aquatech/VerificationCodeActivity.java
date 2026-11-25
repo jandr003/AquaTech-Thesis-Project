@@ -61,9 +61,18 @@ public class VerificationCodeActivity extends AppCompatActivity {
 
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         mobile = getIntent().getStringExtra("mobile");
+        String email = getIntent().getStringExtra("email");
+
+        String targetContact = phoneNumber != null && !phoneNumber.isEmpty() ? phoneNumber :
+                (mobile != null && !mobile.isEmpty() ? mobile :
+                        (email != null && !email.isEmpty() ? email : ""));
 
         if (yourMobileNum != null) {
-            yourMobileNum.setText("We sent a code to " + (phoneNumber != null ? phoneNumber : (mobile != null ? mobile : "")));
+            if (!targetContact.isEmpty()) {
+                yourMobileNum.setText("We sent a 6-digit code to " + targetContact);
+            } else {
+                yourMobileNum.setText("We sent a 6-digit code to your registered account.");
+            }
         }
 
         setupStatusBar();
