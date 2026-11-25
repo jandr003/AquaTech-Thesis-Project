@@ -122,7 +122,7 @@ public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
         }
 
         if (btnSendMethod != null) {
-            btnSendMethod.setText(isEmail ? "Send Password Reset Link" : "Send SMS Verification Code");
+            btnSendMethod.setText(isEmail ? "Send Email Verification Code" : "Send SMS Verification Code");
         }
     }
 
@@ -136,6 +136,8 @@ public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
         Map<String, Object> otpData = new HashMap<>();
         otpData.put("otp", otpCode);
         otpData.put("timestamp", ServerValue.TIMESTAMP);
+
+        Toast.makeText(this, "Verification Code: " + otpCode, Toast.LENGTH_LONG).show();
 
         FirebaseDatabase.getInstance(DB_URL).getReference("PasswordResets")
                 .child(sanitizedKey)
