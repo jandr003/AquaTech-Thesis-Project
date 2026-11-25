@@ -127,30 +127,29 @@ public class CustomerPasswordRecoveryActivity extends AppCompatActivity {
     }
 
     private void executeSelectedRecovery() {
-        if (isEmailSelected) {
-            Intent intent = new Intent(this, ForgetPasswordActivity.class);
-            if (!userEmail.isEmpty()) {
-                intent.putExtra("PREFILL_EMAIL", userEmail);
-            }
-            startActivity(intent);
-        } else {
-            String targetNum = !userPhone.isEmpty() ? userPhone : "09989619845";
-            String otpCode = generateOtpCode(6);
+        String targetKey = isEmailSelected ? (!userEmail.isEmpty() ? userEmail : "registered email")
+                                           : (!userPhone.isEmpty() ? userPhone : "registered mobile");
 
-            Map<String, Object> otpData = new HashMap<>();
-            otpData.put("otp", otpCode);
-            otpData.put("timestamp", ServerValue.TIMESTAMP);
+        String sanitizedKey = targetKey.replace(".", "_").replace("@", "_at_");
+        String otpCode = generateOtpCode(6);
 
-            FirebaseDatabase.getInstance(DB_URL).getReference("PasswordResets")
-                    .child(targetNum)
-                    .setValue(otpData)
-                    .addOnCompleteListener(task -> {
-                        Intent intent = new Intent(this, VerificationCodeActivity.class);
-                        intent.putExtra("mobile", targetNum);
-                        intent.putExtra("phoneNumber", targetNum);
-                        startActivity(intent);
-                    });
-        }
+        Map<String, Object> otpData = new HashMap<>();
+        otpData.put("otp", otpCode);
+        otpData.put("timestamp", ServerValue.TIMESTAMP);
+
+        FirebaseDatabase.getInstance(DB_URL).getReference("PasswordResets")
+                .child(sanitizedKey)
+                .setValue(otpData)
+                .addOnCompleteListener(task -> {
+                    Intent intent = new Intent(this, VerificationCodeActivity.class);
+                    if (isEmailSelected) {
+                        intent.putExtra("email", targetKey);
+                    } else {
+                        intent.putExtra("mobile", targetKey);
+                        intent.putExtra("phoneNumber", targetKey);
+                    }
+                    startActivity(intent);
+                });
     }
 
     private String generateOtpCode(int length) {
