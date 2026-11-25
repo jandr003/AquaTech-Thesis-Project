@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6FBFF">
+    android:background="@color/aqua_background">
 
     <RelativeLayout
         android:id="@+id/aboutHeader"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="88dp"
         android:background="#2196F3"
         android:paddingHorizontal="12dp"
+        android:paddingTop="36dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -33,9 +34,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins"
             android:text="About AquaTech"
             android:textColor="@color/white"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -90,9 +92,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:background="@drawable/bg_pdf_status_blue_pill"
+                            android:fontFamily="@font/poppins"
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="6dp"
-                            android:text="Version 1.1.0"
+                            android:text="v2.4.0 (2026 Release)"
                             android:textColor="#2196F3"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -123,6 +126,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/poppins"
                             android:text="THE PHILIPPINE WATER REVOLUTION"
                             android:textColor="#2196F3"
                             android:textSize="13sp"
@@ -134,6 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:fontFamily="@font/poppins"
                         android:lineSpacingExtra="4dp"
                         android:text="Water is the most important substance we consume. But rather than a source of health and hydration, water in the Philippines today is a source of inconvenience at best, and danger and pollution at worst."
                         android:textColor="#475569"
@@ -143,6 +148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:fontFamily="@font/poppins"
                         android:lineSpacingExtra="4dp"
                         android:text="We are on a mission to make a water revolution in the Philippines—providing access for every individual, home, and business to an unlimited supply of the world’s safest clean water, guaranteed."
                         android:textColor="#1E293B"
@@ -173,6 +179,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/poppins"
                             android:text="OUR MOTHER COMPANY"
                             android:textColor="#2196F3"
                             android:textSize="13sp"
@@ -184,6 +191,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:fontFamily="@font/poppins"
                         android:lineSpacingExtra="4dp"
                         android:text="Together with our mother company, Waterlogic, and their decades of experience delivering highly-certified, great-tasting water in a safe and environmentally-responsible way, we will transform drinking water into a trusted, clean and sustainably abundant resource for all Filipinos."
                         android:textColor="#475569"
@@ -213,16 +221,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/poppins"
                             android:text="FIREWALL™ PURIFICATION TECHNOLOGY"
                             android:textColor="#2196F3"
                             android:textSize="13sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:fontFamily="@font/poppins"
                         android:lineSpacingExtra="4dp"
                         android:text="Our patented Firewall™ UV purification technology safely purifies drinking water up to 99.9999%, effectively eliminating viruses, bacteria, and cysts. Combined with BioCote® surface protection, every drop is guaranteed pure, safe, and fresh."
                         android:textColor="#475569"
@@ -252,6 +263,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
+                            android:fontFamily="@font/poppins"
                             android:text="TOTAL CARE &amp; SUSTAINABILITY"
                             android:textColor="#2196F3"
                             android:textSize="13sp"
@@ -263,6 +275,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:fontFamily="@font/poppins"
                         android:lineSpacingExtra="4dp"
                         android:text="Through our Total Care subscription service, every installation includes routine filter and UVC lamp replacements, technical support, and repairs for a fixed fee. We promote sustainable water management—delivering clean, bottleless hydration while eliminating single-use plastics."
                         android:textColor="#475569"
@@ -279,6 +292,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
                             android:lineSpacingExtra="3dp"
                             android:text="Waterlogic provides the world’s purest and safest water to over 50 million households and offices in more than 70 countries."
                             android:textColor="@color/white"
@@ -293,6 +307,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
                             android:gravity="center"
                             android:text="The Water Revolution has now arrived in the Philippines."
                             android:textColor="@color/white"
@@ -302,6 +317,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
@@ -319,6 +335,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:contentDescription="Phone Icon"
                         android:src="@drawable/ic_phone"
                         app:tint="#2196F3" />
 
@@ -326,6 +343,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
+                        android:fontFamily="@font/poppins"
                         android:text="Sales: +63 998 557 9144 • Tech: +63 998 961 9695"
                         android:textColor="#64748B"
                         android:textSize="11.5sp"
@@ -342,13 +360,15 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:src="@drawable/ic_pinpoint"
+                        android:contentDescription="Pinpoint Icon"
+                        android:src="@drawable/ic_location_pin_vector"
                         app:tint="#2196F3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
+                        android:fontFamily="@font/poppins"
                         android:text="GF, Makati City, 1209 Metro Manila"
                         android:textColor="#64748B"
                         android:textSize="12sp"
@@ -360,6 +380,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:fontFamily="@font/poppins"
                     android:text="© 2026 Aqua SmartGuard Corp. All Rights Reserved."
                     android:textColor="#94A3B8"
                     android:textSize="11sp" />
@@ -367,6 +388,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
