@@ -91,13 +91,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:background="@drawable/bg_pdf_status_blue_pill"
+                            android:background="@drawable/bg_solid_blue_pill"
                             android:fontFamily="@font/poppins"
-                            android:paddingHorizontal="16dp"
+                            android:paddingHorizontal="18dp"
                             android:paddingVertical="6dp"
-                            android:text="Version 1.1.0"
-                            android:textColor="#2196F3"
-                            android:textSize="12sp"
+                            android:text="Version 2.4.0"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12.5sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
