@@ -84,7 +84,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         View menuSupport = findViewById(R.id.menuSupportHelp);
         if (menuSupport != null) {
-            menuSupport.setOnClickListener(v -> startActivity(new Intent(this, TechnicianHelpCenterActivity.class)));
+            menuSupport.setOnClickListener(v -> startActivity(new Intent(this, HelpCenterActivity.class)));
         }
 
         View menuAbout = findViewById(R.id.menuAboutAquaTechCust);
