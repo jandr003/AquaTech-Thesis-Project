@@ -95,7 +95,7 @@
                             android:fontFamily="@font/poppins"
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="6dp"
-                            android:text="v2.4.0 (2026 Release)"
+                            android:text="Version 1.1.0"
                             android:textColor="#2196F3"
                             android:textSize="12sp"
                             android:textStyle="bold" />
