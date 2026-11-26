@@ -88,7 +88,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="STATUS" />
+                        tools:text="TICKET STATUS" />
 
                     <TextView
                         android:id="@+id/SroNumber"
@@ -101,7 +101,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/assignedTech"
-                        tools:text="ASC2026-0819" />
+                        tools:text="TICKET REFERENCE CODE" />
 
                     <TextView
                         android:id="@+id/tvAquaTechnician"
@@ -129,7 +129,7 @@
                         app:layout_constraintEnd_toStartOf="@id/techProfileAvatar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvAquaTechnician"
-                        tools:text="Jonnifer Iglesias" />
+                        tools:text="Technician Name" />
 
                     <TextView
                         android:id="@+id/tvDateTime"
@@ -142,7 +142,7 @@
                         app:layout_constraintEnd_toStartOf="@id/techProfileAvatar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvTechName"
-                        tools:text="Wednesday 12:00PM - 1:00PM" />
+                        tools:text="Scheduled Appointment Date &amp; Time" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/techProfileAvatar"
