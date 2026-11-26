@@ -160,6 +160,13 @@
             tools:ignore="LockedOrientationActivity"/>
 
         <activity
+            android:name=".ChatListCustomerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AquaTech"
+            tools:ignore="LockedOrientationActivity"/>
+
+        <activity
             android:name=".CustomerPrivacyPolicyActivity"
             android:exported="false"
             android:screenOrientation="portrait"

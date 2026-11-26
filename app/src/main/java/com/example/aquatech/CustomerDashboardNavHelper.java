@@ -28,7 +28,7 @@ public class CustomerDashboardNavHelper {
 
         View navMessages = activity.findViewById(R.id.navCustMessages);
         if (navMessages != null) {
-            navMessages.setOnClickListener(v -> activity.startActivity(new Intent(activity, ChatListTech.class)));
+            navMessages.setOnClickListener(v -> activity.startActivity(new Intent(activity, ChatListCustomerActivity.class)));
         }
 
         View navHistory = activity.findViewById(R.id.navCustHistory);
