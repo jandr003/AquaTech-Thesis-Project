@@ -150,13 +150,12 @@
                         android:layout_height="72dp"
                         android:contentDescription="Technician Avatar"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/new_technician"
+                        android:src="@drawable/technician_avatar1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:shapeAppearanceOverlay="@style/CircleImage"
-                        app:strokeColor="#2196F3"
-                        app:strokeWidth="1.5dp" />
+                        app:strokeWidth="0dp" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

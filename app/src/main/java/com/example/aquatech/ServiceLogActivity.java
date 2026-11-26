@@ -163,9 +163,12 @@ public class ServiceLogActivity extends AppCompatActivity {
 
         if (techProfileAvatar != null) {
             if (isFinished) {
-                techProfileAvatar.setImageResource(R.drawable.new_technician);
-            } else if (avatarUrl != null && !avatarUrl.isEmpty()) {
-                Glide.with(ServiceLogActivity.this).load(avatarUrl).placeholder(R.drawable.new_technician).circleCrop().into(techProfileAvatar);
+                techProfileAvatar.setImageResource(R.drawable.technician_avatar1);
+            } else if (avatarUrl != null && !avatarUrl.isEmpty() && avatarUrl.startsWith("http")) {
+                Glide.with(ServiceLogActivity.this).load(avatarUrl).placeholder(R.drawable.technician_avatar1).circleCrop().into(techProfileAvatar);
+            } else {
+                int avatarRes = getTechAvatarDrawable(avatarUrl, assignedTechId);
+                techProfileAvatar.setImageResource(avatarRes);
             }
         }
 
@@ -375,6 +378,35 @@ public class ServiceLogActivity extends AppCompatActivity {
             default:
                 return R.drawable.cbc0064_carbon_black_filter;
         }
+    }
+
+    private int getTechAvatarDrawable(String avatarName, String techId) {
+        if (avatarName != null && !avatarName.isEmpty()) {
+            if (avatarName.contains("2")) return R.drawable.technician_avatar2;
+            if (avatarName.contains("3")) return R.drawable.technician_avatar3;
+            if (avatarName.contains("4")) return R.drawable.technician_avatar4;
+            if (avatarName.contains("5")) return R.drawable.technician_avatar5;
+            if (avatarName.contains("6")) return R.drawable.technician_avatar6;
+            if (avatarName.contains("7")) return R.drawable.technician_avatar7;
+            if (avatarName.contains("8")) return R.drawable.technician_avatar8;
+            return R.drawable.technician_avatar1;
+        }
+
+        if (techId != null) {
+            int hash = Math.abs(techId.hashCode()) % 8;
+            switch (hash) {
+                case 1: return R.drawable.technician_avatar2;
+                case 2: return R.drawable.technician_avatar3;
+                case 3: return R.drawable.technician_avatar4;
+                case 4: return R.drawable.technician_avatar5;
+                case 5: return R.drawable.technician_avatar6;
+                case 6: return R.drawable.technician_avatar7;
+                case 7: return R.drawable.technician_avatar8;
+                default: return R.drawable.technician_avatar1;
+            }
+        }
+
+        return R.drawable.technician_avatar1;
     }
 
     private class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
