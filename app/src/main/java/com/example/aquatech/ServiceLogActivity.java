@@ -66,6 +66,7 @@ public class ServiceLogActivity extends AppCompatActivity {
         initializeViews();
         setupFirebaseRequestListener();
         setupListeners();
+        CustomerDashboardNavHelper.setupBottomNavigation(this);
     }
 
     private void initializeViews() {
