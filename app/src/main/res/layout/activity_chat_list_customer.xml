@@ -115,7 +115,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/bottomNavBarCardCust"
         app:layout_constraintTop_toBottomOf="@id/filterDividerCust"
-        tools:listitem="@layout/item_chat_thread" />
+        tools:listitem="@layout/item_customer_chat_thread" />
 
     <LinearLayout
         android:id="@+id/emptyCustomerChatContainer"
@@ -311,9 +311,6 @@
                     android:textSize="11sp" />
 
             </LinearLayout>
-
         </LinearLayout>
-
     </com.google.android.material.card.MaterialCardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
