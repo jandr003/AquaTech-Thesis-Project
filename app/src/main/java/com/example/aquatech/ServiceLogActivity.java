@@ -142,6 +142,12 @@ public class ServiceLogActivity extends AppCompatActivity {
         assignedTechId = ds.child("assignedTechId").getValue(String.class);
         String assignedTechName = ds.child("assignedTechName").getValue(String.class);
         String avatarUrl = ds.child("techAvatarUrl").getValue(String.class);
+
+        TextView tvStatusPill = findViewById(R.id.assignedTech);
+        if (tvStatusPill != null) {
+            String statusUpper = currentStatus != null ? currentStatus.toUpperCase() : "PENDING";
+            tvStatusPill.setText(statusUpper);
+        }
         boolean isFinished = "Completed".equalsIgnoreCase(currentStatus) ||
                 "Submission".equalsIgnoreCase(currentStatus) ||
                 "Cancelled".equalsIgnoreCase(currentStatus);

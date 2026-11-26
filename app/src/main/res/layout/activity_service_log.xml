@@ -83,12 +83,12 @@
                         android:fontFamily="@font/poppins"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
-                        android:text="ASSIGNED"
                         android:textColor="@color/white"
                         android:textSize="10.5sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="STATUS" />
 
                     <TextView
                         android:id="@+id/SroNumber"
