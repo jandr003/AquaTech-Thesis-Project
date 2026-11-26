@@ -813,7 +813,9 @@ public class ServiceRequestActivity extends AppCompatActivity {
 
     private void proceedToAnimation() {
         Intent intent = new Intent(this, WaterDropFillAnimationActivity.class);
-        intent.putExtra("TICKET_ID", "ASC2026-" + String.format(Locale.getDefault(), "%04d", new Random().nextInt(9000) + 1));
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        String generatedTicketId = "ASC" + currentYear + "-" + String.format(Locale.getDefault(), "%04d", new Random().nextInt(9000) + 1);
+        intent.putExtra("TICKET_ID", generatedTicketId);
 
         if (tvCustomerNameValue != null) {
             intent.putExtra("CUSTOMER_NAME", tvCustomerNameValue.getText().toString());

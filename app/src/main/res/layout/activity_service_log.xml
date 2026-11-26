@@ -101,7 +101,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/assignedTech"
-                        tools:text="SRO-ASC2026-0819" />
+                        tools:text="ASC2026-0819" />
 
                     <TextView
                         android:id="@+id/tvAquaTechnician"

@@ -135,7 +135,8 @@ public class ServiceLogActivity extends AppCompatActivity {
         }
 
         if (SroNumber != null && sro != null) {
-            SroNumber.setText(sro);
+            String cleanTicket = sro.startsWith("SRO-") ? sro.substring(4) : sro;
+            SroNumber.setText(cleanTicket);
         }
 
         currentStatus = ds.child("status").getValue(String.class);
