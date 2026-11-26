@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="85dp"
     android:layout_marginHorizontal="16dp"
@@ -29,24 +30,24 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_black_ttf"
-            android:text="CARBON BLOCK FILTER"
             android:textColor="#5B5B5B"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/tvItemQty"
             app:layout_constraintStart_toEndOf="@id/ivItemImage"
-            app:layout_constraintTop_toTopOf="@id/ivItemImage" />
+            app:layout_constraintTop_toTopOf="@id/ivItemImage"
+            tools:text="CARBON BLOCK FILTER" />
 
         <TextView
             android:id="@+id/tvItemSub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_black_ttf"
-            android:text="0064-CBC"
             android:textColor="#757575"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tvItemName"
-            app:layout_constraintTop_toBottomOf="@id/tvItemName" />
+            app:layout_constraintTop_toBottomOf="@id/tvItemName"
+            tools:text="0064-CBC" />
 
         <TextView
             android:id="@+id/tvItemQty"
@@ -54,13 +55,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/poppins_black_ttf"
-            android:text="x1"
             android:textColor="#5B5B5B"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="x1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
