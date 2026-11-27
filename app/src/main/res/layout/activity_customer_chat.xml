@@ -9,19 +9,18 @@
     <RelativeLayout
         android:id="@+id/headerTitle"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="88dp"
         android:background="#2196F3"
         android:paddingHorizontal="12dp"
-        android:paddingTop="30dp"
-        android:paddingBottom="6dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="Back"
@@ -32,9 +31,10 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="6dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
             android:layout_toStartOf="@id/btnCall"
             android:layout_toEndOf="@id/btnBack"
             android:gravity="center_vertical"
@@ -42,8 +42,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/customerAvatar"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:contentDescription="Technician Avatar"
                 android:scaleType="centerCrop"
                 android:src="@drawable/technician_avatar1"
@@ -53,7 +53,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -64,7 +64,7 @@
                     android:fontFamily="@font/poppins"
                     android:maxLines="1"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
+                    android:textSize="15.5sp"
                     android:textStyle="bold"
                     tools:text="Technician Name" />
 
@@ -74,7 +74,7 @@
                     android:fontFamily="@font/poppins"
                     android:text="Technician Partner • Online"
                     android:textColor="#E0F2FE"
-                    android:textSize="10.5sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -82,9 +82,10 @@
 
         <ImageView
             android:id="@+id/btnCall"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_centerVertical="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="4dp"
             android:layout_toStartOf="@id/btnTechInfo"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -97,10 +98,11 @@
 
         <ImageView
             android:id="@+id/btnTechInfo"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="Technician Profile Info"
