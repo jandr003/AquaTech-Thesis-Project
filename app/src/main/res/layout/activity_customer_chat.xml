@@ -46,8 +46,8 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/customerAvatar"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
                     android:contentDescription="Technician Avatar"
                     android:scaleType="centerCrop"
                     android:src="@drawable/technician_avatar1"
