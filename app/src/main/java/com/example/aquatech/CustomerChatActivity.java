@@ -583,7 +583,10 @@ public class CustomerChatActivity extends AppCompatActivity {
 
     private void openPdfPicker() {
         if (!isChatFunctionalityEnabled) {
-            String errorMsg = (myId != null && myId.equals(techId)) ? "Accept the ticket first." : "Waiting for technician to accept.";
+            String errorMsg = "Waiting for technician to accept service request.";
+            if (myId != null && myId.equals(techId)) {
+                errorMsg = "Please accept the ticket first.";
+            }
             Toast.makeText(CustomerChatActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -595,7 +598,10 @@ public class CustomerChatActivity extends AppCompatActivity {
 
     private void openImagePicker() {
         if (!isChatFunctionalityEnabled) {
-            String errorMsg = (myId != null && myId.equals(techId)) ? "Accept the ticket first." : "Waiting for technician to accept.";
+            String errorMsg = "Waiting for technician to accept service request.";
+            if (myId != null && myId.equals(techId)) {
+                errorMsg = "Please accept the ticket first.";
+            }
             Toast.makeText(CustomerChatActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
             return;
         }
