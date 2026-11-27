@@ -17,26 +17,15 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/iconBg"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            app:cardBackgroundColor="#EBF5FF"
-            app:cardCornerRadius="22dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp"
+        <ImageView
+            android:id="@+id/ivHistoryIcon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:contentDescription="Service Icon"
+            android:src="@drawable/ic_pdf_wrench"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/ivHistoryIcon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="Service Icon"
-                android:padding="10dp"
-                android:src="@drawable/ic_pdf_wrench"
-                app:tint="#2196F3" />
-        </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#2196F3" />
 
         <TextView
             android:id="@+id/tvHistoryTicketId"
@@ -49,8 +38,8 @@
             android:textSize="13.5sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/tvHistoryPrice"
-            app:layout_constraintStart_toEndOf="@id/iconBg"
-            app:layout_constraintTop_toTopOf="@id/iconBg"
+            app:layout_constraintStart_toEndOf="@id/ivHistoryIcon"
+            app:layout_constraintTop_toTopOf="@id/ivHistoryIcon"
             tools:text="ASC2026-0819" />
 
         <TextView
@@ -62,7 +51,7 @@
             android:textSize="14.5sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iconBg"
+            app:layout_constraintTop_toTopOf="@id/ivHistoryIcon"
             tools:text="₱ 2,500.00" />
 
         <TextView
