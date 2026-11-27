@@ -42,7 +42,7 @@
             android:textColor="#1E293B"
             android:textSize="15.5sp"
             android:textStyle="bold"
-            tools:text="Jonnifer Iglesias" />
+            tools:text="Technician Name" />
 
         <TextView
             android:id="@+id/msgText"
