@@ -59,6 +59,7 @@ public class ServiceHistoryActivity extends AppCompatActivity {
         setupStatusBar();
         initializeViews();
         setupCalendar(currentCalendar);
+        CustomerDashboardNavHelper.setupBottomNavigation(this);
 
         String today = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(new Date());
         if (tvSelectedDateLabel != null) {
