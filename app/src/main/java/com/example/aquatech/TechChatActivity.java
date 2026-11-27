@@ -135,56 +135,25 @@ public class TechChatActivity extends AppCompatActivity {
     private String resolveTechNameFromEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null || user.getEmail() == null) {
-            return "";
+            return "Technician";
         }
 
         String email = user.getEmail().toLowerCase().trim();
-
-        if (email.equals("admin@aquasmartguard.ph")) {
-            return "John Andrew";
+        int atIndex = email.indexOf("@");
+        if (atIndex > 0) {
+            String username = email.substring(0, atIndex);
+            String[] parts = username.split("[._]");
+            StringBuilder sb = new StringBuilder();
+            for (String p : parts) {
+                if (!p.isEmpty()) {
+                    sb.append(Character.toUpperCase(p.charAt(0)))
+                            .append(p.substring(1))
+                            .append(" ");
+                }
+            }
+            return sb.toString().trim();
         }
-
-        if (email.equals("management@aquasmartguard.ph")) {
-            return "Glenn Jean";
-        }
-
-        if (email.equals("john1@aquasmartguard.ph")) {
-            return "John";
-        }
-
-        if (email.equals("jhonny.s@aquasmartguard.ph")) {
-            return "Jhonny Sinder";
-        }
-
-        if (email.equals("rarcilla@aquasmartguard.ph")) {
-            return "Ricky Arcilla";
-        }
-
-        if (email.equals("r.trinidad@aquasmartguard.ph")) {
-            return "Ruel Trinidad";
-        }
-
-        if (email.equals("gdelantar@aquasmartguard.ph")) {
-            return "Glenda Delantar";
-        }
-
-        if (email.equals("duena@aquasmartguard.ph")) {
-            return "Jerry Duena";
-        }
-
-        if (email.equals("ji@aquasmartguard.ph")) {
-            return "Jonnifer Iglesias";
-        }
-
-        if (email.equals("marlon.salvador@aquasmartguard.ph")) {
-            return "Marlon Salvador";
-        }
-
-        if (email.equals("smjr@aquasmartguard.ph")) {
-            return "Selvino Magora Jr.";
-        }
-
-        return "";
+        return "Technician";
     }
 
     private void initializeViews() {

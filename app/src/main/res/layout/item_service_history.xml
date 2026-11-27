@@ -45,25 +45,25 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/poppins"
-            android:text="#ASC2026-0146"
             android:textColor="#2196F3"
             android:textSize="13.5sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/tvHistoryPrice"
             app:layout_constraintStart_toEndOf="@id/iconBg"
-            app:layout_constraintTop_toTopOf="@id/iconBg" />
+            app:layout_constraintTop_toTopOf="@id/iconBg"
+            tools:text="ASC2026-0819" />
 
         <TextView
             android:id="@+id/tvHistoryPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:text="₱ 2,500.00"
             android:textColor="#059669"
             android:textSize="14.5sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iconBg" />
+            app:layout_constraintTop_toTopOf="@id/iconBg"
+            tools:text="₱ 2,500.00" />
 
         <TextView
             android:id="@+id/tvHistoryItems"
@@ -74,13 +74,13 @@
             android:ellipsize="end"
             android:fontFamily="@font/poppins"
             android:maxLines="1"
-            android:text="Installation Kit, Filter Preventive..."
             android:textColor="#1E293B"
             android:textSize="13.5sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/tvHistoryStatus"
             app:layout_constraintStart_toStartOf="@id/tvHistoryTicketId"
-            app:layout_constraintTop_toBottomOf="@id/tvHistoryTicketId" />
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryTicketId"
+            tools:text="Filter Replacement &amp; Maintenance" />
 
         <TextView
             android:id="@+id/tvHistoryDate"
@@ -88,12 +88,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins"
-            android:text="August 28, 2025 • 10:30 PM"
             android:textColor="#94A3B8"
             android:textSize="11.5sp"
             app:layout_constraintEnd_toStartOf="@id/tvHistoryStatus"
             app:layout_constraintStart_toStartOf="@id/tvHistoryItems"
-            app:layout_constraintTop_toBottomOf="@id/tvHistoryItems" />
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryItems"
+            tools:text="November 20, 2026" />
 
         <TextView
             android:id="@+id/tvHistoryStatus"
@@ -103,13 +103,13 @@
             android:fontFamily="@font/poppins"
             android:paddingHorizontal="10dp"
             android:paddingVertical="4dp"
-            android:text="COMPLETED"
             android:textColor="@color/white"
             android:textSize="10.5sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvHistoryPrice" />
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryPrice"
+            tools:text="COMPLETED" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

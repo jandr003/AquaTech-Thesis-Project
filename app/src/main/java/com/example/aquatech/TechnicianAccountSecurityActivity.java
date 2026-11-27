@@ -135,16 +135,11 @@ public class TechnicianAccountSecurityActivity extends AppCompatActivity {
     }
 
     private String getTechIdFromEmail(String email) {
-        if (email.contains("john@")) return "ASC-T001";
-        if (email.contains("jhonny@")) return "ASC-T002";
-        if (email.contains("ricky@")) return "ASC-T003";
-        if (email.contains("ruel@")) return "ASC-T004";
-        if (email.contains("glenda@")) return "ASC-T005";
-        if (email.contains("jerry@")) return "ASC-T006";
-        if (email.contains("jonnifer@")) return "ASC-T007";
-        if (email.contains("marlon@")) return "ASC-T008";
-        if (email.contains("selvino@")) return "ASC-T009";
-        return "ASC-T100";
+        if (email == null || email.isEmpty()) {
+            return "ASC-T001";
+        }
+        int code = Math.abs(email.hashCode()) % 900 + 100;
+        return "ASC-T" + code;
     }
 
     private void showAssistanceDialog() {
