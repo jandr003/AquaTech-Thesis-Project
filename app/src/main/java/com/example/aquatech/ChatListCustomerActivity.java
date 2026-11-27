@@ -86,17 +86,8 @@ public class ChatListCustomerActivity extends AppCompatActivity {
                         String unitModel = ds.child("unitModel").getValue(String.class);
                         String status = ds.child("status").getValue(String.class);
 
-                        if (techId != null && !techId.isEmpty()) {
-                            CustomerChatThread thread = new CustomerChatThread(
-                                    techId,
-                                    techName != null && !techName.isEmpty() ? techName : "Assigned Technician",
-                                    ticketId != null ? ticketId : "Ticket Request",
-                                    unitModel != null ? unitModel : "Water Purifier",
-                                    status != null ? status : "Active"
-                            );
-                            if (!containsTech(techId)) {
-                                chatList.add(thread);
-                            }
+                        if (techId != null && !techId.isEmpty() && !"null".equalsIgnoreCase(techId)) {
+                            fetchAndAddTechChat(techId, techName, ticketId, unitModel, status);
                         }
                     }
                 }
@@ -114,6 +105,48 @@ public class ChatListCustomerActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(ChatListCustomerActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    private void fetchAndAddTechChat(String techId, String fallbackName, String ticketId, String unitModel, String status) {
+        if (containsTech(techId)) {
+            return;
+        }
+
+        DatabaseReference techRef = FirebaseDatabase.getInstance(DB_URL).getReference("Technicians").child(techId);
+        techRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String realName = snapshot.child("fullName").getValue(String.class);
+                if (realName == null || realName.isEmpty()) {
+                    realName = snapshot.child("name").getValue(String.class);
+                }
+                if (realName == null || realName.isEmpty()) {
+                    realName = (fallbackName != null && !fallbackName.isEmpty()) ? fallbackName : "Assigned Technician";
+                }
+
+                CustomerChatThread thread = new CustomerChatThread(
+                        techId,
+                        realName,
+                        ticketId != null ? ticketId : "Ticket Request",
+                        unitModel != null ? unitModel : "Water Purifier",
+                        status != null ? status : "Active"
+                );
+
+                if (!containsTech(techId)) {
+                    chatList.add(thread);
+                    if (adapter != null) {
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+
+                if (emptyView != null) {
+                    emptyView.setVisibility(chatList.isEmpty() ? View.VISIBLE : View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
