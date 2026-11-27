@@ -173,6 +173,39 @@ public class TechChatActivity extends AppCompatActivity {
         if (customerName != null && customerNameDisplay != null) {
             customerNameDisplay.setText(customerName);
         }
+        fetchCustomerRealNameFromDB();
+    }
+
+    private void fetchCustomerRealNameFromDB() {
+        if (customerId == null || customerId.isEmpty()) {
+            return;
+        }
+
+        DatabaseReference custRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(customerId);
+        custRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String realName = snapshot.child("fullName").getValue(String.class);
+                    if (realName == null || realName.isEmpty()) {
+                        realName = snapshot.child("name").getValue(String.class);
+                    }
+
+                    if (realName != null && !realName.isEmpty()) {
+                        customerName = realName;
+                        if (customerNameDisplay != null) {
+                            customerNameDisplay.setText(customerName);
+                        }
+                        if (chatAdapter != null) {
+                            chatAdapter.setOtherPartyName(customerName);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
     }
 
     private void setupRecyclerView() {
