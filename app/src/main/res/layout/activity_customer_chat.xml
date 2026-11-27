@@ -153,15 +153,30 @@
 
             <ImageButton
                 android:id="@+id/btnAttach"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Attach File or Image"
-                android:padding="8dp"
+                android:contentDescription="Attach PDF Document"
+                android:padding="7dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_paperclip"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="#2196F3" />
+
+            <ImageButton
+                android:id="@+id/btnAttachImage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Attach Gallery Image"
+                android:padding="7dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_gallery_image_vector"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnAttach"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="#2196F3" />
 
@@ -177,14 +192,14 @@
                 android:inputType="textCapSentences|textMultiLine"
                 android:maxLines="4"
                 android:minHeight="44dp"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="8dp"
                 android:paddingVertical="8dp"
                 android:textColor="#0F172A"
                 android:textColorHint="#94A3B8"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnSend"
-                app:layout_constraintStart_toEndOf="@id/btnAttach"
+                app:layout_constraintStart_toEndOf="@id/btnAttachImage"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton

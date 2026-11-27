@@ -377,6 +377,16 @@ public class TechChatActivity extends AppCompatActivity {
             btnBack.setOnClickListener(v -> finish());
         }
 
+        View btnAttach = findViewById(R.id.btnAttach);
+        if (btnAttach != null) {
+            btnAttach.setOnClickListener(v -> openPdfPicker());
+        }
+
+        View btnAttachImg = findViewById(R.id.btnAttachImage);
+        if (btnAttachImg != null) {
+            btnAttachImg.setOnClickListener(v -> openImagePicker());
+        }
+
         if (btnSend != null) {
             btnSend.setOnClickListener(v -> {
                 String msg = etMessage != null ? etMessage.getText().toString().trim() : "";
@@ -416,6 +426,20 @@ public class TechChatActivity extends AppCompatActivity {
                 d.show();
             });
         }
+    }
+
+    private static final int PICK_CHAT_FILE_REQUEST = 102;
+
+    private void openPdfPicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf");
+        startActivityForResult(Intent.createChooser(intent, "Select PDF Document"), PICK_CHAT_FILE_REQUEST);
+    }
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select Gallery Image"), PICK_CHAT_FILE_REQUEST);
     }
 
     private void initiateCall() {

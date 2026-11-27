@@ -520,7 +520,12 @@ public class CustomerChatActivity extends AppCompatActivity {
 
         btnAttach = findViewById(R.id.btnAttach);
         if (btnAttach != null) {
-            btnAttach.setOnClickListener(v -> openFilePicker());
+            btnAttach.setOnClickListener(v -> openPdfPicker());
+        }
+
+        View btnAttachImg = findViewById(R.id.btnAttachImage);
+        if (btnAttachImg != null) {
+            btnAttachImg.setOnClickListener(v -> openImagePicker());
         }
 
         if (btnSend != null && etMessage != null) {
@@ -576,7 +581,7 @@ public class CustomerChatActivity extends AppCompatActivity {
 
     private static final int PICK_CHAT_FILE_REQUEST = 102;
 
-    private void openFilePicker() {
+    private void openPdfPicker() {
         if (!isChatFunctionalityEnabled) {
             String errorMsg = (myId != null && myId.equals(techId)) ? "Accept the ticket first." : "Waiting for technician to accept.";
             Toast.makeText(CustomerChatActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
@@ -584,10 +589,20 @@ public class CustomerChatActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        String[] mimetypes = {"image/*", "application/pdf"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-        startActivityForResult(Intent.createChooser(intent, "Select File or Image"), PICK_CHAT_FILE_REQUEST);
+        intent.setType("application/pdf");
+        startActivityForResult(Intent.createChooser(intent, "Select PDF Document"), PICK_CHAT_FILE_REQUEST);
+    }
+
+    private void openImagePicker() {
+        if (!isChatFunctionalityEnabled) {
+            String errorMsg = (myId != null && myId.equals(techId)) ? "Accept the ticket first." : "Waiting for technician to accept.";
+            Toast.makeText(CustomerChatActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select Gallery Image"), PICK_CHAT_FILE_REQUEST);
     }
 
     @Override
