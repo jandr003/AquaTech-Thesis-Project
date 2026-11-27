@@ -166,7 +166,8 @@ public class TechChatActivity extends AppCompatActivity {
         avatarHeader = findViewById(R.id.techAvatar);
 
         if (avatarHeader != null) {
-            Glide.with(this).load(R.drawable.man_customer_icon).circleCrop().into(avatarHeader);
+            int avatarRes = getCustomerAvatarDrawable(customerId);
+            avatarHeader.setImageResource(avatarRes);
         }
 
         if (customerName != null && customerNameDisplay != null) {
@@ -440,6 +441,31 @@ public class TechChatActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select Gallery Image"), PICK_CHAT_FILE_REQUEST);
+    }
+
+    private int getCustomerAvatarDrawable(String custId) {
+        if (custId != null) {
+            int hash = Math.abs(custId.hashCode()) % 8;
+            switch (hash) {
+                case 1:
+                    return R.drawable.customer_avatar2;
+                case 2:
+                    return R.drawable.customer_avatar3;
+                case 3:
+                    return R.drawable.customer_avatar4;
+                case 4:
+                    return R.drawable.customer_avatar5;
+                case 5:
+                    return R.drawable.customer_avatar6;
+                case 6:
+                    return R.drawable.customer_avatar7;
+                case 7:
+                    return R.drawable.customer_avatar8;
+                default:
+                    return R.drawable.customer_avatar1;
+            }
+        }
+        return R.drawable.customer_avatar1;
     }
 
     private void initiateCall() {

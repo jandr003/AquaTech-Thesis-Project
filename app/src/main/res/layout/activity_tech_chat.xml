@@ -50,7 +50,7 @@
                     android:layout_height="46dp"
                     android:contentDescription="Customer Avatar"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/man_user_circle_icon"
+                    android:src="@drawable/customer_avatar1"
                     app:shapeAppearanceOverlay="@style/CircleImage"
                     app:strokeWidth="0dp" />
 
