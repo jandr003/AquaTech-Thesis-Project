@@ -45,20 +45,6 @@
             tools:text="Jonnifer Iglesias" />
 
         <TextView
-            android:id="@+id/msgTicketBadge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/bg_pdf_status_pending_pill"
-            android:fontFamily="@font/poppins"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="2dp"
-            android:textColor="#2196F3"
-            android:textSize="10.5sp"
-            android:textStyle="bold"
-            tools:text="ASC2026-0819 • WL Cube Firewall" />
-
-        <TextView
             android:id="@+id/msgText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +54,7 @@
             android:maxLines="1"
             android:textColor="#64748B"
             android:textSize="13sp"
-            tools:text="En route to your service address..." />
+            tools:text="I'm on my way to your service address..." />
 
     </LinearLayout>
 

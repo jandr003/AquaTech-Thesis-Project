@@ -157,8 +157,7 @@ public class ChatListCustomerActivity extends AppCompatActivity {
             }
 
             if (holder.tvSub != null) {
-                String cleanSro = item.ticketCode.startsWith("SRO-") ? item.ticketCode.substring(4) : item.ticketCode;
-                holder.tvSub.setText(cleanSro + " • " + item.unitModel);
+                holder.tvSub.setText("Tap to message technician...");
             }
 
             if (holder.ivAvatar != null) {
