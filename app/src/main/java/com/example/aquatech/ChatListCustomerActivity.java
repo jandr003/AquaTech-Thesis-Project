@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -156,8 +155,49 @@ public class ChatListCustomerActivity extends AppCompatActivity {
                 holder.tvName.setText(item.techName);
             }
 
-            if (holder.tvSub != null) {
-                holder.tvSub.setText("Tap to message technician...");
+            if (holder.tvSub != null && item.techId != null) {
+                String chatRoom1 = currentUid + "_" + item.techId;
+                String chatRoom2 = item.techId + "_" + currentUid;
+
+                DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("Chats");
+                chatRef.child(chatRoom1).orderByChild("timestamp").limitToLast(1).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                String msg = ds.child("message").getValue(String.class);
+                                if (msg != null && !msg.isEmpty()) {
+                                    holder.tvSub.setText(msg);
+                                    return;
+                                }
+                            }
+                        }
+
+                        chatRef.child(chatRoom2).orderByChild("timestamp").limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snap2) {
+                                if (snap2.exists()) {
+                                    for (DataSnapshot ds2 : snap2.getChildren()) {
+                                        String msg2 = ds2.child("message").getValue(String.class);
+                                        if (msg2 != null && !msg2.isEmpty()) {
+                                            holder.tvSub.setText(msg2);
+                                            return;
+                                        }
+                                    }
+                                }
+                                holder.tvSub.setText("Tap to open technician chat...");
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
             }
 
             if (holder.ivAvatar != null) {
@@ -195,14 +235,22 @@ public class ChatListCustomerActivity extends AppCompatActivity {
         if (techId != null) {
             int hash = Math.abs(techId.hashCode()) % 8;
             switch (hash) {
-                case 1: return R.drawable.technician_avatar2;
-                case 2: return R.drawable.technician_avatar3;
-                case 3: return R.drawable.technician_avatar4;
-                case 4: return R.drawable.technician_avatar5;
-                case 5: return R.drawable.technician_avatar6;
-                case 6: return R.drawable.technician_avatar7;
-                case 7: return R.drawable.technician_avatar8;
-                default: return R.drawable.technician_avatar1;
+                case 1:
+                    return R.drawable.technician_avatar2;
+                case 2:
+                    return R.drawable.technician_avatar3;
+                case 3:
+                    return R.drawable.technician_avatar4;
+                case 4:
+                    return R.drawable.technician_avatar5;
+                case 5:
+                    return R.drawable.technician_avatar6;
+                case 6:
+                    return R.drawable.technician_avatar7;
+                case 7:
+                    return R.drawable.technician_avatar8;
+                default:
+                    return R.drawable.technician_avatar1;
             }
         }
         return R.drawable.technician_avatar1;
