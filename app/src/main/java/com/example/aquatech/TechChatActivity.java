@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -430,6 +431,11 @@ public class TechChatActivity extends AppCompatActivity {
             });
         }
 
+        View btnCustInfo = findViewById(R.id.btnCustInfo);
+        if (btnCustInfo != null) {
+            btnCustInfo.setOnClickListener(v -> showCustomerInfoDialog());
+        }
+
         if (btnCall != null) {
             btnCall.setOnClickListener(v -> {
                 Dialog d = new Dialog(this);
@@ -474,6 +480,52 @@ public class TechChatActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select Gallery Image"), PICK_CHAT_FILE_REQUEST);
+    }
+
+    private void showCustomerInfoDialog() {
+        if (customerId == null || customerId.isEmpty()) {
+            Toast.makeText(this, "Customer information unavailable.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance(DB_URL).getReference("Users").child(customerId);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+
+                String name = snapshot.child("fullName").getValue(String.class);
+                if (name == null || name.isEmpty()) {
+                    name = snapshot.child("name").getValue(String.class);
+                }
+
+                String phone = snapshot.child("phone").getValue(String.class);
+                if (phone == null || phone.isEmpty()) {
+                    phone = snapshot.child("phoneNumber").getValue(String.class);
+                }
+
+                String address = snapshot.child("address").getValue(String.class);
+                if (address == null || address.isEmpty()) {
+                    address = "Address not specified";
+                }
+
+                String infoText = "Customer: " + (name != null ? name : "Customer") + "\n\n"
+                        + "Contact: " + (phone != null ? phone : "N/A") + "\n\n"
+                        + "Address: " + address;
+
+                new AlertDialog.Builder(TechChatActivity.this)
+                        .setTitle("Customer Service Details")
+                        .setMessage(infoText)
+                        .setPositiveButton("Got It", (dialog, which) -> dialog.dismiss())
+                        .show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     private int getCustomerAvatarDrawable(String custId) {
