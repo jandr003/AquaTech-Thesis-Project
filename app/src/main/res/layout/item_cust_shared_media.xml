@@ -2,15 +2,15 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="80dp"
-    android:layout_height="80dp"
-    android:layout_marginEnd="8dp"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_marginEnd="10dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2.5dp"
     app:strokeColor="#E2E8F0"
     app:strokeWidth="1dp">
 
@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:contentDescription="Shared Media Thumbnail"
             android:scaleType="centerCrop"
-            tools:src="@drawable/ic_upload_image" />
+            tools:src="@drawable/ic_gallery_image_vector" />
 
         <LinearLayout
             android:id="@+id/sharedMediaDocOverlay"
@@ -33,13 +33,13 @@
             android:background="#FFFFFF"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="6dp"
+            android:padding="8dp"
             android:visibility="gone"
             tools:visibility="gone">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="Document Icon"
                 android:src="@drawable/ic_pdf_document"
                 app:tint="#2196F3" />
@@ -52,9 +52,9 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
-                android:maxLines="1"
-                android:textColor="#1E293B"
-                android:textSize="9.5sp"
+                android:maxLines="2"
+                android:textColor="#0F172A"
+                android:textSize="10sp"
                 android:textStyle="bold"
                 tools:text="Attachment.pdf" />
 
