@@ -85,10 +85,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Rafael Santos"
                         android:textColor="#1E293B"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="Technician Name" />
 
                     <TextView
                         android:id="@+id/tvTechDetailRole"
@@ -98,10 +98,10 @@
                         android:background="@drawable/bg_solid_blue_pill"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
-                        android:text="AquaTech Certified Technician"
                         android:textColor="@color/white"
                         android:textSize="11.5sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="AquaTech Certified Technician" />
 
                     <TextView
                         android:id="@+id/tvTechDetailExperience"
@@ -183,7 +183,6 @@
 
                         </LinearLayout>
                     </LinearLayout>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
