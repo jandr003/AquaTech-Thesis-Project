@@ -49,7 +49,9 @@ public class TechnicianDetailActivity extends AppCompatActivity {
     private void setupStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            );
             window.setStatusBarColor(Color.TRANSPARENT);
         }
     }
@@ -57,7 +59,9 @@ public class TechnicianDetailActivity extends AppCompatActivity {
     private void initializeViews() {
         View btnBack = findViewById(R.id.btnBackTechDetail);
         if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
+            btnBack.setOnClickListener(v -> {
+                finish();
+            });
         }
 
         ivTechDetailAvatar = findViewById(R.id.ivTechDetailAvatar);
@@ -72,8 +76,10 @@ public class TechnicianDetailActivity extends AppCompatActivity {
         tvTechDetailStatus = findViewById(R.id.tvTechDetailStatus);
 
         String intentName = getIntent().getStringExtra("TECH_NAME");
-        if (intentName != null && !intentName.isEmpty() && tvTechDetailName != null) {
-            tvTechDetailName.setText(intentName);
+        if (intentName != null && !intentName.isEmpty()) {
+            if (tvTechDetailName != null) {
+                tvTechDetailName.setText(intentName);
+            }
         }
     }
 
@@ -87,29 +93,34 @@ public class TechnicianDetailActivity extends AppCompatActivity {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+
                 if (snapshot.exists()) {
                     String name = snapshot.child("fullName").getValue(String.class);
-                    if (name == null) {
+                    if (name == null || name.isEmpty()) {
                         name = snapshot.child("name").getValue(String.class);
                     }
 
-                    if (name != null && tvTechDetailName != null) {
+                    if (name != null && !name.isEmpty() && tvTechDetailName != null) {
                         tvTechDetailName.setText(name);
                     }
 
                     String phone = snapshot.child("phone").getValue(String.class);
-                    if (phone == null) {
+                    if (phone == null || phone.isEmpty()) {
                         phone = snapshot.child("phoneNumber").getValue(String.class);
                     }
 
-                    if (phone != null && tvTechDetailPhone != null) {
+                    if (phone != null && !phone.isEmpty() && tvTechDetailPhone != null) {
                         tvTechDetailPhone.setText(phone);
                     }
 
                     String experience = snapshot.child("experienceYears").getValue(String.class);
-                    if (experience == null) {
+                    if (experience == null || experience.isEmpty()) {
                         experience = snapshot.child("experience").getValue(String.class);
                     }
+
                     if (tvTechDetailExperience != null) {
                         if (experience != null && !experience.isEmpty()) {
                             tvTechDetailExperience.setText(experience + " Experience with AquaTech");
@@ -168,7 +179,8 @@ public class TechnicianDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
 
         setupSharedMedia();
@@ -225,7 +237,8 @@ public class TechnicianDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 }
