@@ -32,7 +32,7 @@ public class CustomerDetailActivity extends AppCompatActivity {
     private TextView tvCustName, tvCustPhone, tvCustAddress, tvCustTicketId, tvCustUnit, tvCustSchedule;
     private RecyclerView rvSharedMedia;
     private TextView tvEmptySharedMedia;
-    private SharedMediaAdapter sharedMediaAdapter;
+    private CustomerSharedMediaAdapter sharedMediaAdapter;
     private List<ChatMessage> sharedMediaList;
     private String customerId, techId;
     private final String DB_URL = "https://aquatech-8da99c74-default-rtdb.asia-southeast1.firebasedatabase.app/";
@@ -225,7 +225,7 @@ public class CustomerDetailActivity extends AppCompatActivity {
 
         if (rvSharedMedia != null) {
             sharedMediaList = new ArrayList<>();
-            sharedMediaAdapter = new SharedMediaAdapter(sharedMediaList);
+            sharedMediaAdapter = new CustomerSharedMediaAdapter(sharedMediaList);
             rvSharedMedia.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             rvSharedMedia.setAdapter(sharedMediaAdapter);
 
