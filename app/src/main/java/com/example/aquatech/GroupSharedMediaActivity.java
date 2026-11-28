@@ -183,10 +183,22 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
     }
 
     private void loadGroupMediaData() {
-        DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("GroupChats").child("TechniciansTeam").child("messages");
+        String chatId = getIntent().getStringExtra("CHAT_ID");
+        DatabaseReference chatRef;
+
+        if (chatId != null && !chatId.isEmpty()) {
+            chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("messages");
+        } else {
+            chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("GroupChats").child("TechniciansTeam").child("messages");
+        }
+
         chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+
                 mediaList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ChatMessage msg = ds.getValue(ChatMessage.class);
@@ -211,7 +223,8 @@ public class GroupSharedMediaActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 

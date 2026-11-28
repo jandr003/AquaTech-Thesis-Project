@@ -1,5 +1,6 @@
 package com.example.aquatech;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -196,6 +197,31 @@ public class CustomerDetailActivity extends AppCompatActivity {
     private void setupSharedMedia() {
         rvSharedMedia = findViewById(R.id.rvCustSharedMedia);
         tvEmptySharedMedia = findViewById(R.id.tvEmptyCustSharedMedia);
+
+        View chipMedia = findViewById(R.id.chipCustMedia);
+        View chipFiles = findViewById(R.id.chipCustFiles);
+        View chipLinks = findViewById(R.id.chipCustLinks);
+
+        View.OnClickListener openFullSharedMedia = v -> {
+            String myUid = FirebaseAuth.getInstance().getUid();
+            String chatId = (myUid != null && customerId != null) ? myUid + "_" + customerId : null;
+
+            Intent intent = new Intent(CustomerDetailActivity.this, GroupSharedMediaActivity.class);
+            if (chatId != null) {
+                intent.putExtra("CHAT_ID", chatId);
+            }
+            startActivity(intent);
+        };
+
+        if (chipMedia != null) {
+            chipMedia.setOnClickListener(openFullSharedMedia);
+        }
+        if (chipFiles != null) {
+            chipFiles.setOnClickListener(openFullSharedMedia);
+        }
+        if (chipLinks != null) {
+            chipLinks.setOnClickListener(openFullSharedMedia);
+        }
 
         if (rvSharedMedia != null) {
             sharedMediaList = new ArrayList<>();
