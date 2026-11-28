@@ -457,7 +457,11 @@ public class TechChatActivity extends AppCompatActivity {
         View btnCustInfo = findViewById(R.id.btnCustInfo);
         if (btnCustInfo != null) {
             btnCustInfo.setOnClickListener(v -> {
-                showCustomerInfoDialog();
+                Intent intent = new Intent(TechChatActivity.this, CustomerDetailActivity.class);
+                intent.putExtra("CUSTOMER_ID", customerId);
+                intent.putExtra("CUSTOMER_NAME", customerName);
+                intent.putExtra("TECH_ID", techId);
+                startActivity(intent);
             });
         }
 
