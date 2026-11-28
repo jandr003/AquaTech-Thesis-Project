@@ -100,10 +100,10 @@
                         android:fontFamily="@font/poppins"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
-                        android:text="REGISTERED CUSTOMER"
                         android:textColor="@color/white"
                         android:textSize="11sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="REGISTERED CUSTOMER" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
