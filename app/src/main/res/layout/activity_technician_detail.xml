@@ -454,7 +454,7 @@
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_shared_media" />
+                        tools:listitem="@layout/item_cust_shared_media" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
