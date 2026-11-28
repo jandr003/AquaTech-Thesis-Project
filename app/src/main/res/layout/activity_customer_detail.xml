@@ -374,6 +374,53 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/chipCustMedia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/bg_filter_chip"
+                            android:fontFamily="@font/poppins"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="5dp"
+                            android:text="Media"
+                            android:textColor="#2196F3"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/chipCustFiles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/bg_filter_chip"
+                            android:fontFamily="@font/poppins"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="5dp"
+                            android:text="Files (PDF)"
+                            android:textColor="#64748B"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/chipCustLinks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_filter_chip"
+                            android:fontFamily="@font/poppins"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="5dp"
+                            android:text="Links"
+                            android:textColor="#64748B"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/tvEmptyCustSharedMedia"
                         android:layout_width="match_parent"
