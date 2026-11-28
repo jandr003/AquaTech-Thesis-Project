@@ -67,7 +67,8 @@ public class TechChatActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            );
             window.setStatusBarColor(Color.TRANSPARENT);
         }
 
@@ -116,7 +117,7 @@ public class TechChatActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         String name = snapshot.child("fullName").getValue(String.class);
-                        if (name == null) {
+                        if (name == null || name.isEmpty()) {
                             name = snapshot.child("name").getValue(String.class);
                         }
 
@@ -127,7 +128,8 @@ public class TechChatActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {}
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
             };
             myProfileRef.addValueEventListener(profileListener);
         }
@@ -171,8 +173,10 @@ public class TechChatActivity extends AppCompatActivity {
             avatarHeader.setImageResource(avatarRes);
         }
 
-        if (customerName != null && customerNameDisplay != null) {
-            customerNameDisplay.setText(customerName);
+        if (customerName != null && !customerName.isEmpty()) {
+            if (customerNameDisplay != null) {
+                customerNameDisplay.setText(customerName);
+            }
         }
         fetchCustomerRealNameFromDB();
     }
@@ -205,7 +209,8 @@ public class TechChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 
@@ -250,16 +255,20 @@ public class TechChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         };
 
         chatRef.addChildEventListener(chatListener);
@@ -280,16 +289,20 @@ public class TechChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         };
 
         notifRef.addChildEventListener(notifListener);
@@ -300,39 +313,43 @@ public class TechChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 
     private void showIncomingCallPopup(String message, String callerCustId, String callerName) {
+        String displayName = (callerName != null && !callerName.isEmpty()) ? callerName : "Customer";
+        String targetCustId = (callerCustId != null && !callerCustId.isEmpty()) ? callerCustId : customerId;
+
         IncomingCallPopup popup = new IncomingCallPopup(
                 this,
-                callerName != null ? callerName : "Customer",
+                displayName,
                 "Customer",
-                callerCustId != null ? callerCustId : customerId,
+                targetCustId,
                 techId,
                 true,
                 new IncomingCallPopup.OnCallActionListener() {
                     @Override
                     public void onAnswer() {
-                        String chatId = techId + "_" + (callerCustId != null ? callerCustId : customerId);
-                        DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
+                        String chatId = techId + "_" + targetCustId;
+                        DatabaseReference cRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
 
                         Map<String, Object> updates = new HashMap<>();
                         updates.put("callStatus", "active");
                         updates.put("callStartTime", ServerValue.TIMESTAMP);
-                        chatRef.updateChildren(updates);
+                        cRef.updateChildren(updates);
 
                         Intent intent = new Intent(TechChatActivity.this, VoiceCallActivity.class);
                         intent.putExtra("TECH_ID", techId);
-                        intent.putExtra("CUSTOMER_ID", callerCustId != null ? callerCustId : customerId);
-                        intent.putExtra("NAME", callerName);
+                        intent.putExtra("CUSTOMER_ID", targetCustId);
+                        intent.putExtra("NAME", displayName);
                         startActivity(intent);
                     }
 
                     @Override
                     public void onDecline() {
-                        String chatId = techId + "_" + (callerCustId != null ? callerCustId : customerId);
+                        String chatId = techId + "_" + targetCustId;
                         FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId).child("callStatus").setValue("ended");
                     }
                 }
@@ -409,17 +426,23 @@ public class TechChatActivity extends AppCompatActivity {
 
     private void setupClickListeners() {
         if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
+            btnBack.setOnClickListener(v -> {
+                finish();
+            });
         }
 
         View btnAttach = findViewById(R.id.btnAttach);
         if (btnAttach != null) {
-            btnAttach.setOnClickListener(v -> openPdfPicker());
+            btnAttach.setOnClickListener(v -> {
+                openPdfPicker();
+            });
         }
 
         View btnAttachImg = findViewById(R.id.btnAttachImage);
         if (btnAttachImg != null) {
-            btnAttachImg.setOnClickListener(v -> openImagePicker());
+            btnAttachImg.setOnClickListener(v -> {
+                openImagePicker();
+            });
         }
 
         if (btnSend != null) {
@@ -433,7 +456,9 @@ public class TechChatActivity extends AppCompatActivity {
 
         View btnCustInfo = findViewById(R.id.btnCustInfo);
         if (btnCustInfo != null) {
-            btnCustInfo.setOnClickListener(v -> showCustomerInfoDialog());
+            btnCustInfo.setOnClickListener(v -> {
+                showCustomerInfoDialog();
+            });
         }
 
         if (btnCall != null) {
@@ -460,12 +485,38 @@ public class TechChatActivity extends AppCompatActivity {
 
                 View btnClose = d.findViewById(R.id.btnCloseCallDialog);
                 if (btnClose != null) {
-                    btnClose.setOnClickListener(view -> d.dismiss());
+                    btnClose.setOnClickListener(view -> {
+                        d.dismiss();
+                    });
                 }
 
                 d.show();
             });
         }
+    }
+
+    private void initiateCall() {
+        if (techId == null || customerId == null) {
+            return;
+        }
+
+        String callerName = (myRealName != null && !myRealName.isEmpty()) ? myRealName : "Technician";
+        String chatId = techId + "_" + customerId;
+        DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("callStatus", "ringing");
+        updates.put("callStartTime", null);
+        chatRef.updateChildren(updates);
+
+        String notifMessage = "<b>Incoming Call</b><br>" + callerName + " is calling.";
+        sendNotificationToUser(customerId, notifMessage, "CALL", techId, true);
+
+        Intent intent = new Intent(this, VoiceCallActivity.class);
+        intent.putExtra("TECH_ID", techId);
+        intent.putExtra("CUSTOMER_ID", customerId);
+        intent.putExtra("NAME", customerName);
+        startActivity(intent);
     }
 
     private static final int PICK_CHAT_FILE_REQUEST = 102;
@@ -553,43 +604,11 @@ public class TechChatActivity extends AppCompatActivity {
         return R.drawable.customer_avatar1;
     }
 
-    private void initiateCall() {
-        if (techId == null || customerId == null) {
-            return;
-        }
-
-        String callerName = (myRealName != null && !myRealName.isEmpty()) ? myRealName : "Technician";
-        String chatId = techId + "_" + customerId;
-        DatabaseReference chatRef = FirebaseDatabase.getInstance(DB_URL).getReference("UserChats").child(chatId);
-
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("callStatus", "ringing");
-        updates.put("callStartTime", null);
-        chatRef.updateChildren(updates);
-
-        String notifMessage = "<b>Incoming Call</b><br>" + callerName + " is calling.";
-        sendNotificationToUser(customerId, notifMessage, "CALL", techId, true);
-
-        Intent intent = new Intent(this, VoiceCallActivity.class);
-        intent.putExtra("TECH_ID", techId);
-        intent.putExtra("CUSTOMER_ID", customerId);
-        intent.putExtra("NAME", customerName);
-        startActivity(intent);
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (chatRef != null && chatListener != null) {
             chatRef.removeEventListener(chatListener);
-        }
-
-        if (notifRef != null && notifListener != null) {
-            notifRef.removeEventListener(notifListener);
-        }
-
-        if (myProfileRef != null && profileListener != null) {
-            myProfileRef.removeEventListener(profileListener);
         }
     }
 }
