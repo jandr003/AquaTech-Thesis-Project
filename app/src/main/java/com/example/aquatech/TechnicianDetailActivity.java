@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TechnicianDetailActivity extends AppCompatActivity {
 
@@ -103,6 +104,33 @@ public class TechnicianDetailActivity extends AppCompatActivity {
 
                     if (phone != null && tvTechDetailPhone != null) {
                         tvTechDetailPhone.setText(phone);
+                    }
+
+                    String experience = snapshot.child("experienceYears").getValue(String.class);
+                    if (experience == null) {
+                        experience = snapshot.child("experience").getValue(String.class);
+                    }
+                    if (tvTechDetailExperience != null) {
+                        if (experience != null && !experience.isEmpty()) {
+                            tvTechDetailExperience.setText(experience + " Experience with AquaTech");
+                        } else {
+                            tvTechDetailExperience.setText("3+ Years Experience with AquaTech");
+                        }
+                    }
+
+                    String role = snapshot.child("role").getValue(String.class);
+                    if (tvTechDetailRole != null && role != null && !role.isEmpty()) {
+                        tvTechDetailRole.setText(role);
+                    }
+
+                    Double ratingVal = snapshot.child("rating").getValue(Double.class);
+                    if (tvTechDetailRating != null && ratingVal != null) {
+                        tvTechDetailRating.setText(String.format(Locale.US, "%.1f ★", ratingVal));
+                    }
+
+                    Long jobsCount = snapshot.child("completedJobs").getValue(Long.class);
+                    if (tvTechDetailJobs != null && jobsCount != null) {
+                        tvTechDetailJobs.setText(jobsCount + " Completed Services");
                     }
 
                     int[] techAvatars = {
