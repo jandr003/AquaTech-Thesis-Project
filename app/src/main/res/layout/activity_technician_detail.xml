@@ -108,10 +108,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="5+ Years Experience with AquaTech"
                         android:textColor="#64748B"
                         android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="5+ Years Experience with AquaTech" />
 
                     <View
                         android:layout_width="match_parent"
@@ -137,10 +137,10 @@
                                 android:id="@+id/tvTechDetailRating"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="⭐ 4.9 / 5.0"
                                 android:textColor="#166534"
                                 android:textSize="15sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="⭐ 4.9 / 5.0" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -168,10 +168,10 @@
                                 android:id="@+id/tvTechDetailJobs"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="120+ Jobs"
                                 android:textColor="#2196F3"
                                 android:textSize="15sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="120+ Jobs" />
 
                             <TextView
                                 android:layout_width="wrap_content"
