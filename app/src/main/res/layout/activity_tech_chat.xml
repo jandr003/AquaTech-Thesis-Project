@@ -86,15 +86,15 @@
 
             <ImageView
                 android:id="@+id/btnCall"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:contentDescription="Voice Call"
                 android:focusable="true"
-                android:padding="8dp"
+                android:padding="5dp"
                 android:src="@drawable/ic_call"
                 app:tint="@color/white" />
 
